@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SediM.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MySQL_server" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">80.211.209.240</Value>
+    </Setting>
+    <Setting Name="MySQL_uzivatel" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ultron01</Value>
+    </Setting>
+    <Setting Name="MySQL_heslo" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Nechanice123Pp@@@</Value>
+    </Setting>
+    <Setting Name="MySQL_databaze" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">sedim</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
