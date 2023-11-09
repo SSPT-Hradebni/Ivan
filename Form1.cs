@@ -18,6 +18,7 @@ namespace SediM
         public MySqlConnection mySqlConnection = new MySqlConnection($"Server={Properties.Settings.Default.MySQL_server}; database={Properties.Settings.Default.MySQL_databaze}; uID={Properties.Settings.Default.MySQL_uzivatel}; pwd={Properties.Settings.Default.MySQL_heslo}");
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
+        List<Zak> zaci = new List<Zak>();
 
         private void NactiData()
         {
@@ -32,7 +33,10 @@ namespace SediM
 
             foreach (DataRow radek in data.Rows)
             {
-                dataviewStudenti.Rows.Add(radek[0], radek[1], radek[2], radek[3], radek[4], radek[5]);
+                Zak zak = new Zak(radek[1].ToString(), (int)radek[3], (int)radek[4], 1, radek[2].ToString(), (int)radek[0], radek[5].ToString());
+                zaci.Add(zak);
+
+                dataviewStudenti.Rows.Add(zak.poradCislo, zak.jmeno, zak.kateg, zak.skola, zak.rocnik, zak.pozice);
                 radek.Delete();
             }
 
@@ -91,6 +95,11 @@ namespace SediM
         private void btnAktualizujData_Click(object sender, EventArgs e)
         {
             NactiData();
+        }
+
+        private void btnVypis_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Poèet žákù v I. kategorii je {zaci.Count(item => item.kateg == "I")}");
         }
     }
 }
