@@ -38,6 +38,7 @@
             rocnik = new DataGridViewTextBoxColumn();
             souradnice = new DataGridViewTextBoxColumn();
             btnVypis = new Button();
+            btnVlozit = new Button();
             ((System.ComponentModel.ISupportInitialize)dataviewStudenti).BeginInit();
             SuspendLayout();
             // 
@@ -62,7 +63,6 @@
             // 
             // dataviewStudenti
             // 
-            dataviewStudenti.AllowUserToAddRows = false;
             dataviewStudenti.AllowUserToDeleteRows = false;
             dataviewStudenti.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataviewStudenti.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
@@ -70,7 +70,6 @@
             dataviewStudenti.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola, rocnik, souradnice });
             dataviewStudenti.Location = new Point(12, 27);
             dataviewStudenti.Name = "dataviewStudenti";
-            dataviewStudenti.ReadOnly = true;
             dataviewStudenti.RowTemplate.Height = 25;
             dataviewStudenti.Size = new Size(695, 411);
             dataviewStudenti.TabIndex = 3;
@@ -79,37 +78,31 @@
             // 
             id.HeaderText = "ID";
             id.Name = "id";
-            id.ReadOnly = true;
             // 
             // jmeno_prijmeni
             // 
             jmeno_prijmeni.HeaderText = "Jméno a přijmení";
             jmeno_prijmeni.Name = "jmeno_prijmeni";
-            jmeno_prijmeni.ReadOnly = true;
             // 
             // kategorie
             // 
             kategorie.HeaderText = "Kategorie";
             kategorie.Name = "kategorie";
-            kategorie.ReadOnly = true;
             // 
             // skola
             // 
             skola.HeaderText = "Škola";
             skola.Name = "skola";
-            skola.ReadOnly = true;
             // 
             // rocnik
             // 
             rocnik.HeaderText = "Ročník";
             rocnik.Name = "rocnik";
-            rocnik.ReadOnly = true;
             // 
             // souradnice
             // 
             souradnice.HeaderText = "Souřadnice";
             souradnice.Name = "souradnice";
-            souradnice.ReadOnly = true;
             // 
             // btnVypis
             // 
@@ -121,11 +114,22 @@
             btnVypis.UseVisualStyleBackColor = true;
             btnVypis.Click += btnVypis_Click;
             // 
+            // btnVlozit
+            // 
+            btnVlozit.Location = new Point(713, 70);
+            btnVlozit.Name = "btnVlozit";
+            btnVlozit.Size = new Size(75, 23);
+            btnVlozit.TabIndex = 5;
+            btnVlozit.Text = "Vložit";
+            btnVlozit.UseVisualStyleBackColor = true;
+            btnVlozit.Click += btnVlozit_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnVlozit);
             Controls.Add(btnVypis);
             Controls.Add(dataviewStudenti);
             Controls.Add(btnAktualizujData);
@@ -151,5 +155,6 @@
         private DataGridViewTextBoxColumn rocnik;
         private DataGridViewTextBoxColumn souradnice;
         private Button btnVypis;
+        private Button btnVlozit;
     }
 }
