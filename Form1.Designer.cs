@@ -39,6 +39,7 @@
             souradnice = new DataGridViewTextBoxColumn();
             btnVypis = new Button();
             btnVlozit = new Button();
+            btnHO = new Button();
             ((System.ComponentModel.ISupportInitialize)dataviewStudenti).BeginInit();
             SuspendLayout();
             // 
@@ -124,11 +125,22 @@
             btnVlozit.UseVisualStyleBackColor = true;
             btnVlozit.Click += btnVlozit_Click;
             // 
+            // btnHO
+            // 
+            btnHO.Location = new Point(713, 415);
+            btnHO.Name = "btnHO";
+            btnHO.Size = new Size(75, 23);
+            btnHO.TabIndex = 6;
+            btnHO.Text = "HO";
+            btnHO.UseVisualStyleBackColor = true;
+            btnHO.Click += btnHO_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnHO);
             Controls.Add(btnVlozit);
             Controls.Add(btnVypis);
             Controls.Add(dataviewStudenti);
@@ -156,5 +168,6 @@
         private DataGridViewTextBoxColumn souradnice;
         private Button btnVypis;
         private Button btnVlozit;
+        private Button btnHO;
     }
 }

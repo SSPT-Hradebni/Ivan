@@ -12,7 +12,7 @@ namespace SediM.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace SediM.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("80.211.209.240")]
+        [global::System.Configuration.DefaultSettingValueAttribute("sstp-sedim-12289.8nj.cockroachlabs.cloud")]
         public string MySQL_server {
             get {
                 return ((string)(this["MySQL_server"]));
@@ -34,7 +34,7 @@ namespace SediM.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ultron01")]
+        [global::System.Configuration.DefaultSettingValueAttribute("sspt")]
         public string MySQL_uzivatel {
             get {
                 return ((string)(this["MySQL_uzivatel"]));
@@ -43,7 +43,7 @@ namespace SediM.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Nechanice123Pp@@@")]
+        [global::System.Configuration.DefaultSettingValueAttribute("kQzI129YtsJOcy2lyudNow")]
         public string MySQL_heslo {
             get {
                 return ((string)(this["MySQL_heslo"]));
@@ -56,6 +56,18 @@ namespace SediM.Properties {
         public string MySQL_databaze {
             get {
                 return ((string)(this["MySQL_databaze"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("26257")]
+        public string MySQL_port {
+            get {
+                return ((string)(this["MySQL_port"]));
+            }
+            set {
+                this["MySQL_port"] = value;
             }
         }
     }
