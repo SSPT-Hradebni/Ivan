@@ -28,7 +28,7 @@ namespace SediM.Helpers
         /// <param name="nazev">Název souboru</param>
         public void ToCSV(DataTable dtDataTable, string nazev)
         {
-            StreamWriter sw = new StreamWriter($"{nazev}.csv", false, Encoding.UTF8);
+            StreamWriter sw = new StreamWriter(nazev, false, Encoding.UTF8);
 
             //headers
             for (int i = 0; i < dtDataTable.Columns.Count; i++)

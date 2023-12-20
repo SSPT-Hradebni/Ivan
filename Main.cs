@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace SediM
@@ -18,6 +19,8 @@ namespace SediM
         public static NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
         private NpgsqlConnection? connection;
+        private DataTable data;
+        private System.Timers.Timer _systemTimer;
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
@@ -26,6 +29,12 @@ namespace SediM
         public Main()
         {
             InitializeComponent();
+
+            _systemTimer = new System.Timers.Timer(2000);
+            _systemTimer.Elapsed += _systemTimer_Elapsed;
+
+            toolStripStatusLabel.Text = string.Empty;
+
 
             var conn = dataSource.OpenConnectionAsync();
             connection = conn.Result;
@@ -50,6 +59,13 @@ namespace SediM
             }
         }
 
+        void _systemTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            toolStripStatusLabel.Text = string.Empty;
+            _systemTimer.Stop(); // stop it if you don't want it repeating 
+        }
+
+
         private DataTable NactiStudenty()
         {
             DataTable data = new DataTable();
@@ -64,7 +80,7 @@ namespace SediM
 
         private void NactiStudentyDoSelectu()
         {
-            DataTable data = NactiStudenty();
+            data = NactiStudenty();
 
             foreach (DataRow radek in data.Rows)
             {
@@ -100,7 +116,12 @@ namespace SediM
 
             ulozit.ShowDialog();
 
-            // mainHelp.ToCSV(data, "studenti");
+            if (ulozit.CheckFileExists == false)
+            {
+                mainHelp.ToCSV(data, ulozit.FileName);
+                toolStripStatusLabel.Text = $"Data exportována do \"{ulozit.FileName}\"";
+                _systemTimer.Start();
+            }
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -112,6 +133,21 @@ namespace SediM
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Exportovat();
+        }
+
+        private void ukončitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult opravdu = MessageBox.Show(this, "Opravdu chcete aplikaci ukončit? Všechna neuložená data budou ztracena.", "Ukončit aplikaci", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if(opravdu == DialogResult.OK)
+            {
+                Environment.Exit(0);
+            }
+        }
+
+        private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Aplikace SediM\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\nAplikace SediM umožňuje správu a organizaci krajského kola matematické soutěže.");
         }
     }
 }
