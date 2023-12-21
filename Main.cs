@@ -139,7 +139,7 @@ namespace SediM
         {
             DialogResult opravdu = MessageBox.Show(this, "Opravdu chcete aplikaci ukončit? Všechna neuložená data budou ztracena.", "Ukončit aplikaci", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
-            if(opravdu == DialogResult.OK)
+            if (opravdu == DialogResult.OK)
             {
                 Environment.Exit(0);
             }
