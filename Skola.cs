@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SkolaKategorieZaciObj
+﻿namespace SediM
 {
     internal class Skola
     {
-        private string nazev;
-        private List<List<Zak>> kategorie; // List který obsahuje listy s žáky. Každý list reprezentuje jednu kategorii.
+        private int id;
+        private List<Zak>[] kategorie = new List<Zak>[7]; // Pole které obsahuje listy s žáky. Každý list reprezentuje jednu kategorii.
 
-        public string Nazev { get { return nazev; } }
-        public List<List<Zak>> Kategorie { get { return kategorie; } set { kategorie = value; } }
+        public int Id { get { return id; } }
+        public List<Zak>[] Kategorie { get { return kategorie; } set { kategorie = value; } }
 
-        public Skola(string nazev)
+        public Skola(int id)
         {
-            this.nazev = nazev;
+            this.id = id;
+
+            // Inicializace jednotlivých kategorií
+            for (int i = 0; i < kategorie.Length; i++)
+                kategorie[i] = new List<Zak>();
         }
     }
 }

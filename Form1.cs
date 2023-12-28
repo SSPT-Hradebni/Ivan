@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
+using Npgsql;
 // knihovny aplikace
 using SediM.Helpers;
-using Npgsql;
+using System.Data;
 
 namespace SediM
 {
@@ -21,7 +14,8 @@ namespace SediM
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
-        List<Zak> zaci = new List<Zak>();
+        //List<Zak> zaci = new List<Zak>();
+        List<Skola> skoly = new List<Skola>();
 
         public Form1()
         {
@@ -61,13 +55,26 @@ namespace SediM
             dataAdapter = new NpgsqlDataAdapter(cmd);
             dataAdapter.Fill(data);
 
-            foreach (DataRow radek in data.Rows)
+            // Vysvìtlení jednotlivých indexù datového typu DataRow
+            // [0] - Poøadové èíslo
+            // [1] - Jméno 
+            // [2] - Škola 
+            // [3] - Kategorie 
+            // [4] - Roèník 
+            // [5] - Pozice
+            foreach (DataRow zak in data.Rows)
             {
-                Zak zak = new Zak(radek[1].ToString() ?? "", int.Parse(radek[2].ToString() ?? ""), int.Parse(radek[4].ToString() ?? ""), 0, int.Parse(radek[3].ToString() ?? ""), int.Parse(radek[0].ToString() ?? ""), radek[5].ToString() ?? "");
-                zaci.Add(zak);
+                // [1], [2], [4], 0, [3], [0], [5]
+                //Zak zak = new Zak(radek[1].ToString() ?? "", int.Parse(radek[2].ToString() ?? ""), int.Parse(radek[4].ToString() ?? ""), 0, int.Parse(radek[3].ToString() ?? ""), int.Parse(radek[0].ToString() ?? ""), radek[5].ToString() ?? "");
+                //zaci.Add(zak);
 
-                dataviewStudenti.Rows.Add(zak.poradCislo, zak.jmeno, zak.kateg, zak.skola, zak.rocnik, zak.pozice);
-                radek.Delete();
+                // Pokud škola, v které se daný žák nachází neexistuje v listu skoly, vytvoøí se.
+                if (skoly.Exists(skola => skola.Id == (int)zak[2]) == false) skoly.Add(new Skola((int)zak[2]));
+                // Žák se umístí do pøíslušnì školy a kategorie
+                skoly.Find(skola => skola.Id == (int)zak[2]).Kategorie[(int)zak[3]].Add(new Zak(zak[1].ToString() ?? ""));
+
+                //dataviewStudenti.Rows.Add(zak.poradCislo, zak.jmeno, zak.kateg, zak.skola, zak.rocnik, zak.pozice);
+                zak.Delete();
             }
 
             data.Rows.Clear();
@@ -87,7 +94,7 @@ namespace SediM
         {
             for (int i = 1; i <= 7; i++)
             {
-                MessageBox.Show($"Poèet žákù v {i}. kategorii je {zaci.Count(item => item.kateg == i)}");
+                //MessageBox.Show($"Poèet žákù v {i}. kategorii je {zaci.Count(item => item.kateg == i)}"); // FIXME
             }
         }
 
