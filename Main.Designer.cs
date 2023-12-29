@@ -58,6 +58,7 @@
             dataToolStripMenuItem = new ToolStripMenuItem();
             importToolStripMenuItem = new ToolStripMenuItem();
             exportToolStripMenuItem = new ToolStripMenuItem();
+            noveRozsazeniToolStripMenuItem = new ToolStripMenuItem();
             statusStrip = new StatusStrip();
             toolStripProgressBar = new ToolStripProgressBar();
             toolStripStatusLabel = new ToolStripStatusLabel();
@@ -320,26 +321,26 @@
             // oAplikaciToolStripMenuItem
             // 
             oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
-            oAplikaciToolStripMenuItem.Size = new Size(224, 26);
+            oAplikaciToolStripMenuItem.Size = new Size(161, 26);
             oAplikaciToolStripMenuItem.Text = "O aplikaci";
             oAplikaciToolStripMenuItem.Click += oAplikaciToolStripMenuItem_Click;
             // 
             // nápovědaToolStripMenuItem
             // 
             nápovědaToolStripMenuItem.Name = "nápovědaToolStripMenuItem";
-            nápovědaToolStripMenuItem.Size = new Size(224, 26);
+            nápovědaToolStripMenuItem.Size = new Size(161, 26);
             nápovědaToolStripMenuItem.Text = "Nápověda";
             // 
             // ukončitToolStripMenuItem
             // 
             ukončitToolStripMenuItem.Name = "ukončitToolStripMenuItem";
-            ukončitToolStripMenuItem.Size = new Size(224, 26);
+            ukončitToolStripMenuItem.Size = new Size(161, 26);
             ukončitToolStripMenuItem.Text = "Konec";
             ukončitToolStripMenuItem.Click += ukončitToolStripMenuItem_Click;
             // 
             // dataToolStripMenuItem
             // 
-            dataToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { importToolStripMenuItem, exportToolStripMenuItem });
+            dataToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { importToolStripMenuItem, exportToolStripMenuItem, noveRozsazeniToolStripMenuItem });
             dataToolStripMenuItem.Name = "dataToolStripMenuItem";
             dataToolStripMenuItem.Size = new Size(55, 24);
             dataToolStripMenuItem.Text = "Data";
@@ -347,15 +348,22 @@
             // importToolStripMenuItem
             // 
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(224, 26);
+            importToolStripMenuItem.Size = new Size(193, 26);
             importToolStripMenuItem.Text = "Import";
             // 
             // exportToolStripMenuItem
             // 
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(224, 26);
+            exportToolStripMenuItem.Size = new Size(193, 26);
             exportToolStripMenuItem.Text = "Export";
             exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
+            // 
+            // noveRozsazeniToolStripMenuItem
+            // 
+            noveRozsazeniToolStripMenuItem.Name = "noveRozsazeniToolStripMenuItem";
+            noveRozsazeniToolStripMenuItem.Size = new Size(193, 26);
+            noveRozsazeniToolStripMenuItem.Text = "Nové rozsazení";
+            noveRozsazeniToolStripMenuItem.Click += noveRozsazeniToolStripMenuItem_Click;
             // 
             // statusStrip
             // 
@@ -448,5 +456,6 @@
         private Panel panelEditClassroom;
         private Button btnOdstranitTridu;
         private TextBox txtbxNazevTridy;
+        private ToolStripMenuItem noveRozsazeniToolStripMenuItem;
     }
 }

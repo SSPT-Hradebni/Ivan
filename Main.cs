@@ -16,8 +16,7 @@ namespace SediM
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
-        //List<Zak> zaci = new List<Zak>();
-        List<Skola> skoly = new List<Skola>();
+        private List<Skola> skoly = new List<Skola>();
         private bool vyberTridNovyVybrana = true; // Pomocná proměnná. Zabraňuje opakovanému přesunutí komponent při události comboboxu výběru tříd.
 
         public Main()
@@ -282,6 +281,14 @@ namespace SediM
                 combobxVyberTrid.Items.Add($"{txtbxNazevTridy.Text} ({numupdownClassroomWidth.Value}x{numupdownClassroomHeight.Value})");
             }
             // TODO: Chybí kontrola proti opakovanému vkládání stejnojmenných tříd.
+        }
+
+        private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(combobxVyberTrid.Items.Cast<string>());
+            formularRozsazeni.setSkoly(skoly);
+            formularRozsazeni.Owner = this;
+            formularRozsazeni.Show();
         }
     }
 }
