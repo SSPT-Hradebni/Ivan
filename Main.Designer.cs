@@ -42,7 +42,7 @@
             lblCboxStudenti = new Label();
             cboxStudenti = new ComboBox();
             tabPage4 = new TabPage();
-            txtxbxNazevTridy = new TextBox();
+            txtbxNazevTridy = new TextBox();
             panelEditClassroom = new Panel();
             btnOdstranitTridu = new Button();
             btnNastavitTridu = new Button();
@@ -78,18 +78,20 @@
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage4);
-            tabControl1.Location = new Point(0, 27);
+            tabControl1.Location = new Point(0, 36);
+            tabControl1.Margin = new Padding(3, 4, 3, 4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(800, 398);
+            tabControl1.Size = new Size(914, 531);
             tabControl1.TabIndex = 0;
             // 
             // tabPage3
             // 
             tabPage3.Controls.Add(dataviewStudenti);
-            tabPage3.Location = new Point(4, 24);
+            tabPage3.Location = new Point(4, 29);
+            tabPage3.Margin = new Padding(3, 4, 3, 4);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(792, 370);
+            tabPage3.Size = new Size(906, 498);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Seznam studentů";
             tabPage3.UseVisualStyleBackColor = true;
@@ -103,11 +105,12 @@
             dataviewStudenti.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataviewStudenti.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola, rocnik, souradnice });
             dataviewStudenti.Location = new Point(0, 0);
+            dataviewStudenti.Margin = new Padding(3, 4, 3, 4);
             dataviewStudenti.Name = "dataviewStudenti";
             dataviewStudenti.ReadOnly = true;
             dataviewStudenti.RowHeadersWidth = 51;
             dataviewStudenti.RowTemplate.Height = 25;
-            dataviewStudenti.Size = new Size(793, 374);
+            dataviewStudenti.Size = new Size(906, 499);
             dataviewStudenti.TabIndex = 4;
             // 
             // id
@@ -154,10 +157,11 @@
             // 
             // tabPage1
             // 
-            tabPage1.Location = new Point(4, 24);
+            tabPage1.Location = new Point(4, 29);
+            tabPage1.Margin = new Padding(3, 4, 3, 4);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(792, 370);
+            tabPage1.Padding = new Padding(3, 4, 3, 4);
+            tabPage1.Size = new Size(906, 498);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Nový student";
             tabPage1.UseVisualStyleBackColor = true;
@@ -166,10 +170,11 @@
             // 
             tabPage2.Controls.Add(lblCboxStudenti);
             tabPage2.Controls.Add(cboxStudenti);
-            tabPage2.Location = new Point(4, 24);
+            tabPage2.Location = new Point(4, 29);
+            tabPage2.Margin = new Padding(3, 4, 3, 4);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(792, 370);
+            tabPage2.Padding = new Padding(3, 4, 3, 4);
+            tabPage2.Size = new Size(906, 498);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Upravit studenta";
             tabPage2.UseVisualStyleBackColor = true;
@@ -177,24 +182,25 @@
             // lblCboxStudenti
             // 
             lblCboxStudenti.AutoSize = true;
-            lblCboxStudenti.Location = new Point(6, 5);
+            lblCboxStudenti.Location = new Point(7, 7);
             lblCboxStudenti.Name = "lblCboxStudenti";
-            lblCboxStudenti.Size = new Size(96, 15);
+            lblCboxStudenti.Size = new Size(121, 20);
             lblCboxStudenti.TabIndex = 1;
             lblCboxStudenti.Text = "Vyberte studenta";
             // 
             // cboxStudenti
             // 
             cboxStudenti.FormattingEnabled = true;
-            cboxStudenti.Location = new Point(6, 23);
+            cboxStudenti.Location = new Point(7, 31);
+            cboxStudenti.Margin = new Padding(3, 4, 3, 4);
             cboxStudenti.Name = "cboxStudenti";
-            cboxStudenti.Size = new Size(276, 23);
+            cboxStudenti.Size = new Size(315, 28);
             cboxStudenti.Sorted = true;
             cboxStudenti.TabIndex = 0;
             // 
             // tabPage4
             // 
-            tabPage4.Controls.Add(txtxbxNazevTridy);
+            tabPage4.Controls.Add(txtbxNazevTridy);
             tabPage4.Controls.Add(panelEditClassroom);
             tabPage4.Controls.Add(btnOdstranitTridu);
             tabPage4.Controls.Add(btnNastavitTridu);
@@ -202,55 +208,62 @@
             tabPage4.Controls.Add(lblUpravaTrid);
             tabPage4.Controls.Add(numupdownClassroomWidth);
             tabPage4.Controls.Add(combobxVyberTrid);
-            tabPage4.Location = new Point(4, 24);
+            tabPage4.Location = new Point(4, 29);
+            tabPage4.Margin = new Padding(3, 4, 3, 4);
             tabPage4.Name = "tabPage4";
-            tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(792, 370);
+            tabPage4.Padding = new Padding(3, 4, 3, 4);
+            tabPage4.Size = new Size(906, 498);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Úprava tříd";
             tabPage4.UseVisualStyleBackColor = true;
             // 
-            // txtxbxNazevTridy
+            // txtbxNazevTridy
             // 
-            txtxbxNazevTridy.Location = new Point(6, 35);
-            txtxbxNazevTridy.Name = "txtxbxNazevTridy";
-            txtxbxNazevTridy.PlaceholderText = "Název třídy";
-            txtxbxNazevTridy.Size = new Size(125, 23);
-            txtxbxNazevTridy.TabIndex = 7;
+            txtbxNazevTridy.Location = new Point(7, 47);
+            txtbxNazevTridy.Margin = new Padding(3, 4, 3, 4);
+            txtbxNazevTridy.Name = "txtbxNazevTridy";
+            txtbxNazevTridy.PlaceholderText = "Název třídy";
+            txtbxNazevTridy.Size = new Size(142, 27);
+            txtbxNazevTridy.TabIndex = 7;
             // 
             // panelEditClassroom
             // 
-            panelEditClassroom.Location = new Point(137, 6);
+            panelEditClassroom.Location = new Point(157, 8);
+            panelEditClassroom.Margin = new Padding(3, 4, 3, 4);
             panelEditClassroom.Name = "panelEditClassroom";
-            panelEditClassroom.Size = new Size(640, 350);
+            panelEditClassroom.Size = new Size(731, 467);
             panelEditClassroom.TabIndex = 6;
             panelEditClassroom.Paint += panelEditClassroom_Paint;
             // 
             // btnOdstranitTridu
             // 
-            btnOdstranitTridu.Location = new Point(6, 122);
+            btnOdstranitTridu.Location = new Point(7, 163);
+            btnOdstranitTridu.Margin = new Padding(3, 4, 3, 4);
             btnOdstranitTridu.Name = "btnOdstranitTridu";
-            btnOdstranitTridu.Size = new Size(125, 23);
+            btnOdstranitTridu.Size = new Size(143, 31);
             btnOdstranitTridu.TabIndex = 5;
             btnOdstranitTridu.Text = "Odstranit";
             btnOdstranitTridu.UseVisualStyleBackColor = true;
+            btnOdstranitTridu.Click += btnOdstranitTridu_Click;
             // 
             // btnNastavitTridu
             // 
-            btnNastavitTridu.Location = new Point(6, 93);
+            btnNastavitTridu.Location = new Point(7, 124);
+            btnNastavitTridu.Margin = new Padding(3, 4, 3, 4);
             btnNastavitTridu.Name = "btnNastavitTridu";
-            btnNastavitTridu.Size = new Size(125, 23);
+            btnNastavitTridu.Size = new Size(143, 31);
             btnNastavitTridu.TabIndex = 4;
             btnNastavitTridu.Text = "Nastavit";
             btnNastavitTridu.UseVisualStyleBackColor = true;
-            btnNastavitTridu.Click += btnSetClassroon_Click;
+            btnNastavitTridu.Click += btnNastavitTridu_Click;
             // 
             // numupdownClassroomHeight
             // 
-            numupdownClassroomHeight.Location = new Point(81, 64);
+            numupdownClassroomHeight.Location = new Point(93, 85);
+            numupdownClassroomHeight.Margin = new Padding(3, 4, 3, 4);
             numupdownClassroomHeight.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numupdownClassroomHeight.Name = "numupdownClassroomHeight";
-            numupdownClassroomHeight.Size = new Size(50, 23);
+            numupdownClassroomHeight.Size = new Size(57, 27);
             numupdownClassroomHeight.TabIndex = 3;
             numupdownClassroomHeight.Value = new decimal(new int[] { 1, 0, 0, 0 });
             numupdownClassroomHeight.ValueChanged += numupdownClassroomHeight_ValueChanged;
@@ -258,18 +271,19 @@
             // lblUpravaTrid
             // 
             lblUpravaTrid.AutoSize = true;
-            lblUpravaTrid.Location = new Point(62, 66);
+            lblUpravaTrid.Location = new Point(71, 88);
             lblUpravaTrid.Name = "lblUpravaTrid";
-            lblUpravaTrid.Size = new Size(13, 15);
+            lblUpravaTrid.Size = new Size(16, 20);
             lblUpravaTrid.TabIndex = 2;
             lblUpravaTrid.Text = "x";
             // 
             // numupdownClassroomWidth
             // 
-            numupdownClassroomWidth.Location = new Point(6, 64);
+            numupdownClassroomWidth.Location = new Point(7, 85);
+            numupdownClassroomWidth.Margin = new Padding(3, 4, 3, 4);
             numupdownClassroomWidth.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numupdownClassroomWidth.Name = "numupdownClassroomWidth";
-            numupdownClassroomWidth.Size = new Size(50, 23);
+            numupdownClassroomWidth.Size = new Size(57, 27);
             numupdownClassroomWidth.TabIndex = 1;
             numupdownClassroomWidth.Value = new decimal(new int[] { 1, 0, 0, 0 });
             numupdownClassroomWidth.ValueChanged += numupdownClassroomWidth_ValueChanged;
@@ -278,9 +292,10 @@
             // 
             combobxVyberTrid.FormattingEnabled = true;
             combobxVyberTrid.Items.AddRange(new object[] { "Nový" });
-            combobxVyberTrid.Location = new Point(6, 6);
+            combobxVyberTrid.Location = new Point(7, 8);
+            combobxVyberTrid.Margin = new Padding(3, 4, 3, 4);
             combobxVyberTrid.Name = "combobxVyberTrid";
-            combobxVyberTrid.Size = new Size(125, 23);
+            combobxVyberTrid.Size = new Size(142, 28);
             combobxVyberTrid.TabIndex = 0;
             combobxVyberTrid.SelectedIndexChanged += combobxVyberTrid_SelectedIndexChanged;
             // 
@@ -290,7 +305,8 @@
             menuStrip.Items.AddRange(new ToolStripItem[] { souborToolStripMenuItem, dataToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
-            menuStrip.Size = new Size(800, 24);
+            menuStrip.Padding = new Padding(7, 3, 0, 3);
+            menuStrip.Size = new Size(914, 30);
             menuStrip.TabIndex = 1;
             menuStrip.Text = "menuStrip1";
             // 
@@ -298,26 +314,26 @@
             // 
             souborToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { oAplikaciToolStripMenuItem, nápovědaToolStripMenuItem, ukončitToolStripMenuItem });
             souborToolStripMenuItem.Name = "souborToolStripMenuItem";
-            souborToolStripMenuItem.Size = new Size(52, 20);
+            souborToolStripMenuItem.Size = new Size(65, 24);
             souborToolStripMenuItem.Text = "SediM";
             // 
             // oAplikaciToolStripMenuItem
             // 
             oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
-            oAplikaciToolStripMenuItem.Size = new Size(128, 22);
+            oAplikaciToolStripMenuItem.Size = new Size(224, 26);
             oAplikaciToolStripMenuItem.Text = "O aplikaci";
             oAplikaciToolStripMenuItem.Click += oAplikaciToolStripMenuItem_Click;
             // 
             // nápovědaToolStripMenuItem
             // 
             nápovědaToolStripMenuItem.Name = "nápovědaToolStripMenuItem";
-            nápovědaToolStripMenuItem.Size = new Size(128, 22);
+            nápovědaToolStripMenuItem.Size = new Size(224, 26);
             nápovědaToolStripMenuItem.Text = "Nápověda";
             // 
             // ukončitToolStripMenuItem
             // 
             ukončitToolStripMenuItem.Name = "ukončitToolStripMenuItem";
-            ukončitToolStripMenuItem.Size = new Size(128, 22);
+            ukončitToolStripMenuItem.Size = new Size(224, 26);
             ukončitToolStripMenuItem.Text = "Konec";
             ukončitToolStripMenuItem.Click += ukončitToolStripMenuItem_Click;
             // 
@@ -325,19 +341,19 @@
             // 
             dataToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { importToolStripMenuItem, exportToolStripMenuItem });
             dataToolStripMenuItem.Name = "dataToolStripMenuItem";
-            dataToolStripMenuItem.Size = new Size(43, 20);
+            dataToolStripMenuItem.Size = new Size(55, 24);
             dataToolStripMenuItem.Text = "Data";
             // 
             // importToolStripMenuItem
             // 
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(110, 22);
+            importToolStripMenuItem.Size = new Size(224, 26);
             importToolStripMenuItem.Text = "Import";
             // 
             // exportToolStripMenuItem
             // 
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(110, 22);
+            exportToolStripMenuItem.Size = new Size(224, 26);
             exportToolStripMenuItem.Text = "Export";
             exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
             // 
@@ -345,34 +361,36 @@
             // 
             statusStrip.ImageScalingSize = new Size(20, 20);
             statusStrip.Items.AddRange(new ToolStripItem[] { toolStripProgressBar, toolStripStatusLabel });
-            statusStrip.Location = new Point(0, 428);
+            statusStrip.Location = new Point(0, 573);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(800, 22);
+            statusStrip.Padding = new Padding(1, 0, 16, 0);
+            statusStrip.Size = new Size(914, 27);
             statusStrip.TabIndex = 2;
             statusStrip.Text = "statusStrip";
             // 
             // toolStripProgressBar
             // 
             toolStripProgressBar.Name = "toolStripProgressBar";
-            toolStripProgressBar.Size = new Size(100, 16);
+            toolStripProgressBar.Size = new Size(114, 19);
             // 
             // toolStripStatusLabel
             // 
             toolStripStatusLabel.Name = "toolStripStatusLabel";
-            toolStripStatusLabel.Size = new Size(112, 17);
+            toolStripStatusLabel.Size = new Size(143, 21);
             toolStripStatusLabel.Text = "toolStripStatusLabel";
             // 
             // Main
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(statusStrip);
             Controls.Add(tabControl1);
             Controls.Add(menuStrip);
             DoubleBuffered = true;
             MainMenuStrip = menuStrip;
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Main";
@@ -429,6 +447,6 @@
         private NumericUpDown numupdownClassroomWidth;
         private Panel panelEditClassroom;
         private Button btnOdstranitTridu;
-        private TextBox txtxbxNazevTridy;
+        private TextBox txtbxNazevTridy;
     }
 }

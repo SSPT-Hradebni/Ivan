@@ -223,8 +223,7 @@ namespace SediM
 
                 // Při prvotním spuštění předchází přesunutí komponent
                 if (vyberTridNovyVybrana) return;
-
-                txtxbxNazevTridy.Visible = true;
+                txtbxNazevTridy.Visible = true;
                 numupdownClassroomWidth.Location = new Point(numupdownClassroomWidth.Location.X, numupdownClassroomWidth.Location.Y + 29);
                 lblUpravaTrid.Location = new Point(lblUpravaTrid.Location.X, lblUpravaTrid.Location.Y + 29);
                 numupdownClassroomHeight.Location = new Point(numupdownClassroomHeight.Location.X, numupdownClassroomHeight.Location.Y + 29);
@@ -232,12 +231,13 @@ namespace SediM
                 btnOdstranitTridu.Location = new Point(btnOdstranitTridu.Location.X, btnOdstranitTridu.Location.Y + 29);
                 vyberTridNovyVybrana = true;
 
+                txtbxNazevTridy.Text = "";
+
                 return;
             }
 
             if (!vyberTridNovyVybrana) return;
-
-            txtxbxNazevTridy.Visible = false;
+            txtbxNazevTridy.Visible = false;
             numupdownClassroomWidth.Location = new Point(numupdownClassroomWidth.Location.X, numupdownClassroomWidth.Location.Y - 29);
             lblUpravaTrid.Location = new Point(lblUpravaTrid.Location.X, lblUpravaTrid.Location.Y - 29);
             numupdownClassroomHeight.Location = new Point(numupdownClassroomHeight.Location.X, numupdownClassroomHeight.Location.Y - 29);
@@ -245,25 +245,43 @@ namespace SediM
             btnOdstranitTridu.Location = new Point(btnOdstranitTridu.Location.X, btnOdstranitTridu.Location.Y - 29);
             vyberTridNovyVybrana = false;
 
+            txtbxNazevTridy.Text = combobxVyberTrid.Text;
+
             // Formát tříd v comboboxu: LV04 (4x5)
             numupdownClassroomWidth.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[0]);
             numupdownClassroomHeight.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[1].Replace(")", ""));
         }
 
-        private void btnSetClassroon_Click(object sender, EventArgs e)
+        private void btnOdstranitTridu_Click(object sender, EventArgs e)
         {
-            if (txtxbxNazevTridy.Text.Contains('(') | txtxbxNazevTridy.Text.Contains(')'))
+            if (combobxVyberTrid.Text == "Nový")
+            {
+                numupdownClassroomWidth.Value = 1;
+                numupdownClassroomHeight.Value = 1;
+                return;
+            }
+            combobxVyberTrid.Items.RemoveAt(combobxVyberTrid.SelectedIndex);
+        }
+
+        private void btnNastavitTridu_Click(object sender, EventArgs e)
+        {
+            if (txtbxNazevTridy.Text == combobxVyberTrid.Text)
+            {
+                MessageBox.Show("Nevypracovaná funkcionalita! - TODO\r\nÚprava stávající třídy", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (txtbxNazevTridy.Text.Contains('(') | txtbxNazevTridy.Text.Contains(')'))
             {
                 MessageBox.Show("Název třídy nesmí obsahovat kulaté závorky!", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
-            else if (txtxbxNazevTridy.Text == "")
+            else if (txtbxNazevTridy.Text == "")
             {
                 MessageBox.Show("Nelze vytvořit bezejmennou třídu", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+            }
+            else if (combobxVyberTrid.Text == "Nový")
+            {
+                combobxVyberTrid.Items.Add($"{txtbxNazevTridy.Text} ({numupdownClassroomWidth.Value}x{numupdownClassroomHeight.Value})");
             }
             // TODO: Chybí kontrola proti opakovanému vkládání stejnojmenných tříd.
-            combobxVyberTrid.Items.Add($"{txtxbxNazevTridy.Text} ({numupdownClassroomWidth.Value}x{numupdownClassroomHeight.Value})");
         }
     }
 }
