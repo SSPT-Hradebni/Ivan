@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Remove="Form1.cs" />
     <Compile Remove="Form1.Designer.cs" />
+    <Compile Remove="StructZak.cs" />
   </ItemGroup>
 
   <ItemGroup>

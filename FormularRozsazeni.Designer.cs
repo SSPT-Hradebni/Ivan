@@ -37,9 +37,11 @@
             btnPresunTridu = new Button();
             label2 = new Label();
             label3 = new Label();
-            tabControlVyplneneTridy = new TabControl();
             combobxAlgoritmus = new ComboBox();
             label4 = new Label();
+            panelVykresleniRozsazeni = new Panel();
+            listbxVyplneneTridy = new ListBox();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)numupdownKategoriiNaTridu).BeginInit();
             SuspendLayout();
             // 
@@ -127,14 +129,6 @@
             label3.TabIndex = 8;
             label3.Text = "Vybrané třídy";
             // 
-            // tabControlVyplneneTridy
-            // 
-            tabControlVyplneneTridy.Location = new Point(255, 12);
-            tabControlVyplneneTridy.Name = "tabControlVyplneneTridy";
-            tabControlVyplneneTridy.SelectedIndex = 0;
-            tabControlVyplneneTridy.Size = new Size(533, 426);
-            tabControlVyplneneTridy.TabIndex = 9;
-            // 
             // combobxAlgoritmus
             // 
             combobxAlgoritmus.FormattingEnabled = true;
@@ -153,14 +147,43 @@
             label4.TabIndex = 11;
             label4.Text = "Algoritmus";
             // 
+            // panelVykresleniRozsazeni
+            // 
+            panelVykresleniRozsazeni.Location = new Point(255, 12);
+            panelVykresleniRozsazeni.Name = "panelVykresleniRozsazeni";
+            panelVykresleniRozsazeni.Size = new Size(380, 436);
+            panelVykresleniRozsazeni.TabIndex = 12;
+            panelVykresleniRozsazeni.Paint += panelVykresleniRozsazeni_Paint;
+            // 
+            // listbxVyplneneTridy
+            // 
+            listbxVyplneneTridy.FormattingEnabled = true;
+            listbxVyplneneTridy.ItemHeight = 20;
+            listbxVyplneneTridy.Location = new Point(12, 344);
+            listbxVyplneneTridy.Name = "listbxVyplneneTridy";
+            listbxVyplneneTridy.Size = new Size(237, 104);
+            listbxVyplneneTridy.TabIndex = 13;
+            listbxVyplneneTridy.SelectedIndexChanged += listbxVyplneneTridy_SelectedIndexChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(12, 321);
+            label5.Name = "label5";
+            label5.Size = new Size(104, 20);
+            label5.TabIndex = 14;
+            label5.Text = "Vyplněné třídy";
+            // 
             // FormularRozsazeni
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(647, 460);
+            Controls.Add(label5);
+            Controls.Add(listbxVyplneneTridy);
+            Controls.Add(panelVykresleniRozsazeni);
             Controls.Add(label4);
             Controls.Add(combobxAlgoritmus);
-            Controls.Add(tabControlVyplneneTridy);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(btnPresunTridu);
@@ -188,8 +211,10 @@
         private Button btnPresunTridu;
         private Label label2;
         private Label label3;
-        private TabControl tabControlVyplneneTridy;
         private ComboBox combobxAlgoritmus;
         private Label label4;
+        private Panel panelVykresleniRozsazeni;
+        private ListBox listbxVyplneneTridy;
+        private Label label5;
     }
 }
