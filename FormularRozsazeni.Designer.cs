@@ -62,6 +62,7 @@
             numupdownKategoriiNaTridu.Size = new Size(50, 27);
             numupdownKategoriiNaTridu.TabIndex = 1;
             numupdownKategoriiNaTridu.Value = new decimal(new int[] { 7, 0, 0, 0 });
+            numupdownKategoriiNaTridu.ValueChanged += numupdownKategoriiNaTridu_ValueChanged;
             // 
             // btnVyplnit
             // 
@@ -71,6 +72,7 @@
             btnVyplnit.TabIndex = 2;
             btnVyplnit.Text = "Vyplnit";
             btnVyplnit.UseVisualStyleBackColor = true;
+            btnVyplnit.Click += btnVyplnit_Click;
             // 
             // btnVyplnitVse
             // 

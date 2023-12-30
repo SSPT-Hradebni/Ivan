@@ -17,7 +17,8 @@ namespace SediM
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
         private List<Skola> skoly = new List<Skola>();
-        private bool vyberTridNovyVybrana = true; // Pomocná proměnná. Zabraňuje opakovanému přesunutí komponent při události comboboxu výběru tříd.
+        // Pomocná proměnná. Zabraňuje opakovanému přesunutí komponent při události comboboxu výběru tříd.
+        private bool vyberTridNovyVybrana = true; 
 
         public Main()
         {
@@ -235,6 +236,10 @@ namespace SediM
                 return;
             }
 
+            // Formát tříd v comboboxu: LV04 (4x5)
+            numupdownClassroomWidth.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[0]);
+            numupdownClassroomHeight.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[1].Replace(")", ""));
+
             if (!vyberTridNovyVybrana) return;
             txtbxNazevTridy.Visible = false;
             numupdownClassroomWidth.Location = new Point(numupdownClassroomWidth.Location.X, numupdownClassroomWidth.Location.Y - 29);
@@ -245,10 +250,6 @@ namespace SediM
             vyberTridNovyVybrana = false;
 
             txtbxNazevTridy.Text = combobxVyberTrid.Text;
-
-            // Formát tříd v comboboxu: LV04 (4x5)
-            numupdownClassroomWidth.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[0]);
-            numupdownClassroomHeight.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[1].Replace(")", ""));
         }
 
         private void btnOdstranitTridu_Click(object sender, EventArgs e)
