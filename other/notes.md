@@ -23,3 +23,6 @@ Rozsazením typu **Jezdec**
 #### Poznámka hledně kombinování "tahů" rozsazení
 Osobně bych se nezabýval s různými kombinacemi (čtverec, jezdec) rozsazení v jedné učebně jelikož mi příjde, že kombinování zbytečně komplikuje generaci rozsazení ale v pozdější fázi vývoje je možné, 
 že bude prostor tuto funkcionalitu implementovat. Prozatím bych se však na tuto problematiku nesoustředil.
+
+#### Řazení žáků dle kategorií - Maximalizace délky dostupnosti kategorií ve školách
+Abysme udrželi co nejvyšší počet kategorií ve školách po celou dobu plnění tříd, musíme vybírat žáky ze škol s co nejvyšším počtem žáků kýžené kategorie sestupně seřazených
