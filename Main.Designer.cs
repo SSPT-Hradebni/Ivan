@@ -31,12 +31,6 @@
             tabControl1 = new TabControl();
             tabPage3 = new TabPage();
             dataviewStudenti = new DataGridView();
-            id = new DataGridViewTextBoxColumn();
-            jmeno_prijmeni = new DataGridViewTextBoxColumn();
-            kategorie = new DataGridViewTextBoxColumn();
-            skola = new DataGridViewTextBoxColumn();
-            rocnik = new DataGridViewTextBoxColumn();
-            souradnice = new DataGridViewTextBoxColumn();
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
             lblCboxStudenti = new Label();
@@ -62,6 +56,10 @@
             statusStrip = new StatusStrip();
             toolStripProgressBar = new ToolStripProgressBar();
             toolStripStatusLabel = new ToolStripStatusLabel();
+            id = new DataGridViewTextBoxColumn();
+            jmeno_prijmeni = new DataGridViewTextBoxColumn();
+            kategorie = new DataGridViewTextBoxColumn();
+            skola = new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataviewStudenti).BeginInit();
@@ -104,7 +102,7 @@
             dataviewStudenti.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataviewStudenti.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             dataviewStudenti.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataviewStudenti.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola, rocnik, souradnice });
+            dataviewStudenti.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola });
             dataviewStudenti.Location = new Point(0, 0);
             dataviewStudenti.Margin = new Padding(3, 4, 3, 4);
             dataviewStudenti.Name = "dataviewStudenti";
@@ -113,48 +111,6 @@
             dataviewStudenti.RowTemplate.Height = 25;
             dataviewStudenti.Size = new Size(906, 499);
             dataviewStudenti.TabIndex = 4;
-            // 
-            // id
-            // 
-            id.HeaderText = "ID";
-            id.MinimumWidth = 6;
-            id.Name = "id";
-            id.ReadOnly = true;
-            // 
-            // jmeno_prijmeni
-            // 
-            jmeno_prijmeni.HeaderText = "Jméno a přijmení";
-            jmeno_prijmeni.MinimumWidth = 6;
-            jmeno_prijmeni.Name = "jmeno_prijmeni";
-            jmeno_prijmeni.ReadOnly = true;
-            // 
-            // kategorie
-            // 
-            kategorie.HeaderText = "Kategorie";
-            kategorie.MinimumWidth = 6;
-            kategorie.Name = "kategorie";
-            kategorie.ReadOnly = true;
-            // 
-            // skola
-            // 
-            skola.HeaderText = "Škola";
-            skola.MinimumWidth = 6;
-            skola.Name = "skola";
-            skola.ReadOnly = true;
-            // 
-            // rocnik
-            // 
-            rocnik.HeaderText = "Ročník";
-            rocnik.MinimumWidth = 6;
-            rocnik.Name = "rocnik";
-            rocnik.ReadOnly = true;
-            // 
-            // souradnice
-            // 
-            souradnice.HeaderText = "Souřadnice";
-            souradnice.MinimumWidth = 6;
-            souradnice.Name = "souradnice";
-            souradnice.ReadOnly = true;
             // 
             // tabPage1
             // 
@@ -387,6 +343,34 @@
             toolStripStatusLabel.Size = new Size(143, 21);
             toolStripStatusLabel.Text = "toolStripStatusLabel";
             // 
+            // id
+            // 
+            id.HeaderText = "ID";
+            id.MinimumWidth = 6;
+            id.Name = "id";
+            id.ReadOnly = true;
+            // 
+            // jmeno_prijmeni
+            // 
+            jmeno_prijmeni.HeaderText = "Jméno a přijmení";
+            jmeno_prijmeni.MinimumWidth = 6;
+            jmeno_prijmeni.Name = "jmeno_prijmeni";
+            jmeno_prijmeni.ReadOnly = true;
+            // 
+            // kategorie
+            // 
+            kategorie.HeaderText = "Kategorie";
+            kategorie.MinimumWidth = 6;
+            kategorie.Name = "kategorie";
+            kategorie.ReadOnly = true;
+            // 
+            // skola
+            // 
+            skola.HeaderText = "Škola";
+            skola.MinimumWidth = 6;
+            skola.Name = "skola";
+            skola.ReadOnly = true;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -439,12 +423,6 @@
         private ToolStripStatusLabel toolStripStatusLabel;
         private ToolStripProgressBar toolStripProgressBar;
         private DataGridView dataviewStudenti;
-        private DataGridViewTextBoxColumn id;
-        private DataGridViewTextBoxColumn jmeno_prijmeni;
-        private DataGridViewTextBoxColumn kategorie;
-        private DataGridViewTextBoxColumn skola;
-        private DataGridViewTextBoxColumn rocnik;
-        private DataGridViewTextBoxColumn souradnice;
         private ComboBox cboxStudenti;
         private Label lblCboxStudenti;
         private TabPage tabPage4;
@@ -457,5 +435,9 @@
         private Button btnOdstranitTridu;
         private TextBox txtbxNazevTridy;
         private ToolStripMenuItem noveRozsazeniToolStripMenuItem;
+        private DataGridViewTextBoxColumn id;
+        private DataGridViewTextBoxColumn jmeno_prijmeni;
+        private DataGridViewTextBoxColumn kategorie;
+        private DataGridViewTextBoxColumn skola;
     }
 }

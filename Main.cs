@@ -66,7 +66,7 @@ namespace SediM
         {
             DataTable data = new DataTable();
             NpgsqlDataAdapter dataAdapter;
-            NpgsqlCommand cmd = new("SELECT * FROM studenti", connection);
+            NpgsqlCommand cmd = new("SELECT * FROM studentiv2", connection);
 
             dataAdapter = new NpgsqlDataAdapter(cmd);
             dataAdapter.Fill(data);
@@ -92,24 +92,22 @@ namespace SediM
             DataTable data = NactiStudenty();
 
             // Vysvětlení jednotlivých indexů datového typu DataRow
-            // [0] - Pořadové číslo
-            // [1] - Jméno 
-            // [2] - Škola 
-            // [3] - Kategorie 
-            // [4] - Ročník 
-            // [5] - Pozice
+            // [0] - ID
+            // [1] - Jméno
+            // [2] - Kategorie
+            // [3] - Škola
+
             foreach (DataRow zak in data.Rows)
             {
                 // Pokud škola, v které se daný žák nachází neexistuje v listu skoly, vytvoří se.
-                if (skoly.Exists(skola => skola.Id == int.Parse(zak[2].ToString() ?? "")) == false)
-                    skoly.Add(new Skola(int.Parse(zak[2].ToString() ?? "")));
+                if (skoly.Exists(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")) == false)
+                    skoly.Add(new Skola(int.Parse(zak[3].ToString() ?? "")));
                 // Žák se umístí do příslušně školy a kategorie
-                List<Zak> tmpKat = skoly.Find(skola => skola.Id == int.Parse(zak[2].ToString() ?? "")).Kategorie[int.Parse(zak[3].ToString() ?? "") - 1];
+                List<Zak> tmpKat = skoly.Find(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")).Kategorie[int.Parse(zak[2].ToString() ?? "") - 1];
                 tmpKat.Add(new Zak(zak[1].ToString() ?? ""));
-                skoly.Find(skola => skola.Id == int.Parse(zak[2].ToString() ?? "")).Kategorie[int.Parse(zak[3].ToString() ?? "") - 1] = tmpKat;
+                skoly.Find(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")).Kategorie[int.Parse(zak[2].ToString() ?? "") - 1] = tmpKat;
 
-                // TODO: umožnit opětový výpis žáků do dataView, nyní není možný.
-                //dataviewStudenti.Rows.Add(zak.poradCislo, zak.jmeno, zak.kateg, zak.skola, zak.rocnik, zak.pozice);
+                dataviewStudenti.Rows.Add(zak[0], zak[1], zak[2], zak[3]);
                 zak.Delete();
             }
 
