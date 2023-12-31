@@ -193,8 +193,10 @@ namespace SediM
             // Místa pro studenty
             // Poznámka: plocha pro vykreslování míst studentů je snížena o 5% od stěn a katedry
             Point pocatekPlochyMist = new Point((int)(panelEditClassroom.Width * 0.2), (int)(panelEditClassroom.Height * 0.05));
-            // Na to nemám teď sílu to vysvětlovat - TODO
+            // Vypočítá podíl rozdílu šířky plochy pro vykreslení míst a hodnoty numericUpDown
+            // pro počet míst ve třídě do šířky hodnotou numericUpDown ... do šířky
             int mistoSirka = (int)((panelEditClassroom.Width * 0.75 - (double)numupdownClassroomWidth.Value) / (double)numupdownClassroomWidth.Value);
+            // Stejný princip ale pro počet míst ve třídě do výšky
             int mistoVyska = (int)((panelEditClassroom.Height * 0.9 - (double)numupdownClassroomHeight.Value) / (double)numupdownClassroomHeight.Value);
 
             for (int r = 0; r < numupdownClassroomHeight.Value; r++) // r - řádek
