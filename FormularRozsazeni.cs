@@ -13,6 +13,7 @@
             listbxVybraneTridy.Items.AddRange(tridy.Skip(1).ToArray());
             inicializaceListuBarev();
         }
+
         internal void setSkoly(List<Skola> skoly)
         {
             this.skoly = skoly;

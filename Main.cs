@@ -260,7 +260,13 @@ namespace SediM
                 numupdownClassroomHeight.Value = 1;
                 return;
             }
+
+            string nazev = combobxVyberTrid.Text;
+
             combobxVyberTrid.Items.RemoveAt(combobxVyberTrid.SelectedIndex);
+
+            toolStripStatusLabel.Text = $"Třída \"{nazev}\" byla smazána";
+            _systemTimer.Start();
         }
 
         private void btnNastavitTridu_Click(object sender, EventArgs e)
@@ -289,7 +295,7 @@ namespace SediM
             FormularRozsazeni formularRozsazeni = new FormularRozsazeni(combobxVyberTrid.Items.Cast<string>());
             formularRozsazeni.setSkoly(skoly);
             formularRozsazeni.Owner = this;
-            formularRozsazeni.Show();
+            formularRozsazeni.ShowDialog();
         }
     }
 }
