@@ -22,7 +22,7 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Release --output /var/SediM/build
+        run: dotnet build --configuration Release /p:EnableWindowsTargeting=true --output /var/SediM/build
 
   create-release:
     runs-on: ubuntu-latest
