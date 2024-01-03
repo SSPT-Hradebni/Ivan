@@ -196,6 +196,7 @@
             Controls.Add(numupdownKategoriiNaTridu);
             Controls.Add(label1);
             Name = "FormularRozsazeni";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "FormularRozsazeni";
             ((System.ComponentModel.ISupportInitialize)numupdownKategoriiNaTridu).EndInit();
             ResumeLayout(false);

@@ -88,7 +88,6 @@
             lblPrijmeni = new Label();
             tabControl1.SuspendLayout();
             tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataviewStudenti).BeginInit();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
 
@@ -147,7 +146,6 @@
             dataviewStudenti.Location = new Point(0, 0);
             dataviewStudenti.Margin = new Padding(3, 4, 3, 4);
 
-            dataviewStudenti.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola, rocnik, souradnice });
             dataviewStudenti.Location = new Point(0, 0);
 
             dataviewStudenti.Name = "dataviewStudenti";
@@ -664,8 +662,6 @@
         private DataGridViewTextBoxColumn skola;
         private DataGridViewTextBoxColumn rocnik;
         private DataGridViewTextBoxColumn souradnice;
-        private ComboBox cboxStudenti;
-        private Label lblCboxStudenti;
         private Label lblJmeno;
         private TextBox tboxJmeno;
         private TextBox tboxPrijmeni;
