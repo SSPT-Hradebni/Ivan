@@ -26,11 +26,6 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release /p:EnableWindowsTargeting=true --output /home/runner/work/SediM/SediM/build
 
-  create-release:
-    runs-on: ubuntu-latest
-
-    needs: build
-    steps:
       - name: Check Required Files
         run: ls /home/runner/work/SediM/SediM/ && ls /home/runner/work/SediM/SediM/build
 
