@@ -10,7 +10,7 @@ namespace SediM
     {
         private List<Skola> skoly = new List<Skola>();
         private List<SolidBrush> barvyKategorii = new List<SolidBrush>();
-
+        private List<SolidBrush[]> barvyVyplnenychTrid = new List<SolidBrush[]>();
         public FormularRozsazeni(IEnumerable<string> tridy)
         {
             InitializeComponent();
@@ -138,10 +138,18 @@ namespace SediM
 
             dimensions[1] = dimensions[1].Remove(dimensions[1].Length - 1);
 
-            return new int[]
+
+            for (int r = 0; r < int.Parse(dimensions[0]); r++)
             {
-                int.Parse(dimensions[1]), int.Parse(dimensions[0])
-            };
+                for (int s = 0; s < int.Parse(dimensions[1]); s++)
+                {
+                    g.FillRectangle(
+                        ziskejBarvuDleKategorie(listbxVyplneneTridy.SelectedIndex != -1 ? listbxVyplneneTridy.SelectedIndex : -1, (r * 2 + s) % (int)numupdownKategoriiNaTridu.Value),
+                        pocatekPlochyMist.X + s * mistoSirka + s,
+                        pocatekPlochyMist.Y + r * mistoVyska + r,
+                        mistoSirka, mistoVyska);
+                }
+            }
         }
 
         private void numupdownKategoriiNaTridu_ValueChanged(object sender, EventArgs e)
@@ -153,26 +161,25 @@ namespace SediM
         {
             barvyKategorii.Clear();
             Random rng = new Random();
-            for (int i = 0; i < numupdownKategoriiNaTridu.Value; i++)
+            int i = 0;
+            while (i < numupdownKategoriiNaTridu.Value)
             {
                 SolidBrush sb = new SolidBrush(Color.FromArgb(rng.Next(0, 255), rng.Next(0, 255), rng.Next(0, 255)));
-                if (barvyKategorii.Exists(barva => barva.Color == sb.Color))
-                {
-                    i--;
-                    continue;
-                }
+                // Přeskočí přidání duplicitní barvy
+                if (barvyKategorii.Exists(barva => barva.Color == sb.Color)) continue;
+                i++;
                 barvyKategorii.Add(sb);
             }
         }
 
-        private SolidBrush ziskejBarvuDleKategorie(int kategorie)
+        private SolidBrush ziskejBarvuDleKategorie(int indexTridy, int kategorie)
         {
-            switch (kategorie)
+            switch (indexTridy)
             {
                 case -1:
                     return new SolidBrush(Color.FromArgb(100, 100, 100));
                 default:
-                    return barvyKategorii[kategorie];
+                    return barvyVyplnenychTrid[indexTridy][kategorie];
             }
         }
 
@@ -183,6 +190,7 @@ namespace SediM
             // jsou jednotlivá místa správně zabarvená. Zde se bude řešit řazení žáků - TODO
             listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[listbxVybraneTridy.SelectedIndex]);
             listbxVybraneTridy.Items.RemoveAt(listbxVybraneTridy.SelectedIndex);
+            barvyVyplnenychTrid.Add(barvyKategorii.ToArray());
         }
 
         private void ExportToPdf(string filePath)
