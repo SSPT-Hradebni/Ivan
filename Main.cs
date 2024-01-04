@@ -18,7 +18,7 @@ namespace SediM
         public bool jePripojen = false;
         private List<Skola> skoly = new List<Skola>();
         // Pomocná proměnná. Zabraňuje opakovanému přesunutí komponent při události comboboxu výběru tříd.
-        private bool vyberTridNovyVybrana = true; 
+        private bool vyberTridNovyVybrana = true;
 
         public Main()
         {
