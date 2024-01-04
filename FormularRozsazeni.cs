@@ -4,6 +4,7 @@
     {
         private List<Skola> skoly = new List<Skola>();
         private List<SolidBrush> barvyKategorii = new List<SolidBrush>();
+        // List polí barev. Počet barev v poli na daném indexu odpovídá počtu kategorií vyplněné třídy
         private List<SolidBrush[]> barvyVyplnenychTrid = new List<SolidBrush[]>();
         public FormularRozsazeni(IEnumerable<string> tridy)
         {
@@ -118,7 +119,7 @@
                 for (int s = 0; s < int.Parse(dimensions[1]); s++)
                 {
                     g.FillRectangle(
-                        ziskejBarvuDleKategorie(listbxVyplneneTridy.SelectedIndex != -1 ? listbxVyplneneTridy.SelectedIndex : -1, (r * 2 + s) % (int)numupdownKategoriiNaTridu.Value),
+                        ziskejBarvuDleKategorie(listbxVyplneneTridy.SelectedIndex != -1 ? listbxVyplneneTridy.SelectedIndex : -1, listbxVyplneneTridy.SelectedIndex != -1 ? (r * 2 + s) % barvyVyplnenychTrid[listbxVyplneneTridy.SelectedIndex].Length : -1),
                         pocatekPlochyMist.X + s * mistoSirka + s,
                         pocatekPlochyMist.Y + r * mistoVyska + r,
                         mistoSirka, mistoVyska);
