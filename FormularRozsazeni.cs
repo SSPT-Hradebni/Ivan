@@ -24,7 +24,7 @@
 
         private void listbxVyberTrid_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // FIXME: Z neznámého důvodu se při označení jiného prvku v jiném listboxu
+            // TODO/FIXME: Z neznámého důvodu se při označení jiného prvku v jiném listboxu
             // odznačí i ta klikaná položka - platí pro všechny listboxy ve formu
             listbxVybraneTridy.SelectedIndex = -1;
             listbxVyplneneTridy.SelectedIndex = -1;
@@ -36,6 +36,14 @@
             listbxVyberTrid.SelectedIndex = -1;
             listbxVyplneneTridy.SelectedIndex = -1;
             btnPresunTridu.Text = "<";
+
+            panelVykresleniRozsazeni.Invalidate();
+        }
+
+        private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listbxVyberTrid.SelectedIndex = -1;
+            listbxVybraneTridy.SelectedIndex = -1;
 
             panelVykresleniRozsazeni.Invalidate();
         }
@@ -58,14 +66,6 @@
                 listbxVybraneTridy.Items.Add(listbxVyberTrid.Items[listbxVyberTrid.SelectedIndex]);
                 listbxVyberTrid.Items.RemoveAt(listbxVyberTrid.SelectedIndex);
             }
-        }
-
-        private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            listbxVyberTrid.SelectedIndex = -1;
-            listbxVybraneTridy.SelectedIndex = -1;
-
-            panelVykresleniRozsazeni.Invalidate();
         }
 
         private void panelVykresleniRozsazeni_Paint(object sender, PaintEventArgs e)
@@ -97,11 +97,14 @@
 
         private void vykresleniMist(Graphics g)
         {
+            // Vytvořen "počáteční" bod pro vykreslování míst
             Point pocatekPlochyMist = new Point(
                 (int)(panelVykresleniRozsazeni.Width * 0.05),
                 (int)(panelVykresleniRozsazeni.Height * 0.05));
 
+            // Extrahuje dimenze třídy z právě označeného listboxu ve formátu [0] - šířka, [1] - výška
             int[] dimenze = extrahujDimenze();
+            // Vypočítá velikost jednoho místa na základě velikosti dimenzí - stejný princip jako ve formuláři Main
             int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9 - dimenze[0]) / dimenze[0]);
             int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65 - dimenze[1]) / dimenze[1]);
 
@@ -111,8 +114,10 @@
                 tridyZaku.Add(new Zak[dimenze[0], dimenze[1]]);
             }
 
-            for (int r = 0; r < dimenze[1] ; r++)
+            // Opakuje pro každý řádek míst ve třídě
+            for (int r = 0; r < dimenze[1]; r++)
             {
+                // Opakuje pro každé místo v řádku ve třídě
                 for (int s = 0; s < dimenze[0]; s++)
                 {
                     g.FillRectangle(
@@ -142,6 +147,7 @@
         {
             inicializaceListuBarev();
         }
+
         private void inicializaceListuBarev()
         {
             barvyKategorii.Clear();
@@ -171,17 +177,42 @@
         private void btnVyplnit_Click(object sender, EventArgs e)
         {
             if (listbxVybraneTridy.SelectedIndex == -1) return;
+            barvyVyplnenychTrid.Add(barvyKategorii.ToArray());
+            // Extrahuje velikost dimenzí z listboxu vybraných tříd
+            int[] tmp = extrahujDimenze();
+            tridyZaku.Add(new Zak[tmp[0], tmp[1]]);
+            // Vyplní právě přidanou třídu žáky
+            //vyplnZaky(tridyZaku.Count - 1, tmp); // TODO - odkomentovat po funkční implementaci řazení žáků
+            // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[listbxVybraneTridy.SelectedIndex]);
             listbxVybraneTridy.Items.RemoveAt(listbxVybraneTridy.SelectedIndex);
-            barvyVyplnenychTrid.Add(barvyKategorii.ToArray());
-            // TODO - po kliknutí na tlačítlo se odznačí listbox a tedy nemůže pracovat funkce extrahujDimenze
-            //int[] tmp = extrahujDimenze();
-            //tridyZaku.Add(new Zak[tmp[0],tmp[1]]);
-            //vyplnZaky(tridyZaku.Count-1);
         }
-        private void vyplnZaky(int indexTridy)
+
+        private void btnVyplnitVse_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Nevypracovaná funkcionalita! - TODO\r\nVyplnění všech tříd", "Chyba při vyplňování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void vyplnZaky(int indexTridy, int[] dimenze)
         {
             // TODO - Zde se bude vyplňovat specifikovaná třída na indexu zadaném v parametru funkce
+
+            // Opakuje pro každý řádek míst ve třídě
+            for (int r = 0; r < dimenze[1]; r++)
+            {
+                // Opakuje pro každé místo v řádku ve třídě
+                for (int s = 0; s < dimenze[0]; s++)
+                {
+                    // Přidá žáka podle kategorie pomocí funkce ziskejZaka
+                    tridyZaku[indexTridy][r,s] = ziskejZaka((r * 2 + s) % barvyVyplnenychTrid[listbxVyplneneTridy.SelectedIndex].Length);
+                }
+            }
+        }
+
+        private Zak ziskejZaka(int kategorie)
+        {
+            // TODO: Zde funkce vybere žáka na základě specifikované kategorie
+            throw new NotImplementedException();
         }
     }
 }
