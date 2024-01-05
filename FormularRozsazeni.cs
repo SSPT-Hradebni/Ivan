@@ -2,6 +2,8 @@
 {
     public partial class FormularRozsazeni : Form
     {
+        // TODO/FIXME: Když uživatel zavře a znovu otevře tento form bez ukončení aplikace (formulář Main)
+        // tak zůstanou nastaveny globální proměnné. To je nežádoucí.
         private List<Skola> skoly = new List<Skola>();
         private List<SolidBrush> barvyKategorii = new List<SolidBrush>();
         // List polí barev. Počet barev v poli na daném indexu odpovídá počtu kategorií vyplněné třídy
@@ -182,20 +184,23 @@
             int[] tmp = extrahujDimenze();
             tridyZaku.Add(new Zak[tmp[0], tmp[1]]);
             // Vyplní právě přidanou třídu žáky
-            //vyplnZaky(tridyZaku.Count - 1, tmp); // TODO - odkomentovat po funkční implementaci řazení žáků
+            vyplnTridu(tridyZaku.Count - 1, tmp, skoly.ToArray());
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[listbxVybraneTridy.SelectedIndex]);
             listbxVybraneTridy.Items.RemoveAt(listbxVybraneTridy.SelectedIndex);
         }
 
+        // TODO
         private void btnVyplnitVse_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Nevypracovaná funkcionalita! - TODO\r\nVyplnění všech tříd", "Chyba při vyplňování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void vyplnZaky(int indexTridy, int[] dimenze)
+        private void vyplnTridu(int indexTridy, int[] dimenze, Skola[] skoly)
         {
-            // TODO - Zde se bude vyplňovat specifikovaná třída na indexu zadaném v parametru funkce
+            // List identický globální proměnné skoly sloužící k orientaci již využitých kategorií,
+            // které nelze využít k dalšímu řazení v právě řazené třídě.
+            List<Skola> listSkolProTridu = skoly.ToList<Skola>();
 
             // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < dimenze[1]; r++)
@@ -204,15 +209,31 @@
                 for (int s = 0; s < dimenze[0]; s++)
                 {
                     // Přidá žáka podle kategorie pomocí funkce ziskejZaka
-                    tridyZaku[indexTridy][r,s] = ziskejZaka((r * 2 + s) % barvyVyplnenychTrid[listbxVyplneneTridy.SelectedIndex].Length);
+                    tridyZaku[indexTridy][r,s] = ziskejZaka((r * 2 + s) % barvyVyplnenychTrid[barvyVyplnenychTrid.Count-1].Length, listSkolProTridu);
                 }
             }
         }
 
-        private Zak ziskejZaka(int kategorie)
+        private Zak ziskejZaka(int kategorie, List<Skola> skoly)
         {
-            // TODO: Zde funkce vybere žáka na základě specifikované kategorie
-            throw new NotImplementedException();
+            // Vytvoříme žáka returnZak s jménem "PRÁZDNÉ MÍSTO" pro případ, že by
+            // for cyklus došel do konce bez přenastavení této proměnné
+            Zak returnZak = new Zak("PRÁZDNÉ MÍSTO");
+
+            for (int i = 0; i < skoly.Count; i++)
+            {
+                // Pokud je hledaná kategorie nullové hodnoty nebo je prázdná, přeskočíme na další školu.
+                // Pokud je kategorie null, znamená to, že již v dané třídě byla využita.
+                if (skoly[i].Kategorie[kategorie] == null || skoly[i].Kategorie[kategorie].Count == 0) continue;
+                // Vybereme žáka na indexu 0. Tímto způsobem máme jistotu že nevybereme žáka mimo list.
+                returnZak = skoly[i].Kategorie[kategorie][0];
+                this.skoly[i].Kategorie[kategorie].RemoveAt(0);
+                // Označíme danou kategorii jako využitou - tedy hodntou null
+                // TODO/FIXME: Z neznámého důvodu nulluje zároveň i proměnnou this.skoly
+                skoly[i].Kategorie[kategorie] = null;
+            }
+
+            return returnZak;
         }
     }
 }
