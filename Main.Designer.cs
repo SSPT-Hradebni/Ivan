@@ -28,236 +28,207 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tabControl1 = new TabControl();
-            tabPage3 = new TabPage();
-            dataviewStudenti = new DataGridView();
-            id = new DataGridViewTextBoxColumn();
-            jmeno_prijmeni = new DataGridViewTextBoxColumn();
-            kategorie = new DataGridViewTextBoxColumn();
-            skola = new DataGridViewTextBoxColumn();
-            rocnik = new DataGridViewTextBoxColumn();
-            souradnice = new DataGridViewTextBoxColumn();
-            tabPage1 = new TabPage();
-            tboxPrijmeni = new TextBox();
-            lblPrijmeni = new Label();
-            tboxJmeno = new TextBox();
-            lblJmeno = new Label();
-            tabPage2 = new TabPage();
-            lblCboxStudenti = new Label();
-            cboxStudenti = new ComboBox();
-            tabPage4 = new TabPage();
-            txtbxNazevTridy = new TextBox();
-            panelEditClassroom = new Panel();
-            btnOdstranitTridu = new Button();
-            btnNastavitTridu = new Button();
-            numupdownClassroomHeight = new NumericUpDown();
-            lblUpravaTrid = new Label();
-            numupdownClassroomWidth = new NumericUpDown();
-            combobxVyberTrid = new ComboBox();
-            menuStrip = new MenuStrip();
-            souborToolStripMenuItem = new ToolStripMenuItem();
-            oAplikaciToolStripMenuItem = new ToolStripMenuItem();
-            nápovědaToolStripMenuItem = new ToolStripMenuItem();
-            ukončitToolStripMenuItem = new ToolStripMenuItem();
-            dataToolStripMenuItem = new ToolStripMenuItem();
-            importToolStripMenuItem = new ToolStripMenuItem();
-            exportToolStripMenuItem = new ToolStripMenuItem();
-            noveRozsazeniToolStripMenuItem = new ToolStripMenuItem();
-            statusStrip = new StatusStrip();
-            toolStripProgressBar = new ToolStripProgressBar();
-            toolStripStatusLabel = new ToolStripStatusLabel();
-            tabControl1.SuspendLayout();
-            tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataviewStudenti).BeginInit();
-            tabPage1.SuspendLayout();
-            tabPage2.SuspendLayout();
-            tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numupdownClassroomHeight).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numupdownClassroomWidth).BeginInit();
-            menuStrip.SuspendLayout();
-            statusStrip.SuspendLayout();
-            SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            tabControl1.Controls.Add(tabPage3);
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Controls.Add(tabPage4);
-            tabControl1.Location = new Point(0, 27);
-            tabControl1.Margin = new Padding(3, 4, 3, 4);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(800, 398);
-            tabControl1.TabIndex = 0;
-            // 
-            // tabPage3
-            // 
-            tabPage3.Controls.Add(dataviewStudenti);
-            tabPage3.Location = new Point(4, 24);
-            tabPage3.Margin = new Padding(3, 4, 3, 4);
-            tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(792, 370);
-            tabPage3.TabIndex = 2;
-            tabPage3.Text = "Seznam studentů";
-            tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // dataviewStudenti
-            // 
-            dataviewStudenti.AllowUserToAddRows = false;
-            dataviewStudenti.AllowUserToDeleteRows = false;
-            dataviewStudenti.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataviewStudenti.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            dataviewStudenti.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataviewStudenti.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola, rocnik, souradnice });
-            dataviewStudenti.Location = new Point(0, 0);
-            dataviewStudenti.Margin = new Padding(3, 4, 3, 4);
-            dataviewStudenti.Name = "dataviewStudenti";
-            dataviewStudenti.ReadOnly = true;
-            dataviewStudenti.RowHeadersWidth = 51;
-            dataviewStudenti.RowTemplate.Height = 25;
-            dataviewStudenti.Size = new Size(793, 374);
-            dataviewStudenti.TabIndex = 4;
-            // 
-            // id
-            // 
-            id.HeaderText = "ID";
-            id.MinimumWidth = 6;
-            id.Name = "id";
-            id.ReadOnly = true;
-            // 
-            // jmeno_prijmeni
-            // 
-            jmeno_prijmeni.HeaderText = "Jméno a přijmení";
-            jmeno_prijmeni.MinimumWidth = 6;
-            jmeno_prijmeni.Name = "jmeno_prijmeni";
-            jmeno_prijmeni.ReadOnly = true;
-            // 
-            // kategorie
-            // 
-            kategorie.HeaderText = "Kategorie";
-            kategorie.MinimumWidth = 6;
-            kategorie.Name = "kategorie";
-            kategorie.ReadOnly = true;
-            // 
-            // skola
-            // 
-            skola.HeaderText = "Škola";
-            skola.MinimumWidth = 6;
-            skola.Name = "skola";
-            skola.ReadOnly = true;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            this.rocnik = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.souradnice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oAplikaciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nápovědaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ukončitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noveRozsazeniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tabUpravitTrida = new System.Windows.Forms.TabPage();
+            this.txtbxNazevTridy = new System.Windows.Forms.TextBox();
+            this.panelEditClassroom = new System.Windows.Forms.Panel();
+            this.btnOdstranitTridu = new System.Windows.Forms.Button();
+            this.btnNastavitTridu = new System.Windows.Forms.Button();
+            this.numupdownClassroomHeight = new System.Windows.Forms.NumericUpDown();
+            this.lblUpravaTrid = new System.Windows.Forms.Label();
+            this.numupdownClassroomWidth = new System.Windows.Forms.NumericUpDown();
+            this.combobxVyberTrid = new System.Windows.Forms.ComboBox();
+            this.tabUpravitStudent = new System.Windows.Forms.TabPage();
+            this.splitContUpravitStudenta = new System.Windows.Forms.SplitContainer();
+            this.lboxStudenti = new System.Windows.Forms.ListBox();
+            this.tboxJmeno = new System.Windows.Forms.TextBox();
+            this.lblJmeno = new System.Windows.Forms.Label();
+            this.lblPrijmeni = new System.Windows.Forms.Label();
+            this.lblIdecko = new System.Windows.Forms.Label();
+            this.tboxPrijmeni = new System.Windows.Forms.TextBox();
+            this.btnUlozit = new System.Windows.Forms.Button();
+            this.lblCboxStudenti = new System.Windows.Forms.Label();
+            this.tabSeznam = new System.Windows.Forms.TabPage();
+            this.dataviewStudenti = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jmeno_prijmeni = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kategorie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.skola = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.menuStrip.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            this.tabUpravitTrida.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numupdownClassroomHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numupdownClassroomWidth)).BeginInit();
+            this.tabUpravitStudent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContUpravitStudenta)).BeginInit();
+            this.splitContUpravitStudenta.Panel1.SuspendLayout();
+            this.splitContUpravitStudenta.Panel2.SuspendLayout();
+            this.splitContUpravitStudenta.SuspendLayout();
+            this.tabSeznam.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataviewStudenti)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // rocnik
             // 
-            rocnik.HeaderText = "Ročník";
-            rocnik.MinimumWidth = 6;
-            rocnik.Name = "rocnik";
-            rocnik.ReadOnly = true;
+            this.rocnik.HeaderText = "Ročník";
+            this.rocnik.MinimumWidth = 6;
+            this.rocnik.Name = "rocnik";
+            this.rocnik.ReadOnly = true;
+            this.rocnik.Width = 125;
             // 
             // souradnice
             // 
-            souradnice.HeaderText = "Souřadnice";
-            souradnice.MinimumWidth = 6;
-            souradnice.Name = "souradnice";
-            souradnice.ReadOnly = true;
+            this.souradnice.HeaderText = "Souřadnice";
+            this.souradnice.MinimumWidth = 6;
+            this.souradnice.Name = "souradnice";
+            this.souradnice.ReadOnly = true;
+            this.souradnice.Width = 125;
             // 
-            // tabPage1
+            // menuStrip
             // 
-            tabPage1.Controls.Add(tboxPrijmeni);
-            tabPage1.Controls.Add(lblPrijmeni);
-            tabPage1.Controls.Add(tboxJmeno);
-            tabPage1.Controls.Add(lblJmeno);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Margin = new Padding(3, 4, 3, 4);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(792, 370);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Nový student";
-            tabPage1.UseVisualStyleBackColor = true;
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.souborToolStripMenuItem,
+            this.dataToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
+            this.menuStrip.Size = new System.Drawing.Size(1001, 25);
+            this.menuStrip.TabIndex = 1;
+            this.menuStrip.Text = "menuStrip1";
             // 
-            // tboxPrijmeni
+            // souborToolStripMenuItem
             // 
-            tboxPrijmeni.Location = new Point(114, 21);
-            tboxPrijmeni.Name = "tboxPrijmeni";
-            tboxPrijmeni.Size = new Size(100, 23);
-            tboxPrijmeni.TabIndex = 3;
+            this.souborToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.oAplikaciToolStripMenuItem,
+            this.nápovědaToolStripMenuItem,
+            this.ukončitToolStripMenuItem});
+            this.souborToolStripMenuItem.Name = "souborToolStripMenuItem";
+            this.souborToolStripMenuItem.Size = new System.Drawing.Size(52, 19);
+            this.souborToolStripMenuItem.Text = "SediM";
             // 
-            // lblPrijmeni
+            // oAplikaciToolStripMenuItem
             // 
-            lblPrijmeni.AutoSize = true;
-            lblPrijmeni.Location = new Point(114, 3);
-            lblPrijmeni.Name = "lblPrijmeni";
-            lblPrijmeni.Size = new Size(51, 15);
-            lblPrijmeni.TabIndex = 2;
-            lblPrijmeni.Text = "Příjmení";
+            this.oAplikaciToolStripMenuItem.Image = global::SediM.Properties.Resources.Information;
+            this.oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
+            this.oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.oAplikaciToolStripMenuItem.Text = "O aplikaci";
+            this.oAplikaciToolStripMenuItem.Click += new System.EventHandler(this.oAplikaciToolStripMenuItem_Click);
             // 
-            // tboxJmeno
+            // nápovědaToolStripMenuItem
             // 
-            tboxJmeno.Location = new Point(8, 21);
-            tboxJmeno.Name = "tboxJmeno";
-            tboxJmeno.Size = new Size(100, 23);
-            tboxJmeno.TabIndex = 1;
+            this.nápovědaToolStripMenuItem.Image = global::SediM.Properties.Resources.Help_and_Support;
+            this.nápovědaToolStripMenuItem.Name = "nápovědaToolStripMenuItem";
+            this.nápovědaToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.nápovědaToolStripMenuItem.Text = "Nápověda";
             // 
-            // lblJmeno
+            // ukončitToolStripMenuItem
             // 
-            lblJmeno.AutoSize = true;
-            lblJmeno.Location = new Point(8, 3);
-            lblJmeno.Name = "lblJmeno";
-            lblJmeno.Size = new Size(42, 15);
-            lblJmeno.TabIndex = 0;
-            lblJmeno.Text = "Jméno";
+            this.ukončitToolStripMenuItem.Image = global::SediM.Properties.Resources.Power;
+            this.ukončitToolStripMenuItem.Name = "ukončitToolStripMenuItem";
+            this.ukončitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.ukončitToolStripMenuItem.Text = "Konec";
+            this.ukončitToolStripMenuItem.Click += new System.EventHandler(this.ukončitToolStripMenuItem_Click);
             // 
-            // tabPage2
+            // dataToolStripMenuItem
             // 
-            tabPage2.Controls.Add(lblCboxStudenti);
-            tabPage2.Controls.Add(cboxStudenti);
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Margin = new Padding(3, 4, 3, 4);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(792, 370);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Upravit studenta";
-            tabPage2.UseVisualStyleBackColor = true;
+            this.dataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noveRozsazeniToolStripMenuItem,
+            this.toolStripSeparator,
+            this.importToolStripMenuItem,
+            this.exportToolStripMenuItem});
+            this.dataToolStripMenuItem.Name = "dataToolStripMenuItem";
+            this.dataToolStripMenuItem.Size = new System.Drawing.Size(43, 19);
+            this.dataToolStripMenuItem.Text = "Data";
             // 
-            // lblCboxStudenti
+            // noveRozsazeniToolStripMenuItem
             // 
-            lblCboxStudenti.AutoSize = true;
-            lblCboxStudenti.Location = new Point(6, 5);
-            lblCboxStudenti.Name = "lblCboxStudenti";
-            lblCboxStudenti.Size = new Size(96, 15);
-            lblCboxStudenti.TabIndex = 1;
-            lblCboxStudenti.Text = "Vyberte studenta";
+            this.noveRozsazeniToolStripMenuItem.Image = global::SediM.Properties.Resources.Add;
+            this.noveRozsazeniToolStripMenuItem.Name = "noveRozsazeniToolStripMenuItem";
+            this.noveRozsazeniToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.noveRozsazeniToolStripMenuItem.Text = "Nové rozsazení";
+            this.noveRozsazeniToolStripMenuItem.Click += new System.EventHandler(this.noveRozsazeniToolStripMenuItem_Click);
             // 
-            // cboxStudenti
+            // toolStripSeparator
             // 
-            cboxStudenti.FormattingEnabled = true;
-            cboxStudenti.Location = new Point(6, 23);
-            cboxStudenti.Margin = new Padding(3, 4, 3, 4);
-            cboxStudenti.Name = "cboxStudenti";
-            cboxStudenti.Size = new Size(276, 23);
-            cboxStudenti.Sorted = true;
-            cboxStudenti.TabIndex = 0;
+            this.toolStripSeparator.Name = "toolStripSeparator";
+            this.toolStripSeparator.Size = new System.Drawing.Size(150, 6);
             // 
-            // tabPage4
+            // importToolStripMenuItem
             // 
-            tabPage4.Controls.Add(txtbxNazevTridy);
-            tabPage4.Controls.Add(panelEditClassroom);
-            tabPage4.Controls.Add(btnOdstranitTridu);
-            tabPage4.Controls.Add(btnNastavitTridu);
-            tabPage4.Controls.Add(numupdownClassroomHeight);
-            tabPage4.Controls.Add(lblUpravaTrid);
-            tabPage4.Controls.Add(numupdownClassroomWidth);
-            tabPage4.Controls.Add(combobxVyberTrid);
-            tabPage4.Location = new Point(4, 24);
-            tabPage4.Margin = new Padding(3, 4, 3, 4);
-            tabPage4.Name = "tabPage4";
-            tabPage4.Padding = new Padding(3, 4, 3, 4);
-            tabPage4.Size = new Size(792, 370);
-            tabPage4.TabIndex = 3;
-            tabPage4.Text = "Úprava tříd";
-            tabPage4.UseVisualStyleBackColor = true;
+            this.importToolStripMenuItem.Image = global::SediM.Properties.Resources.Fax_Received_Succesfully;
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.importToolStripMenuItem.Text = "Import";
+            this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Image = global::SediM.Properties.Resources.Fax_Sent_Succesfully;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar,
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 585);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+            this.statusStrip.Size = new System.Drawing.Size(1001, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // toolStripProgressBar
+            // 
+            this.toolStripProgressBar.Name = "toolStripProgressBar";
+            this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
+            this.toolStripStatusLabel.Text = "toolStripStatusLabel";
+            // 
+            // tabUpravitTrida
+            // 
+            this.tabUpravitTrida.Controls.Add(this.txtbxNazevTridy);
+            this.tabUpravitTrida.Controls.Add(this.panelEditClassroom);
+            this.tabUpravitTrida.Controls.Add(this.btnOdstranitTridu);
+            this.tabUpravitTrida.Controls.Add(this.btnNastavitTridu);
+            this.tabUpravitTrida.Controls.Add(this.numupdownClassroomHeight);
+            this.tabUpravitTrida.Controls.Add(this.lblUpravaTrid);
+            this.tabUpravitTrida.Controls.Add(this.numupdownClassroomWidth);
+            this.tabUpravitTrida.Controls.Add(this.combobxVyberTrid);
+            this.tabUpravitTrida.Location = new System.Drawing.Point(4, 24);
+            this.tabUpravitTrida.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabUpravitTrida.Name = "tabUpravitTrida";
+            this.tabUpravitTrida.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabUpravitTrida.Size = new System.Drawing.Size(993, 554);
+            this.tabUpravitTrida.TabIndex = 3;
+            this.tabUpravitTrida.Text = "Úprava tříd";
+            this.tabUpravitTrida.UseVisualStyleBackColor = true;
             // 
             // txtbxNazevTridy
             // 
@@ -301,14 +272,22 @@
             // 
             // numupdownClassroomHeight
             // 
-            numupdownClassroomHeight.Location = new Point(93, 85);
-            numupdownClassroomHeight.Margin = new Padding(3, 4, 3, 4);
-            numupdownClassroomHeight.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numupdownClassroomHeight.Name = "numupdownClassroomHeight";
-            numupdownClassroomHeight.Size = new Size(57, 23);
-            numupdownClassroomHeight.TabIndex = 3;
-            numupdownClassroomHeight.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            numupdownClassroomHeight.ValueChanged += numupdownClassroomHeight_ValueChanged;
+            this.numupdownClassroomHeight.Location = new System.Drawing.Point(93, 85);
+            this.numupdownClassroomHeight.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.numupdownClassroomHeight.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numupdownClassroomHeight.Name = "numupdownClassroomHeight";
+            this.numupdownClassroomHeight.Size = new System.Drawing.Size(57, 23);
+            this.numupdownClassroomHeight.TabIndex = 3;
+            this.numupdownClassroomHeight.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numupdownClassroomHeight.Click += new System.EventHandler(this.numupdownClassroomHeight_ValueChanged);
             // 
             // lblUpravaTrid
             // 
@@ -321,154 +300,270 @@
             // 
             // numupdownClassroomWidth
             // 
-            numupdownClassroomWidth.Location = new Point(7, 85);
-            numupdownClassroomWidth.Margin = new Padding(3, 4, 3, 4);
-            numupdownClassroomWidth.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numupdownClassroomWidth.Name = "numupdownClassroomWidth";
-            numupdownClassroomWidth.Size = new Size(57, 23);
-            numupdownClassroomWidth.TabIndex = 1;
-            numupdownClassroomWidth.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            numupdownClassroomWidth.ValueChanged += numupdownClassroomWidth_ValueChanged;
+            this.numupdownClassroomWidth.Location = new System.Drawing.Point(7, 85);
+            this.numupdownClassroomWidth.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.numupdownClassroomWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numupdownClassroomWidth.Name = "numupdownClassroomWidth";
+            this.numupdownClassroomWidth.Size = new System.Drawing.Size(57, 23);
+            this.numupdownClassroomWidth.TabIndex = 1;
+            this.numupdownClassroomWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numupdownClassroomWidth.Click += new System.EventHandler(this.numupdownClassroomWidth_ValueChanged);
             // 
             // combobxVyberTrid
             // 
-            combobxVyberTrid.FormattingEnabled = true;
-            combobxVyberTrid.Items.AddRange(new object[] { "Nový" });
-            combobxVyberTrid.Location = new Point(7, 8);
-            combobxVyberTrid.Margin = new Padding(3, 4, 3, 4);
-            combobxVyberTrid.Name = "combobxVyberTrid";
-            combobxVyberTrid.Size = new Size(142, 23);
-            combobxVyberTrid.TabIndex = 0;
-            combobxVyberTrid.SelectedIndexChanged += combobxVyberTrid_SelectedIndexChanged;
+            this.combobxVyberTrid.FormattingEnabled = true;
+            this.combobxVyberTrid.Items.AddRange(new object[] {
+            "Nový"});
+            this.combobxVyberTrid.Location = new System.Drawing.Point(7, 8);
+            this.combobxVyberTrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.combobxVyberTrid.Name = "combobxVyberTrid";
+            this.combobxVyberTrid.Size = new System.Drawing.Size(142, 23);
+            this.combobxVyberTrid.TabIndex = 0;
+            this.combobxVyberTrid.Click += new System.EventHandler(this.combobxVyberTrid_SelectedIndexChanged);
             // 
-            // menuStrip
+            // tabUpravitStudent
             // 
-            menuStrip.ImageScalingSize = new Size(20, 20);
-            menuStrip.Items.AddRange(new ToolStripItem[] { souborToolStripMenuItem, dataToolStripMenuItem });
-            menuStrip.Location = new Point(0, 0);
-            menuStrip.Name = "menuStrip";
-            menuStrip.Padding = new Padding(7, 3, 0, 3);
-            menuStrip.Size = new Size(800, 25);
-            menuStrip.TabIndex = 1;
-            menuStrip.Text = "menuStrip1";
+            this.tabUpravitStudent.Controls.Add(this.splitContUpravitStudenta);
+            this.tabUpravitStudent.Controls.Add(this.btnUlozit);
+            this.tabUpravitStudent.Controls.Add(this.lblCboxStudenti);
+            this.tabUpravitStudent.Location = new System.Drawing.Point(4, 24);
+            this.tabUpravitStudent.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabUpravitStudent.Name = "tabUpravitStudent";
+            this.tabUpravitStudent.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUpravitStudent.Size = new System.Drawing.Size(993, 554);
+            this.tabUpravitStudent.TabIndex = 1;
+            this.tabUpravitStudent.Text = "Upravit studenta";
+            this.tabUpravitStudent.UseVisualStyleBackColor = true;
             // 
-            // souborToolStripMenuItem
+            // splitContUpravitStudenta
             // 
-            souborToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { oAplikaciToolStripMenuItem, nápovědaToolStripMenuItem, ukončitToolStripMenuItem });
-            souborToolStripMenuItem.Name = "souborToolStripMenuItem";
-            souborToolStripMenuItem.Size = new Size(52, 19);
-            souborToolStripMenuItem.Text = "SediM";
+            this.splitContUpravitStudenta.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContUpravitStudenta.Location = new System.Drawing.Point(3, 3);
+            this.splitContUpravitStudenta.Name = "splitContUpravitStudenta";
             // 
-            // oAplikaciToolStripMenuItem
+            // splitContUpravitStudenta.Panel1
             // 
-            oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
-            oAplikaciToolStripMenuItem.Size = new Size(128, 22);
-            oAplikaciToolStripMenuItem.Text = "O aplikaci";
-            oAplikaciToolStripMenuItem.Click += oAplikaciToolStripMenuItem_Click;
+            this.splitContUpravitStudenta.Panel1.Controls.Add(this.lboxStudenti);
             // 
-            // nápovědaToolStripMenuItem
+            // splitContUpravitStudenta.Panel2
             // 
-            nápovědaToolStripMenuItem.Name = "nápovědaToolStripMenuItem";
-            nápovědaToolStripMenuItem.Size = new Size(128, 22);
-            nápovědaToolStripMenuItem.Text = "Nápověda";
+            this.splitContUpravitStudenta.Panel2.Controls.Add(this.tboxJmeno);
+            this.splitContUpravitStudenta.Panel2.Controls.Add(this.lblJmeno);
+            this.splitContUpravitStudenta.Panel2.Controls.Add(this.lblPrijmeni);
+            this.splitContUpravitStudenta.Panel2.Controls.Add(this.lblIdecko);
+            this.splitContUpravitStudenta.Panel2.Controls.Add(this.tboxPrijmeni);
+            this.splitContUpravitStudenta.Size = new System.Drawing.Size(987, 548);
+            this.splitContUpravitStudenta.SplitterDistance = 208;
+            this.splitContUpravitStudenta.TabIndex = 9;
             // 
-            // ukončitToolStripMenuItem
+            // lboxStudenti
             // 
-            ukončitToolStripMenuItem.Name = "ukončitToolStripMenuItem";
-            ukončitToolStripMenuItem.Size = new Size(128, 22);
-            ukončitToolStripMenuItem.Text = "Konec";
-            ukončitToolStripMenuItem.Click += ukončitToolStripMenuItem_Click;
+            this.lboxStudenti.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lboxStudenti.FormattingEnabled = true;
+            this.lboxStudenti.ItemHeight = 15;
+            this.lboxStudenti.Location = new System.Drawing.Point(0, 0);
+            this.lboxStudenti.Name = "lboxStudenti";
+            this.lboxStudenti.Size = new System.Drawing.Size(208, 548);
+            this.lboxStudenti.Sorted = true;
+            this.lboxStudenti.TabIndex = 2;
+            this.lboxStudenti.SelectedIndexChanged += new System.EventHandler(this.lboxStudenti_SelectedIndexChanged);
             // 
-            // dataToolStripMenuItem
+            // tboxJmeno
             // 
-            dataToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { noveRozsazeniToolStripMenuItem, importToolStripMenuItem, exportToolStripMenuItem });
-            dataToolStripMenuItem.Name = "dataToolStripMenuItem";
-            dataToolStripMenuItem.Size = new Size(43, 19);
-            dataToolStripMenuItem.Text = "Data";
+            this.tboxJmeno.Enabled = false;
+            this.tboxJmeno.Location = new System.Drawing.Point(7, 26);
+            this.tboxJmeno.Name = "tboxJmeno";
+            this.tboxJmeno.Size = new System.Drawing.Size(248, 23);
+            this.tboxJmeno.TabIndex = 5;
             // 
-            // importToolStripMenuItem
+            // lblJmeno
             // 
-            importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(153, 22);
-            importToolStripMenuItem.Text = "Import";
+            this.lblJmeno.AutoSize = true;
+            this.lblJmeno.Location = new System.Drawing.Point(7, 8);
+            this.lblJmeno.Name = "lblJmeno";
+            this.lblJmeno.Size = new System.Drawing.Size(42, 15);
+            this.lblJmeno.TabIndex = 3;
+            this.lblJmeno.Text = "Jméno";
             // 
-            // exportToolStripMenuItem
+            // lblPrijmeni
             // 
-            exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(153, 22);
-            exportToolStripMenuItem.Text = "Export";
-            exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
+            this.lblPrijmeni.AutoSize = true;
+            this.lblPrijmeni.Location = new System.Drawing.Point(277, 8);
+            this.lblPrijmeni.Name = "lblPrijmeni";
+            this.lblPrijmeni.Size = new System.Drawing.Size(51, 15);
+            this.lblPrijmeni.TabIndex = 4;
+            this.lblPrijmeni.Text = "Příjmení";
             // 
-            // noveRozsazeniToolStripMenuItem
+            // lblIdecko
             // 
-            noveRozsazeniToolStripMenuItem.Name = "noveRozsazeniToolStripMenuItem";
-            noveRozsazeniToolStripMenuItem.Size = new Size(153, 22);
-            noveRozsazeniToolStripMenuItem.Text = "Nové rozsazení";
-            noveRozsazeniToolStripMenuItem.Click += noveRozsazeniToolStripMenuItem_Click;
+            this.lblIdecko.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblIdecko.AutoSize = true;
+            this.lblIdecko.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblIdecko.ForeColor = System.Drawing.Color.Red;
+            this.lblIdecko.Location = new System.Drawing.Point(694, 11);
+            this.lblIdecko.Name = "lblIdecko";
+            this.lblIdecko.Size = new System.Drawing.Size(76, 37);
+            this.lblIdecko.TabIndex = 7;
+            this.lblIdecko.Text = "ID: 0";
+            this.lblIdecko.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // statusStrip
+            // tboxPrijmeni
             // 
-            statusStrip.ImageScalingSize = new Size(20, 20);
-            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripProgressBar, toolStripStatusLabel });
-            statusStrip.Location = new Point(0, 428);
-            statusStrip.Name = "statusStrip";
-            statusStrip.Padding = new Padding(1, 0, 16, 0);
-            statusStrip.Size = new Size(800, 22);
-            statusStrip.TabIndex = 2;
-            statusStrip.Text = "statusStrip";
+            this.tboxPrijmeni.Enabled = false;
+            this.tboxPrijmeni.Location = new System.Drawing.Point(277, 25);
+            this.tboxPrijmeni.Name = "tboxPrijmeni";
+            this.tboxPrijmeni.Size = new System.Drawing.Size(248, 23);
+            this.tboxPrijmeni.TabIndex = 6;
             // 
-            // toolStripProgressBar
+            // btnUlozit
             // 
-            toolStripProgressBar.Name = "toolStripProgressBar";
-            toolStripProgressBar.Size = new Size(100, 16);
+            this.btnUlozit.Enabled = false;
+            this.btnUlozit.Location = new System.Drawing.Point(300, 439);
+            this.btnUlozit.Name = "btnUlozit";
+            this.btnUlozit.Size = new System.Drawing.Size(75, 23);
+            this.btnUlozit.TabIndex = 8;
+            this.btnUlozit.Text = "Uložit";
+            this.btnUlozit.UseVisualStyleBackColor = true;
+            this.btnUlozit.Click += new System.EventHandler(this.btnUlozit_Click);
             // 
-            // toolStripStatusLabel
+            // lblCboxStudenti
             // 
-            toolStripStatusLabel.Name = "toolStripStatusLabel";
-            toolStripStatusLabel.Size = new Size(112, 17);
-            toolStripStatusLabel.Text = "toolStripStatusLabel";
+            this.lblCboxStudenti.AutoSize = true;
+            this.lblCboxStudenti.Location = new System.Drawing.Point(6, 5);
+            this.lblCboxStudenti.Name = "lblCboxStudenti";
+            this.lblCboxStudenti.Size = new System.Drawing.Size(86, 15);
+            this.lblCboxStudenti.TabIndex = 1;
+            this.lblCboxStudenti.Text = "Výběr studenta";
+            // 
+            // tabSeznam
+            // 
+            this.tabSeznam.Controls.Add(this.dataviewStudenti);
+            this.tabSeznam.Location = new System.Drawing.Point(4, 24);
+            this.tabSeznam.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabSeznam.Name = "tabSeznam";
+            this.tabSeznam.Size = new System.Drawing.Size(993, 554);
+            this.tabSeznam.TabIndex = 2;
+            this.tabSeznam.Text = "Seznam studentů";
+            this.tabSeznam.UseVisualStyleBackColor = true;
+            // 
+            // dataviewStudenti
+            // 
+            this.dataviewStudenti.AllowUserToAddRows = false;
+            this.dataviewStudenti.AllowUserToDeleteRows = false;
+            this.dataviewStudenti.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataviewStudenti.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.dataviewStudenti.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataviewStudenti.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id,
+            this.jmeno_prijmeni,
+            this.kategorie,
+            this.skola});
+            this.dataviewStudenti.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataviewStudenti.Location = new System.Drawing.Point(0, 0);
+            this.dataviewStudenti.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dataviewStudenti.Name = "dataviewStudenti";
+            this.dataviewStudenti.ReadOnly = true;
+            this.dataviewStudenti.RowHeadersWidth = 51;
+            this.dataviewStudenti.RowTemplate.Height = 25;
+            this.dataviewStudenti.Size = new System.Drawing.Size(993, 554);
+            this.dataviewStudenti.TabIndex = 4;
+            // 
+            // id
+            // 
+            this.id.HeaderText = "ID";
+            this.id.MinimumWidth = 6;
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            // 
+            // jmeno_prijmeni
+            // 
+            this.jmeno_prijmeni.HeaderText = "Jméno a přijmení";
+            this.jmeno_prijmeni.MinimumWidth = 6;
+            this.jmeno_prijmeni.Name = "jmeno_prijmeni";
+            this.jmeno_prijmeni.ReadOnly = true;
+            // 
+            // kategorie
+            // 
+            this.kategorie.HeaderText = "Kategorie";
+            this.kategorie.MinimumWidth = 6;
+            this.kategorie.Name = "kategorie";
+            this.kategorie.ReadOnly = true;
+            // 
+            // skola
+            // 
+            this.skola.HeaderText = "Škola";
+            this.skola.MinimumWidth = 6;
+            this.skola.Name = "skola";
+            this.skola.ReadOnly = true;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabSeznam);
+            this.tabControl1.Controls.Add(this.tabUpravitStudent);
+            this.tabControl1.Controls.Add(this.tabUpravitTrida);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 25);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1001, 582);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.tabControl1.TabIndex = 0;
             // 
             // Main
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(800, 450);
-            Controls.Add(statusStrip);
-            Controls.Add(tabControl1);
-            Controls.Add(menuStrip);
-            DoubleBuffered = true;
-            MainMenuStrip = menuStrip;
-            Margin = new Padding(3, 4, 3, 4);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "Main";
-            Text = "Main";
-            Load += Main_Load;
-            tabControl1.ResumeLayout(false);
-            tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataviewStudenti).EndInit();
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
-            tabPage2.ResumeLayout(false);
-            tabPage2.PerformLayout();
-            tabPage4.ResumeLayout(false);
-            tabPage4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numupdownClassroomHeight).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numupdownClassroomWidth).EndInit();
-            menuStrip.ResumeLayout(false);
-            menuStrip.PerformLayout();
-            statusStrip.ResumeLayout(false);
-            statusStrip.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(1001, 607);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.menuStrip);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Name = "Main";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "SediM";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Main_Load);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
+            this.tabUpravitTrida.ResumeLayout(false);
+            this.tabUpravitTrida.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numupdownClassroomHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numupdownClassroomWidth)).EndInit();
+            this.tabUpravitStudent.ResumeLayout(false);
+            this.tabUpravitStudent.PerformLayout();
+            this.splitContUpravitStudenta.Panel1.ResumeLayout(false);
+            this.splitContUpravitStudenta.Panel2.ResumeLayout(false);
+            this.splitContUpravitStudenta.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContUpravitStudenta)).EndInit();
+            this.splitContUpravitStudenta.ResumeLayout(false);
+            this.tabSeznam.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataviewStudenti)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
-
-        private TabControl tabControl1;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
         private MenuStrip menuStrip;
         private ToolStripMenuItem souborToolStripMenuItem;
         private ToolStripMenuItem dataToolStripMenuItem;
@@ -478,31 +573,38 @@
         private ToolStripMenuItem nápovědaToolStripMenuItem;
         private ToolStripMenuItem ukončitToolStripMenuItem;
         private StatusStrip statusStrip;
-        private TabPage tabPage3;
         private ToolStripStatusLabel toolStripStatusLabel;
         private ToolStripProgressBar toolStripProgressBar;
-        private DataGridView dataviewStudenti;
-        private ComboBox cboxStudenti;
-        private Label lblCboxStudenti;
-        private TabPage tabPage4;
-        private ComboBox combobxVyberTrid;
+        private ToolStripMenuItem noveRozsazeniToolStripMenuItem;
+        private DataGridViewTextBoxColumn rocnik;
+        private DataGridViewTextBoxColumn souradnice;
+        private ToolStripSeparator toolStripSeparator;
+        private ListBox listBoxIdeckaStudentu;
+        private TabPage tabUpravitTrida;
+        private TextBox txtbxNazevTridy;
+        private Panel panelEditClassroom;
+        private Button btnOdstranitTridu;
         private Button btnNastavitTridu;
         private NumericUpDown numupdownClassroomHeight;
         private Label lblUpravaTrid;
         private NumericUpDown numupdownClassroomWidth;
-        private Panel panelEditClassroom;
-        private Button btnOdstranitTridu;
-        private TextBox txtbxNazevTridy;
-        private ToolStripMenuItem noveRozsazeniToolStripMenuItem;
+        private ComboBox combobxVyberTrid;
+        private TabPage tabUpravitStudent;
+        private Label lblJmeno;
+        private ListBox lboxStudenti;
+        private Label lblCboxStudenti;
+        private TabPage tabSeznam;
+        private DataGridView dataviewStudenti;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn jmeno_prijmeni;
         private DataGridViewTextBoxColumn kategorie;
         private DataGridViewTextBoxColumn skola;
-        private DataGridViewTextBoxColumn rocnik;
-        private DataGridViewTextBoxColumn souradnice;
-        private Label lblJmeno;
+        private TabControl tabControl1;
+        private Label lblPrijmeni;
         private TextBox tboxJmeno;
         private TextBox tboxPrijmeni;
-        private Label lblPrijmeni;
+        private Label lblIdecko;
+        private Button btnUlozit;
+        private SplitContainer splitContUpravitStudenta;
     }
 }

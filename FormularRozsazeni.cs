@@ -1,4 +1,10 @@
-﻿namespace SediM
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+
+namespace SediM
 {
     public partial class FormularRozsazeni : Form
     {
@@ -247,6 +253,32 @@
             returnZak.Misto = mistoZaka;
             mistoZaka++;
             return returnZak;
+        }
+
+        private void ExportToPdf(string filePath)
+        {
+            // Vytvoření nového dokumentu PDF
+            PdfDocument document = new PdfDocument();
+
+            // Vytvoření stránky v dokumentu
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            // Získání obsahu panelu, který chcete exportovat
+            Bitmap panelContent = new Bitmap(panelVykresleniRozsazeni.Width, panelVykresleniRozsazeni.Height);
+            panelVykresleniRozsazeni.DrawToBitmap(panelContent, new Rectangle(0, 0, panelVykresleniRozsazeni.Width, panelVykresleniRozsazeni.Height));
+
+            // Převod obsahu panelu na XImage
+            XImage image = XImage.FromGdiPlusImage(panelContent);
+
+            // Vložení obrázku do PDF stránky
+            gfx.DrawImage(image, 0, 0);
+
+            // Uložení dokumentu do souboru
+            document.Save(filePath);
+
+            // Zavření dokumentu
+            document.Close();
         }
     }
 }

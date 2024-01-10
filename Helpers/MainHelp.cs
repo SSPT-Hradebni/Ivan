@@ -1,5 +1,8 @@
-﻿using System.Data;
+﻿using Npgsql.Internal;
+using PdfSharp;
+using System.Data;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SediM.Helpers
 {
@@ -65,6 +68,50 @@ namespace SediM.Helpers
                 sw.Write(sw.NewLine);
             }
             sw.Close();
+        }
+
+        /// <summary>
+        /// Import dat z CSV souboru do DataTable
+        /// </summary>
+        /// <param name="csvFilePath">Cesta k CSV souboru</param>
+        /// <returns>DataTable obsahující načtená data</returns>
+        public DataTable FromCSV(string csvFilePath)
+        {
+            DataTable tabulka = new DataTable();
+
+            try
+            {
+                StreamReader sr = new StreamReader(csvFilePath);
+                // přečte a zahodí první řádek kde jsou vypsány názvy sloupců
+                sr.ReadLine();
+
+                tabulka.Columns.Add("ID");
+                tabulka.Columns.Add("Jméno a příjmení");
+                tabulka.Columns.Add("Kategorie");
+                tabulka.Columns.Add("Škola");
+
+                // čte řádky dokud nedojde ke konci souboru
+                while (sr.Peek() != -1)
+                {
+                    string[] radek = sr.ReadLine().Split(';');
+
+                    // [1] - ID (přiřadí se pak v databázi - proto je teď 0)
+                    // [2] - jméno a příjmení
+                    // [3] - číslo kategorie
+                    // [4] - ID školy
+
+                    tabulka.Rows.Add(0, radek[1], radek[2], radek[3]);
+                }
+
+                sr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error is " + ex.ToString());
+                throw;
+            }
+
+            return tabulka;
         }
     }
 }
