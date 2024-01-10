@@ -1,9 +1,16 @@
-﻿namespace SediM
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+
+namespace SediM
 {
     public partial class FormularRozsazeni : Form
     {
         private List<Skola> skoly = new List<Skola>();
         private List<SolidBrush> barvyKategorii = new List<SolidBrush>();
+
         public FormularRozsazeni(IEnumerable<string> tridy)
         {
             InitializeComponent();
@@ -98,7 +105,29 @@
                 (int)(panelVykresleniRozsazeni.Width * 0.05),
                 (int)(panelVykresleniRozsazeni.Height * 0.05));
 
+            int[] dimensions = extrahujDimenze();
+
+            int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9 - dimensions[1]) / dimensions[1]);
+            int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65 - dimensions[0]) / dimensions[0]);
+
+
+            for (int r = 0; r < dimensions[0]; r++)
+            {
+                for (int s = 0; s < dimensions[1]; s++)
+                {
+                    g.FillRectangle(
+                        ziskejBarvuDleKategorie(listbxVyplneneTridy.SelectedIndex != -1 ? (r * 2 + s) % (int)numupdownKategoriiNaTridu.Value : -1),
+                        pocatekPlochyMist.X + s * mistoSirka + s,
+                        pocatekPlochyMist.Y + r * mistoVyska + r,
+                        mistoSirka, mistoVyska);
+                }
+            }
+        }
+
+        private int[] extrahujDimenze()
+        {
             string[] dimensions = new string[2];
+
             if (listbxVyberTrid.SelectedIndex == -1 && listbxVybraneTridy.SelectedIndex != -1 && listbxVyplneneTridy.SelectedIndex == -1)
             {
                 dimensions = listbxVybraneTridy.Text.Split('(')[1].Split('x');
@@ -109,21 +138,11 @@
             }
 
             dimensions[1] = dimensions[1].Remove(dimensions[1].Length - 1);
-            int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9 - int.Parse(dimensions[1])) / int.Parse(dimensions[1]));
-            int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65 - int.Parse(dimensions[0])) / int.Parse(dimensions[0]));
 
-
-            for (int r = 0; r < int.Parse(dimensions[0]); r++)
+            return new int[]
             {
-                for (int s = 0; s < int.Parse(dimensions[1]); s++)
-                {
-                    g.FillRectangle(
-                        ziskejBarvuDleKategorie(listbxVyplneneTridy.SelectedIndex != -1 ? (r * 2 + s) % (int)numupdownKategoriiNaTridu.Value : -1),
-                        pocatekPlochyMist.X + s * mistoSirka + s,
-                        pocatekPlochyMist.Y + r * mistoVyska + r,
-                        mistoSirka, mistoVyska);
-                }
-            }
+                int.Parse(dimensions[1]), int.Parse(dimensions[0])
+            };
         }
 
         private void numupdownKategoriiNaTridu_ValueChanged(object sender, EventArgs e)
@@ -164,6 +183,32 @@
             // jsou jednotlivá místa správně zabarvená. Zde se bude řešit řazení žáků - TODO
             listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[listbxVybraneTridy.SelectedIndex]);
             listbxVybraneTridy.Items.RemoveAt(listbxVybraneTridy.SelectedIndex);
+        }
+
+        private void ExportToPdf(string filePath)
+        {
+            // Vytvoření nového dokumentu PDF
+            PdfDocument document = new PdfDocument();
+
+            // Vytvoření stránky v dokumentu
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            // Získání obsahu panelu, který chcete exportovat
+            Bitmap panelContent = new Bitmap(panelVykresleniRozsazeni.Width, panelVykresleniRozsazeni.Height);
+            panelVykresleniRozsazeni.DrawToBitmap(panelContent, new Rectangle(0, 0, panelVykresleniRozsazeni.Width, panelVykresleniRozsazeni.Height));
+
+            // Převod obsahu panelu na XImage
+            XImage image = XImage.FromGdiPlusImage(panelContent);
+
+            // Vložení obrázku do PDF stránky
+            gfx.DrawImage(image, 0, 0);
+
+            // Uložení dokumentu do souboru
+            document.Save(filePath);
+
+            // Zavření dokumentu
+            document.Close();
         }
     }
 }
