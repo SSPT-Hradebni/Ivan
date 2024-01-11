@@ -240,6 +240,8 @@ namespace SediM
             numupdownClassroomWidth.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[0]);
             numupdownClassroomHeight.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[1].Replace(")", ""));
 
+            txtbxNazevTridy.Text = combobxVyberTrid.Text;
+
             if (!vyberTridNovyVybrana) return;
             txtbxNazevTridy.Visible = false;
             numupdownClassroomWidth.Location = new Point(numupdownClassroomWidth.Location.X, numupdownClassroomWidth.Location.Y - 29);
@@ -248,8 +250,6 @@ namespace SediM
             btnNastavitTridu.Location = new Point(btnNastavitTridu.Location.X, btnNastavitTridu.Location.Y - 29);
             btnOdstranitTridu.Location = new Point(btnOdstranitTridu.Location.X, btnOdstranitTridu.Location.Y - 29);
             vyberTridNovyVybrana = false;
-
-            txtbxNazevTridy.Text = combobxVyberTrid.Text;
         }
 
         private void btnOdstranitTridu_Click(object sender, EventArgs e)
@@ -261,6 +261,7 @@ namespace SediM
                 return;
             }
             combobxVyberTrid.Items.RemoveAt(combobxVyberTrid.SelectedIndex);
+            combobxVyberTrid.SelectedIndex = 0;
         }
 
         private void btnNastavitTridu_Click(object sender, EventArgs e)
@@ -269,8 +270,6 @@ namespace SediM
             {
                 MessageBox.Show("Nevypracovaná funkcionalita! - TODO\r\nÚprava stávající třídy", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            // TODO/FIXME: Z neznámého důvodu se spustí tento messagebox když vytvoříme
-            // alespoň dvě třídy a překlikneme z první na druhou třídu
             else if (txtbxNazevTridy.Text.Contains('(') | txtbxNazevTridy.Text.Contains(')'))
             {
                 MessageBox.Show("Název třídy nesmí obsahovat kulaté závorky!", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
