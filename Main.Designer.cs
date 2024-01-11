@@ -232,43 +232,43 @@
             // 
             // txtbxNazevTridy
             // 
-            txtbxNazevTridy.Location = new Point(7, 47);
-            txtbxNazevTridy.Margin = new Padding(3, 4, 3, 4);
-            txtbxNazevTridy.Name = "txtbxNazevTridy";
-            txtbxNazevTridy.PlaceholderText = "Název třídy";
-            txtbxNazevTridy.Size = new Size(142, 23);
-            txtbxNazevTridy.TabIndex = 7;
+            this.txtbxNazevTridy.Location = new System.Drawing.Point(7, 47);
+            this.txtbxNazevTridy.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtbxNazevTridy.Name = "txtbxNazevTridy";
+            this.txtbxNazevTridy.PlaceholderText = "Název třídy";
+            this.txtbxNazevTridy.Size = new System.Drawing.Size(142, 23);
+            this.txtbxNazevTridy.TabIndex = 7;
             // 
             // panelEditClassroom
             // 
-            panelEditClassroom.Location = new Point(157, 8);
-            panelEditClassroom.Margin = new Padding(3, 4, 3, 4);
-            panelEditClassroom.Name = "panelEditClassroom";
-            panelEditClassroom.Size = new Size(629, 354);
-            panelEditClassroom.TabIndex = 6;
-            panelEditClassroom.Paint += panelEditClassroom_Paint;
+            this.panelEditClassroom.Location = new System.Drawing.Point(157, 8);
+            this.panelEditClassroom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelEditClassroom.Name = "panelEditClassroom";
+            this.panelEditClassroom.Size = new System.Drawing.Size(629, 354);
+            this.panelEditClassroom.TabIndex = 6;
+            this.panelEditClassroom.Paint += new System.Windows.Forms.PaintEventHandler(this.panelEditClassroom_Paint);
             // 
             // btnOdstranitTridu
             // 
-            btnOdstranitTridu.Location = new Point(7, 163);
-            btnOdstranitTridu.Margin = new Padding(3, 4, 3, 4);
-            btnOdstranitTridu.Name = "btnOdstranitTridu";
-            btnOdstranitTridu.Size = new Size(143, 31);
-            btnOdstranitTridu.TabIndex = 5;
-            btnOdstranitTridu.Text = "Odstranit";
-            btnOdstranitTridu.UseVisualStyleBackColor = true;
-            btnOdstranitTridu.Click += btnOdstranitTridu_Click;
+            this.btnOdstranitTridu.Location = new System.Drawing.Point(7, 163);
+            this.btnOdstranitTridu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnOdstranitTridu.Name = "btnOdstranitTridu";
+            this.btnOdstranitTridu.Size = new System.Drawing.Size(143, 31);
+            this.btnOdstranitTridu.TabIndex = 5;
+            this.btnOdstranitTridu.Text = "Odstranit";
+            this.btnOdstranitTridu.UseVisualStyleBackColor = true;
+            this.btnOdstranitTridu.Click += new System.EventHandler(this.btnOdstranitTridu_Click);
             // 
             // btnNastavitTridu
             // 
-            btnNastavitTridu.Location = new Point(7, 124);
-            btnNastavitTridu.Margin = new Padding(3, 4, 3, 4);
-            btnNastavitTridu.Name = "btnNastavitTridu";
-            btnNastavitTridu.Size = new Size(143, 31);
-            btnNastavitTridu.TabIndex = 4;
-            btnNastavitTridu.Text = "Nastavit";
-            btnNastavitTridu.UseVisualStyleBackColor = true;
-            btnNastavitTridu.Click += btnNastavitTridu_Click;
+            this.btnNastavitTridu.Location = new System.Drawing.Point(7, 124);
+            this.btnNastavitTridu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnNastavitTridu.Name = "btnNastavitTridu";
+            this.btnNastavitTridu.Size = new System.Drawing.Size(143, 31);
+            this.btnNastavitTridu.TabIndex = 4;
+            this.btnNastavitTridu.Text = "Nastavit";
+            this.btnNastavitTridu.UseVisualStyleBackColor = true;
+            this.btnNastavitTridu.Click += new System.EventHandler(this.btnNastavitTridu_Click);
             // 
             // numupdownClassroomHeight
             // 
@@ -287,16 +287,16 @@
             0,
             0,
             0});
-            this.numupdownClassroomHeight.Click += new System.EventHandler(this.numupdownClassroomHeight_ValueChanged);
+            this.numupdownClassroomHeight.ValueChanged += new System.EventHandler(this.numupdownClassroomHeight_ValueChanged);
             // 
             // lblUpravaTrid
             // 
-            lblUpravaTrid.AutoSize = true;
-            lblUpravaTrid.Location = new Point(71, 88);
-            lblUpravaTrid.Name = "lblUpravaTrid";
-            lblUpravaTrid.Size = new Size(13, 15);
-            lblUpravaTrid.TabIndex = 2;
-            lblUpravaTrid.Text = "x";
+            this.lblUpravaTrid.AutoSize = true;
+            this.lblUpravaTrid.Location = new System.Drawing.Point(71, 88);
+            this.lblUpravaTrid.Name = "lblUpravaTrid";
+            this.lblUpravaTrid.Size = new System.Drawing.Size(13, 15);
+            this.lblUpravaTrid.TabIndex = 2;
+            this.lblUpravaTrid.Text = "x";
             // 
             // numupdownClassroomWidth
             // 
@@ -315,7 +315,7 @@
             0,
             0,
             0});
-            this.numupdownClassroomWidth.Click += new System.EventHandler(this.numupdownClassroomWidth_ValueChanged);
+            this.numupdownClassroomWidth.ValueChanged += new System.EventHandler(this.numupdownClassroomWidth_ValueChanged);
             // 
             // combobxVyberTrid
             // 
@@ -327,7 +327,7 @@
             this.combobxVyberTrid.Name = "combobxVyberTrid";
             this.combobxVyberTrid.Size = new System.Drawing.Size(142, 23);
             this.combobxVyberTrid.TabIndex = 0;
-            this.combobxVyberTrid.Click += new System.EventHandler(this.combobxVyberTrid_SelectedIndexChanged);
+            this.combobxVyberTrid.SelectedIndexChanged += new System.EventHandler(this.combobxVyberTrid_SelectedIndexChanged);
             // 
             // tabUpravitStudent
             // 

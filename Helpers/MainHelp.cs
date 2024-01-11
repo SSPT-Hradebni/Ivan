@@ -1,8 +1,5 @@
-﻿using Npgsql.Internal;
-using PdfSharp;
-using System.Data;
+﻿using System.Data;
 using System.Text;
-using System.Windows.Forms;
 
 namespace SediM.Helpers
 {

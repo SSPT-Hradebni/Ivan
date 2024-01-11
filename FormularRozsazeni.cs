@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using PdfSharp.Drawing;
+﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 
 namespace SediM
@@ -106,6 +103,9 @@ namespace SediM
 
         private void vykresleniMist(Graphics g)
         {
+            // Odstraní veškeré studenty z listboxu aby se nepřidávali přes sebe
+            listbxSeznamStudentu.Items.Clear();
+
             // Vytvořen "počáteční" bod pro vykreslování míst
             Point pocatekPlochyMist = new Point(
                 (int)(panelVykresleniRozsazeni.Width * 0.05),
@@ -134,6 +134,27 @@ namespace SediM
                         pocatekPlochyMist.X + s * mistoSirka + s,
                         pocatekPlochyMist.Y + r * mistoVyska + r,
                         mistoSirka, mistoVyska);
+
+                    if (listbxVyplneneTridy.SelectedIndex != -1)
+                    {
+                        // Zjistí velikost vykreslovaného řetězce
+                        SizeF velikostCisla = g.MeasureString(
+                            tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Misto.ToString(),
+                            new Font("Arial", 10));
+
+                        // Vykreslí řetězec na střed buňky (místa)
+                        g.DrawString(
+                            tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Misto.ToString(),
+                            new Font("Arial", 10),
+                            Brushes.Black,
+                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostCisla.Width / 2,
+                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostCisla.Height / 2);
+
+                        // Přidá žáka včetně jeho místa do listboxu seznamu studentů ve třídě
+                        listbxSeznamStudentu.Items.Add(
+                            $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Misto} - " +
+                            $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Jmeno}");
+                    }
                 }
             }
         }
@@ -188,6 +209,7 @@ namespace SediM
 
         private void btnVyplnitVse_Click(object sender, EventArgs e)
         {
+            if (listbxVybraneTridy.Items.Count == 0) return;
             for (int i = 0; i <= listbxVybraneTridy.Items.Count; i++)
             {
                 listbxVybraneTridy.SelectedIndex = 0;

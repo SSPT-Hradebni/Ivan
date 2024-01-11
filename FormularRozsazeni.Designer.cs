@@ -44,6 +44,8 @@
             this.listbxVyplneneTridy = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.label6 = new System.Windows.Forms.Label();
+            this.listbxSeznamStudentu = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.numupdownKategoriiNaTridu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -77,7 +79,6 @@
             0,
             0,
             0});
-            this.numupdownKategoriiNaTridu.ValueChanged += new System.EventHandler(this.numupdownKategoriiNaTridu_ValueChanged);
             // 
             // btnVyplnit
             // 
@@ -99,6 +100,7 @@
             this.btnVyplnitVse.TabIndex = 3;
             this.btnVyplnitVse.Text = "Vyplnit vše";
             this.btnVyplnitVse.UseVisualStyleBackColor = true;
+            this.btnVyplnitVse.Click += new System.EventHandler(this.btnVyplnitVse_Click);
             // 
             // listbxVyberTrid
             // 
@@ -209,6 +211,8 @@
             // 
             // splitContainer.Panel1
             // 
+            this.splitContainer.Panel1.Controls.Add(this.listbxSeznamStudentu);
+            this.splitContainer.Panel1.Controls.Add(this.label6);
             this.splitContainer.Panel1.Controls.Add(this.label4);
             this.splitContainer.Panel1.Controls.Add(this.label1);
             this.splitContainer.Panel1.Controls.Add(this.label2);
@@ -229,6 +233,24 @@
             this.splitContainer.Size = new System.Drawing.Size(1022, 602);
             this.splitContainer.SplitterDistance = 224;
             this.splitContainer.TabIndex = 15;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 349);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(98, 15);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Seznam studentů";
+            // 
+            // listbxSeznamStudentu
+            // 
+            this.listbxSeznamStudentu.FormattingEnabled = true;
+            this.listbxSeznamStudentu.ItemHeight = 15;
+            this.listbxSeznamStudentu.Location = new System.Drawing.Point(12, 367);
+            this.listbxSeznamStudentu.Name = "listbxSeznamStudentu";
+            this.listbxSeznamStudentu.Size = new System.Drawing.Size(208, 229);
+            this.listbxSeznamStudentu.TabIndex = 16;
             // 
             // FormularRozsazeni
             // 
@@ -273,5 +295,7 @@
         private ListBox listbxVyplneneTridy;
         private Label label5;
         private SplitContainer splitContainer;
+        private ListBox listbxSeznamStudentu;
+        private Label label6;
     }
 }

@@ -3,7 +3,6 @@ using SediM.Helpers;
 using System.Data;
 using System.Reflection;
 using System.Timers;
-using System.Xml;
 
 namespace SediM
 {
@@ -80,7 +79,7 @@ namespace SediM
         {
             data = NactiStudenty();
 
-            if(lboxStudenti.Items.Count > 0)
+            if (lboxStudenti.Items.Count > 0)
             {
                 lboxStudenti.Items.Clear();
             }
@@ -367,7 +366,8 @@ namespace SediM
 
                 MessageBox.Show($"Stav úpravy: {stavUpravy}");
                 NactiStudentyDoSelectu();
-            } catch (NpgsqlException ex)
+            }
+            catch (NpgsqlException ex)
             {
                 mainHelp.Alert("Chyba", $"{ex.Message}", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
