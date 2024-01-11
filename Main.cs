@@ -269,6 +269,8 @@ namespace SediM
             {
                 MessageBox.Show("Nevypracovaná funkcionalita! - TODO\r\nÚprava stávající třídy", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            // TODO/FIXME: Z neznámého důvodu se spustí tento messagebox když vytvoříme
+            // alespoň dvě třídy a překlikneme z první na druhou třídu
             else if (txtbxNazevTridy.Text.Contains('(') | txtbxNazevTridy.Text.Contains(')'))
             {
                 MessageBox.Show("Název třídy nesmí obsahovat kulaté závorky!", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);

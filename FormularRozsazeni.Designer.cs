@@ -63,7 +63,6 @@
             numupdownKategoriiNaTridu.Size = new Size(44, 23);
             numupdownKategoriiNaTridu.TabIndex = 1;
             numupdownKategoriiNaTridu.Value = new decimal(new int[] { 7, 0, 0, 0 });
-            numupdownKategoriiNaTridu.ValueChanged += numupdownKategoriiNaTridu_ValueChanged;
             // 
             // btnVyplnit
             // 

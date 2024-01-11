@@ -5,10 +5,9 @@
         // TODO/FIXME: Když uživatel zavře a znovu otevře tento form bez ukončení aplikace (formulář Main)
         // tak zůstanou nastaveny globální proměnné. To je nežádoucí.
         private List<Skola> skoly = new List<Skola>();
-        private List<SolidBrush> barvyKategorii = new List<SolidBrush>();
         // List polí barev. Počet barev v poli na daném indexu odpovídá počtu kategorií vyplněné třídy
         private List<SolidBrush[]> barvyVyplnenychTrid = new List<SolidBrush[]>();
-        // TODO - vysvětlit
+        // List vyplněných tříd žáky. Každý index dané položky v listu odpovídá indexu vyplněné třídy v listboxu vyplněných tříd
         private List<Zak[,]> tridyZaku = new List<Zak[,]>();
         public FormularRozsazeni(IEnumerable<string> tridy)
         {
@@ -17,7 +16,6 @@
             combobxAlgoritmus.SelectedIndex = 0;
             // Je využito funkce Skip() s parametrem 1 jelikož 0 je položka "Nový". S touto položkou nemáme zapotřebí pracovat.
             listbxVybraneTridy.Items.AddRange(tridy.Skip(1).ToArray());
-            inicializaceListuBarev();
         }
         internal void setSkoly(List<Skola> skoly)
         {
@@ -145,13 +143,9 @@
             return new int[] { int.Parse(tmp[1]), int.Parse(tmp[0]) };
         }
 
-        private void numupdownKategoriiNaTridu_ValueChanged(object sender, EventArgs e)
+        private List<SolidBrush> inicializujListBarev()
         {
-            inicializaceListuBarev();
-        }
-
-        private void inicializaceListuBarev()
-        {
+            List<SolidBrush> barvyKategorii = new List<SolidBrush>();
             barvyKategorii.Clear();
             Random rng = new Random();
             int i = 0;
@@ -163,6 +157,7 @@
                 i++;
                 barvyKategorii.Add(sb);
             }
+            return barvyKategorii;
         }
 
         private SolidBrush ziskejBarvuDleKategorie(int indexTridy, int kategorie)
@@ -179,25 +174,33 @@
         private void btnVyplnit_Click(object sender, EventArgs e)
         {
             if (listbxVybraneTridy.SelectedIndex == -1) return;
-            barvyVyplnenychTrid.Add(barvyKategorii.ToArray());
+            nastavParametryProVyplneni(listbxVybraneTridy.SelectedIndex);
+        }
+
+        private void btnVyplnitVse_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i <= listbxVybraneTridy.Items.Count; i++)
+            {
+                listbxVybraneTridy.SelectedIndex = 0;
+                nastavParametryProVyplneni(listbxVybraneTridy.SelectedIndex);
+            }
+        }
+
+        private void nastavParametryProVyplneni(int selectedIndex)
+        {
             // Extrahuje velikost dimenzí z listboxu vybraných tříd
             int[] tmp = extrahujDimenze();
             tridyZaku.Add(new Zak[tmp[0], tmp[1]]);
             // Vyplní právě přidanou třídu žáky
             vyplnTridu(tridyZaku.Count - 1, tmp);
             // Přesune zvolenou třídu mezi vyplněné třídy
-            listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[listbxVybraneTridy.SelectedIndex]);
-            listbxVybraneTridy.Items.RemoveAt(listbxVybraneTridy.SelectedIndex);
-        }
-
-        // TODO
-        private void btnVyplnitVse_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Nevypracovaná funkcionalita! - TODO\r\nVyplnění všech tříd", "Chyba při vyplňování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[selectedIndex]);
+            listbxVybraneTridy.Items.RemoveAt(selectedIndex);
         }
 
         private void vyplnTridu(int indexTridy, int[] dimenze)
         {
+            barvyVyplnenychTrid.Add(inicializujListBarev().ToArray());
             // List identický globální proměnné skoly sloužící k orientaci již využitých kategorií,
             // které nelze využít k dalšímu řazení v právě řazené třídě.
             List<Skola> listSkolProTridu = new List<Skola>();
@@ -212,7 +215,8 @@
                 // Opakuje pro každé místo v řádku ve třídě
                 for (int s = 0; s < dimenze[0]; s++)
                 {
-                    // Přidá žáka podle kategorie pomocí funkce ziskejZaka
+                    // Přidá žáka podle kategorie pomocí funkce ziskejZaka - tento řádek
+                    // je implementovám aby řadil žáky pouze podle aloritmu Knight!
                     tridyZaku[indexTridy][r, s] = ziskejZaka((r * 2 + s) % barvyVyplnenychTrid[barvyVyplnenychTrid.Count - 1].Length, listSkolProTridu);
                 }
             }
@@ -234,6 +238,7 @@
                 this.skoly[i].Kategorie[kategorie].RemoveAt(0);
                 // Označíme danou kategorii jako využitou - tedy hodntou null
                 skoly[i].Kategorie[kategorie] = null;
+                // Vrátíme nastaveného žáka jelikož nepotřebujeme dále hledat vhodnou školu s nevyužitou kategorií
                 return returnZak;
             }
 
