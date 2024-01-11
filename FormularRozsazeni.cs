@@ -110,7 +110,6 @@ namespace SediM
             int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9 - dimensions[1]) / dimensions[1]);
             int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65 - dimensions[0]) / dimensions[0]);
 
-
             for (int r = 0; r < dimensions[0]; r++)
             {
                 for (int s = 0; s < dimensions[1]; s++)

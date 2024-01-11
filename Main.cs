@@ -19,6 +19,7 @@ namespace SediM
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
         private List<Skola> skoly = new List<Skola>();
+
         // Pomocná proměnná. Zabraňuje opakovanému přesunutí komponent při události comboboxu výběru tříd.
         private bool vyberTridNovyVybrana = true;
 
@@ -63,6 +64,17 @@ namespace SediM
             _systemTimer.Stop(); // stop it if you don't want it repeating 
         }
 
+        private DataTable NactiSkoly()
+        {
+            DataTable data = new DataTable();
+            NpgsqlDataAdapter dataAdapter;
+            NpgsqlCommand cmd = new("SELECT * FROM skoly", connection);
+
+            dataAdapter = new NpgsqlDataAdapter(cmd);
+            dataAdapter.Fill(data);
+
+            return data;
+        }
 
         private DataTable NactiStudenty()
         {
@@ -80,18 +92,37 @@ namespace SediM
         {
             data = NactiStudenty();
 
-            if(lboxStudenti.Items.Count > 0)
+            if (lboxStudenti.Items.Count > 0)
             {
                 lboxStudenti.Items.Clear();
             }
 
             foreach (DataRow zak in data.Rows)
             {
+                zak.Field<string>("jmeno_prijmeni");
+
                 string[] prijmeniJmeno = zak[1].ToString().Split(' ');
                 lboxStudenti.Items.Add($"{prijmeniJmeno[1]} {prijmeniJmeno[0]} ({zak[0]})");
             }
 
             lboxStudenti.Sorted = true;
+        }
+
+        private void NactiSkolyDoSelectu()
+        {
+            data = NactiSkoly();
+
+            if (cboxSkoly.Items.Count > 0)
+            {
+                cboxSkoly.Items.Clear();
+            }
+
+            foreach (DataRow skola in data.Rows)
+            {
+                cboxSkoly.Items.Add($"{skola[1]}");
+            }
+
+            cboxSkoly.Sorted = true;
         }
 
         private void NactiData()
@@ -111,9 +142,14 @@ namespace SediM
                 // Pokud škola, v které se daný žák nachází neexistuje v listu skoly, vytvoří se.
                 if (skoly.Exists(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")) == false)
                     skoly.Add(new Skola(int.Parse(zak[3].ToString() ?? "")));
+
                 // Žák se umístí do příslušně školy a kategorie
                 List<Zak> tmpKat = skoly.Find(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")).Kategorie[int.Parse(zak[2].ToString() ?? "") - 1];
+
+                // string[] jmenoprijmeni = zak[1].ToString().Split(' ');
+
                 tmpKat.Add(new Zak(zak[1].ToString() ?? ""));
+
                 skoly.Find(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")).Kategorie[int.Parse(zak[2].ToString() ?? "") - 1] = tmpKat;
 
                 dataviewStudenti.Rows.Add(zak[0], zak[1], zak[2], zak[3]);
@@ -165,6 +201,8 @@ namespace SediM
         {
             NactiData();
             NactiStudentyDoSelectu();
+            NactiSkolyDoSelectu();
+
 
             lblCboxStudenti.Height = ClientSize.Height - 20;
         }
@@ -231,6 +269,7 @@ namespace SediM
             // Vypočítá podíl rozdílu šířky plochy pro vykreslení míst a hodnoty numericUpDown
             // pro počet míst ve třídě do šířky hodnotou numericUpDown ... do šířky
             int mistoSirka = (int)((panelEditClassroom.Width * 0.75 - (double)numupdownClassroomWidth.Value) / (double)numupdownClassroomWidth.Value);
+
             // Stejný princip ale pro počet míst ve třídě do výšky
             int mistoVyska = (int)((panelEditClassroom.Height * 0.9 - (double)numupdownClassroomHeight.Value) / (double)numupdownClassroomHeight.Value);
 
@@ -372,7 +411,8 @@ namespace SediM
 
                 MessageBox.Show($"Stav úpravy: {stavUpravy}");
                 NactiStudentyDoSelectu();
-            } catch (NpgsqlException ex)
+            }
+            catch (NpgsqlException ex)
             {
                 mainHelp.Alert("Chyba", $"{ex.Message}", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
