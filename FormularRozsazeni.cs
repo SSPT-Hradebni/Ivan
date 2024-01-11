@@ -184,7 +184,7 @@
             int[] tmp = extrahujDimenze();
             tridyZaku.Add(new Zak[tmp[0], tmp[1]]);
             // Vyplní právě přidanou třídu žáky
-            vyplnTridu(tridyZaku.Count - 1, tmp, skoly.ToArray());
+            vyplnTridu(tridyZaku.Count - 1, tmp);
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[listbxVybraneTridy.SelectedIndex]);
             listbxVybraneTridy.Items.RemoveAt(listbxVybraneTridy.SelectedIndex);
@@ -196,11 +196,15 @@
             MessageBox.Show("Nevypracovaná funkcionalita! - TODO\r\nVyplnění všech tříd", "Chyba při vyplňování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void vyplnTridu(int indexTridy, int[] dimenze, Skola[] skoly)
+        private void vyplnTridu(int indexTridy, int[] dimenze)
         {
             // List identický globální proměnné skoly sloužící k orientaci již využitých kategorií,
             // které nelze využít k dalšímu řazení v právě řazené třídě.
-            List<Skola> listSkolProTridu = skoly.ToList<Skola>();
+            List<Skola> listSkolProTridu = new List<Skola>();
+            foreach (Skola skola in skoly)
+            {
+                listSkolProTridu.Add(skola.Clone());
+            }
 
             // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < dimenze[1]; r++)
@@ -209,7 +213,7 @@
                 for (int s = 0; s < dimenze[0]; s++)
                 {
                     // Přidá žáka podle kategorie pomocí funkce ziskejZaka
-                    tridyZaku[indexTridy][r,s] = ziskejZaka((r * 2 + s) % barvyVyplnenychTrid[barvyVyplnenychTrid.Count-1].Length, listSkolProTridu);
+                    tridyZaku[indexTridy][r, s] = ziskejZaka((r * 2 + s) % barvyVyplnenychTrid[barvyVyplnenychTrid.Count - 1].Length, listSkolProTridu);
                 }
             }
         }
@@ -229,8 +233,8 @@
                 returnZak = skoly[i].Kategorie[kategorie][0];
                 this.skoly[i].Kategorie[kategorie].RemoveAt(0);
                 // Označíme danou kategorii jako využitou - tedy hodntou null
-                // TODO/FIXME: Z neznámého důvodu nulluje zároveň i proměnnou this.skoly
                 skoly[i].Kategorie[kategorie] = null;
+                return returnZak;
             }
 
             return returnZak;
