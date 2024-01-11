@@ -9,6 +9,9 @@
         private List<SolidBrush[]> barvyVyplnenychTrid = new List<SolidBrush[]>();
         // List vyplněných tříd žáky. Každý index dané položky v listu odpovídá indexu vyplněné třídy v listboxu vyplněných tříd
         private List<Zak[,]> tridyZaku = new List<Zak[,]>();
+        // Proměnná, jejíž hodnota se přiřadí každému dalšímu zákovi při řazení do třídy.
+        // Po nastavení její hodnoty žákovi se inkrementuje aby se předešlo dvěma místům se stejnou hodnotou
+        private int mistoZaka = 1;
         public FormularRozsazeni(IEnumerable<string> tridy)
         {
             InitializeComponent();
@@ -239,9 +242,10 @@
                 // Označíme danou kategorii jako využitou - tedy hodntou null
                 skoly[i].Kategorie[kategorie] = null;
                 // Vrátíme nastaveného žáka jelikož nepotřebujeme dále hledat vhodnou školu s nevyužitou kategorií
-                return returnZak;
+                break;
             }
-
+            returnZak.Misto = mistoZaka;
+            mistoZaka++;
             return returnZak;
         }
     }
