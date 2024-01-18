@@ -131,9 +131,9 @@ namespace SediM
                 {
                     g.FillRectangle(
                         ziskejBarvuDleKategorie(
-                            listbxVyplneneTridy.SelectedIndex != -1 ? listbxVyplneneTridy.SelectedIndex : -1, 
-                            listbxVyplneneTridy.SelectedIndex != -1 
-                                ? (r * 2 + s) % barvyVyplnenychTrid[listbxVyplneneTridy.SelectedIndex].Length 
+                            listbxVyplneneTridy.SelectedIndex != -1 ? listbxVyplneneTridy.SelectedIndex : -1,
+                            listbxVyplneneTridy.SelectedIndex != -1
+                                ? (r * 2 + s) % barvyVyplnenychTrid[listbxVyplneneTridy.SelectedIndex].Length
                                 : -1),
                         pocatekPlochyMist.X + s * mistoSirka + s,
                         pocatekPlochyMist.Y + r * mistoVyska + r,
@@ -228,6 +228,7 @@ namespace SediM
             tridyZaku.Add(new Zak[tmp[1], tmp[0]]);
             // Vyplní právě přidanou třídu žáky
             vyplnTridu(tridyZaku.Count - 1, tmp);
+            ExportToPdf("C:\\Users\\ta2113\\Desktop\\aa.pdf");
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[selectedIndex]);
             listbxVybraneTridy.Items.RemoveAt(selectedIndex);
@@ -290,9 +291,57 @@ namespace SediM
 
             // Vytvoření stránky v dokumentu
             PdfPage page = document.AddPage();
-            XGraphics gfx = XGraphics.FromPdfPage(page);
+            XGraphics g = XGraphics.FromPdfPage(page);
 
-            // Získání obsahu panelu, který chcete exportovat
+            // Slouží pouze jako test. Později bude optimalizováno - TODO
+
+            int width = 1080, height = 1920;
+            // Vytvořen "počáteční" bod pro vykreslování míst
+            Point pocatekPlochyMist = new Point(
+                (int)(width * 0.05),
+                (int)(height * 0.05));
+
+            // Extrahuje dimenze třídy z právě označeného listboxu ve formátu [0] - šířka, [1] - výška
+            int[] dimenze = { tridyZaku[0].GetLength(1), tridyZaku[0].GetLength(0) };
+            // Vypočítá velikost jednoho místa na základě velikosti dimenzí - stejný princip jako ve formuláři Main
+            int mistoSirka = (int)((width * 0.9 - dimenze[0]) / dimenze[0]);
+            int mistoVyska = (int)((height * 0.65 - dimenze[1]) / dimenze[1]);
+
+            // Opakuje pro každý řádek míst ve třídě
+            for (int r = 0; r < dimenze[1]; r++)
+            {
+                // Opakuje pro každé místo v řádku ve třídě
+                for (int s = 0; s < dimenze[0]; s++)
+                {
+                    g.DrawRectangle(
+                        new XPen(ziskejBarvuDleKategorie(
+                            0, 
+                            (r * 2 + s) % barvyVyplnenychTrid[0].Length).Color),
+                        pocatekPlochyMist.X + s * mistoSirka + s,
+                        pocatekPlochyMist.Y + r * mistoVyska + r,
+                        mistoSirka, mistoVyska);
+
+                    // Zjistí velikost vykreslovaného řetězce
+                    XSize velikostCisla = g.MeasureString(
+                        tridyZaku[0][r, s].Misto.ToString(),
+                        new XFont("Arial", 10, XFontStyleEx.Regular));
+
+                    // Vykreslí řetězec na střed buňky (místa)
+                    g.DrawString(
+                        tridyZaku[0][r, s].Misto.ToString(),
+                        new XFont("Arial", 10, XFontStyleEx.Regular),
+                        XBrushes.Black,
+                        pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostCisla.Width / 2,
+                        pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostCisla.Height / 2);
+
+                    /*// Přidá žáka včetně jeho místa do listboxu seznamu studentů ve třídě
+                    listbxSeznamStudentu.Items.Add(
+                        $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Misto} - " +
+                        $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Jmeno}");*/
+                }
+            }
+
+            /*// Získání obsahu panelu, který chcete exportovat
             Bitmap panelContent = new Bitmap(panelVykresleniRozsazeni.Width, panelVykresleniRozsazeni.Height);
             panelVykresleniRozsazeni.DrawToBitmap(panelContent, new Rectangle(0, 0, panelVykresleniRozsazeni.Width, panelVykresleniRozsazeni.Height));
 
@@ -300,7 +349,7 @@ namespace SediM
             XImage image = XImage.FromGdiPlusImage(panelContent);
 
             // Vložení obrázku do PDF stránky
-            gfx.DrawImage(image, 0, 0);
+            gfx.DrawImage(image, 0, 0);*/
 
             // Uložení dokumentu do souboru
             document.Save(filePath);
