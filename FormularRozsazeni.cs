@@ -130,7 +130,11 @@ namespace SediM
                 for (int s = 0; s < dimenze[0]; s++)
                 {
                     g.FillRectangle(
-                        ziskejBarvuDleKategorie(listbxVyplneneTridy.SelectedIndex != -1 ? listbxVyplneneTridy.SelectedIndex : -1, listbxVyplneneTridy.SelectedIndex != -1 ? (r * 2 + s) % barvyVyplnenychTrid[listbxVyplneneTridy.SelectedIndex].Length : -1),
+                        ziskejBarvuDleKategorie(
+                            listbxVyplneneTridy.SelectedIndex != -1 ? listbxVyplneneTridy.SelectedIndex : -1, 
+                            listbxVyplneneTridy.SelectedIndex != -1 
+                                ? (r * 2 + s) % barvyVyplnenychTrid[listbxVyplneneTridy.SelectedIndex].Length 
+                                : -1),
                         pocatekPlochyMist.X + s * mistoSirka + s,
                         pocatekPlochyMist.Y + r * mistoVyska + r,
                         mistoSirka, mistoVyska);
@@ -221,7 +225,7 @@ namespace SediM
         {
             // Extrahuje velikost dimenzí z listboxu vybraných tříd
             int[] tmp = extrahujDimenze();
-            tridyZaku.Add(new Zak[tmp[0], tmp[1]]);
+            tridyZaku.Add(new Zak[tmp[1], tmp[0]]);
             // Vyplní právě přidanou třídu žáky
             vyplnTridu(tridyZaku.Count - 1, tmp);
             // Přesune zvolenou třídu mezi vyplněné třídy
@@ -261,6 +265,8 @@ namespace SediM
 
             for (int i = 0; i < skoly.Count; i++)
             {
+                // Pokud se hledaná kategorie ve škole nenachází, přeskočíme na další školu.
+                if (skoly[i].Kategorie.Length - 1 < kategorie) continue;
                 // Pokud je hledaná kategorie nullové hodnoty nebo je prázdná, přeskočíme na další školu.
                 // Pokud je kategorie null, znamená to, že již v dané třídě byla využita.
                 if (skoly[i].Kategorie[kategorie] == null || skoly[i].Kategorie[kategorie].Count == 0) continue;
