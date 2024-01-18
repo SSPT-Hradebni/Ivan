@@ -203,6 +203,16 @@ namespace SediM.Properties {
         /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap OE_Signature {
+            get {
+                object obj = ResourceManager.GetObject("OE_Signature", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Power {
             get {
                 object obj = ResourceManager.GetObject("Power", resourceCulture);
@@ -256,6 +266,16 @@ namespace SediM.Properties {
         internal static System.Drawing.Bitmap Success {
             get {
                 object obj = ResourceManager.GetObject("Success", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap User_Accounts {
+            get {
+                object obj = ResourceManager.GetObject("User_Accounts", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

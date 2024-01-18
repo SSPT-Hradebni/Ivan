@@ -1,4 +1,5 @@
-﻿using Npgsql.Internal;
+﻿using Npgsql;
+using Npgsql.Internal;
 using PdfSharp;
 using System.Data;
 using System.Text;
@@ -112,6 +113,27 @@ namespace SediM.Helpers
             }
 
             return tabulka;
+        }
+
+        public List<Zak> ListZaku(DataTable data)
+        {
+            List<Zak> list = new List<Zak>();
+
+            // Vysvětlení jednotlivých indexů datového typu DataRow
+            // [0] - ID
+            // [1] - Jméno
+            // [2] - Příjmení
+            // [2] - Kategorie
+            // [3] - Škola ID
+
+            foreach (DataRow zak in data.Rows)
+            {
+                string[] jmenoPrijmeni = zak[1].ToString().Split(' ');
+                list.Add(new Zak(int.Parse(zak[0].ToString()), jmenoPrijmeni[0], jmenoPrijmeni[1], int.Parse(zak[2].ToString()), int.Parse(zak[3].ToString())));
+                zak.Delete();
+            }
+
+            return list;
         }
     }
 }

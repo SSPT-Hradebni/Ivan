@@ -41,6 +41,18 @@
             toolStripSeparator = new ToolStripSeparator();
             importToolStripMenuItem = new ToolStripMenuItem();
             exportToolStripMenuItem = new ToolStripMenuItem();
+            studentToolStripMenuItem = new ToolStripMenuItem();
+            novýToolStripMenuItem = new ToolStripMenuItem();
+            upravitToolStripMenuItem = new ToolStripMenuItem();
+            učitelToolStripMenuItem = new ToolStripMenuItem();
+            novýToolStripMenuItem1 = new ToolStripMenuItem();
+            upravitToolStripMenuItem1 = new ToolStripMenuItem();
+            školaToolStripMenuItem = new ToolStripMenuItem();
+            nováToolStripMenuItem = new ToolStripMenuItem();
+            upravitToolStripMenuItem2 = new ToolStripMenuItem();
+            třídaToolStripMenuItem = new ToolStripMenuItem();
+            nováToolStripMenuItem1 = new ToolStripMenuItem();
+            upravitToolStripMenuItem3 = new ToolStripMenuItem();
             statusStrip = new StatusStrip();
             toolStripProgressBar = new ToolStripProgressBar();
             toolStripStatusLabel = new ToolStripStatusLabel();
@@ -106,7 +118,7 @@
             // menuStrip
             // 
             menuStrip.ImageScalingSize = new Size(20, 20);
-            menuStrip.Items.AddRange(new ToolStripItem[] { souborToolStripMenuItem, dataToolStripMenuItem });
+            menuStrip.Items.AddRange(new ToolStripItem[] { souborToolStripMenuItem, dataToolStripMenuItem, studentToolStripMenuItem, učitelToolStripMenuItem, školaToolStripMenuItem, třídaToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new Padding(7, 3, 0, 3);
@@ -179,6 +191,91 @@
             exportToolStripMenuItem.Size = new Size(153, 22);
             exportToolStripMenuItem.Text = "Export";
             exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
+            // 
+            // studentToolStripMenuItem
+            // 
+            studentToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { novýToolStripMenuItem, upravitToolStripMenuItem });
+            studentToolStripMenuItem.Name = "studentToolStripMenuItem";
+            studentToolStripMenuItem.Size = new Size(60, 19);
+            studentToolStripMenuItem.Text = "Student";
+            // 
+            // novýToolStripMenuItem
+            // 
+            novýToolStripMenuItem.Image = Properties.Resources.Add;
+            novýToolStripMenuItem.Name = "novýToolStripMenuItem";
+            novýToolStripMenuItem.Size = new Size(184, 26);
+            novýToolStripMenuItem.Text = "Nový";
+            novýToolStripMenuItem.Click += novýToolStripMenuItem_Click;
+            // 
+            // upravitToolStripMenuItem
+            // 
+            upravitToolStripMenuItem.Image = Properties.Resources.OE_Signature;
+            upravitToolStripMenuItem.Name = "upravitToolStripMenuItem";
+            upravitToolStripMenuItem.Size = new Size(184, 26);
+            upravitToolStripMenuItem.Text = "Upravit";
+            // 
+            // učitelToolStripMenuItem
+            // 
+            učitelToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { novýToolStripMenuItem1, upravitToolStripMenuItem1 });
+            učitelToolStripMenuItem.Name = "učitelToolStripMenuItem";
+            učitelToolStripMenuItem.Size = new Size(49, 19);
+            učitelToolStripMenuItem.Text = "Učitel";
+            // 
+            // novýToolStripMenuItem1
+            // 
+            novýToolStripMenuItem1.Image = Properties.Resources.Add;
+            novýToolStripMenuItem1.Name = "novýToolStripMenuItem1";
+            novýToolStripMenuItem1.Size = new Size(184, 26);
+            novýToolStripMenuItem1.Text = "Nový";
+            // 
+            // upravitToolStripMenuItem1
+            // 
+            upravitToolStripMenuItem1.Image = Properties.Resources.OE_Signature;
+            upravitToolStripMenuItem1.Name = "upravitToolStripMenuItem1";
+            upravitToolStripMenuItem1.Size = new Size(184, 26);
+            upravitToolStripMenuItem1.Text = "Upravit";
+            // 
+            // školaToolStripMenuItem
+            // 
+            školaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nováToolStripMenuItem, upravitToolStripMenuItem2 });
+            školaToolStripMenuItem.Name = "školaToolStripMenuItem";
+            školaToolStripMenuItem.Size = new Size(47, 19);
+            školaToolStripMenuItem.Text = "Škola";
+            // 
+            // nováToolStripMenuItem
+            // 
+            nováToolStripMenuItem.Image = Properties.Resources.Add;
+            nováToolStripMenuItem.Name = "nováToolStripMenuItem";
+            nováToolStripMenuItem.Size = new Size(112, 22);
+            nováToolStripMenuItem.Text = "Nová";
+            // 
+            // upravitToolStripMenuItem2
+            // 
+            upravitToolStripMenuItem2.Image = Properties.Resources.OE_Signature;
+            upravitToolStripMenuItem2.Name = "upravitToolStripMenuItem2";
+            upravitToolStripMenuItem2.Size = new Size(112, 22);
+            upravitToolStripMenuItem2.Text = "Upravit";
+            // 
+            // třídaToolStripMenuItem
+            // 
+            třídaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nováToolStripMenuItem1, upravitToolStripMenuItem3 });
+            třídaToolStripMenuItem.Name = "třídaToolStripMenuItem";
+            třídaToolStripMenuItem.Size = new Size(44, 19);
+            třídaToolStripMenuItem.Text = "Třída";
+            // 
+            // nováToolStripMenuItem1
+            // 
+            nováToolStripMenuItem1.Image = Properties.Resources.Add;
+            nováToolStripMenuItem1.Name = "nováToolStripMenuItem1";
+            nováToolStripMenuItem1.Size = new Size(112, 22);
+            nováToolStripMenuItem1.Text = "Nová";
+            // 
+            // upravitToolStripMenuItem3
+            // 
+            upravitToolStripMenuItem3.Image = Properties.Resources.OE_Signature;
+            upravitToolStripMenuItem3.Name = "upravitToolStripMenuItem3";
+            upravitToolStripMenuItem3.Size = new Size(112, 22);
+            upravitToolStripMenuItem3.Text = "Upravit";
             // 
             // statusStrip
             // 
@@ -595,5 +692,17 @@
         private SplitContainer splitContUpravitStudenta;
         private ComboBox cboxSkoly;
         private Label lblSkola;
+        private ToolStripMenuItem studentToolStripMenuItem;
+        private ToolStripMenuItem učitelToolStripMenuItem;
+        private ToolStripMenuItem školaToolStripMenuItem;
+        private ToolStripMenuItem třídaToolStripMenuItem;
+        private ToolStripMenuItem novýToolStripMenuItem;
+        private ToolStripMenuItem upravitToolStripMenuItem;
+        private ToolStripMenuItem novýToolStripMenuItem1;
+        private ToolStripMenuItem upravitToolStripMenuItem1;
+        private ToolStripMenuItem nováToolStripMenuItem;
+        private ToolStripMenuItem upravitToolStripMenuItem2;
+        private ToolStripMenuItem nováToolStripMenuItem1;
+        private ToolStripMenuItem upravitToolStripMenuItem3;
     }
 }

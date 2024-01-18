@@ -1,21 +1,29 @@
 ﻿namespace SediM
 {
-    internal class Zak : IComparable<Zak>
+    public class Zak : IComparable<Zak>
     {
         private int id;
         private string jmeno;
+        private string prijmeni;
+        private int kategorie;
+        private int skola;
 
-        // private string prijmeni;
         private int misto;
 
+        public int Id { get { return id; } }
         public string Jmeno { get { return jmeno; } }
-        // public string Prijmeni { get { return prijmeni; } }
+        public string Prijmeni { get { return prijmeni; } }
+        public int Kategorie { get { return kategorie; } set { kategorie = value; } }
+        public int Skola { get { return skola; } set { skola = value; } }
         public int Misto { get { return misto; } set { misto = value; } }
 
-        public Zak(string jmeno)
+        public Zak(int id, string jmeno, string prijmeni, int kategorie, int skola)
         {
+            this.id = id;
             this.jmeno = jmeno;
-            // this.prijmeni = prijmeni;
+            this.prijmeni = prijmeni;
+            this.kategorie = kategorie;
+            this.skola = skola;
         }
 
         public int CompareTo(Zak? other)
@@ -25,7 +33,7 @@
 
         public string ZamenaJmenoPrijmeni()
         {
-            string[] udaje = this.jmeno.Split(' ');
+            string[] udaje = jmeno.Split(' ');
 
             return $"{udaje[1]} {udaje[0]}";
         }
