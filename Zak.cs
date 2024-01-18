@@ -2,22 +2,22 @@
 {
     public class Zak : IComparable<Zak>
     {
-        private int id;
+        private long id;
         private string jmeno;
         private string prijmeni;
-        private int kategorie;
-        private int skola;
+        private long kategorie;
+        private long skola;
 
-        private int misto;
+        private long misto;
 
-        public int Id { get { return id; } }
+        public long Id { get { return id; } }
         public string Jmeno { get { return jmeno; } }
         public string Prijmeni { get { return prijmeni; } }
-        public int Kategorie { get { return kategorie; } set { kategorie = value; } }
-        public int Skola { get { return skola; } set { skola = value; } }
-        public int Misto { get { return misto; } set { misto = value; } }
+        public long Kategorie { get { return kategorie; } set { kategorie = value; } }
+        public long Skola { get { return skola; } set { skola = value; } }
+        public long Misto { get { return misto; } set { misto = value; } }
 
-        public Zak(int id, string jmeno, string prijmeni, int kategorie, int skola)
+        public Zak(long id, string jmeno, string prijmeni, long kategorie, long skola)
         {
             this.id = id;
             this.jmeno = jmeno;
@@ -28,19 +28,17 @@
 
         public int CompareTo(Zak? other)
         {
-            return string.Compare(ZamenaJmenoPrijmeni(), other.ZamenaJmenoPrijmeni());
-        }
-
-        public string ZamenaJmenoPrijmeni()
-        {
-            string[] udaje = jmeno.Split(' ');
-
-            return $"{udaje[1]} {udaje[0]}";
+            return string.Compare(ToString(), other.ToString());
         }
 
         public override string ToString()
         {
-            return ZamenaJmenoPrijmeni();
+            return $"{prijmeni} {jmeno}";
+        }
+
+        public string CeleJmeno
+        {
+            get { return $"{prijmeni} {jmeno}"; }
         }
     }
 }

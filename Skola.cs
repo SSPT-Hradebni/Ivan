@@ -1,16 +1,19 @@
 ﻿namespace SediM
 {
-    internal class Skola
+    public class Skola
     {
-        private int id;
+        private long id;
+        private string nazev;
         private List<Zak>[] kategorie = new List<Zak>[7]; // Pole které obsahuje listy s žáky. Každý list reprezentuje jednu kategorii.
 
-        public int Id { get { return id; } }
+        public long Id { get { return id; } }
+        public string Nazev { get { return nazev; } set { nazev = value; } }
         public List<Zak>[] Kategorie { get { return kategorie; } set { kategorie = value; } }
 
-        public Skola(int id)
+        public Skola(long id, string nazev)
         {
             this.id = id;
+            this.nazev = nazev;
 
             // Inicializace jednotlivých kategorií
             for (int i = 0; i < kategorie.Length; i++)

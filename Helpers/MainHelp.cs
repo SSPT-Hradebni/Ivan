@@ -129,8 +129,25 @@ namespace SediM.Helpers
             foreach (DataRow zak in data.Rows)
             {
                 string[] jmenoPrijmeni = zak[1].ToString().Split(' ');
-                list.Add(new Zak(int.Parse(zak[0].ToString()), jmenoPrijmeni[0], jmenoPrijmeni[1], int.Parse(zak[2].ToString()), int.Parse(zak[3].ToString())));
+                list.Add(new Zak(long.Parse(zak[0].ToString() ?? ""), jmenoPrijmeni[0], jmenoPrijmeni[1], long.Parse(zak[2].ToString() ?? ""), long.Parse(zak[3].ToString() ?? "")));
                 zak.Delete();
+            }
+
+            return list;
+        }
+
+        public List<Skola> ListSkol(DataTable data)
+        {
+            List<Skola> list = new List<Skola>();
+
+            // Vysvětlení jednotlivých indexů datového typu DataRow
+            // [0] - ID
+            // [1] - Název
+
+            foreach (DataRow skola in data.Rows)
+            {
+                list.Add(new Skola(long.Parse(skola[0].ToString() ?? ""), skola[1].ToString() ?? ""));
+                skola.Delete();
             }
 
             return list;

@@ -14,6 +14,7 @@ namespace SediM
 
         private NpgsqlConnection? connection;
         private DataTable? data;
+        private DataTable? dataSkoly;
         private System.Timers.Timer _systemTimer;
 
         public MainHelp mainHelp = new MainHelp();
@@ -28,12 +29,6 @@ namespace SediM
         public Main()
         {
             InitializeComponent();
-
-            _systemTimer = new System.Timers.Timer(2000);
-            _systemTimer.Elapsed += _systemTimer_Elapsed;
-
-            toolStripStatusLabel.Text = string.Empty;
-
 
             var conn = dataSource.OpenConnectionAsync();
             connection = conn.Result;
@@ -58,12 +53,6 @@ namespace SediM
             }
 
             combobxVyberTrid.SelectedIndex = 0;
-        }
-
-        void _systemTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            toolStripStatusLabel.Text = string.Empty;
-            _systemTimer.Stop(); // stop it if you don't want it repeating
         }
 
         private DataTable NactiSkoly()
@@ -117,9 +106,9 @@ namespace SediM
                 cboxSkoly.Items.Clear();
             }
 
-            foreach (DataRow skola in data.Rows)
+            foreach (Skola skola in skoly)
             {
-                cboxSkoly.Items.Add($"{skola[1]}");
+                cboxSkoly.Items.Add(skola.Nazev);
             }
 
             cboxSkoly.Sorted = true;
@@ -137,19 +126,6 @@ namespace SediM
 
             foreach (Zak zak in zaci)
             {
-                // Pokud škola, v které se daný žák nachází neexistuje v listu skoly, vytvoří se.
-                // if (skoly.Exists(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")) == false)
-                // skoly.Add(new Skola(int.Parse(zak[3].ToString() ?? "")));
-
-                // Žák se umístí do příslušně školy a kategorie
-                // List<Zak> tmpKat = skoly.Find(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")).Kategorie[int.Parse(zak[2].ToString() ?? "") - 1];
-
-                // string[] jmenoprijmeni = zak[1].ToString().Split(' ');
-
-                // tmpKat.Add(new Zak(zak[1].ToString() ?? ""));
-
-                // skoly.Find(skola => skola.Id == int.Parse(zak[3].ToString() ?? "")).Kategorie[int.Parse(zak[2].ToString() ?? "") - 1] = tmpKat;
-
                 dataviewStudenti.Rows.Add(zak.Id, $"{zak.Prijmeni} {zak.Jmeno}", zak.Kategorie, zak.Skola);
             }
         }
@@ -166,8 +142,6 @@ namespace SediM
                 if (ulozit.CheckFileExists == false)
                 {
                     mainHelp.ToCSV(data, ulozit.FileName);
-                    toolStripStatusLabel.Text = $"Data exportována do \"{ulozit.FileName}\"";
-                    _systemTimer.Start();
                 }
             }
         }
@@ -181,9 +155,6 @@ namespace SediM
 
             if (otevrit.ShowDialog() == DialogResult.OK)
             {
-                toolStripStatusLabel.Text = $"Data importována z \"{otevrit.FileName}\"";
-                _systemTimer.Start();
-
                 dataviewStudenti.Refresh();
 
                 dataviewStudenti.Columns.Clear();
@@ -195,9 +166,11 @@ namespace SediM
         private void Main_Load(object sender, EventArgs e)
         {
             data = NactiStudenty();
+            dataSkoly = NactiSkoly();
 
             // načtení žáků do listu pro práci s dočasnými hodnotami (data mohou být aktualizována přímo na serveru bez obnovení dat v aplikaci)
             zaci = mainHelp.ListZaku(data);
+            skoly = mainHelp.ListSkol(dataSkoly);
 
             // načtení dat do hlavní tabulky
             NactiData();
@@ -339,9 +312,6 @@ namespace SediM
             string nazev = combobxVyberTrid.Text;
 
             combobxVyberTrid.Items.RemoveAt(combobxVyberTrid.SelectedIndex);
-
-            toolStripStatusLabel.Text = $"Třída \"{nazev}\" byla smazána";
-            _systemTimer.Start();
         }
 
         private void btnNastavitTridu_Click(object sender, EventArgs e)
@@ -408,9 +378,7 @@ namespace SediM
                 upravStudenta.Parameters.AddWithValue("@jmenoprijmeni", $"{tboxJmeno.Text} {tboxPrijmeni.Text}");
                 upravStudenta.Parameters.AddWithValue("@id", int.Parse(idecko[1]));
 
-                int stavUpravy = upravStudenta.ExecuteNonQuery();
-
-                // MessageBox.Show($"Stav úpravy: {stavUpravy}");
+                upravStudenta.ExecuteNonQuery();
 
                 NactiStudentyDoSelectu();
                 NactiData();
@@ -422,14 +390,36 @@ namespace SediM
         }
 
         /// <summary>
-        /// Toolstrip pro otevřené okna pro vytvoření nového studenta
+        /// Toolstrip pro otevření okna pro vytvoření nového studenta
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void novýToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Zak_Novy okno = new Zak_Novy();
-            okno.ShowDialog();
+            Zak_Novy okno = new Zak_Novy(NactiSkoly());
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                NactiStudentyDoSelectu();
+                NactiData();
+            }
+        }
+
+        private void upravitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zak_Upravit okno = new Zak_Upravit(skoly, zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                NactiStudentyDoSelectu();
+                NactiData();
+            }
         }
     }
 }
