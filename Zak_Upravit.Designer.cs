@@ -40,6 +40,7 @@
             groupBoxStudent = new GroupBox();
             cboxStudenti = new ComboBox();
             lblStudent = new Label();
+            btnUlozit = new Button();
             ((System.ComponentModel.ISupportInitialize)numKategorie).BeginInit();
             groupBoxStudent.SuspendLayout();
             SuspendLayout();
@@ -116,6 +117,7 @@
             // 
             // groupBoxStudent
             // 
+            groupBoxStudent.Controls.Add(btnUlozit);
             groupBoxStudent.Controls.Add(lblJmeno);
             groupBoxStudent.Controls.Add(cboxSkoly);
             groupBoxStudent.Controls.Add(lblPrijmeni);
@@ -149,6 +151,16 @@
             lblStudent.Size = new Size(121, 20);
             lblStudent.TabIndex = 12;
             lblStudent.Text = "Vyberte studenta";
+            // 
+            // btnUlozit
+            // 
+            btnUlozit.Location = new Point(616, 282);
+            btnUlozit.Name = "btnUlozit";
+            btnUlozit.Size = new Size(94, 29);
+            btnUlozit.TabIndex = 12;
+            btnUlozit.Text = "Uložit";
+            btnUlozit.UseVisualStyleBackColor = true;
+            btnUlozit.Click += btnUlozit_Click;
             // 
             // Zak_Upravit
             // 
@@ -188,5 +200,6 @@
         private GroupBox groupBoxStudent;
         private ComboBox cboxStudenti;
         private Label lblStudent;
+        private Button btnUlozit;
     }
 }

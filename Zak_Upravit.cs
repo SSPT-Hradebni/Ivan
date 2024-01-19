@@ -62,7 +62,7 @@ namespace SediM
         private void Zak_Upravit_Load(object sender, EventArgs e)
         {
 
-            _skoly.Sort(); // seřazení
+            // _skoly.Sort(); // seřazení
 
             // MessageBox.Show(_skoly.Count.ToString());
 
@@ -86,7 +86,41 @@ namespace SediM
             tboxJmeno.Text = student.Jmeno;
             tboxPrijmeni.Text = student.Prijmeni;
             numKategorie.Value = student.Kategorie;
-            // cboxSkoly.SelectedItem = (int)student.Skola;
+            cboxSkoly.SelectedIndex = (int)student.Skola - 1;
+        }
+
+        private void btnUlozit_Click(object sender, EventArgs e)
+        {
+            string jmeno = tboxJmeno.Text;
+            string prijmeni = tboxPrijmeni.Text;
+            int kategorie = (int)numKategorie.Value;
+            int skola = cboxSkoly.SelectedIndex + 1;
+
+            try
+            {
+                NpgsqlCommand vytvorStudenta = new NpgsqlCommand($"UPDATE studentiv2 SET jmeno_prijmeni = @jmenoprijmeni, kategorie = @kategorie, skola = @skola WHERE id = @id", connection);
+
+                vytvorStudenta.Parameters.AddWithValue("@jmenoprijmeni", $"{jmeno} {prijmeni}");
+                vytvorStudenta.Parameters.AddWithValue("@kategorie", kategorie);
+                vytvorStudenta.Parameters.AddWithValue("@skola", skola);
+                vytvorStudenta.Parameters.AddWithValue("@id", cboxStudenti.SelectedIndex + 1);
+
+                int stav = vytvorStudenta.ExecuteNonQuery();
+
+                if (stav != 0)
+                {
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else
+                {
+                    mainHelp.Alert("Chyba!", "Při ukládání úprav studenta do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

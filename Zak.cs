@@ -26,7 +26,7 @@
             this.skola = skola;
         }
 
-        public int CompareTo(Zak? other)
+        public int CompareTo(Zak other)
         {
             return string.Compare(ToString(), other.ToString());
         }

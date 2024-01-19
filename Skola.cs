@@ -1,4 +1,6 @@
-﻿namespace SediM
+﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace SediM
 {
     public class Skola
     {
@@ -18,6 +20,16 @@
             // Inicializace jednotlivých kategorií
             for (int i = 0; i < kategorie.Length; i++)
                 kategorie[i] = new List<Zak>();
+        }
+
+        public IComparable CompareTo(Skola other)
+        {
+            return string.Compare(ToString(), other.ToString());
+        }
+
+        public override string ToString()
+        {
+            return nazev;
         }
     }
 }

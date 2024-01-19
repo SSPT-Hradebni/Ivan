@@ -109,7 +109,7 @@ namespace SediM
                     }
                     else
                     {
-                        mainHelp.Alert("Chyba!", "Při přidání nového student do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        mainHelp.Alert("Chyba!", "Při přidání nového studenta do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 } catch (Exception ex)
                 {
