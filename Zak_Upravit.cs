@@ -64,7 +64,7 @@ namespace SediM
 
             _skoly.Sort(); // seřazení
 
-            MessageBox.Show(_skoly.Count.ToString());
+            // MessageBox.Show(_skoly.Count.ToString());
 
             // načtení škol
             cboxSkoly.DataSource = _skoly;
