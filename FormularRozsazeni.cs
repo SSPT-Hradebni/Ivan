@@ -1,4 +1,5 @@
 ﻿using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 
 namespace SediM
@@ -228,7 +229,7 @@ namespace SediM
             tridyZaku.Add(new Zak[tmp[1], tmp[0]]);
             // Vyplní právě přidanou třídu žáky
             vyplnTridu(tridyZaku.Count - 1, tmp);
-            ExportToPdf("C:\\Users\\ta2113\\Desktop\\aa.pdf");
+            ExportToPdf("C:\\Users\\Petr\\Desktop\\bb.pdf");
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[selectedIndex]);
             listbxVybraneTridy.Items.RemoveAt(selectedIndex);
@@ -293,9 +294,12 @@ namespace SediM
             PdfPage page = document.AddPage();
             XGraphics g = XGraphics.FromPdfPage(page);
 
+            XTextFormatter tf = new XTextFormatter(g);
+            tf.Alignment = XParagraphAlignment.Center;
+
             // Slouží pouze jako test. Později bude optimalizováno - TODO
 
-            int width = 1080, height = 1920;
+            int width = 720, height = 480;
             // Vytvořen "počáteční" bod pro vykreslování míst
             Point pocatekPlochyMist = new Point(
                 (int)(width * 0.05),
@@ -303,9 +307,13 @@ namespace SediM
 
             // Extrahuje dimenze třídy z právě označeného listboxu ve formátu [0] - šířka, [1] - výška
             int[] dimenze = { tridyZaku[0].GetLength(1), tridyZaku[0].GetLength(0) };
+
             // Vypočítá velikost jednoho místa na základě velikosti dimenzí - stejný princip jako ve formuláři Main
-            int mistoSirka = (int)((width * 0.9 - dimenze[0]) / dimenze[0]);
-            int mistoVyska = (int)((height * 0.65 - dimenze[1]) / dimenze[1]);
+            int mistoSirka = (int)((width * 0.9) / dimenze[0]);
+            int mistoVyska = (int)((height * 0.65) / dimenze[1]);
+
+            page.Size = PdfSharp.PageSize.A4;
+            page.Orientation = PdfSharp.PageOrientation.Landscape;
 
             // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < dimenze[1]; r++)
@@ -314,25 +322,28 @@ namespace SediM
                 for (int s = 0; s < dimenze[0]; s++)
                 {
                     g.DrawRectangle(
-                        new XPen(ziskejBarvuDleKategorie(
-                            0, 
-                            (r * 2 + s) % barvyVyplnenychTrid[0].Length).Color),
+                        new XPen(Color.Black),
                         pocatekPlochyMist.X + s * mistoSirka + s,
                         pocatekPlochyMist.Y + r * mistoVyska + r,
                         mistoSirka, mistoVyska);
 
                     // Zjistí velikost vykreslovaného řetězce
                     XSize velikostCisla = g.MeasureString(
-                        tridyZaku[0][r, s].Misto.ToString(),
+                        $"{tridyZaku[0][r, s].Misto}",
+                        new XFont("Arial", 10, XFontStyleEx.Regular));
+
+                    // 
+                    XSize velikostJmena = g.MeasureString(
+                        tridyZaku[0][r, s].Jmeno,
                         new XFont("Arial", 10, XFontStyleEx.Regular));
 
                     // Vykreslí řetězec na střed buňky (místa)
-                    g.DrawString(
-                        tridyZaku[0][r, s].Misto.ToString(),
+                    tf.DrawString(
+                        $"{tridyZaku[0][r, s].Misto}\n{tridyZaku[0][r, s].Jmeno}",
                         new XFont("Arial", 10, XFontStyleEx.Regular),
                         XBrushes.Black,
-                        pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostCisla.Width / 2,
-                        pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostCisla.Height / 2);
+                        new XRect(pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostJmena.Width / 2,
+                        pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostJmena.Height / 2, mistoSirka, mistoVyska));
 
                     /*// Přidá žáka včetně jeho místa do listboxu seznamu studentů ve třídě
                     listbxSeznamStudentu.Items.Add(
