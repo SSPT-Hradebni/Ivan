@@ -125,9 +125,6 @@ namespace SediM
             // načtení žáků do listu pro práci s dočasnými hodnotami (data mohou být aktualizována přímo na serveru bez obnovení dat v aplikaci)
             zaci = mainHelp.ListZaku(data);
             skoly = mainHelp.ListSkol(dataSkoly);
-
-            // načtení dat do hlavní tabulky
-            NactiData();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)

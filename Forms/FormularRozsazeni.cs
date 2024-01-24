@@ -148,6 +148,7 @@ namespace SediM
         {
             inicializaceListuBarev();
         }
+
         private void inicializaceListuBarev()
         {
             barvyKategorii.Clear();
@@ -208,6 +209,20 @@ namespace SediM
 
             // Zavření dokumentu
             document.Close();
+        }
+
+        private void btnTisk_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.AddExtension = true;
+            dialog.DefaultExt = "pdf";
+
+            DialogResult stav = dialog.ShowDialog();
+
+            if(stav == DialogResult.OK)
+            {
+                ExportToPdf(dialog.FileName);
+            }
         }
     }
 }
