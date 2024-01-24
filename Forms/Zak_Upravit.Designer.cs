@@ -38,9 +38,10 @@
             numKategorie = new NumericUpDown();
             cboxSkoly = new ComboBox();
             groupBoxStudent = new GroupBox();
+            lblStudentID = new Label();
+            btnUlozit = new Button();
             cboxStudenti = new ComboBox();
             lblStudent = new Label();
-            btnUlozit = new Button();
             ((System.ComponentModel.ISupportInitialize)numKategorie).BeginInit();
             groupBoxStudent.SuspendLayout();
             SuspendLayout();
@@ -117,6 +118,7 @@
             // 
             // groupBoxStudent
             // 
+            groupBoxStudent.Controls.Add(lblStudentID);
             groupBoxStudent.Controls.Add(btnUlozit);
             groupBoxStudent.Controls.Add(lblJmeno);
             groupBoxStudent.Controls.Add(cboxSkoly);
@@ -132,6 +134,26 @@
             groupBoxStudent.TabIndex = 12;
             groupBoxStudent.TabStop = false;
             groupBoxStudent.Text = "Student";
+            // 
+            // lblStudentID
+            // 
+            lblStudentID.AutoSize = true;
+            lblStudentID.Location = new Point(465, 23);
+            lblStudentID.Name = "lblStudentID";
+            lblStudentID.Size = new Size(85, 20);
+            lblStudentID.TabIndex = 13;
+            lblStudentID.Text = "ID studenta";
+            lblStudentID.Visible = false;
+            // 
+            // btnUlozit
+            // 
+            btnUlozit.Location = new Point(616, 282);
+            btnUlozit.Name = "btnUlozit";
+            btnUlozit.Size = new Size(94, 29);
+            btnUlozit.TabIndex = 12;
+            btnUlozit.Text = "Uložit";
+            btnUlozit.UseVisualStyleBackColor = true;
+            btnUlozit.Click += btnUlozit_Click;
             // 
             // cboxStudenti
             // 
@@ -151,16 +173,6 @@
             lblStudent.Size = new Size(121, 20);
             lblStudent.TabIndex = 12;
             lblStudent.Text = "Vyberte studenta";
-            // 
-            // btnUlozit
-            // 
-            btnUlozit.Location = new Point(616, 282);
-            btnUlozit.Name = "btnUlozit";
-            btnUlozit.Size = new Size(94, 29);
-            btnUlozit.TabIndex = 12;
-            btnUlozit.Text = "Uložit";
-            btnUlozit.UseVisualStyleBackColor = true;
-            btnUlozit.Click += btnUlozit_Click;
             // 
             // Zak_Upravit
             // 
@@ -201,5 +213,6 @@
         private ComboBox cboxStudenti;
         private Label lblStudent;
         private Button btnUlozit;
+        private Label lblStudentID;
     }
 }

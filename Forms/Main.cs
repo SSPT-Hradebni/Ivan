@@ -1,9 +1,11 @@
-﻿using Npgsql;
+﻿using System.Windows.Forms;
+using Npgsql;
 using SediM.Helpers;
 using System.Data;
 using System.Reflection;
 using System.Timers;
 using System.Xml;
+using SediM.Forms;
 
 namespace SediM
 {
@@ -79,26 +81,10 @@ namespace SediM
             return data;
         }
 
-        private void NactiStudentyDoSelectu()
+        private void NactiData()
         {
             data = NactiStudenty();
             zaci = mainHelp.ListZaku(data);
-        }
-
-        private void NactiData()
-        {
-            dataviewStudenti.Rows.Clear();
-
-            // Vysvětlení jednotlivých indexů datového typu DataRow
-            // [0] - ID
-            // [1] - Jméno
-            // [2] - Kategorie
-            // [3] - Škola
-
-            foreach (Zak zak in zaci)
-            {
-                dataviewStudenti.Rows.Add(zak.Id, $"{zak.Prijmeni} {zak.Jmeno}", zak.Kategorie, zak.Skola);
-            }
         }
 
         private void Exportovat()
@@ -126,11 +112,8 @@ namespace SediM
 
             if (otevrit.ShowDialog() == DialogResult.OK)
             {
-                dataviewStudenti.Refresh();
-
-                dataviewStudenti.Columns.Clear();
-
-                dataviewStudenti.DataSource = mainHelp.FromCSV(otevrit.FileName);
+                // TODO: uložení importovaných dat
+                MessageBox.Show("Data byla úspěšně importována", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -145,8 +128,6 @@ namespace SediM
 
             // načtení dat do hlavní tabulky
             NactiData();
-
-            NactiStudentyDoSelectu();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -323,14 +304,13 @@ namespace SediM
         /// <param name="e"></param>
         private void novýToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Zak_Novy okno = new Zak_Novy(NactiSkoly());
+            Zak_Novy okno = new Zak_Novy(skoly, zaci);
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
 
             if (stav == DialogResult.OK)
             {
-                NactiStudentyDoSelectu();
                 NactiData();
             }
         }
@@ -344,7 +324,19 @@ namespace SediM
 
             if (stav == DialogResult.OK)
             {
-                NactiStudentyDoSelectu();
+                NactiData();
+            }
+        }
+
+        private void seznamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zak_Seznam okno = new Zak_Seznam(zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
                 NactiData();
             }
         }

@@ -22,7 +22,7 @@ namespace SediM
                 kategorie[i] = new List<Zak>();
         }
 
-        public IComparable CompareTo(Skola other)
+        public int CompareTo(Skola other)
         {
             return string.Compare(ToString(), other.ToString());
         }
