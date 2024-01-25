@@ -433,11 +433,6 @@
             PerformLayout();
         }
 
-        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
         private MenuStrip menuStrip;
         private ToolStripMenuItem souborToolStripMenuItem;
