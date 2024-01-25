@@ -149,10 +149,10 @@
             // 
             combobxAlgoritmus.FormattingEnabled = true;
             combobxAlgoritmus.Items.AddRange(new object[] { "Knight (Jezdec)" });
-            combobxAlgoritmus.Location = new Point(90, 19);
+            combobxAlgoritmus.Location = new Point(84, 18);
             combobxAlgoritmus.Margin = new Padding(3, 2, 3, 2);
             combobxAlgoritmus.Name = "combobxAlgoritmus";
-            combobxAlgoritmus.Size = new Size(131, 23);
+            combobxAlgoritmus.Size = new Size(137, 23);
             combobxAlgoritmus.TabIndex = 10;
             // 
             // label4

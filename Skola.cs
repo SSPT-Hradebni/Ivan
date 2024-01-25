@@ -22,6 +22,32 @@ namespace SediM
                 kategorie[i] = new List<Zak>();
         }
 
+        public Skola(long id)
+        {
+            this.id = id;
+
+            // Inicializace jednotlivých kategorií
+            for (int i = 0; i < kategorie.Length; i++)
+                kategorie[i] = new List<Zak>();
+        }
+
+        public Skola Clone()
+        {
+            Skola skola = new Skola(id);
+
+            // Procykulje veškeré kategorie ve klonované škole
+            for (int i = 0; i < kategorie.Length; i++)
+            {
+                // Procykluje veškeré žáky v kategorii klonované školy
+                foreach (Zak zak in kategorie[i])
+                {
+                    skola.kategorie[i].Add(new Zak(zak.Id, zak.Jmeno, zak.Prijmeni, zak.Kategorie, zak.Skola));
+                }
+            }
+
+            return skola;
+        }
+
         public int CompareTo(Skola other)
         {
             return string.Compare(ToString(), other.ToString());

@@ -263,7 +263,7 @@ namespace SediM
         {
             // Vytvoříme žáka returnZak s jménem "PRÁZDNÉ MÍSTO" pro případ, že by
             // for cyklus došel do konce bez přenastavení této proměnné
-            Zak returnZak = new Zak("PRÁZDNÉ MÍSTO");
+            Zak returnZak = new Zak(0, "MÍSTO", "PRÁZDNÉ", 0, 0);
 
             for (int i = 0; i < skoly.Count; i++)
             {
