@@ -22,7 +22,6 @@ namespace SediM
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
         private List<Skola> skoly = new List<Skola>();
-
         public List<Zak> zaci = new List<Zak>();
 
         // Pomocná proměnná. Zabraňuje opakovanému přesunutí komponent při události comboboxu výběru tříd.

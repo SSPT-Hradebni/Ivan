@@ -26,7 +26,7 @@ namespace SediM
             combobxAlgoritmus.SelectedIndex = 0;
             // Je využito funkce Skip() s parametrem 1 jelikož 0 je položka "Nový". S touto položkou nemáme zapotřebí pracovat.
             listbxVybraneTridy.Items.AddRange(tridy.Skip(1).ToArray());
-            inicializujListBarev();
+            // TODO - vyplň list škol svými příslušnými žáky. je třeba předat proměnné skoly a zaci a následně je rozřadit
         }
 
         internal void setSkoly(List<Skola> skoly)
