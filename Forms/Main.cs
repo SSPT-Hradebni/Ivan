@@ -127,6 +127,11 @@ namespace SediM
             skoly = mainHelp.ListSkol(dataSkoly);
         }
 
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Exportovat();
+        }
+
         private void ukončitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult opravdu = MessageBox.Show(this, "Opravdu chcete aplikaci ukončit? Všechna neuložená data budou ztracena.", "Ukončit aplikaci", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
@@ -229,8 +234,6 @@ namespace SediM
             numupdownClassroomWidth.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[0]);
             numupdownClassroomHeight.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[1].Replace(")", ""));
 
-            txtbxNazevTridy.Text = combobxVyberTrid.Text;
-
             if (!vyberTridNovyVybrana) return;
             txtbxNazevTridy.Visible = false;
             numupdownClassroomWidth.Location = new Point(numupdownClassroomWidth.Location.X, numupdownClassroomWidth.Location.Y - 29);
@@ -239,6 +242,8 @@ namespace SediM
             btnNastavitTridu.Location = new Point(btnNastavitTridu.Location.X, btnNastavitTridu.Location.Y - 29);
             btnOdstranitTridu.Location = new Point(btnOdstranitTridu.Location.X, btnOdstranitTridu.Location.Y - 29);
             vyberTridNovyVybrana = false;
+
+            txtbxNazevTridy.Text = combobxVyberTrid.Text;
         }
 
         private void btnOdstranitTridu_Click(object sender, EventArgs e)
@@ -253,7 +258,6 @@ namespace SediM
             string nazev = combobxVyberTrid.Text;
 
             combobxVyberTrid.Items.RemoveAt(combobxVyberTrid.SelectedIndex);
-            combobxVyberTrid.SelectedIndex = 0;
         }
 
         private void btnNastavitTridu_Click(object sender, EventArgs e)
@@ -283,6 +287,11 @@ namespace SediM
             formularRozsazeni.setSkoly(skoly);
             formularRozsazeni.Owner = this;
             formularRozsazeni.ShowDialog();
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Importovat();
         }
 
         /// <summary>
@@ -323,15 +332,13 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
+                MessageBox.Show($"Stav úpravy: {stavUpravy}");
+                NactiStudentyDoSelectu();
             }
-        }
-
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Importovat();
+            catch (NpgsqlException ex)
+            {
+                mainHelp.Alert("Chyba", $"{ex.Message}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

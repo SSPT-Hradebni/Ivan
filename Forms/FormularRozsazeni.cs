@@ -1,4 +1,7 @@
-﻿using PdfSharp.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 
@@ -23,6 +26,7 @@ namespace SediM
             combobxAlgoritmus.SelectedIndex = 0;
             // Je využito funkce Skip() s parametrem 1 jelikož 0 je položka "Nový". S touto položkou nemáme zapotřebí pracovat.
             listbxVybraneTridy.Items.AddRange(tridy.Skip(1).ToArray());
+            inicializaceListuBarev();
         }
 
         internal void setSkoly(List<Skola> skoly)
@@ -76,6 +80,14 @@ namespace SediM
             }
         }
 
+        private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listbxVyberTrid.SelectedIndex = -1;
+            listbxVybraneTridy.SelectedIndex = -1;
+
+            panelVykresleniRozsazeni.Invalidate();
+        }
+
         private void panelVykresleniRozsazeni_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -119,17 +131,10 @@ namespace SediM
             int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9 - dimenze[0]) / dimenze[0]);
             int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65 - dimenze[1]) / dimenze[1]);
 
-            // Vytvoří 2-dimenzionální pole o velikosti zvolené vyplňované třídy
-            if (listbxVyplneneTridy.SelectedIndex != -1)
-            {
-                tridyZaku.Add(new Zak[dimenze[0], dimenze[1]]);
-            }
 
-            // Opakuje pro každý řádek míst ve třídě
-            for (int r = 0; r < dimenze[1]; r++)
+            for (int r = 0; r < dimensions[0]; r++)
             {
-                // Opakuje pro každé místo v řádku ve třídě
-                for (int s = 0; s < dimenze[0]; s++)
+                for (int s = 0; s < dimensions[1]; s++)
                 {
                     g.FillRectangle(
                         ziskejBarvuDleKategorie(
@@ -160,9 +165,9 @@ namespace SediM
                         listbxSeznamStudentu.Items.Add(
                             $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Misto} - " +
                             $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Jmeno}");
-                    }
                 }
             }
+        }
         }
         private int[] extrahujDimenze()
         {

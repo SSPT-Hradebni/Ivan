@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Forms/FormularRozsazeni.resx
+/Prerequisites/.NET 6.0
+/Setup Files
+/SediM-cache
