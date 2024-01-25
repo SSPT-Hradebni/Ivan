@@ -23,7 +23,7 @@ namespace SediM
         }
         public Skola Clone()
         {
-            Skola skola = new Skola(id);
+            Skola skola = new Skola(id, nazev);
 
             // Procykulje veškeré kategorie ve klonované škole
             for (int i = 0; i < kategorie.Length; i++)
@@ -31,7 +31,7 @@ namespace SediM
                 // Procykluje veškeré žáky v kategorii klonované školy
                 foreach (Zak zak in kategorie[i])
                 {
-                    skola.kategorie[i].Add(new Zak(zak.Jmeno));
+                    skola.kategorie[i].Add(new Zak(zak.Id, zak.Jmeno, zak.Prijmeni, zak.Kategorie, zak.Skola));
                 }
             }
 

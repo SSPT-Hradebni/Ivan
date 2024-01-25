@@ -44,8 +44,9 @@
             this.listbxVyplneneTridy = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.label6 = new System.Windows.Forms.Label();
+            this.btnTisk = new System.Windows.Forms.Button();
             this.listbxSeznamStudentu = new System.Windows.Forms.ListBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numupdownKategoriiNaTridu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -179,7 +180,7 @@
             this.panelVykresleniRozsazeni.Location = new System.Drawing.Point(0, 0);
             this.panelVykresleniRozsazeni.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelVykresleniRozsazeni.Name = "panelVykresleniRozsazeni";
-            this.panelVykresleniRozsazeni.Size = new System.Drawing.Size(794, 602);
+            this.panelVykresleniRozsazeni.Size = new System.Drawing.Size(793, 602);
             this.panelVykresleniRozsazeni.TabIndex = 12;
             this.panelVykresleniRozsazeni.Paint += new System.Windows.Forms.PaintEventHandler(this.panelVykresleniRozsazeni_Paint);
             // 
@@ -207,10 +208,12 @@
             // 
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
             // 
+            this.splitContainer.Panel1.Controls.Add(this.btnTisk);
             this.splitContainer.Panel1.Controls.Add(this.listbxSeznamStudentu);
             this.splitContainer.Panel1.Controls.Add(this.label6);
             this.splitContainer.Panel1.Controls.Add(this.label4);
@@ -232,7 +235,27 @@
             this.splitContainer.Panel2.Controls.Add(this.panelVykresleniRozsazeni);
             this.splitContainer.Size = new System.Drawing.Size(1022, 602);
             this.splitContainer.SplitterDistance = 224;
+            this.splitContainer.SplitterWidth = 5;
             this.splitContainer.TabIndex = 15;
+            // 
+            // btnTisk
+            // 
+            this.btnTisk.Location = new System.Drawing.Point(12, 576);
+            this.btnTisk.Name = "btnTisk";
+            this.btnTisk.Size = new System.Drawing.Size(75, 23);
+            this.btnTisk.TabIndex = 17;
+            this.btnTisk.Text = "Tisk";
+            this.btnTisk.UseVisualStyleBackColor = true;
+            this.btnTisk.Click += new System.EventHandler(this.btnTisk_Click);
+            // 
+            // listbxSeznamStudentu
+            // 
+            this.listbxSeznamStudentu.FormattingEnabled = true;
+            this.listbxSeznamStudentu.ItemHeight = 15;
+            this.listbxSeznamStudentu.Location = new System.Drawing.Point(12, 367);
+            this.listbxSeznamStudentu.Name = "listbxSeznamStudentu";
+            this.listbxSeznamStudentu.Size = new System.Drawing.Size(208, 199);
+            this.listbxSeznamStudentu.TabIndex = 16;
             // 
             // label6
             // 
@@ -242,57 +265,6 @@
             this.label6.Size = new System.Drawing.Size(98, 15);
             this.label6.TabIndex = 15;
             this.label6.Text = "Seznam studentů";
-            // 
-            // listbxSeznamStudentu
-            // 
-            this.listbxSeznamStudentu.FormattingEnabled = true;
-            this.listbxSeznamStudentu.ItemHeight = 15;
-            this.listbxSeznamStudentu.Location = new System.Drawing.Point(12, 367);
-            this.listbxSeznamStudentu.Name = "listbxSeznamStudentu";
-            this.listbxSeznamStudentu.Size = new System.Drawing.Size(208, 229);
-            this.listbxSeznamStudentu.TabIndex = 16;
-            // 
-            // splitContainer
-            // 
-            splitContainer.Dock = DockStyle.Fill;
-            splitContainer.Location = new Point(0, 0);
-            splitContainer.Margin = new Padding(3, 4, 3, 4);
-            splitContainer.Name = "splitContainer";
-            // 
-            // splitContainer.Panel1
-            // 
-            splitContainer.Panel1.Controls.Add(btnTisk);
-            splitContainer.Panel1.Controls.Add(label4);
-            splitContainer.Panel1.Controls.Add(label1);
-            splitContainer.Panel1.Controls.Add(label2);
-            splitContainer.Panel1.Controls.Add(label5);
-            splitContainer.Panel1.Controls.Add(btnPresunTridu);
-            splitContainer.Panel1.Controls.Add(numupdownKategoriiNaTridu);
-            splitContainer.Panel1.Controls.Add(label3);
-            splitContainer.Panel1.Controls.Add(listbxVyplneneTridy);
-            splitContainer.Panel1.Controls.Add(listbxVybraneTridy);
-            splitContainer.Panel1.Controls.Add(btnVyplnit);
-            splitContainer.Panel1.Controls.Add(combobxAlgoritmus);
-            splitContainer.Panel1.Controls.Add(listbxVyberTrid);
-            splitContainer.Panel1.Controls.Add(btnVyplnitVse);
-            // 
-            // splitContainer.Panel2
-            // 
-            splitContainer.Panel2.Controls.Add(panelVykresleniRozsazeni);
-            splitContainer.Size = new Size(1168, 803);
-            splitContainer.SplitterDistance = 256;
-            splitContainer.SplitterWidth = 5;
-            splitContainer.TabIndex = 15;
-            // 
-            // btnTisk
-            // 
-            btnTisk.Location = new Point(12, 762);
-            btnTisk.Name = "btnTisk";
-            btnTisk.Size = new Size(94, 29);
-            btnTisk.TabIndex = 15;
-            btnTisk.Text = "Tisk";
-            btnTisk.UseVisualStyleBackColor = true;
-            btnTisk.Click += btnTisk_Click;
             // 
             // FormularRozsazeni
             // 
@@ -339,5 +311,6 @@
         private SplitContainer splitContainer;
         private ListBox listbxSeznamStudentu;
         private Label label6;
+        private Button btnTisk;
     }
 }

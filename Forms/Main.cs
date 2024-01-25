@@ -117,26 +117,6 @@ namespace SediM
             }
         }
 
-        private void Importovat()
-        {
-            OpenFileDialog otevrit = new OpenFileDialog();
-            otevrit.Filter = "Tabulka (*.csv)|*.csv";
-            otevrit.DefaultExt = "csv";
-            otevrit.AddExtension = true;
-
-            if (otevrit.ShowDialog() == DialogResult.OK)
-            {
-                toolStripStatusLabel.Text = $"Data importována z \"{otevrit.FileName}\"";
-                _systemTimer.Start();
-
-                dataviewStudenti.Refresh();
-
-                dataviewStudenti.Columns.Clear();
-
-                dataviewStudenti.DataSource = mainHelp.FromCSV(otevrit.FileName);
-            }
-        }
-
         private void Main_Load(object sender, EventArgs e)
         {
             data = NactiStudenty();
@@ -145,11 +125,6 @@ namespace SediM
             // načtení žáků do listu pro práci s dočasnými hodnotami (data mohou být aktualizována přímo na serveru bez obnovení dat v aplikaci)
             zaci = mainHelp.ListZaku(data);
             skoly = mainHelp.ListSkol(dataSkoly);
-        }
-
-        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Exportovat();
         }
 
         private void ukončitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -310,11 +285,6 @@ namespace SediM
             formularRozsazeni.ShowDialog();
         }
 
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Importovat();
-        }
-
         /// <summary>
         /// Toolstrip pro otevření okna pro vytvoření nového studenta
         /// </summary>
@@ -362,47 +332,6 @@ namespace SediM
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Importovat();
-        }
-
-        private void lboxStudenti_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // povolení vstupů a tlačítka pro úpravu
-            tboxJmeno.Enabled = true;
-            tboxPrijmeni.Enabled = true;
-            btnUlozit.Enabled = true;
-
-            string student = lboxStudenti.SelectedItem.ToString();
-
-            string[] udaje = student.Split('(');
-            string idecko = udaje[1].Remove(udaje[1].Length - 1);
-
-            lblIdecko.Text = $"ID: {idecko}";
-
-            string[] jmenoprijmeni = udaje[0].Split(' ');
-            tboxJmeno.Text = jmenoprijmeni[1];
-            tboxPrijmeni.Text = jmenoprijmeni[0];
-        }
-
-        private void btnUlozit_Click(object sender, EventArgs e)
-        {
-            string[] idecko = lblIdecko.Text.Split(": ");
-
-            try
-            {
-                NpgsqlCommand upravStudenta = new NpgsqlCommand($"UPDATE studentiv2 SET jmeno_prijmeni = @jmenoprijmeni WHERE id = @id", connection);
-
-                upravStudenta.Parameters.AddWithValue("@jmenoprijmeni", $"{tboxJmeno.Text} {tboxPrijmeni.Text}");
-                upravStudenta.Parameters.AddWithValue("@id", int.Parse(idecko[1]));
-
-                int stavUpravy = upravStudenta.ExecuteNonQuery();
-
-                MessageBox.Show($"Stav úpravy: {stavUpravy}");
-                NactiStudentyDoSelectu();
-            }
-            catch (NpgsqlException ex)
-            {
-                mainHelp.Alert("Chyba", $"{ex.Message}", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
     }
 }
