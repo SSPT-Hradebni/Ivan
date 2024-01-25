@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using PdfSharp.Drawing;
@@ -28,7 +28,6 @@ namespace SediM
             listbxVybraneTridy.Items.AddRange(tridy.Skip(1).ToArray());
             // TODO - vyplň list škol svými příslušnými žáky. je třeba předat proměnné skoly a zaci a následně je rozřadit
         }
-
         internal void setSkoly(List<Skola> skoly)
         {
             this.skoly = skoly;
@@ -121,7 +120,6 @@ namespace SediM
             // Vypočítá velikost jednoho místa na základě velikosti dimenzí - stejný princip jako ve formuláři Main
             int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9 - dimenze[0]) / dimenze[0]);
             int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65 - dimenze[1]) / dimenze[1]);
-
 
             for (int r = 0; r < dimenze[1]; r++)
             {
