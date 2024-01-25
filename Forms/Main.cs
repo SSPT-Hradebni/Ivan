@@ -210,6 +210,7 @@ namespace SediM
 
         private void combobxVyberTrid_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // TODO/FIXME: Při změně třídy se nevykreslují správně místa
             if (combobxVyberTrid.Text == "Nový")
             {
                 numupdownClassroomWidth.Value = 1;
@@ -331,11 +332,6 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
-
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
         }
     }
 }

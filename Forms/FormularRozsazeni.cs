@@ -1,4 +1,7 @@
-﻿using PdfSharp.Drawing;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 
@@ -23,6 +26,7 @@ namespace SediM
             combobxAlgoritmus.SelectedIndex = 0;
             // Je využito funkce Skip() s parametrem 1 jelikož 0 je položka "Nový". S touto položkou nemáme zapotřebí pracovat.
             listbxVybraneTridy.Items.AddRange(tridy.Skip(1).ToArray());
+            inicializujListBarev();
         }
         internal void setSkoly(List<Skola> skoly)
         {
@@ -101,7 +105,6 @@ namespace SediM
 
             vykresleniMist(g);
         }
-
         private void vykresleniMist(Graphics g)
         {
             // Odstraní veškeré studenty z listboxu aby se nepřidávali přes sebe
@@ -118,16 +121,8 @@ namespace SediM
             int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9 - dimenze[0]) / dimenze[0]);
             int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65 - dimenze[1]) / dimenze[1]);
 
-            // Vytvoří 2-dimenzionální pole o velikosti zvolené vyplňované třídy
-            if (listbxVyplneneTridy.SelectedIndex != -1)
-            {
-                tridyZaku.Add(new Zak[dimenze[0], dimenze[1]]);
-            }
-
-            // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < dimenze[1]; r++)
             {
-                // Opakuje pro každé místo v řádku ve třídě
                 for (int s = 0; s < dimenze[0]; s++)
                 {
                     g.FillRectangle(
@@ -156,12 +151,13 @@ namespace SediM
                             pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostCisla.Height / 2);
 
                         // Přidá žáka včetně jeho místa do listboxu seznamu studentů ve třídě
+                        string prazdnyNeboJmeno = tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].CeleJmeno == "MÍSTO PRÁZDNÉ" ? "PRÁZDNÉ MÍSTO" : tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].CeleJmeno;
                         listbxSeznamStudentu.Items.Add(
                             $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Misto} - " +
-                            $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Jmeno}");
-                    }
+                            $"{prazdnyNeboJmeno}");
                 }
             }
+        }
         }
         private int[] extrahujDimenze()
         {
@@ -229,7 +225,6 @@ namespace SediM
             tridyZaku.Add(new Zak[tmp[1], tmp[0]]);
             // Vyplní právě přidanou třídu žáky
             vyplnTridu(tridyZaku.Count - 1, tmp);
-            ExportToPdf("C:\\Users\\Petr\\Desktop\\bb.pdf");
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(listbxVybraneTridy.Items[selectedIndex]);
             listbxVybraneTridy.Items.RemoveAt(selectedIndex);
@@ -263,7 +258,7 @@ namespace SediM
         {
             // Vytvoříme žáka returnZak s jménem "PRÁZDNÉ MÍSTO" pro případ, že by
             // for cyklus došel do konce bez přenastavení této proměnné
-            Zak returnZak = new Zak(0, "MÍSTO", "PRÁZDNÉ", 0, 0);
+            Zak returnZak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1);
 
             for (int i = 0; i < skoly.Count; i++)
             {
@@ -344,29 +339,28 @@ namespace SediM
                         XBrushes.Black,
                         new XRect(pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostJmena.Width / 2,
                         pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostJmena.Height / 2, mistoSirka, mistoVyska));
-
-                    /*// Přidá žáka včetně jeho místa do listboxu seznamu studentů ve třídě
-                    listbxSeznamStudentu.Items.Add(
-                        $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Misto} - " +
-                        $"{tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].Jmeno}");*/
                 }
             }
-
-            /*// Získání obsahu panelu, který chcete exportovat
-            Bitmap panelContent = new Bitmap(panelVykresleniRozsazeni.Width, panelVykresleniRozsazeni.Height);
-            panelVykresleniRozsazeni.DrawToBitmap(panelContent, new Rectangle(0, 0, panelVykresleniRozsazeni.Width, panelVykresleniRozsazeni.Height));
-
-            // Převod obsahu panelu na XImage
-            XImage image = XImage.FromGdiPlusImage(panelContent);
-
-            // Vložení obrázku do PDF stránky
-            gfx.DrawImage(image, 0, 0);*/
 
             // Uložení dokumentu do souboru
             document.Save(filePath);
 
             // Zavření dokumentu
             document.Close();
+        }
+
+        private void btnTisk_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.AddExtension = true;
+            dialog.DefaultExt = "pdf";
+
+            DialogResult stav = dialog.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                ExportToPdf(dialog.FileName);
+            }
         }
     }
 }
