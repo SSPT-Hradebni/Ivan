@@ -238,7 +238,7 @@
             this.splitContainer.SplitterWidth = 5;
             this.splitContainer.TabIndex = 15;
             // 
-            // btnTisk
+            // listbxSeznamStudentu
             // 
             this.btnTisk.Location = new System.Drawing.Point(12, 576);
             this.btnTisk.Name = "btnTisk";
