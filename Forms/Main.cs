@@ -157,6 +157,128 @@ namespace SediM
             MessageBox.Show($"Aplikace SediM\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace SediM umožňuje správu a organizaci krajského kola matematické soutěže.");
         }
 
+        private void panelEditClassroom_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            // Obrys třídy
+            g.DrawRectangle(
+                Pens.Gray,
+                0, 0, // Počáteční bod (vlevo nahoře)
+                panelEditClassroom.Width - 1, panelEditClassroom.Height - 1); // Koncový bod (vpravo dole)
+            // Tabule
+            g.FillRectangle(
+                Brushes.DarkGreen,
+                0, panelEditClassroom.Height / 4, // Počáteční bod (0% od levé stěny, 25% od horní stěny)
+                (int)(panelEditClassroom.Width * 0.02), // Šířka - 2%
+                panelEditClassroom.Height / 2); // Délka (výška) - 50%
+            // Katedra
+            g.FillRectangle(
+                Brushes.Black,
+                (int)(panelEditClassroom.Height * 0.1), // Roh katedry (10% od levé stěny)
+                panelEditClassroom.Height - (int)(panelEditClassroom.Height * 0.2), // Roh katedry (20% od dolní stěny)
+                (int)(panelEditClassroom.Height * 0.15), // Šířka - 15%
+                (int)(panelEditClassroom.Width * 0.2)); // Délka (výška) - 20%
+
+            // Místa pro studenty
+            // Poznámka: plocha pro vykreslování míst studentů je snížena o 5% od stěn a katedry
+            Point pocatekPlochyMist = new Point((int)(panelEditClassroom.Width * 0.2), (int)(panelEditClassroom.Height * 0.05));
+            // Vypočítá podíl rozdílu šířky plochy pro vykreslení míst a hodnoty numericUpDown
+            // pro počet míst ve třídě do šířky hodnotou numericUpDown ... do šířky
+            int mistoSirka = (int)((panelEditClassroom.Width * 0.75 - (double)numupdownClassroomWidth.Value) / (double)numupdownClassroomWidth.Value);
+
+            // Stejný princip ale pro počet míst ve třídě do výšky
+            int mistoVyska = (int)((panelEditClassroom.Height * 0.9 - (double)numupdownClassroomHeight.Value) / (double)numupdownClassroomHeight.Value);
+
+            for (int r = 0; r < numupdownClassroomHeight.Value; r++) // r - řádek
+            {
+                for (int s = 0; s < numupdownClassroomWidth.Value; s++) // s - sloupec
+                {
+                    g.FillRectangle(
+                        Brushes.Gray,
+                        pocatekPlochyMist.X + s * mistoSirka + s, // Každé nadcházející vykreslení se odsadí o dalších mistoSirka + 1
+                        pocatekPlochyMist.Y + r * mistoVyska + r, // To samé platí zde s rozdílem, že se vykreslení odsadí každý další řádek
+                        mistoSirka,
+                        mistoVyska);
+                }
+            }
+
+        }
+
+        private void combobxVyberTrid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // TODO/FIXME: Při změně třídy se nevykreslují správně místa
+            if (combobxVyberTrid.Text == "Nový")
+            {
+                numupdownClassroomWidth.Value = 1;
+                numupdownClassroomHeight.Value = 1;
+
+                // Při prvotním spuštění předchází přesunutí komponent
+                if (vyberTridNovyVybrana) return;
+                txtbxNazevTridy.Visible = true;
+                numupdownClassroomWidth.Location = new Point(numupdownClassroomWidth.Location.X, numupdownClassroomWidth.Location.Y + 29);
+                lblUpravaTrid.Location = new Point(lblUpravaTrid.Location.X, lblUpravaTrid.Location.Y + 29);
+                numupdownClassroomHeight.Location = new Point(numupdownClassroomHeight.Location.X, numupdownClassroomHeight.Location.Y + 29);
+                btnNastavitTridu.Location = new Point(btnNastavitTridu.Location.X, btnNastavitTridu.Location.Y + 29);
+                btnOdstranitTridu.Location = new Point(btnOdstranitTridu.Location.X, btnOdstranitTridu.Location.Y + 29);
+                vyberTridNovyVybrana = true;
+
+                txtbxNazevTridy.Text = "";
+
+                return;
+            }
+
+            // Formát tříd v comboboxu: LV04 (4x5)
+            numupdownClassroomWidth.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[0]);
+            numupdownClassroomHeight.Value = int.Parse(combobxVyberTrid.Text.Split('(')[1].Split('x')[1].Replace(")", ""));
+
+            if (!vyberTridNovyVybrana) return;
+            txtbxNazevTridy.Visible = false;
+            numupdownClassroomWidth.Location = new Point(numupdownClassroomWidth.Location.X, numupdownClassroomWidth.Location.Y - 29);
+            lblUpravaTrid.Location = new Point(lblUpravaTrid.Location.X, lblUpravaTrid.Location.Y - 29);
+            numupdownClassroomHeight.Location = new Point(numupdownClassroomHeight.Location.X, numupdownClassroomHeight.Location.Y - 29);
+            btnNastavitTridu.Location = new Point(btnNastavitTridu.Location.X, btnNastavitTridu.Location.Y - 29);
+            btnOdstranitTridu.Location = new Point(btnOdstranitTridu.Location.X, btnOdstranitTridu.Location.Y - 29);
+            vyberTridNovyVybrana = false;
+
+            txtbxNazevTridy.Text = combobxVyberTrid.Text;
+        }
+
+        private void btnOdstranitTridu_Click(object sender, EventArgs e)
+        {
+            if (combobxVyberTrid.Text == "Nový")
+            {
+                numupdownClassroomWidth.Value = 1;
+                numupdownClassroomHeight.Value = 1;
+                return;
+            }
+
+            string nazev = combobxVyberTrid.Text;
+
+            combobxVyberTrid.Items.RemoveAt(combobxVyberTrid.SelectedIndex);
+        }
+
+        private void btnNastavitTridu_Click(object sender, EventArgs e)
+        {
+            if (txtbxNazevTridy.Text == combobxVyberTrid.Text)
+            {
+                MessageBox.Show("Nevypracovaná funkcionalita! - TODO\r\nÚprava stávající třídy", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (txtbxNazevTridy.Text.Contains('(') | txtbxNazevTridy.Text.Contains(')'))
+            {
+                MessageBox.Show("Název třídy nesmí obsahovat kulaté závorky!", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (txtbxNazevTridy.Text == "")
+            {
+                MessageBox.Show("Nelze vytvořit bezejmennou třídu", "Chyba při zpracování třídy", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (combobxVyberTrid.Text == "Nový")
+            {
+                combobxVyberTrid.Items.Add($"{txtbxNazevTridy.Text} ({numupdownClassroomWidth.Value}x{numupdownClassroomHeight.Value})");
+            }
+            // TODO: Chybí kontrola proti opakovanému vkládání stejnojmenných tříd.
+        }
+
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, connection);
@@ -207,11 +329,6 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
-
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
         }
 
         private void nováToolStripMenuItem1_Click(object sender, EventArgs e)
