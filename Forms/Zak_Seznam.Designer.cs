@@ -47,12 +47,12 @@
             dataviewStudenti.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola });
             dataviewStudenti.Dock = DockStyle.Fill;
             dataviewStudenti.Location = new Point(0, 0);
-            dataviewStudenti.Margin = new Padding(3, 4, 3, 4);
+            dataviewStudenti.Margin = new Padding(3, 5, 3, 5);
             dataviewStudenti.Name = "dataviewStudenti";
             dataviewStudenti.ReadOnly = true;
             dataviewStudenti.RowHeadersWidth = 51;
             dataviewStudenti.RowTemplate.Height = 25;
-            dataviewStudenti.Size = new Size(800, 450);
+            dataviewStudenti.Size = new Size(914, 600);
             dataviewStudenti.TabIndex = 5;
             // 
             // id
@@ -85,15 +85,17 @@
             // 
             // Zak_Seznam
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(dataviewStudenti);
             HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Zak_Seznam";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Seznam studentů";
             Load += Zak_Seznam_Load;
             ((System.ComponentModel.ISupportInitialize)dataviewStudenti).EndInit();
