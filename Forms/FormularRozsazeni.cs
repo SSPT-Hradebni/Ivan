@@ -19,8 +19,6 @@ namespace SediM
 
         // List vyplněných tříd žáky. Každý index dané položky v listu odpovídá indexu vyplněné třídy v listboxu vyplněných tříd
         private List<Zak[,]> tridyZaku = new List<Zak[,]>();
-
-        private List<Skola> skoly = new List<Skola>();
         private List<Trida> tridy = new List<Trida>();
         private List<Zak> zaci = new List<Zak>();
 
@@ -28,11 +26,10 @@ namespace SediM
         // Po nastavení její hodnoty žákovi se inkrementuje aby se předešlo dvěma místům se stejnou hodnotou
         private int mistoZaka = 1;
 
-        public FormularRozsazeni(List<Skola> skoly, List<Trida> tridy, List<Zak> zaci, NpgsqlConnection connection)
+        public FormularRozsazeni(List<Trida> tridy, List<Zak> zaci, NpgsqlConnection connection)
         {
             InitializeComponent();
 
-            this.skoly = skoly;
             this.tridy = tridy;
             this.zaci = zaci;
             this.connection = connection;
@@ -197,7 +194,7 @@ namespace SediM
             barvyVyplnenychTrid.Add(inicializujListBarev().ToArray());
             List<Zak> kopieZaku = new List<Zak>();
             foreach (Zak zak in zaci)
-                kopieZaku.Add(new Zak(zak.Id, zak.Jmeno, zak.Prijmeni, zak.Kategorie, zak.Skola));
+                kopieZaku.Add(zak.Clone());
 
             // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < sirka; r++)
@@ -207,7 +204,7 @@ namespace SediM
                 {
                     // Přidá žáka podle kategorie pomocí funkce ziskejZaka - tento řádek
                     // je implementovám aby řadil žáky pouze podle aloritmu Knight!
-                    tridyZaku[indexTridy][r, s] = ziskejZaka((r * 2 + s) % barvyVyplnenychTrid[barvyVyplnenychTrid.Count - 1].Length, kopieZaku);
+                    tridyZaku[indexTridy][r, s] = ziskejZaka((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value, kopieZaku);
                 }
             }
         }
@@ -219,20 +216,11 @@ namespace SediM
             Zak returnZak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1);
 
             // TODO: Selekce žáka na základě kýžené kategorie
-            /*
-            // Pokud se hledaná kategorie ve škole nenachází, přeskočíme na další školu.
-            if (skoly[i].Kategorie.Length - 1 < kategorie) continue;
-            // Pokud je hledaná kategorie nullové hodnoty nebo je prázdná, přeskočíme na další školu.
-            // Pokud je kategorie null, znamená to, že již v dané třídě byla využita.
-            if (skoly[i].Kategorie[kategorie] == null || skoly[i].Kategorie[kategorie].Count == 0) continue;
-            // Vybereme žáka na indexu 0. Tímto způsobem máme jistotu že nevybereme žáka mimo list.
-            returnZak = skoly[i].Kategorie[kategorie][0];
-            this.skoly[i].Kategorie[kategorie].RemoveAt(0);
-            // Označíme danou kategorii jako využitou - tedy hodntou null
-            skoly[i].Kategorie[kategorie] = null;
-            // Vrátíme nastaveného žáka jelikož nepotřebujeme dále hledat vhodnou školu s nevyužitou kategorií
-            break;
-            */
+            if (kopieZaku.Find(zak => zak.Kategorie == kategorie) != null)
+            {
+                returnZak = kopieZaku.Find(zak => zak.Kategorie == kategorie);
+                kopieZaku.RemoveAll(zak => zak.Kategorie == kategorie && zak.Skola == returnZak.Skola);
+            }
 
             returnZak.Misto = mistoZaka;
             mistoZaka++;
@@ -318,10 +306,6 @@ namespace SediM
         private Trida ZiskejAktualniTridu()
         {
             if (cboxTridy.SelectedIndex != -1)
-            {
-                return tridy[cboxTridy.SelectedIndex];
-            }
-            else if (cboxTridy.SelectedIndex != -1)
             {
                 return tridy[cboxTridy.SelectedIndex];
             }

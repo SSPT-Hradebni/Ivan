@@ -54,6 +54,11 @@
             return string.Compare(ToString(), other.ToString());
         }
 
+        public Zak Clone()
+        {
+            return new Zak(this.Id, this.Jmeno, this.Prijmeni, this.Kategorie, this.Skola);
+        }
+
         public override string ToString()
         {
             return $"{prijmeni} {jmeno}";
