@@ -14,18 +14,15 @@ namespace SediM
         public static NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder($"Host={Properties.Settings.Default.MySQL_server};Port={Properties.Settings.Default.MySQL_port};Username={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo};Database={Properties.Settings.Default.MySQL_databaze};");
         public static NpgsqlDataSource dataSource = dataSourceBuilder.Build();
 
-        private NpgsqlConnection? connection;
+        private NpgsqlConnection connection;
         private DataTable? data;
-        private DataTable? dataSkoly;
-        private System.Timers.Timer _systemTimer;
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
-        private List<Skola> skoly = new List<Skola>();
-        public List<Zak> zaci = new List<Zak>();
 
-        // Pomocná proměnná. Zabraňuje opakovanému přesunutí komponent při události comboboxu výběru tříd.
-        private bool vyberTridNovyVybrana = true;
+        public List<Zak> zaci = new List<Zak>();
+        public List<Trida> tridy = new List<Trida>();
+        private List<Skola> skoly = new List<Skola>();
 
         public Main()
         {
@@ -52,8 +49,6 @@ namespace SediM
                 mainHelp.Alert("Chyba PostgreSQL", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
-
-            combobxVyberTrid.SelectedIndex = 0;
         }
 
         private DataTable NactiSkoly()
@@ -61,6 +56,18 @@ namespace SediM
             DataTable data = new DataTable();
             NpgsqlDataAdapter dataAdapter;
             NpgsqlCommand cmd = new("SELECT * FROM skoly", connection);
+
+            dataAdapter = new NpgsqlDataAdapter(cmd);
+            dataAdapter.Fill(data);
+
+            return data;
+        }
+
+        private DataTable NactiTridy()
+        {
+            DataTable data = new DataTable();
+            NpgsqlDataAdapter dataAdapter;
+            NpgsqlCommand cmd = new("SELECT * FROM tridy", connection);
 
             dataAdapter = new NpgsqlDataAdapter(cmd);
             dataAdapter.Fill(data);
@@ -84,6 +91,12 @@ namespace SediM
         {
             data = NactiStudenty();
             zaci = mainHelp.ListZaku(data);
+
+            data = NactiSkoly();
+            skoly = mainHelp.ListSkol(data);
+
+            data = NactiTridy();
+            tridy = mainHelp.ListTrid(data);
         }
 
         private void Exportovat()
@@ -118,12 +131,7 @@ namespace SediM
 
         private void Main_Load(object sender, EventArgs e)
         {
-            data = NactiStudenty();
-            dataSkoly = NactiSkoly();
-
-            // načtení žáků do listu pro práci s dočasnými hodnotami (data mohou být aktualizována přímo na serveru bez obnovení dat v aplikaci)
-            zaci = mainHelp.ListZaku(data);
-            skoly = mainHelp.ListSkol(dataSkoly);
+            NactiData();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,6 +157,8 @@ namespace SediM
             MessageBox.Show($"Aplikace SediM\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace SediM umožňuje správu a organizaci krajského kola matematické soutěže.");
         }
 
+<<<<<<< HEAD
+=======
         private void numupdownClassroomWidth_ValueChanged(object sender, EventArgs e)
         {
             panelEditClassroom.Invalidate();
@@ -281,9 +291,10 @@ namespace SediM
             // TODO: Chybí kontrola proti opakovanému vkládání stejnojmenných tříd.
         }
 
+>>>>>>> fe694e4f46be048da6bdfdd472817e77ea34c4b0
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(combobxVyberTrid.Items.Cast<string>());
+            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, connection);
             formularRozsazeni.setSkoly(skoly);
             formularRozsazeni.Owner = this;
             formularRozsazeni.ShowDialog();
@@ -331,6 +342,19 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
+        }
+
+        private void nováToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Trida_Nova okno = new Trida_Nova(tridy);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                NactiData();
+            }
         }
     }
 }

@@ -1,9 +1,5 @@
-﻿using Npgsql;
-using Npgsql.Internal;
-using PdfSharp;
-using System.Data;
+﻿using System.Data;
 using System.Text;
-using System.Windows.Forms;
 
 namespace SediM.Helpers
 {
@@ -19,6 +15,77 @@ namespace SediM.Helpers
         public DialogResult Alert(string titulek, string obsah, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OK, MessageBoxIcon messageBoxIcon = MessageBoxIcon.None)
         {
             return MessageBox.Show(obsah, titulek, messageBoxButtons, messageBoxIcon);
+        }
+
+        /// <summary>
+        /// Načítání studentů do listu z <paramref name="data"/>
+        /// </summary>
+        /// <param name="data">Surová tabulka dat studentů</param>
+        /// <returns>Všichni studenti z databáze v listu</returns>
+        public List<Zak> ListZaku(DataTable data)
+        {
+            // vytvoření dočasného listu studentů
+            List<Zak> zaci = new List<Zak>();
+
+            foreach(DataRow radek in data.Rows)
+            {
+                // rozdělení jména a příjmení
+                string[] jmeno = radek[1].ToString().Split(' ');
+
+                // [0] - ID studenta
+                // [1] - Jméno studenta
+                // [2] - Příjmení studenta
+                // [3] - Studentovo číslo kategorie
+                // [4] - ID školy
+                Zak zak = new Zak(long.Parse(radek[0].ToString()), jmeno[0], jmeno[1], long.Parse(radek[2].ToString()), long.Parse(radek[3].ToString()));
+                zaci.Add(zak);
+            }
+
+            return zaci;
+        }
+
+        /// <summary>
+        /// Načítání tříd do listu z <paramref name="data"/>
+        /// </summary>
+        /// <param name="data">Surová tabulka dat tříd</param>
+        /// <returns>Všechny třídy z databáze v listu</returns>
+        public List<Trida> ListTrid(DataTable data)
+        {
+            // vytvoření dočasného listu tříd
+            List<Trida> tridy = new List<Trida>();
+
+            foreach (DataRow radek in data.Rows)
+            {
+                // [0] - ID třídy
+                // [1] - Název třídy
+                // [2] - Šířka třídy (v místech)
+                // [3] - Výška třídy (v místech)
+                Trida trida = new Trida(long.Parse(radek[0].ToString()), radek[1].ToString(), int.Parse(radek[2].ToString()), int.Parse(radek[3].ToString()));
+                tridy.Add(trida);
+            }
+
+            return tridy;
+        }
+
+        /// <summary>
+        /// Načítání škol do listu z <paramref name="data"/>
+        /// </summary>
+        /// <param name="data">Surová tabulka dat škol</param>
+        /// <returns>Všechny školy z databáze v listu</returns>
+        public List<Skola> ListSkol(DataTable data)
+        {
+            // vytvoření dočasného listu škol
+            List<Skola> skoly = new List<Skola>();
+
+            foreach (DataRow radek in data.Rows)
+            {
+                // [0] - ID školy
+                // [1] - Název školy
+                Skola skola = new Skola(long.Parse(radek[0].ToString()), radek[1].ToString());
+                skoly.Add(skola);
+            }
+
+            return skoly;
         }
 
         /// <summary>
@@ -113,44 +180,6 @@ namespace SediM.Helpers
             }
 
             return tabulka;
-        }
-
-        public List<Zak> ListZaku(DataTable data)
-        {
-            List<Zak> list = new List<Zak>();
-
-            // Vysvětlení jednotlivých indexů datového typu DataRow
-            // [0] - ID
-            // [1] - Jméno
-            // [2] - Příjmení
-            // [2] - Kategorie
-            // [3] - Škola ID
-
-            foreach (DataRow zak in data.Rows)
-            {
-                string[] jmenoPrijmeni = zak[1].ToString().Split(' ');
-                list.Add(new Zak(long.Parse(zak[0].ToString() ?? ""), jmenoPrijmeni[0], jmenoPrijmeni[1], long.Parse(zak[2].ToString() ?? ""), long.Parse(zak[3].ToString() ?? "")));
-                zak.Delete();
-            }
-
-            return list;
-        }
-
-        public List<Skola> ListSkol(DataTable data)
-        {
-            List<Skola> list = new List<Skola>();
-
-            // Vysvětlení jednotlivých indexů datového typu DataRow
-            // [0] - ID
-            // [1] - Název
-
-            foreach (DataRow skola in data.Rows)
-            {
-                list.Add(new Skola(long.Parse(skola[0].ToString() ?? ""), skola[1].ToString() ?? ""));
-                skola.Delete();
-            }
-
-            return list;
         }
     }
 }

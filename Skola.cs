@@ -12,6 +12,11 @@ namespace SediM
         public string Nazev { get { return nazev; } set { nazev = value; } }
         public List<Zak>[] Kategorie { get { return kategorie; } set { kategorie = value; } }
 
+        /// <summary>
+        /// Klasický konstruktor školy
+        /// </summary>
+        /// <param name="id">ID školy</param>
+        /// <param name="nazev">Název školy</param>
         public Skola(long id, string nazev)
         {
             this.id = id;
@@ -38,6 +43,10 @@ namespace SediM
             return skola;
         }
 
+        /// <summary>
+        /// Přetížení s pouze ID školy
+        /// </summary>
+        /// <param name="id">ID školy</param>
         public Skola(long id)
         {
             this.id = id;
