@@ -144,6 +144,7 @@ namespace SediM.Forms
                 int sirka = (int)numSirka.Value;
                 int vyska = (int)numVyska.Value;
 
+                // TODO: Proč se id přidává dohromady o 2? řádek 158
                 // ID poslední vložené třídy do databáze (kvůli indexování o +1)
                 int posledniID = _tridy.Count() + 1;
 
@@ -152,14 +153,14 @@ namespace SediM.Forms
                     throw new Exception("Název třídy nesmí být prázdný");
                 }
 
-                NpgsqlCommand vytvorStudenta = new NpgsqlCommand($"INSERT INTO tridy (id, nazev, sirka, vyska) VALUES(@id, @nazev, @sirka, @vyska)", connection);
+                NpgsqlCommand vytvorTridu = new NpgsqlCommand($"INSERT INTO tridy (id, nazev, sirka, vyska) VALUES(@id, @nazev, @sirka, @vyska)", connection);
 
-                vytvorStudenta.Parameters.AddWithValue("@id", posledniID + 1); // ID nově vytvořené třídy
-                vytvorStudenta.Parameters.AddWithValue("@nazev", nazev);
-                vytvorStudenta.Parameters.AddWithValue("@sirka", sirka);
-                vytvorStudenta.Parameters.AddWithValue("@vyska", vyska);
+                vytvorTridu.Parameters.AddWithValue("@id", posledniID + 1); // ID nově vytvořené třídy
+                vytvorTridu.Parameters.AddWithValue("@nazev", nazev);
+                vytvorTridu.Parameters.AddWithValue("@sirka", sirka);
+                vytvorTridu.Parameters.AddWithValue("@vyska", vyska);
 
-                int stav = vytvorStudenta.ExecuteNonQuery();
+                int stav = vytvorTridu.ExecuteNonQuery();
 
                 if (stav != 0)
                 {

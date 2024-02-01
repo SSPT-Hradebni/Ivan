@@ -156,6 +156,7 @@ namespace SediM
 
             MessageBox.Show($"Aplikace SediM\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace SediM umožňuje správu a organizaci krajského kola matematické soutěže.");
         }
+        // FIXME: broken
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, connection);
