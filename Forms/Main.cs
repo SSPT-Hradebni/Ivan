@@ -159,8 +159,7 @@ namespace SediM
         // FIXME: broken
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, connection);
-            formularRozsazeni.setSkoly(skoly);
+            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(skoly,tridy,zaci, connection);
             formularRozsazeni.Owner = this;
             formularRozsazeni.ShowDialog();
         }
