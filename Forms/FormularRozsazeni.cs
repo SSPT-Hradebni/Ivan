@@ -20,6 +20,7 @@ namespace SediM
         // List vyplněných tříd žáky. Každý index dané položky v listu odpovídá indexu vyplněné třídy v listboxu vyplněných tříd
         private List<Zak[,]> tridyZaku = new List<Zak[,]>();
         private List<Trida> tridy = new List<Trida>();
+        private List<Trida> vyplneneTridy = new List<Trida>();
         private List<Zak> zaci = new List<Zak>();
 
         // Proměnná, jejíž hodnota se přiřadí každému dalšímu zákovi při řazení do třídy.
@@ -37,9 +38,13 @@ namespace SediM
             // Automaticky zvolí jediný doposud vyřešený algoritmus - Knight (Jezdec)
             combobxAlgoritmus.SelectedIndex = 0;
         }
-
-
+        // TODO/FIXME: Při vybrání třídy z cboxTridy, ve chvíli kdy je alespoň jedna třída vyplněná, spadne aplikace z důvodu přístupu do pole mimo jeho stanovenou velikost
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            panelVykresleniRozsazeni.Invalidate();
+        }
+
+        private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
             panelVykresleniRozsazeni.Invalidate();
         }
@@ -88,8 +93,10 @@ namespace SediM
                 (int)(panelVykresleniRozsazeni.Height * 0.05));
 
             // Vypočítá velikost jednoho místa na základě velikosti dimenzí
-            int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9) / aktualniTrida.Vyska);
-            int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65) / aktualniTrida.Sirka);
+            int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9) / aktualniTrida.Sirka);
+            int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65) / aktualniTrida.Vyska);
+
+            int indexVyplneneTridy = listbxVyplneneTridy.SelectedIndex;
 
             // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < aktualniTrida.Vyska; r++)
@@ -97,36 +104,39 @@ namespace SediM
                 // Opakuje pro každé místo v řádku ve třídě
                 for (int s = 0; s < aktualniTrida.Sirka; s++)
                 {
-                    /* g.FillRectangle(
+                    g.FillRectangle(
                         ziskejBarvuDleKategorie(
-                            cboxTridy.SelectedIndex != -1 ? cboxTridy.SelectedIndex : -1,
-                            cboxTridy.SelectedIndex != -1
-                                ? (r * 2 + s) % barvyVyplnenychTrid[cboxTridy.SelectedIndex].Length
+                            indexVyplneneTridy,
+                            indexVyplneneTridy != -1
+                                ? (r * 2 + s) % barvyVyplnenychTrid[indexVyplneneTridy].Length
                                 : -1),
                         pocatekPlochyMist.X + s * mistoSirka + s,
                         pocatekPlochyMist.Y + r * mistoVyska + r,
-                        mistoSirka, mistoVyska); */
+                        mistoSirka, mistoVyska);
 
-                    if (cboxTridy.SelectedIndex != -1)
+                    if (indexVyplneneTridy != -1)
                     {
                         // Zjistí velikost vykreslovaného řetězce
                         SizeF velikostCisla = g.MeasureString(
-                            tridyZaku[cboxTridy.SelectedIndex][r, s].Misto.ToString(),
+                            tridyZaku[indexVyplneneTridy][r, s].Misto.ToString(),
                             new Font("Arial", 10));
 
                         // Vykreslí řetězec na střed buňky (místa)
                         g.DrawString(
-                            tridyZaku[cboxTridy.SelectedIndex][r, s].Misto.ToString(),
+                            tridyZaku[indexVyplneneTridy][r, s].Misto.ToString(),
                             new Font("Arial", 10),
                             Brushes.Black,
                             pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostCisla.Width / 2,
                             pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostCisla.Height / 2);
 
                         // Přidá žáka včetně jeho místa do listboxu seznamu studentů ve třídě
-                        string prazdnyNeboJmeno = tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].CeleJmeno == "MÍSTO PRÁZDNÉ" ? "PRÁZDNÉ MÍSTO" : tridyZaku[listbxVyplneneTridy.SelectedIndex][r, s].CeleJmeno;
+                        string prazdnyNeboJmeno =
+                            tridyZaku[indexVyplneneTridy][r, s].CeleJmeno == "MÍSTO PRÁZDNÉ"
+                            ? "PRÁZDNÉ MÍSTO"
+                            : tridyZaku[indexVyplneneTridy][r, s].CeleJmeno;
                         listbxSeznamStudentu.Items.Add(
-                            $"{tridyZaku[cboxTridy.SelectedIndex][r, s].Misto} - " +
-                            $"{tridyZaku[cboxTridy.SelectedIndex][r, s].Jmeno}");
+                            $"{tridyZaku[indexVyplneneTridy][r, s].Misto} - " +
+                            $"{prazdnyNeboJmeno}");
                     }
                 }
             }
@@ -135,12 +145,13 @@ namespace SediM
         private List<SolidBrush> inicializujListBarev()
         {
             List<SolidBrush> barvyKategorii = new List<SolidBrush>();
-            barvyKategorii.Clear();
             Random rng = new Random();
             int i = 0;
+
             while (i < numupdownKategoriiNaTridu.Value)
             {
                 SolidBrush sb = new SolidBrush(Color.FromArgb(rng.Next(0, 255), rng.Next(0, 255), rng.Next(0, 255)));
+
                 // Přeskočí přidání duplicitní barvy
                 if (barvyKategorii.Exists(barva => barva.Color == sb.Color)) continue;
                 i++;
@@ -174,19 +185,23 @@ namespace SediM
 
         private void nastavParametryProVyplneni(int selectedIndex, Trida aktualniTrida)
         {
-            tridyZaku.Add(new Zak[aktualniTrida.Sirka, aktualniTrida.Vyska]);
+            tridyZaku.Add(new Zak[aktualniTrida.Vyska, aktualniTrida.Sirka]);
 
             // Vyplní právě přidanou třídu žáky
             vyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska);
 
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(cboxTridy.Items[selectedIndex]);
+            vyplneneTridy.Add(aktualniTrida);
 
             // odstranění vyplněné třídy z comboboxu
             tridy.Remove(aktualniTrida);
             cboxTridy.DataSource = null; // při DataSource nejde vymazat cbox, proto nastaveno teď na null
             cboxTridy.Items.Clear();
             cboxTridy.DataSource = tridy;
+
+            cboxTridy.SelectedIndex = -1;
+            listbxVyplneneTridy.SelectedIndex = listbxVyplneneTridy.Items.Count - 1;
         }
 
         private void vyplnTridu(int indexTridy, int sirka, int vyska)
@@ -197,14 +212,14 @@ namespace SediM
                 kopieZaku.Add(zak.Clone());
 
             // Opakuje pro každý řádek míst ve třídě
-            for (int r = 0; r < sirka; r++)
+            for (int r = 0; r < vyska; r++)
             {
                 // Opakuje pro každé místo v řádku ve třídě
-                for (int s = 0; s < vyska; s++)
+                for (int s = 0; s < sirka; s++)
                 {
                     // Přidá žáka podle kategorie pomocí funkce ziskejZaka - tento řádek
                     // je implementovám aby řadil žáky pouze podle aloritmu Knight!
-                    tridyZaku[indexTridy][r, s] = ziskejZaka((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value, kopieZaku);
+                    tridyZaku[indexTridy][r, s] = ziskejZaka((r * 2 + s + 1) % (int)numupdownKategoriiNaTridu.Value, kopieZaku);
                 }
             }
         }
@@ -311,7 +326,7 @@ namespace SediM
             }
             else if (listbxVyplneneTridy.SelectedIndex != -1)
             {
-                return tridy[listbxVyplneneTridy.SelectedIndex];
+                return vyplneneTridy[listbxVyplneneTridy.SelectedIndex];
             }
             else
             {
