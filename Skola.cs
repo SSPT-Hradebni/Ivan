@@ -1,4 +1,5 @@
-﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+﻿using static Azure.Core.HttpHeader;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SediM
 {
@@ -26,22 +27,6 @@ namespace SediM
             for (int i = 0; i < kategorie.Length; i++)
                 kategorie[i] = new List<Zak>();
         }
-        public Skola Clone()
-        {
-            Skola skola = new Skola(id, nazev);
-
-            // Procykulje veškeré kategorie ve klonované škole
-            for (int i = 0; i < kategorie.Length; i++)
-            {
-                // Procykluje veškeré žáky v kategorii klonované školy
-                foreach (Zak zak in kategorie[i])
-                {
-                    skola.kategorie[i].Add(new Zak(zak.Id, zak.Jmeno, zak.Prijmeni, zak.Kategorie, zak.Skola));
-                }
-            }
-
-            return skola;
-        }
 
         /// <summary>
         /// Přetížení s pouze ID školy
@@ -58,7 +43,7 @@ namespace SediM
 
         public Skola Clone()
         {
-            Skola skola = new Skola(id);
+            Skola skola = new Skola(id, nazev);
 
             // Procykulje veškeré kategorie ve klonované škole
             for (int i = 0; i < kategorie.Length; i++)
