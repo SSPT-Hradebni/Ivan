@@ -1,11 +1,8 @@
-﻿using System.Windows.Forms;
-using Npgsql;
+﻿using Npgsql;
+using SediM.Forms;
 using SediM.Helpers;
 using System.Data;
 using System.Reflection;
-using System.Timers;
-using System.Xml;
-using SediM.Forms;
 
 namespace SediM
 {
@@ -74,7 +71,7 @@ namespace SediM
 
             return data;
         }
-
+        
         private DataTable NactiStudenty()
         {
             DataTable data = new DataTable();
@@ -156,11 +153,15 @@ namespace SediM
 
             MessageBox.Show($"Aplikace SediM\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace SediM umožňuje správu a organizaci krajského kola matematické soutěže.");
         }
-
+        /* POZNÁMKA:
+         * Při rozsazování se odebírají jak studenti, tak třídy. 
+         * Nejsem si však jistý, jestli je to žádoucí chování, či nikoliv.
+         * Odebírání studentů dle mého není žádoucí, odebírání tříd však
+         * pravděpodobně ano kvůli pozdější implementaci úpravy rozsazení.
+        */
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(zaci, tridy, connection);
-            formularRozsazeni.setSkoly(skoly);
+            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, zaci, connection);
             formularRozsazeni.Owner = this;
             formularRozsazeni.ShowDialog();
         }

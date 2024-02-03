@@ -52,26 +52,28 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(14, 61);
+            label1.Location = new Point(12, 46);
             label1.Name = "label1";
-            label1.Size = new Size(125, 20);
+            label1.Size = new Size(98, 15);
             label1.TabIndex = 0;
             label1.Text = "Kategorií na třídu";
             // 
             // numupdownKategoriiNaTridu
             // 
-            numupdownKategoriiNaTridu.Location = new Point(201, 59);
+            numupdownKategoriiNaTridu.Location = new Point(176, 44);
+            numupdownKategoriiNaTridu.Margin = new Padding(3, 2, 3, 2);
             numupdownKategoriiNaTridu.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             numupdownKategoriiNaTridu.Name = "numupdownKategoriiNaTridu";
-            numupdownKategoriiNaTridu.Size = new Size(50, 27);
+            numupdownKategoriiNaTridu.Size = new Size(44, 23);
             numupdownKategoriiNaTridu.TabIndex = 1;
             numupdownKategoriiNaTridu.Value = new decimal(new int[] { 7, 0, 0, 0 });
             // 
             // btnVyplnit
             // 
-            btnVyplnit.Location = new Point(17, 149);
+            btnVyplnit.Location = new Point(15, 112);
+            btnVyplnit.Margin = new Padding(3, 2, 3, 2);
             btnVyplnit.Name = "btnVyplnit";
-            btnVyplnit.Size = new Size(101, 29);
+            btnVyplnit.Size = new Size(88, 22);
             btnVyplnit.TabIndex = 2;
             btnVyplnit.Text = "Vyplnit";
             btnVyplnit.UseVisualStyleBackColor = true;
@@ -80,9 +82,9 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(14, 92);
+            label2.Location = new Point(12, 69);
             label2.Name = "label2";
-            label2.Size = new Size(112, 20);
+            label2.Size = new Size(89, 15);
             label2.TabIndex = 7;
             label2.Text = "Třída k vyplnění";
             // 
@@ -90,17 +92,18 @@
             // 
             combobxAlgoritmus.FormattingEnabled = true;
             combobxAlgoritmus.Items.AddRange(new object[] { "Knight (Jezdec)" });
-            combobxAlgoritmus.Location = new Point(96, 24);
+            combobxAlgoritmus.Location = new Point(84, 18);
+            combobxAlgoritmus.Margin = new Padding(3, 2, 3, 2);
             combobxAlgoritmus.Name = "combobxAlgoritmus";
-            combobxAlgoritmus.Size = new Size(156, 28);
+            combobxAlgoritmus.Size = new Size(137, 23);
             combobxAlgoritmus.TabIndex = 10;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(14, 28);
+            label4.Location = new Point(12, 21);
             label4.Name = "label4";
-            label4.Size = new Size(82, 20);
+            label4.Size = new Size(66, 15);
             label4.TabIndex = 11;
             label4.Text = "Algoritmus";
             // 
@@ -108,26 +111,29 @@
             // 
             panelVykresleniRozsazeni.Dock = DockStyle.Fill;
             panelVykresleniRozsazeni.Location = new Point(0, 0);
+            panelVykresleniRozsazeni.Margin = new Padding(3, 2, 3, 2);
             panelVykresleniRozsazeni.Name = "panelVykresleniRozsazeni";
-            panelVykresleniRozsazeni.Size = new Size(899, 803);
+            panelVykresleniRozsazeni.Size = new Size(976, 602);
             panelVykresleniRozsazeni.TabIndex = 12;
             panelVykresleniRozsazeni.Paint += panelVykresleniRozsazeni_Paint;
             // 
             // listbxVyplneneTridy
             // 
             listbxVyplneneTridy.FormattingEnabled = true;
-            listbxVyplneneTridy.ItemHeight = 20;
-            listbxVyplneneTridy.Location = new Point(17, 223);
+            listbxVyplneneTridy.ItemHeight = 15;
+            listbxVyplneneTridy.Location = new Point(15, 167);
+            listbxVyplneneTridy.Margin = new Padding(3, 2, 3, 2);
             listbxVyplneneTridy.Name = "listbxVyplneneTridy";
-            listbxVyplneneTridy.Size = new Size(237, 104);
+            listbxVyplneneTridy.Size = new Size(208, 79);
             listbxVyplneneTridy.TabIndex = 13;
+            listbxVyplneneTridy.SelectedIndexChanged += listbxVyplneneTridy_SelectedIndexChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(17, 200);
+            label5.Location = new Point(15, 150);
             label5.Name = "label5";
-            label5.Size = new Size(104, 20);
+            label5.Size = new Size(83, 15);
             label5.TabIndex = 14;
             label5.Text = "Vyplněné třídy";
             // 
@@ -135,7 +141,6 @@
             // 
             splitContainer.Dock = DockStyle.Fill;
             splitContainer.Location = new Point(0, 0);
-            splitContainer.Margin = new Padding(3, 4, 3, 4);
             splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
@@ -155,47 +160,48 @@
             // splitContainer.Panel2
             // 
             splitContainer.Panel2.Controls.Add(panelVykresleniRozsazeni);
-            splitContainer.Size = new Size(1168, 803);
-            splitContainer.SplitterDistance = 264;
-            splitContainer.SplitterWidth = 5;
+            splitContainer.Size = new Size(1216, 602);
+            splitContainer.SplitterDistance = 236;
             splitContainer.TabIndex = 15;
             // 
             // cboxTridy
             // 
             cboxTridy.FormattingEnabled = true;
-            cboxTridy.Location = new Point(17, 115);
+            cboxTridy.Location = new Point(15, 86);
+            cboxTridy.Margin = new Padding(3, 2, 3, 2);
             cboxTridy.Name = "cboxTridy";
-            cboxTridy.Size = new Size(235, 28);
+            cboxTridy.Size = new Size(206, 23);
             cboxTridy.TabIndex = 17;
+            cboxTridy.SelectedIndexChanged += cboxTridy_SelectedIndexChanged;
             // 
             // listbxSeznamStudentu
             // 
             listbxSeznamStudentu.FormattingEnabled = true;
-            listbxSeznamStudentu.ItemHeight = 20;
-            listbxSeznamStudentu.Location = new Point(17, 354);
-            listbxSeznamStudentu.Margin = new Padding(3, 4, 3, 4);
+            listbxSeznamStudentu.ItemHeight = 15;
+            listbxSeznamStudentu.Location = new Point(15, 266);
             listbxSeznamStudentu.Name = "listbxSeznamStudentu";
-            listbxSeznamStudentu.Size = new Size(237, 424);
+            listbxSeznamStudentu.Size = new Size(208, 319);
             listbxSeznamStudentu.TabIndex = 16;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(17, 330);
+            label6.Location = new Point(15, 248);
             label6.Name = "label6";
-            label6.Size = new Size(122, 20);
+            label6.Size = new Size(98, 15);
             label6.TabIndex = 15;
             label6.Text = "Seznam studentů";
             // 
             // FormularRozsazeni
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1168, 803);
+            ClientSize = new Size(1216, 602);
             Controls.Add(splitContainer);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FormularRozsazeni";
