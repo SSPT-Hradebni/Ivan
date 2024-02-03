@@ -38,14 +38,16 @@ namespace SediM
             // Automaticky zvolí jediný doposud vyřešený algoritmus - Knight (Jezdec)
             combobxAlgoritmus.SelectedIndex = 0;
         }
-        // TODO/FIXME: Při vybrání třídy z cboxTridy, ve chvíli kdy je alespoň jedna třída vyplněná, spadne aplikace z důvodu přístupu do pole mimo jeho stanovenou velikost
+        // TODO/FIXME: Při výběru třídy v jiné komponentě se odznačí právě označená třída
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            listbxVyplneneTridy.SelectedIndex = -1;
             panelVykresleniRozsazeni.Invalidate();
         }
 
         private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cboxTridy.SelectedIndex = -1;
             panelVykresleniRozsazeni.Invalidate();
         }
 
@@ -219,7 +221,7 @@ namespace SediM
                 {
                     // Přidá žáka podle kategorie pomocí funkce ziskejZaka - tento řádek
                     // je implementovám aby řadil žáky pouze podle aloritmu Knight!
-                    tridyZaku[indexTridy][r, s] = ziskejZaka((r * 2 + s + 1) % (int)numupdownKategoriiNaTridu.Value, kopieZaku);
+                    tridyZaku[indexTridy][r, s] = ziskejZaka(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
                 }
             }
         }
@@ -230,10 +232,10 @@ namespace SediM
             // for cyklus došel do konce bez přenastavení této proměnné
             Zak returnZak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1);
 
-            // TODO: Selekce žáka na základě kýžené kategorie
             if (kopieZaku.Find(zak => zak.Kategorie == kategorie) != null)
             {
                 returnZak = kopieZaku.Find(zak => zak.Kategorie == kategorie);
+                zaci.RemoveAt(zaci.FindIndex(zak => zak.Id == returnZak.Id));
                 kopieZaku.RemoveAll(zak => zak.Kategorie == kategorie && zak.Skola == returnZak.Skola);
             }
 

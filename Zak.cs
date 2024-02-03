@@ -19,7 +19,7 @@
         public long Skola { get { return skola; } set { skola = value; } }
         public int X { get { return x; } set { x = value; } }
         public int Y { get { return y; } set { y = value; } }
-        public int Misto { get { return y; } set { y = value; } }
+        public int Misto { get { return misto; } set { misto = value; } }
 
         /// <summary>
         /// Klasický konstruktor studenta
