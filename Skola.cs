@@ -1,7 +1,4 @@
-﻿using static Azure.Core.HttpHeader;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
-namespace SediM
+﻿namespace SediM
 {
     public class Skola
     {

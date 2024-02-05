@@ -1,14 +1,5 @@
 ﻿using Npgsql;
 using SediM.Helpers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SediM
 {
@@ -99,7 +90,7 @@ namespace SediM
                 // ID posledního vloženého studenta do databáze (kvůli indexování o +1)
                 int posledniID = _studenti.Count() + 1;
 
-                if(jmeno == "")
+                if (jmeno == "")
                 {
                     throw new Exception("Křestní jméno studenta nesmí být prázdné");
                 }
@@ -128,7 +119,7 @@ namespace SediM
 
                 int stav = vytvorStudenta.ExecuteNonQuery();
 
-                if(stav != 0)
+                if (stav != 0)
                 {
                     DialogResult = DialogResult.OK;
                     Close();
@@ -137,7 +128,8 @@ namespace SediM
                 {
                     mainHelp.Alert("Chyba!", "Při přidání nového studenta do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

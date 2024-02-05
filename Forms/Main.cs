@@ -71,7 +71,7 @@ namespace SediM
 
             return data;
         }
-        
+
         private DataTable NactiStudenty()
         {
             DataTable data = new DataTable();
