@@ -1,4 +1,5 @@
-﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+﻿using static Azure.Core.HttpHeader;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SediM
 {
