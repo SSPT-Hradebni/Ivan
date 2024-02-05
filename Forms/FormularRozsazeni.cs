@@ -15,7 +15,10 @@ namespace SediM
         // tak zůstanou nastaveny globální proměnné. To je nežádoucí.
 
         // List polí barev. Počet barev v poli na daném indexu odpovídá počtu kategorií vyplněné třídy
-        private List<SolidBrush[]> barvyVyplnenychTrid = new List<SolidBrush[]>();
+        private List<SolidBrush> barvyKategorii = new List<SolidBrush>();
+
+        // Uchovává počet kategorií pro každou vyplňovanou třídu.
+        private List<int> pocetKategoriiNaTridu = new List<int>();
 
         // List vyplněných tříd žáky. Každý index dané položky v listu odpovídá indexu vyplněné třídy v listboxu vyplněných tříd
         private List<Zak[,]> tridyZaku = new List<Zak[,]>();
@@ -38,15 +41,17 @@ namespace SediM
             // Automaticky zvolí jediný doposud vyřešený algoritmus - Knight (Jezdec)
             combobxAlgoritmus.SelectedIndex = 0;
         }
-        // TODO/FIXME: Při výběru třídy v jiné komponentě se odznačí právě označená třída
+
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cboxTridy.SelectedIndex == -1) return;
             listbxVyplneneTridy.SelectedIndex = -1;
             panelVykresleniRozsazeni.Invalidate();
         }
 
         private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listbxVyplneneTridy.SelectedIndex == -1) return;
             cboxTridy.SelectedIndex = -1;
             panelVykresleniRozsazeni.Invalidate();
         }
@@ -108,9 +113,8 @@ namespace SediM
                 {
                     g.FillRectangle(
                         ziskejBarvuDleKategorie(
-                            indexVyplneneTridy,
                             indexVyplneneTridy != -1
-                                ? (r * 2 + s) % barvyVyplnenychTrid[indexVyplneneTridy].Length
+                                ? (r * 2 + s) % pocetKategoriiNaTridu[indexVyplneneTridy]
                                 : -1),
                         pocatekPlochyMist.X + s * mistoSirka + s,
                         pocatekPlochyMist.Y + r * mistoVyska + r,
@@ -144,32 +148,34 @@ namespace SediM
             }
         }
 
-        private List<SolidBrush> inicializujListBarev()
+        private void aktualizujListBarev()
         {
-            List<SolidBrush> barvyKategorii = new List<SolidBrush>();
             Random rng = new Random();
-            int i = 0;
 
-            while (i < numupdownKategoriiNaTridu.Value)
+            while (barvyKategorii.Count < numupdownKategoriiNaTridu.Value)
             {
-                SolidBrush sb = new SolidBrush(Color.FromArgb(rng.Next(0, 255), rng.Next(0, 255), rng.Next(0, 255)));
+                // Rozsah randomu je omezen na <1-64) (místo <0-256))
+                // kvůli zvýšení kontrastu mezi barvami
+                SolidBrush sb = new SolidBrush(
+                    Color.FromArgb(
+                        rng.Next(1, 64) * 4 - 1,
+                        rng.Next(1, 64) * 4 - 1,
+                        rng.Next(1, 64) * 4 - 1));
 
                 // Přeskočí přidání duplicitní barvy
                 if (barvyKategorii.Exists(barva => barva.Color == sb.Color)) continue;
-                i++;
                 barvyKategorii.Add(sb);
             }
-            return barvyKategorii;
         }
 
-        private SolidBrush ziskejBarvuDleKategorie(int indexTridy, int kategorie)
+        private SolidBrush ziskejBarvuDleKategorie(int kategorie)
         {
-            switch (indexTridy)
+            switch (kategorie)
             {
                 case -1:
                     return new SolidBrush(Color.FromArgb(100, 100, 100));
                 default:
-                    return barvyVyplnenychTrid[indexTridy][kategorie];
+                    return barvyKategorii[kategorie];
             }
         }
 
@@ -187,7 +193,14 @@ namespace SediM
 
         private void nastavParametryProVyplneni(int selectedIndex, Trida aktualniTrida)
         {
+            // Vytvoří 2D pole objektů Zak - naši třídu
             tridyZaku.Add(new Zak[aktualniTrida.Vyska, aktualniTrida.Sirka]);
+
+            pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
+
+            // Rozšíčí list barev je-li třeba přidat další barvy
+            if ((int)numupdownKategoriiNaTridu.Value > barvyKategorii.Count)
+                aktualizujListBarev();
 
             // Vyplní právě přidanou třídu žáky
             vyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska);
@@ -208,7 +221,6 @@ namespace SediM
 
         private void vyplnTridu(int indexTridy, int sirka, int vyska)
         {
-            barvyVyplnenychTrid.Add(inicializujListBarev().ToArray());
             List<Zak> kopieZaku = new List<Zak>();
             foreach (Zak zak in zaci)
                 kopieZaku.Add(zak.Clone());
