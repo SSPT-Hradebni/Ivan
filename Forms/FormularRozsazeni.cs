@@ -198,12 +198,16 @@ namespace SediM
 
             pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
 
-            // Rozšíčí list barev je-li třeba přidat další barvy
+            // Rozšíří list barev je-li třeba přidat další barvy
             if ((int)numupdownKategoriiNaTridu.Value > barvyKategorii.Count)
                 aktualizujListBarev();
 
+            // Překopíruje globální list žáků a přeskupí kategorie
+            // podle nejvyššího počtu žáků v kategorii
+            List<Zak> kopieZaku = nastavListZaku();
+
             // Vyplní právě přidanou třídu žáky
-            vyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska);
+            vyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, kopieZaku);
 
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(cboxTridy.Items[selectedIndex]);
@@ -219,12 +223,8 @@ namespace SediM
             listbxVyplneneTridy.SelectedIndex = listbxVyplneneTridy.Items.Count - 1;
         }
 
-        private void vyplnTridu(int indexTridy, int sirka, int vyska)
+        private void vyplnTridu(int indexTridy, int sirka, int vyska, List<Zak> kopieZaku)
         {
-            List<Zak> kopieZaku = new List<Zak>();
-            foreach (Zak zak in zaci)
-                kopieZaku.Add(zak.Clone());
-
             // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < vyska; r++)
             {
@@ -254,6 +254,64 @@ namespace SediM
             returnZak.Misto = mistoZaka;
             mistoZaka++;
             return returnZak;
+        }
+        // Osobně se mi moc toto řešení nelíbí jelikož modifikace kategorie dle mého
+        // není ideální metodou a pravděpodobně zavedu dodatečnou proměnnou
+        // ve třídě Zak i přesto, že to není příliš paměťově úsporné. - TODO
+        private List<Zak> nastavListZaku()
+        {
+            List<Zak> serazeniZaci = new List<Zak>();
+
+            List<List<Zak>> zaciDleKategorie = new List<List<Zak>>();
+
+            // Separuje veškeré žáky do kategorií pro následovné řazení
+            foreach (Zak zak in zaci)
+            {
+                // Pokud se kategorie žáka nachází v proměnné, přeskoč na dalšího žáka
+                if (zaciDleKategorie.Exists(kategorie => zak.Kategorie == kategorie[0].Kategorie))
+                    continue;
+
+                // Dočasně uloží veškeré žáky nevložené kategorie do proměnné
+                List<Zak> novaKategorie = new List<Zak>();
+                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.Kategorie == zak.Kategorie);
+
+                // Vytvoří kopii této kategorie
+                List<Zak> kopiekategorie = new List<Zak>();
+                foreach (Zak zakNoveKategorie in novaKategorie)
+                    kopiekategorie.Add(zakNoveKategorie.Clone());
+
+                // Nakonec vloží kopii do proměnné, která uchovává veškeré kategorie
+                zaciDleKategorie.Add(kopiekategorie);
+            }
+
+            // Seřadí kategorie sestupně dle počtu žáků v kategorii
+            zaciDleKategorie.Sort((k1, k2) =>
+            {
+                // Pokud si jsou dvě porovnávané kategorie rovny počtem žáků, nic se nezmění.
+                if (k1.Count == k2.Count)
+                    return 0;
+                // Pokud je k1 menší než k2, vrátí se že je "větší" - větší se posouvají ke konci
+                // (řadíme sestupně proto k1 považujeme za "větší" aby se posunula ke konci)
+                else if (k1.Count < k2.Count)
+                    return 1;
+                // Jinak je k2 délkou menší ale vracíme, že
+                // je větší aby se posunula více ke konci
+                else  
+                    return -1;
+            });
+
+            // Procykluje každou kategorii
+            for (int i = 0; i < zaciDleKategorie.Count(); i++)
+            {
+                // Procykluje každého žáka v kategorii
+                foreach (Zak zak in zaciDleKategorie[i])
+                    zak.Kategorie = i + 1;
+
+                // Vloží žáky s modifikovanou kategorií (prioritou) do listu
+                serazeniZaci.AddRange(zaciDleKategorie[i]);
+            }
+
+            return serazeniZaci;
         }
 
         private void ExportToPdf(string filePath)
