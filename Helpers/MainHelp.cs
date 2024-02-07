@@ -181,5 +181,24 @@ namespace SediM.Helpers
 
             return tabulka;
         }
+
+        /// <summary>
+        /// Zobrazí soubor nápovědy na určitém tématu
+        /// </summary>
+        /// <param name="trigger">Z jakého okna je nápověda zavolána (obvykle <strong>this</strong>)</param>
+        /// <param name="topicPage">Stránka v nápovědě, která má být zobrazena</param>
+        public void ShowHelp(Form form, string topicPage)
+        {
+            Help.ShowHelp(form, "SediM.chm", HelpNavigator.Topic, topicPage);
+        }
+
+        /// <summary>
+        /// Zobrazení souboru nápovědy na indexu
+        /// </summary>
+        /// <param name="trigger">Z jakého okna je nápověda zavolána (obvykle <strong>this</strong>)</param>
+        public void ShowHelp(Form form)
+        {
+            Help.ShowHelp(form, "SediM.chm", HelpNavigator.Index);
+        }
     }
 }
