@@ -120,7 +120,7 @@ namespace SediM.Forms
                 {
                     throw new Exception("Název třídy nesmí být prázdný");
                 }
-
+                // TODO: úprava stávající třídy, nikoliv však vytvoření nové
                 NpgsqlCommand vytvorTridu = new NpgsqlCommand($"INSERT INTO tridy (id, nazev, sirka, vyska) VALUES(@id, @nazev, @sirka, @vyska)", connection);
 
                 vytvorTridu.Parameters.AddWithValue("@id", posledniID + 1); // ID nově vytvořené třídy
@@ -148,8 +148,11 @@ namespace SediM.Forms
 
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // TODO
-            //tboxNazev.Text = 
+            Trida trida = _tridy[cboxTridy.SelectedIndex];
+            tboxNazev.Text = trida.Nazev;
+            numSirka.Value = trida.Vyska;
+            numVyska.Value = trida.Sirka;
+            panelEditClassroom.Invalidate();
         }
     }
 }

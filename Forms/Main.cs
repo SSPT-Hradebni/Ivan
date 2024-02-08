@@ -230,7 +230,7 @@ namespace SediM
 
         private void upravitTriduToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Trida_Nova okno = new Trida_Nova(tridy);
+            Trida_Uprava okno = new Trida_Uprava(tridy);
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
