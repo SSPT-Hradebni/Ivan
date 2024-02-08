@@ -27,7 +27,7 @@ namespace SediM.Helpers
             // vytvoření dočasného listu studentů
             List<Zak> zaci = new List<Zak>();
 
-            foreach(DataRow radek in data.Rows)
+            foreach (DataRow radek in data.Rows)
             {
                 // rozdělení jména a příjmení
                 string[] jmeno = radek[1].ToString().Split(' ');
