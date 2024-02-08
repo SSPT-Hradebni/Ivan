@@ -365,3 +365,9 @@ FodyWeavers.xsd
 /Prerequisites/.NET 6.0
 /Setup Files
 /SediM-cache
+*.exe
+/Setup Files/SediM.exe
+/SediM-cache/part2/output-info.ini
+/SediM-cache/part2/SediM1.cab
+*.aip
+/SediM.aip
