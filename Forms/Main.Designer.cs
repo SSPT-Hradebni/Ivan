@@ -108,7 +108,7 @@
             // 
             this.oAplikaciToolStripMenuItem.Image = global::SediM.Properties.Resources.Information;
             this.oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
-            this.oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.oAplikaciToolStripMenuItem.Text = "O aplikaci";
             this.oAplikaciToolStripMenuItem.Click += new System.EventHandler(this.oAplikaciToolStripMenuItem_Click);
             // 
@@ -116,14 +116,15 @@
             // 
             this.nápovědaToolStripMenuItem.Image = global::SediM.Properties.Resources.Help_and_Support;
             this.nápovědaToolStripMenuItem.Name = "nápovědaToolStripMenuItem";
-            this.nápovědaToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.nápovědaToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.nápovědaToolStripMenuItem.Text = "Nápověda";
+            this.nápovědaToolStripMenuItem.Click += new System.EventHandler(this.nápovědaToolStripMenuItem_Click);
             // 
             // ukončitToolStripMenuItem
             // 
             this.ukončitToolStripMenuItem.Image = global::SediM.Properties.Resources.Power;
             this.ukončitToolStripMenuItem.Name = "ukončitToolStripMenuItem";
-            this.ukončitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.ukončitToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.ukončitToolStripMenuItem.Text = "Konec";
             this.ukončitToolStripMenuItem.Click += new System.EventHandler(this.ukončitToolStripMenuItem_Click);
             // 
@@ -265,7 +266,7 @@
             // 
             this.nováToolStripMenuItem1.Image = global::SediM.Properties.Resources.Add;
             this.nováToolStripMenuItem1.Name = "nováToolStripMenuItem1";
-            this.nováToolStripMenuItem1.Size = new System.Drawing.Size(184, 26);
+            this.nováToolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
             this.nováToolStripMenuItem1.Text = "Nová třída";
             this.nováToolStripMenuItem1.Click += new System.EventHandler(this.nováToolStripMenuItem1_Click);
             // 
@@ -273,26 +274,26 @@
             // 
             this.upravitToolStripMenuItem3.Image = global::SediM.Properties.Resources.OE_Signature;
             this.upravitToolStripMenuItem3.Name = "upravitToolStripMenuItem3";
-            this.upravitToolStripMenuItem3.Size = new System.Drawing.Size(184, 26);
+            this.upravitToolStripMenuItem3.Size = new System.Drawing.Size(163, 22);
             this.upravitToolStripMenuItem3.Text = "Upravit třídu";
             // 
             // seznamTřídToolStripMenuItem
             // 
             this.seznamTřídToolStripMenuItem.Image = global::SediM.Properties.Resources.User_Accounts;
             this.seznamTřídToolStripMenuItem.Name = "seznamTřídToolStripMenuItem";
-            this.seznamTřídToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.seznamTřídToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.seznamTřídToolStripMenuItem.Text = "Seznam tříd";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
             // 
             // novéRozsazenítoolStripMenuItem1
             // 
             this.novéRozsazenítoolStripMenuItem1.Image = global::SediM.Properties.Resources.Add;
             this.novéRozsazenítoolStripMenuItem1.Name = "novéRozsazenítoolStripMenuItem1";
-            this.novéRozsazenítoolStripMenuItem1.Size = new System.Drawing.Size(184, 26);
+            this.novéRozsazenítoolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
             this.novéRozsazenítoolStripMenuItem1.Text = "Nové rozsazení";
             this.novéRozsazenítoolStripMenuItem1.Click += new System.EventHandler(this.noveRozsazeniToolStripMenuItem_Click);
             // 
@@ -300,7 +301,7 @@
             // 
             this.upravitRozsazenítoolStripMenuItem1.Image = global::SediM.Properties.Resources.OE_Signature;
             this.upravitRozsazenítoolStripMenuItem1.Name = "upravitRozsazenítoolStripMenuItem1";
-            this.upravitRozsazenítoolStripMenuItem1.Size = new System.Drawing.Size(184, 26);
+            this.upravitRozsazenítoolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
             this.upravitRozsazenítoolStripMenuItem1.Text = "Upravit rozsazení";
             // 
             // Main

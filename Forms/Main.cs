@@ -222,5 +222,10 @@ namespace SediM
                 NactiData();
             }
         }
+
+        private void nápovědaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.ShowHelp(this);
+        }
     }
 }
