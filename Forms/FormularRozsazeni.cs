@@ -315,7 +315,19 @@ namespace SediM
 
         private void FormularRozsazeni_Load(object sender, EventArgs e)
         {
-            cboxTridy.DataSource = tridy;
+            List<Trida> volneTridy = new List<Trida>();
+
+            for(int i = 0; i < tridy.Count; i++)
+            {
+                Trida trida = tridy[i];
+
+                if(trida.Rozsazena == false)
+                {
+                    volneTridy.Add(trida);
+                }
+            }
+
+            cboxTridy.DataSource = volneTridy;
             cboxTridy.ValueMember = "Id";
             cboxTridy.DisplayMember = "Nazev";
         }
