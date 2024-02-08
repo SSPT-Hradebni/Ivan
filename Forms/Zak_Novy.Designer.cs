@@ -29,136 +29,123 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Zak_Novy));
-            this.lblJmeno = new System.Windows.Forms.Label();
-            this.tboxJmeno = new System.Windows.Forms.TextBox();
-            this.tboxPrijmeni = new System.Windows.Forms.TextBox();
-            this.lblPrijmeni = new System.Windows.Forms.Label();
-            this.numKategorie = new System.Windows.Forms.NumericUpDown();
-            this.lblKategorie = new System.Windows.Forms.Label();
-            this.lblSkola = new System.Windows.Forms.Label();
-            this.cboxSkoly = new System.Windows.Forms.ComboBox();
-            this.btnVytvořit = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numKategorie)).BeginInit();
-            this.SuspendLayout();
+            lblJmeno = new Label();
+            tboxJmeno = new TextBox();
+            tboxPrijmeni = new TextBox();
+            lblPrijmeni = new Label();
+            numKategorie = new NumericUpDown();
+            lblKategorie = new Label();
+            lblSkola = new Label();
+            cboxSkoly = new ComboBox();
+            btnVytvořit = new Button();
+            ((System.ComponentModel.ISupportInitialize)numKategorie).BeginInit();
+            SuspendLayout();
             // 
             // lblJmeno
             // 
-            this.lblJmeno.AutoSize = true;
-            this.lblJmeno.Location = new System.Drawing.Point(12, 9);
-            this.lblJmeno.Name = "lblJmeno";
-            this.lblJmeno.Size = new System.Drawing.Size(42, 15);
-            this.lblJmeno.TabIndex = 0;
-            this.lblJmeno.Text = "Jméno";
+            lblJmeno.AutoSize = true;
+            lblJmeno.Location = new Point(12, 9);
+            lblJmeno.Name = "lblJmeno";
+            lblJmeno.Size = new Size(42, 15);
+            lblJmeno.TabIndex = 0;
+            lblJmeno.Text = "Jméno";
             // 
             // tboxJmeno
             // 
-            this.tboxJmeno.Location = new System.Drawing.Point(12, 27);
-            this.tboxJmeno.Name = "tboxJmeno";
-            this.tboxJmeno.Size = new System.Drawing.Size(261, 23);
-            this.tboxJmeno.TabIndex = 1;
+            tboxJmeno.Location = new Point(12, 27);
+            tboxJmeno.Name = "tboxJmeno";
+            tboxJmeno.Size = new Size(261, 23);
+            tboxJmeno.TabIndex = 1;
             // 
             // tboxPrijmeni
             // 
-            this.tboxPrijmeni.Location = new System.Drawing.Point(12, 80);
-            this.tboxPrijmeni.Name = "tboxPrijmeni";
-            this.tboxPrijmeni.Size = new System.Drawing.Size(261, 23);
-            this.tboxPrijmeni.TabIndex = 2;
+            tboxPrijmeni.Location = new Point(12, 80);
+            tboxPrijmeni.Name = "tboxPrijmeni";
+            tboxPrijmeni.Size = new Size(261, 23);
+            tboxPrijmeni.TabIndex = 2;
             // 
             // lblPrijmeni
             // 
-            this.lblPrijmeni.AutoSize = true;
-            this.lblPrijmeni.Location = new System.Drawing.Point(12, 62);
-            this.lblPrijmeni.Name = "lblPrijmeni";
-            this.lblPrijmeni.Size = new System.Drawing.Size(51, 15);
-            this.lblPrijmeni.TabIndex = 3;
-            this.lblPrijmeni.Text = "Příjmení";
+            lblPrijmeni.AutoSize = true;
+            lblPrijmeni.Location = new Point(12, 62);
+            lblPrijmeni.Name = "lblPrijmeni";
+            lblPrijmeni.Size = new Size(51, 15);
+            lblPrijmeni.TabIndex = 3;
+            lblPrijmeni.Text = "Příjmení";
             // 
             // numKategorie
             // 
-            this.numKategorie.Location = new System.Drawing.Point(12, 142);
-            this.numKategorie.Maximum = new decimal(new int[] {
-            7,
-            0,
-            0,
-            0});
-            this.numKategorie.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numKategorie.Name = "numKategorie";
-            this.numKategorie.Size = new System.Drawing.Size(261, 23);
-            this.numKategorie.TabIndex = 4;
-            this.numKategorie.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            numKategorie.Location = new Point(12, 142);
+            numKategorie.Maximum = new decimal(new int[] { 7, 0, 0, 0 });
+            numKategorie.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numKategorie.Name = "numKategorie";
+            numKategorie.Size = new Size(261, 23);
+            numKategorie.TabIndex = 4;
+            numKategorie.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // lblKategorie
             // 
-            this.lblKategorie.AutoSize = true;
-            this.lblKategorie.Location = new System.Drawing.Point(12, 124);
-            this.lblKategorie.Name = "lblKategorie";
-            this.lblKategorie.Size = new System.Drawing.Size(57, 15);
-            this.lblKategorie.TabIndex = 5;
-            this.lblKategorie.Text = "Kategorie";
+            lblKategorie.AutoSize = true;
+            lblKategorie.Location = new Point(12, 124);
+            lblKategorie.Name = "lblKategorie";
+            lblKategorie.Size = new Size(57, 15);
+            lblKategorie.TabIndex = 5;
+            lblKategorie.Text = "Kategorie";
             // 
             // lblSkola
             // 
-            this.lblSkola.AutoSize = true;
-            this.lblSkola.Location = new System.Drawing.Point(12, 182);
-            this.lblSkola.Name = "lblSkola";
-            this.lblSkola.Size = new System.Drawing.Size(35, 15);
-            this.lblSkola.TabIndex = 6;
-            this.lblSkola.Text = "Škola";
+            lblSkola.AutoSize = true;
+            lblSkola.Location = new Point(12, 182);
+            lblSkola.Name = "lblSkola";
+            lblSkola.Size = new Size(35, 15);
+            lblSkola.TabIndex = 6;
+            lblSkola.Text = "Škola";
             // 
             // cboxSkoly
             // 
-            this.cboxSkoly.FormattingEnabled = true;
-            this.cboxSkoly.Location = new System.Drawing.Point(10, 200);
-            this.cboxSkoly.Name = "cboxSkoly";
-            this.cboxSkoly.Size = new System.Drawing.Size(263, 23);
-            this.cboxSkoly.TabIndex = 10;
+            cboxSkoly.FormattingEnabled = true;
+            cboxSkoly.Location = new Point(10, 200);
+            cboxSkoly.Name = "cboxSkoly";
+            cboxSkoly.Size = new Size(263, 23);
+            cboxSkoly.TabIndex = 10;
             // 
             // btnVytvořit
             // 
-            this.btnVytvořit.Location = new System.Drawing.Point(12, 233);
-            this.btnVytvořit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnVytvořit.Name = "btnVytvořit";
-            this.btnVytvořit.Size = new System.Drawing.Size(261, 23);
-            this.btnVytvořit.TabIndex = 11;
-            this.btnVytvořit.Text = "Vytvořit";
-            this.btnVytvořit.UseVisualStyleBackColor = true;
+            btnVytvořit.Location = new Point(12, 233);
+            btnVytvořit.Margin = new Padding(3, 2, 3, 2);
+            btnVytvořit.Name = "btnVytvořit";
+            btnVytvořit.Size = new Size(261, 23);
+            btnVytvořit.TabIndex = 11;
+            btnVytvořit.Text = "Vytvořit";
+            btnVytvořit.UseVisualStyleBackColor = true;
             // 
             // Zak_Novy
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(290, 269);
-            this.Controls.Add(this.btnVytvořit);
-            this.Controls.Add(this.cboxSkoly);
-            this.Controls.Add(this.lblSkola);
-            this.Controls.Add(this.lblKategorie);
-            this.Controls.Add(this.numKategorie);
-            this.Controls.Add(this.lblPrijmeni);
-            this.Controls.Add(this.tboxPrijmeni);
-            this.Controls.Add(this.tboxJmeno);
-            this.Controls.Add(this.lblJmeno);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.HelpButton = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "Zak_Novy";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Nový student";
-            this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Zak_Novy_HelpButtonClicked);
-            ((System.ComponentModel.ISupportInitialize)(this.numKategorie)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(290, 269);
+            Controls.Add(btnVytvořit);
+            Controls.Add(cboxSkoly);
+            Controls.Add(lblSkola);
+            Controls.Add(lblKategorie);
+            Controls.Add(numKategorie);
+            Controls.Add(lblPrijmeni);
+            Controls.Add(tboxPrijmeni);
+            Controls.Add(tboxJmeno);
+            Controls.Add(lblJmeno);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            HelpButton = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "Zak_Novy";
+            SizeGripStyle = SizeGripStyle.Hide;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Nový student";
+            HelpButtonClicked += Zak_Novy_HelpButtonClicked;
+            ((System.ComponentModel.ISupportInitialize)numKategorie).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -135,7 +135,7 @@ namespace SediM
             }
         }
 
-        private void Zak_Novy_HelpButtonClicked(object sender, CancelEventArgs e)
+        private void Zak_Novy_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
             mainHelp.ShowHelp(this, "student-novy.html");
         }
