@@ -227,5 +227,18 @@ namespace SediM
         {
             mainHelp.ShowHelp(this);
         }
+
+        private void upravitTriduToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Trida_Nova okno = new Trida_Nova(tridy);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                NactiData();
+            }
+        }
     }
 }
