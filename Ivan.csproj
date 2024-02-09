@@ -61,7 +61,7 @@
     <StartupObject>Ivan.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Ivan.ico</ApplicationIcon>
+    <ApplicationIcon>IvanIkona.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>4EBBC17C3E263C797B118DAADD054D8BB9277399</ManifestCertificateThumbprint>
@@ -84,6 +84,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,14 +96,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\MenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MenuItem.Designer.cs">
+      <DependentUpon>MenuItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Hlavni.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Hlavni.Designer.cs">
+      <DependentUpon>Hlavni.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Nacitani.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Nacitani.Designer.cs">
       <DependentUpon>Nacitani.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HlavniPomoc.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\MenuItem.resx">
+      <DependentUpon>MenuItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Hlavni.resx">
+      <DependentUpon>Hlavni.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Nacitani.resx">
       <DependentUpon>Nacitani.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,12 +152,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ivan.ico" />
+    <None Include="Resources\loading.wav" />
     <None Include="Resources\IvanLogo.png" />
     <None Include="Resources\loadingBG.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
+    <Content Include="IvanIkona.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="IvanIkona.png" />
+    <None Include="Resources\lukas.wav" />
+    <None Include="Resources\student_upravit.png" />
+    <None Include="Resources\student.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
@@ -151,5 +177,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
