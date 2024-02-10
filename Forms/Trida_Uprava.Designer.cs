@@ -31,13 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Trida_Uprava));
             tboxNazev = new TextBox();
             panelEditClassroom = new Panel();
-            btnNastavit = new Button();
             numVyska = new NumericUpDown();
             numSirka = new NumericUpDown();
             gboxVelikost = new GroupBox();
             lblVyska = new Label();
             lblSirka = new Label();
             cboxTridy = new ComboBox();
+            btnNastavit = new Button();
             ((System.ComponentModel.ISupportInitialize)numVyska).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numSirka).BeginInit();
             gboxVelikost.SuspendLayout();
@@ -60,16 +60,6 @@
             panelEditClassroom.Size = new Size(830, 430);
             panelEditClassroom.TabIndex = 14;
             panelEditClassroom.Paint += panelEditClassroom_Paint;
-            // 
-            // btnNastavit
-            // 
-            btnNastavit.Location = new Point(12, 149);
-            btnNastavit.Margin = new Padding(3, 4, 3, 4);
-            btnNastavit.Name = "btnNastavit";
-            btnNastavit.Size = new Size(143, 31);
-            btnNastavit.TabIndex = 12;
-            btnNastavit.Text = "Nastavit";
-            btnNastavit.UseVisualStyleBackColor = true;
             // 
             // numVyska
             // 
@@ -133,16 +123,27 @@
             cboxTridy.TabIndex = 17;
             cboxTridy.SelectedIndexChanged += cboxTridy_SelectedIndexChanged;
             // 
+            // btnNastavit
+            // 
+            btnNastavit.Location = new Point(12, 147);
+            btnNastavit.Margin = new Padding(3, 2, 3, 2);
+            btnNastavit.Name = "btnNastavit";
+            btnNastavit.Size = new Size(142, 22);
+            btnNastavit.TabIndex = 18;
+            btnNastavit.Text = "Nastavit";
+            btnNastavit.UseVisualStyleBackColor = true;
+            btnNastavit.Click += btnNastavit_Click;
+            // 
             // Trida_Uprava
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(997, 446);
+            Controls.Add(btnNastavit);
             Controls.Add(cboxTridy);
             Controls.Add(gboxVelikost);
             Controls.Add(tboxNazev);
             Controls.Add(panelEditClassroom);
-            Controls.Add(btnNastavit);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             Name = "Trida_Uprava";
@@ -161,12 +162,12 @@
         private TextBox tboxNazev;
         private Panel panelEditClassroom;
         private Button btnOdstranitTridu;
-        private Button btnNastavit;
         private NumericUpDown numVyska;
         private NumericUpDown numSirka;
         private GroupBox gboxVelikost;
         private Label lblVyska;
         private Label lblSirka;
         private ComboBox cboxTridy;
+        private Button btnNastavit;
     }
 }

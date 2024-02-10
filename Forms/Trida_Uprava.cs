@@ -104,26 +104,32 @@ namespace SediM.Forms
             }
         }
 
-        private void btnVytvorit_Click(object sender, EventArgs e)
+        private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Trida trida = _tridy[cboxTridy.SelectedIndex];
+            tboxNazev.Text = trida.Nazev;
+            numSirka.Value = trida.Sirka;
+            numVyska.Value = trida.Vyska;
+            panelEditClassroom.Invalidate();
+        }
+
+        private void btnNastavit_Click(object sender, EventArgs e)
         {
             try
             {
+                int id = cboxTridy.SelectedIndex + 1;
                 string nazev = tboxNazev.Text;
                 int sirka = (int)numSirka.Value;
                 int vyska = (int)numVyska.Value;
-
-                // TODO: Proč se id přidává dohromady o 2? řádek 158
-                // ID poslední vložené třídy do databáze (kvůli indexování o +1)
-                int posledniID = _tridy.Count() + 1;
 
                 if (nazev == "")
                 {
                     throw new Exception("Název třídy nesmí být prázdný");
                 }
-                // TODO: úprava stávající třídy, nikoliv však vytvoření nové
-                NpgsqlCommand vytvorTridu = new NpgsqlCommand($"INSERT INTO tridy (id, nazev, sirka, vyska) VALUES(@id, @nazev, @sirka, @vyska)", connection);
 
-                vytvorTridu.Parameters.AddWithValue("@id", posledniID + 1); // ID nově vytvořené třídy
+                NpgsqlCommand vytvorTridu = new NpgsqlCommand($"UPDATE tridy SET nazev = @nazev, sirka = @sirka, vyska = @vyska WHERE id = @id", connection);
+
+                vytvorTridu.Parameters.AddWithValue("@id", id);
                 vytvorTridu.Parameters.AddWithValue("@nazev", nazev);
                 vytvorTridu.Parameters.AddWithValue("@sirka", sirka);
                 vytvorTridu.Parameters.AddWithValue("@vyska", vyska);
@@ -144,15 +150,6 @@ namespace SediM.Forms
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Trida trida = _tridy[cboxTridy.SelectedIndex];
-            tboxNazev.Text = trida.Nazev;
-            numSirka.Value = trida.Vyska;
-            numVyska.Value = trida.Sirka;
-            panelEditClassroom.Invalidate();
         }
     }
 }
