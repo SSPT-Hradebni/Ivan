@@ -44,7 +44,7 @@
             // 
             this.loadingBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.loadingBar.Location = new System.Drawing.Point(0, 595);
-            this.loadingBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.loadingBar.Margin = new System.Windows.Forms.Padding(4);
             this.loadingBar.Name = "loadingBar";
             this.loadingBar.Size = new System.Drawing.Size(1197, 28);
             this.loadingBar.TabIndex = 0;
@@ -69,16 +69,15 @@
             this.lblAutori.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblAutori.AutoEllipsis = true;
             this.lblAutori.BackColor = System.Drawing.Color.White;
             this.lblAutori.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblAutori.Location = new System.Drawing.Point(61, 262);
             this.lblAutori.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAutori.Name = "lblAutori";
-            this.lblAutori.Size = new System.Drawing.Size(488, 21);
+            this.lblAutori.Size = new System.Drawing.Size(488, 144);
             this.lblAutori.TabIndex = 2;
-            this.lblAutori.Text = "Jména autorů";
-            this.lblAutori.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAutori.Text = "Petr Vurm, Radek Kalous, Jan Píša, Petr Šalda, Štěpán Vodička, Jonáš Vitásek, Fil" +
+    "ip Richter, Adam Částek, Vojta Bednář";
             // 
             // lblTip
             // 

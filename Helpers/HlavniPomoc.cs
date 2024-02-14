@@ -7,6 +7,7 @@ using System.Speech;
 using System.Speech.Synthesis;
 using System.Globalization;
 using System.Media;
+using System.Windows.Forms;
 
 namespace Ivan.Helpers
 {
@@ -157,6 +158,11 @@ namespace Ivan.Helpers
             }
 
             return veta;
+        }
+
+        public void NovyStudent()
+        {
+            MessageBox.Show("Nový student");
         }
     }
 }

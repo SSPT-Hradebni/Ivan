@@ -49,10 +49,6 @@ namespace Ivan
             if (loadingBar.Value >= 0 && loadingBar.Value < 25 && !haIvanRead)
             {
                 lblTip.Text = "Ha, Ivan!";
-                if (nahodneCislo < sanceNaNahodu)
-                {
-                    lblTip.Text = pomoc.NahodnyIvan(cislo); // nahrazení textu náhodnou větou
-                }
                 pomoc.RekniTo(lblTip.Text, true);
                 haIvanRead = true;
             }
@@ -61,7 +57,7 @@ namespace Ivan
                 lblTip.Text = "Ivan se načítá";
                 if (nahodneCislo < sanceNaNahodu)
                 {
-                    lblTip.Text = pomoc.NahodnyIvan(cislo);
+                    //lblTip.Text = pomoc.NahodnyIvan(cislo); // nahrazení textu náhodnou větou
                 }
                 pomoc.RekniTo(lblTip.Text, true);
                 ivanSeNacitaRead = true;
@@ -69,25 +65,15 @@ namespace Ivan
             else if (loadingBar.Value >= 70 && loadingBar.Value < 95 && !ivanSkoroJeRead)
             {
                 lblTip.Text = "Ivan už skoro je ...";
-                if (nahodneCislo < sanceNaNahodu)
-                {
-                    lblTip.Text = pomoc.NahodnyIvan(cislo);
-                }
                 pomoc.RekniTo(lblTip.Text, true);
                 ivanSkoroJeRead = true;
             }
             else if (loadingBar.Value >= 95 && loadingBar.Value < 100 && !ivanNactenyRead)
             {
                 lblTip.Text = "... načtený!";
-                if (nahodneCislo < sanceNaNahodu)
-                {
-                    lblTip.Text = pomoc.NahodnyIvan(cislo);
-                }
                 pomoc.RekniTo(lblTip.Text, true);
                 ivanNactenyRead = true;
             }
-
-            lblTip.Text = $"{cislo}";
 
             if (Properties.Settings.Default.LoadingEnabled)
             {
@@ -127,7 +113,6 @@ namespace Ivan
         {
             loading.Enabled = true;
             this.Text = pomoc.VytvorTitulek("Načítání");
-            this.lblAutori.Text = Properties.Settings.Default.AuthorsName;
         }
     }
 }

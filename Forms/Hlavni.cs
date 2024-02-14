@@ -27,9 +27,19 @@ namespace Ivan.Forms
             this.Text = pomoc.VytvorTitulek("Hlavní okno");
         }
 
-        private void menuItem_StudentNovy_Click(object sender, EventArgs e)
+        private void pictureBox1_StudentNovy_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Nový student");
+            pomoc.NovyStudent();
+        }
+
+        private void lblStudentNovy_Click(object sender, EventArgs e)
+        {
+            pomoc.NovyStudent();
+        }
+
+        private void ukončitIvanaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
