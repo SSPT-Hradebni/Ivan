@@ -369,5 +369,5 @@ FodyWeavers.xsd
 /Setup Files/SediM.exe
 /SediM-cache/part2/output-info.ini
 /SediM-cache/part2/SediM1.cab
-*.aip
 /SediM.aip
+*.aip

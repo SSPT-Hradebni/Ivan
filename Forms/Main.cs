@@ -2,16 +2,14 @@
 using SediM.Forms;
 using SediM.Helpers;
 using System.Data;
+using System.Data.SqlClient;
 using System.Reflection;
 
 namespace SediM
 {
     public partial class Main : Form
     {
-        public static NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder($"Host={Properties.Settings.Default.MySQL_server};Port={Properties.Settings.Default.MySQL_port};Username={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo};Database={Properties.Settings.Default.MySQL_databaze};");
-        public static NpgsqlDataSource dataSource = dataSourceBuilder.Build();
-
-        private NpgsqlConnection connection;
+        private SqlConnection connection = new SqlConnection(@"Data Source=37.60.252.204;Initial Catalog=Ivan;User ID=ivan;Password=mE3xBa0it8dVOGr");
         private DataTable? data;
 
         public MainHelp mainHelp = new MainHelp();
@@ -20,17 +18,18 @@ namespace SediM
         public List<Zak> zaci = new List<Zak>();
         public List<Trida> tridy = new List<Trida>();
         private List<Skola> skoly = new List<Skola>();
+        private List<Ucitel> ucitele = new List<Ucitel>();
 
         public Main()
         {
             InitializeComponent();
 
-            var conn = dataSource.OpenConnectionAsync();
-            connection = conn.Result;
+            connection.Open();
+            ConnectionState stavDB = connection.State;
 
             try
             {
-                if (conn.IsFaulted && jePripojen == false)
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
                 {
                     DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     if (pripojen == DialogResult.Cancel)
@@ -41,9 +40,9 @@ namespace SediM
                     return;
                 }
             }
-            catch (NpgsqlException e)
+            catch (SqlException e)
             {
-                mainHelp.Alert("Chyba PostgreSQL", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }
@@ -51,10 +50,10 @@ namespace SediM
         private DataTable NactiSkoly()
         {
             DataTable data = new DataTable();
-            NpgsqlDataAdapter dataAdapter;
-            NpgsqlCommand cmd = new("SELECT * FROM skoly", connection);
+            SqlDataAdapter dataAdapter;
+            SqlCommand cmd = new("SELECT * FROM Skoly", connection);
 
-            dataAdapter = new NpgsqlDataAdapter(cmd);
+            dataAdapter = new SqlDataAdapter(cmd);
             dataAdapter.Fill(data);
 
             return data;
@@ -63,10 +62,10 @@ namespace SediM
         private DataTable NactiTridy()
         {
             DataTable data = new DataTable();
-            NpgsqlDataAdapter dataAdapter;
-            NpgsqlCommand cmd = new("SELECT * FROM tridy", connection);
+            SqlDataAdapter dataAdapter;
+            SqlCommand cmd = new("SELECT * FROM Tridy", connection);
 
-            dataAdapter = new NpgsqlDataAdapter(cmd);
+            dataAdapter = new SqlDataAdapter(cmd);
             dataAdapter.Fill(data);
 
             return data;
@@ -75,16 +74,28 @@ namespace SediM
         private DataTable NactiStudenty()
         {
             DataTable data = new DataTable();
-            NpgsqlDataAdapter dataAdapter;
-            NpgsqlCommand cmd = new("SELECT * FROM studentiv2", connection);
+            SqlDataAdapter dataAdapter;
+            SqlCommand cmd = new("SELECT * FROM Studenti", connection);
 
-            dataAdapter = new NpgsqlDataAdapter(cmd);
+            dataAdapter = new SqlDataAdapter(cmd);
             dataAdapter.Fill(data);
 
             return data;
         }
 
-        private void NactiData()
+        private DataTable NactiUcitele()
+        {
+            DataTable data = new DataTable();
+            SqlDataAdapter dataAdapter;
+            SqlCommand cmd = new("SELECT * FROM Ucitele", connection);
+
+            dataAdapter = new SqlDataAdapter(cmd);
+            dataAdapter.Fill(data);
+
+            return data;
+        }
+
+        public void NactiData()
         {
             data = NactiStudenty();
             zaci = mainHelp.ListZaku(data);
@@ -94,6 +105,9 @@ namespace SediM
 
             data = NactiTridy();
             tridy = mainHelp.ListTrid(data);
+
+            data = NactiUcitele();
+            ucitele = mainHelp.ListUcitelu(data);
         }
 
         private void Exportovat()
@@ -151,7 +165,7 @@ namespace SediM
             Version verzeAplikace = Assembly.GetExecutingAssembly().GetName().Version;
             string verze = $"Verze {verzeAplikace.Major}.{verzeAplikace.Minor}.{verzeAplikace.Build}";
 
-            MessageBox.Show($"Aplikace SediM\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace SediM umožňuje správu a organizaci krajského kola matematické soutěže.");
+            MessageBox.Show($"Aplikace Ivan\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace umožňuje správu a organizaci krajského kola matematické soutěže pro Královéhradecký kraj.");
         }
         /* POZNÁMKA:
          * Při rozsazování se odebírají jak studenti, tak třídy. 
@@ -161,7 +175,7 @@ namespace SediM
         */
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, zaci, connection);
+            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, zaci);
             formularRozsazeni.Owner = this;
             formularRozsazeni.ShowDialog();
         }
@@ -178,15 +192,7 @@ namespace SediM
         /// <param name="e"></param>
         private void novýToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Zak_Novy okno = new Zak_Novy(skoly, zaci);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            mainHelp.StudentForm_New(this, skoly, zaci);
         }
 
         private void upravitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -226,6 +232,26 @@ namespace SediM
         private void nápovědaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainHelp.ShowHelp(this);
+        }
+
+        private void picbox_StudentNovy_Click(object sender, EventArgs e)
+        {
+            DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
+
+            if (stav == DialogResult.OK)
+            {
+                NactiData();
+            }
+        }
+
+        private void nováToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
+
+            if(stav == DialogResult.OK)
+            {
+                NactiData();
+            }
         }
     }
 }
