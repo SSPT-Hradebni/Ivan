@@ -59,8 +59,7 @@ namespace SediM.Helpers
                 // [1] - Název třídy
                 // [2] - Šířka třídy (v místech)
                 // [3] - Výška třídy (v místech)
-                // [4] - Stav vyplnění třídy (true/false)
-                Trida trida = new Trida(long.Parse(radek[0].ToString()), radek[1].ToString(), int.Parse(radek[2].ToString()), int.Parse(radek[3].ToString()), (bool)radek[4]);
+                Trida trida = new Trida(long.Parse(radek[0].ToString()), radek[1].ToString(), int.Parse(radek[2].ToString()), int.Parse(radek[3].ToString()));
                 tridy.Add(trida);
             }
 

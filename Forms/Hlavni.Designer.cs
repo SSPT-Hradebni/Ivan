@@ -146,7 +146,7 @@
             // 
             this.pictureBox1_StudentNovy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1_StudentNovy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1_StudentNovy.Image = global::Ivan.Properties.Resources.student;
+            this.pictureBox1_StudentNovy.Image = global::SediM.Properties.Resources.student;
             this.pictureBox1_StudentNovy.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1_StudentNovy.Name = "pictureBox1_StudentNovy";
             this.pictureBox1_StudentNovy.Size = new System.Drawing.Size(94, 73);

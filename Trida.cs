@@ -22,7 +22,7 @@
         /// <param name="sirka">Šířka třídy (v polích)</param>
         /// <param name="vyska">Výška třídy (v polích)</param>
         /// <param name="rozsazena">Třída je/není rozsazená</param>
-        public Trida(long id, string nazev, int sirka, int vyska, bool rozsazena)
+        public Trida(long id, string nazev, int sirka, int vyska, bool rozsazena = false)
         {
             this.id = id;
             this.nazev = nazev;

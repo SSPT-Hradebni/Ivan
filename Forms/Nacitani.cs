@@ -12,12 +12,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Ivan
+namespace SediM
 {
     public partial class Nacitani : Form
     {
         private SoundPlayer player;
-        private Hlavni okno = new Hlavni();
+        private Main okno = new Main();
 
         private HlavniPomoc pomoc;
 
@@ -33,7 +33,7 @@ namespace Ivan
             pomoc = new HlavniPomoc();
             lblTip.Text = "";
 
-            player = new SoundPlayer(Properties.Resources.loading);
+            player = new SoundPlayer(SediM.Properties.Resources.loading);
             // player.Play();
         }
 
@@ -75,7 +75,7 @@ namespace Ivan
                 ivanNactenyRead = true;
             }
 
-            if (Properties.Settings.Default.LoadingEnabled)
+            if (SediM.Properties.Settings.Default.LoadingEnabled)
             {
                 loading.Enabled = true;
 
@@ -83,8 +83,6 @@ namespace Ivan
                 if (loadingBar.Value >= 99)
                 {
                     loading.Enabled = false;
-
-                    okno = new Hlavni();
 
                     okno.FormClosed += (s, args) =>
                     {

@@ -43,6 +43,7 @@
     <PackageReference Include="Npgsql" Version="8.0.1" />
     <PackageReference Include="PDFsharp-GDI" Version="6.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.Speech" Version="8.0.0" />
     <PackageReference Include="System.Text.Json" Version="8.0.2" />
   </ItemGroup>
 

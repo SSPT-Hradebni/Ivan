@@ -39,7 +39,7 @@ namespace Ivan.Helpers
         /// <returns>Titulek s konkrétním textem včetně názvu aplikace</returns>
         public string VytvorTitulek(string text)
         {
-            return text.Length > 0 ? $"{text} | {Properties.Settings.Default.AppName}" : Properties.Settings.Default.AppName;
+            return text.Length > 0 ? $"{text} | {SediM.Properties.Settings.Default.AppName}" : SediM.Properties.Settings.Default.AppName;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Ivan.Helpers
             return vysledneSlovo;
         }
 
-        SoundPlayer lukas = new SoundPlayer(Properties.Resources.lukas);
+        SoundPlayer lukas = new SoundPlayer(SediM.Properties.Resources.lukas);
 
         public string NahodnyIvan(int nahoda)
         {

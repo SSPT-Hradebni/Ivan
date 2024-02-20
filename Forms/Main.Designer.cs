@@ -103,7 +103,7 @@
             // 
             // oAplikaciToolStripMenuItem
             // 
-            oAplikaciToolStripMenuItem.Image = Properties.Resources.Information;
+            oAplikaciToolStripMenuItem.Image = Properties.Resources.Information1;
             oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
             oAplikaciToolStripMenuItem.Size = new Size(161, 26);
             oAplikaciToolStripMenuItem.Text = "O aplikaci";
@@ -111,7 +111,7 @@
             // 
             // nápovědaToolStripMenuItem
             // 
-            nápovědaToolStripMenuItem.Image = Properties.Resources.Help_and_Support;
+            nápovědaToolStripMenuItem.Image = Properties.Resources.Help_and_Support1;
             nápovědaToolStripMenuItem.Name = "nápovědaToolStripMenuItem";
             nápovědaToolStripMenuItem.Size = new Size(161, 26);
             nápovědaToolStripMenuItem.Text = "Nápověda";
@@ -119,7 +119,7 @@
             // 
             // ukončitToolStripMenuItem
             // 
-            ukončitToolStripMenuItem.Image = Properties.Resources.Power;
+            ukončitToolStripMenuItem.Image = Properties.Resources.Power1;
             ukončitToolStripMenuItem.Name = "ukončitToolStripMenuItem";
             ukončitToolStripMenuItem.Size = new Size(161, 26);
             ukončitToolStripMenuItem.Text = "Konec";
@@ -134,7 +134,7 @@
             // 
             // importToolStripMenuItem
             // 
-            importToolStripMenuItem.Image = Properties.Resources.Fax_Received_Succesfully;
+            importToolStripMenuItem.Image = Properties.Resources.Fax_Received_Succesfully1;
             importToolStripMenuItem.Name = "importToolStripMenuItem";
             importToolStripMenuItem.Size = new Size(137, 26);
             importToolStripMenuItem.Text = "Import";
@@ -142,7 +142,7 @@
             // 
             // exportToolStripMenuItem
             // 
-            exportToolStripMenuItem.Image = Properties.Resources.Fax_Sent_Succesfully;
+            exportToolStripMenuItem.Image = Properties.Resources.Fax_Sent_Succesfully1;
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             exportToolStripMenuItem.Size = new Size(137, 26);
             exportToolStripMenuItem.Text = "Export";
@@ -157,7 +157,7 @@
             // 
             // novýToolStripMenuItem
             // 
-            novýToolStripMenuItem.Image = Properties.Resources.Add;
+            novýToolStripMenuItem.Image = Properties.Resources.Add1;
             novýToolStripMenuItem.Name = "novýToolStripMenuItem";
             novýToolStripMenuItem.Size = new Size(205, 26);
             novýToolStripMenuItem.Text = "Nový student";
@@ -165,7 +165,7 @@
             // 
             // upravitToolStripMenuItem
             // 
-            upravitToolStripMenuItem.Image = Properties.Resources.OE_Signature;
+            upravitToolStripMenuItem.Image = Properties.Resources.OE_Signature1;
             upravitToolStripMenuItem.Name = "upravitToolStripMenuItem";
             upravitToolStripMenuItem.Size = new Size(205, 26);
             upravitToolStripMenuItem.Text = "Upravit studenta";
@@ -173,7 +173,7 @@
             // 
             // seznamToolStripMenuItem
             // 
-            seznamToolStripMenuItem.Image = Properties.Resources.User_Accounts;
+            seznamToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
             seznamToolStripMenuItem.Name = "seznamToolStripMenuItem";
             seznamToolStripMenuItem.Size = new Size(205, 26);
             seznamToolStripMenuItem.Text = "Seznam studentů";
@@ -188,21 +188,21 @@
             // 
             // novýToolStripMenuItem1
             // 
-            novýToolStripMenuItem1.Image = Properties.Resources.Add;
+            novýToolStripMenuItem1.Image = Properties.Resources.Add1;
             novýToolStripMenuItem1.Name = "novýToolStripMenuItem1";
             novýToolStripMenuItem1.Size = new Size(192, 26);
             novýToolStripMenuItem1.Text = "Nový učitel";
             // 
             // upravitToolStripMenuItem1
             // 
-            upravitToolStripMenuItem1.Image = Properties.Resources.OE_Signature;
+            upravitToolStripMenuItem1.Image = Properties.Resources.OE_Signature1;
             upravitToolStripMenuItem1.Name = "upravitToolStripMenuItem1";
             upravitToolStripMenuItem1.Size = new Size(192, 26);
             upravitToolStripMenuItem1.Text = "Upravit učitele";
             // 
             // seznamUčitelůToolStripMenuItem
             // 
-            seznamUčitelůToolStripMenuItem.Image = Properties.Resources.User_Accounts;
+            seznamUčitelůToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
             seznamUčitelůToolStripMenuItem.Name = "seznamUčitelůToolStripMenuItem";
             seznamUčitelůToolStripMenuItem.Size = new Size(192, 26);
             seznamUčitelůToolStripMenuItem.Text = "Seznam učitelů";
@@ -216,7 +216,7 @@
             // 
             // nováToolStripMenuItem
             // 
-            nováToolStripMenuItem.Image = Properties.Resources.Add;
+            nováToolStripMenuItem.Image = Properties.Resources.Add1;
             nováToolStripMenuItem.Name = "nováToolStripMenuItem";
             nováToolStripMenuItem.Size = new Size(224, 26);
             nováToolStripMenuItem.Text = "Nová škola";
@@ -224,14 +224,14 @@
             // 
             // upravitToolStripMenuItem2
             // 
-            upravitToolStripMenuItem2.Image = Properties.Resources.OE_Signature;
+            upravitToolStripMenuItem2.Image = Properties.Resources.OE_Signature1;
             upravitToolStripMenuItem2.Name = "upravitToolStripMenuItem2";
             upravitToolStripMenuItem2.Size = new Size(224, 26);
             upravitToolStripMenuItem2.Text = "Upravit školu";
             // 
             // seznamŠkolToolStripMenuItem
             // 
-            seznamŠkolToolStripMenuItem.Image = Properties.Resources.User_Accounts;
+            seznamŠkolToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
             seznamŠkolToolStripMenuItem.Name = "seznamŠkolToolStripMenuItem";
             seznamŠkolToolStripMenuItem.Size = new Size(224, 26);
             seznamŠkolToolStripMenuItem.Text = "Seznam škol";
@@ -245,7 +245,7 @@
             // 
             // nováToolStripMenuItem1
             // 
-            nováToolStripMenuItem1.Image = Properties.Resources.Add;
+            nováToolStripMenuItem1.Image = Properties.Resources.Add1;
             nováToolStripMenuItem1.Name = "nováToolStripMenuItem1";
             nováToolStripMenuItem1.Size = new Size(224, 26);
             nováToolStripMenuItem1.Text = "Nová třída";
@@ -253,14 +253,14 @@
             // 
             // upravitToolStripMenuItem3
             // 
-            upravitToolStripMenuItem3.Image = Properties.Resources.OE_Signature;
+            upravitToolStripMenuItem3.Image = Properties.Resources.OE_Signature1;
             upravitToolStripMenuItem3.Name = "upravitToolStripMenuItem3";
             upravitToolStripMenuItem3.Size = new Size(224, 26);
             upravitToolStripMenuItem3.Text = "Upravit třídu";
             // 
             // seznamTřídToolStripMenuItem
             // 
-            seznamTřídToolStripMenuItem.Image = Properties.Resources.User_Accounts;
+            seznamTřídToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
             seznamTřídToolStripMenuItem.Name = "seznamTřídToolStripMenuItem";
             seznamTřídToolStripMenuItem.Size = new Size(224, 26);
             seznamTřídToolStripMenuItem.Text = "Seznam tříd";
@@ -272,7 +272,7 @@
             // 
             // novéRozsazenítoolStripMenuItem1
             // 
-            novéRozsazenítoolStripMenuItem1.Image = Properties.Resources.Add;
+            novéRozsazenítoolStripMenuItem1.Image = Properties.Resources.Add1;
             novéRozsazenítoolStripMenuItem1.Name = "novéRozsazenítoolStripMenuItem1";
             novéRozsazenítoolStripMenuItem1.Size = new Size(224, 26);
             novéRozsazenítoolStripMenuItem1.Text = "Nové rozsazení";
@@ -280,7 +280,7 @@
             // 
             // upravitRozsazenítoolStripMenuItem1
             // 
-            upravitRozsazenítoolStripMenuItem1.Image = Properties.Resources.OE_Signature;
+            upravitRozsazenítoolStripMenuItem1.Image = Properties.Resources.OE_Signature1;
             upravitRozsazenítoolStripMenuItem1.Name = "upravitRozsazenítoolStripMenuItem1";
             upravitRozsazenítoolStripMenuItem1.Size = new Size(224, 26);
             upravitRozsazenítoolStripMenuItem1.Text = "Upravit rozsazení";
