@@ -1,13 +1,13 @@
 ﻿using Npgsql;
 using SediM.Helpers;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SediM
 {
     public partial class Zak_Novy : Form
     {
-        private static NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder($"Host={Properties.Settings.Default.MySQL_server};Port={Properties.Settings.Default.MySQL_port};Username={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo};Database={Properties.Settings.Default.MySQL_databaze};");
-        private static NpgsqlDataSource dataSource = dataSourceBuilder.Build();
-        private NpgsqlConnection? connection;
+        private SqlConnection connection = new SqlConnection(@"Data Source=37.60.252.204;Initial Catalog=Ivan;User ID=ivan;Password=mE3xBa0it8dVOGr");
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
@@ -19,12 +19,12 @@ namespace SediM
         {
             InitializeComponent();
 
-            var conn = dataSource.OpenConnectionAsync();
-            connection = conn.Result;
+            connection.Open();
+            ConnectionState stavDB = connection.State;
 
             try
             {
-                if (conn.IsFaulted && jePripojen == false)
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
                 {
                     DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     if (pripojen == DialogResult.Cancel)
@@ -35,9 +35,9 @@ namespace SediM
                     return;
                 }
             }
-            catch (NpgsqlException e)
+            catch (SqlException e)
             {
-                mainHelp.Alert("Chyba PostgreSQL", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }
@@ -46,33 +46,35 @@ namespace SediM
         {
             _skoly = skoly;
             _studenti = studenti;
+
             InitializeComponent();
 
-            var conn = dataSource.OpenConnectionAsync();
-            connection = conn.Result;
+            connection.Open();
+            ConnectionState stavDB = connection.State;
 
             try
             {
-                if (conn.IsFaulted && jePripojen == false)
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
                 {
                     DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     if (pripojen == DialogResult.Cancel)
                     {
-                        Close();
+                        Application.Exit();
                     }
 
                     return;
                 }
             }
-            catch (NpgsqlException e)
+            catch (SqlException e)
             {
-                mainHelp.Alert("Chyba PostgreSQL", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
             }
         }
 
         private void Zak_Novy_Load(object sender, EventArgs e)
         {
+            // načtení škol
             cboxSkoly.DataSource = _skoly;
             cboxSkoly.ValueMember = "id";
             cboxSkoly.DisplayMember = "nazev";
@@ -105,17 +107,17 @@ namespace SediM
                     throw new Exception("Kategorie musí být v intervalu od 1 do 7 (včetně)");
                 }
 
-                if (skola <= 0)
+                if (skola < 0)
                 {
                     throw new Exception("Platná škola musí být vybrána");
                 }
 
-                NpgsqlCommand vytvorStudenta = new NpgsqlCommand($"INSERT INTO studentiv2 (id, jmeno_prijmeni, kategorie, skola) VALUES(@id, @jmenoprijmeni, @kategorie, @skola)", connection);
+                SqlCommand vytvorStudenta = new SqlCommand($"INSERT INTO Studenti (Jmeno, Prijmeni, Kategorie, Skola) VALUES(@jmeno, @prijmeni, @kategorie, @skola)", connection);
 
-                vytvorStudenta.Parameters.AddWithValue("@id", posledniID + 1); // ID nově vytvořeného studenta
-                vytvorStudenta.Parameters.AddWithValue("@jmenoprijmeni", $"{jmeno} {prijmeni}");
+                vytvorStudenta.Parameters.AddWithValue("@jmeno", $"{jmeno}");
+                vytvorStudenta.Parameters.AddWithValue("@prijmeni", $"{prijmeni}");
                 vytvorStudenta.Parameters.AddWithValue("@kategorie", kategorie);
-                vytvorStudenta.Parameters.AddWithValue("@skola", skola);
+                vytvorStudenta.Parameters.AddWithValue("@skola", skola+ 1);
 
                 int stav = vytvorStudenta.ExecuteNonQuery();
 

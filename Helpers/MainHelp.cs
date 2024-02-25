@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using SediM.Forms;
+using System.Data;
 using System.Text;
 
 namespace SediM.Helpers
@@ -29,15 +30,13 @@ namespace SediM.Helpers
 
             foreach (DataRow radek in data.Rows)
             {
-                // rozdělení jména a příjmení
-                string[] jmeno = radek[1].ToString().Split(' ');
-
                 // [0] - ID studenta
                 // [1] - Jméno studenta
                 // [2] - Příjmení studenta
                 // [3] - Studentovo číslo kategorie
                 // [4] - ID školy
-                Zak zak = new Zak(long.Parse(radek[0].ToString()), jmeno[0], jmeno[1], long.Parse(radek[2].ToString()), long.Parse(radek[3].ToString()));
+                // [5] - ID třídy
+                Zak zak = new Zak((int)radek[0], (string)radek[1], (string)radek[2], (int)radek[3], (int)radek[4], (int)radek[5]);
                 zaci.Add(zak);
             }
 
@@ -60,7 +59,8 @@ namespace SediM.Helpers
                 // [1] - Název třídy
                 // [2] - Šířka třídy (v místech)
                 // [3] - Výška třídy (v místech)
-                Trida trida = new Trida(long.Parse(radek[0].ToString()), radek[1].ToString(), int.Parse(radek[2].ToString()), int.Parse(radek[3].ToString()));
+                // [4] - Stav vyplnění třídy (true/false)
+                Trida trida = new Trida(long.Parse(radek[0].ToString()), radek[1].ToString(), int.Parse(radek[2].ToString()), int.Parse(radek[3].ToString()), (bool)radek[4]);
                 tridy.Add(trida);
             }
 
@@ -82,6 +82,30 @@ namespace SediM.Helpers
                 // [0] - ID školy
                 // [1] - Název školy
                 Skola skola = new Skola(long.Parse(radek[0].ToString()), radek[1].ToString());
+                skoly.Add(skola);
+            }
+
+            return skoly;
+        }
+
+        /// <summary>
+        /// Načítání učitelů do listu z <paramref name="data"/>
+        /// </summary>
+        /// <param name="data">Surová tabulka dat učitelů</param>
+        /// <returns>Všichni učitelé z databáze v listu</returns>
+        public List<Ucitel> ListUcitelu(DataTable data)
+        {
+            // vytvoření dočasného listu učitelů
+            List<Ucitel> skoly = new List<Ucitel>();
+
+            foreach (DataRow radek in data.Rows)
+            {
+                // [0] - ID učitele
+                // [1] - Křestní jméno
+                // [2] - Příjmení
+                // [3] - Email
+                // [4] - Heslo
+                Ucitel skola = new Ucitel(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), radek[3].ToString(), radek[4].ToString());
                 skoly.Add(skola);
             }
 
@@ -199,6 +223,26 @@ namespace SediM.Helpers
         public void ShowHelp(Form form)
         {
             Help.ShowHelp(form, "SediM.chm", HelpNavigator.Index);
+        }
+
+        public DialogResult StudentForm_New(Form form, List<Skola> skoly, List<Zak> zaci)
+        {
+            Zak_Novy okno = new Zak_Novy(skoly, zaci);
+            okno.Owner = form;
+
+            DialogResult stav = okno.ShowDialog();
+
+            return stav;
+        }
+
+        public DialogResult SkolaForm_New(Form form, List<Ucitel> ucitele)
+        {
+            Skola_Nova okno = new Skola_Nova(ucitele);
+            okno.Owner = form;
+
+            DialogResult stav = okno.ShowDialog();
+
+            return stav;
         }
     }
 }

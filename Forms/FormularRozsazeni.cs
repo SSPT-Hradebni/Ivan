@@ -3,12 +3,12 @@ using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using SediM.Helpers;
+using System.Data.SqlClient;
 
 namespace SediM
 {
     public partial class FormularRozsazeni : Form
     {
-        private NpgsqlConnection connection;
         private MainHelp mainHelp = new MainHelp();
 
         // TODO/FIXME: Když uživatel zavře a znovu otevře tento form bez ukončení aplikace (formulář Main)
@@ -30,13 +30,12 @@ namespace SediM
         // Po nastavení její hodnoty žákovi se inkrementuje aby se předešlo dvěma místům se stejnou hodnotou
         private int mistoZaka = 1;
 
-        public FormularRozsazeni(List<Trida> tridy, List<Zak> zaci, NpgsqlConnection connection)
+        public FormularRozsazeni(List<Trida> tridy, List<Zak> zaci)
         {
             InitializeComponent();
 
             this.tridy = tridy;
             this.zaci = zaci;
-            this.connection = connection;
 
             // Automaticky zvolí jediný doposud vyřešený algoritmus - Knight (Jezdec)
             combobxAlgoritmus.SelectedIndex = 0;
@@ -199,7 +198,7 @@ namespace SediM
             // Získáme aktuální vybranou třídu
             Trida aktualniTrida = ZiskejAktualniTridu();
 
-            MessageBox.Show($"Aktuální třída: {aktualniTrida.Nazev}\nŠířka: {aktualniTrida.Sirka} míst\nVýška: {aktualniTrida.Vyska} míst");
+            // MessageBox.Show($"Aktuální třída: {aktualniTrida.Nazev}\nŠířka: {aktualniTrida.Sirka} míst\nVýška: {aktualniTrida.Vyska} míst");
 
             NastavParametryProVyplneni(cboxTridy.SelectedIndex, aktualniTrida);
         }
@@ -270,7 +269,7 @@ namespace SediM
         {
             // Vytvoříme žáka returnZak s jménem "PRÁZDNÉ MÍSTO" pro případ, že by
             // for cyklus došel do konce bez přenastavení této proměnné
-            Zak returnZak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1);
+            Zak returnZak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
 
             if (kopieZaku.Find(zak => zak.Kategorie == kategorie) != null)
             {
@@ -413,7 +412,19 @@ namespace SediM
 
         private void FormularRozsazeni_Load(object sender, EventArgs e)
         {
-            cboxTridy.DataSource = tridy;
+            List<Trida> volneTridy = new List<Trida>();
+
+            for(int i = 0; i < tridy.Count; i++)
+            {
+                Trida trida = tridy[i];
+
+                if(trida.Rozsazena == false)
+                {
+                    volneTridy.Add(trida);
+                }
+            }
+
+            cboxTridy.DataSource = volneTridy;
             cboxTridy.ValueMember = "Id";
             cboxTridy.DisplayMember = "Nazev";
         }
@@ -432,6 +443,11 @@ namespace SediM
             {
                 return null;
             }
+        }
+
+        private void UpdateData(Trida trida)
+        {
+
         }
     }
 }
