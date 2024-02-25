@@ -36,9 +36,6 @@
             oAplikaciToolStripMenuItem = new ToolStripMenuItem();
             nápovědaToolStripMenuItem = new ToolStripMenuItem();
             ukončitToolStripMenuItem = new ToolStripMenuItem();
-            dataToolStripMenuItem = new ToolStripMenuItem();
-            importToolStripMenuItem = new ToolStripMenuItem();
-            exportToolStripMenuItem = new ToolStripMenuItem();
             studentToolStripMenuItem = new ToolStripMenuItem();
             novýToolStripMenuItem = new ToolStripMenuItem();
             upravitToolStripMenuItem = new ToolStripMenuItem();
@@ -86,7 +83,7 @@
             // menuStrip
             // 
             menuStrip.ImageScalingSize = new Size(20, 20);
-            menuStrip.Items.AddRange(new ToolStripItem[] { souborToolStripMenuItem, dataToolStripMenuItem, studentToolStripMenuItem, učitelToolStripMenuItem, školaToolStripMenuItem, třídaToolStripMenuItem });
+            menuStrip.Items.AddRange(new ToolStripItem[] { souborToolStripMenuItem, studentToolStripMenuItem, učitelToolStripMenuItem, školaToolStripMenuItem, třídaToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new Padding(8, 4, 0, 4);
@@ -124,29 +121,6 @@
             ukončitToolStripMenuItem.Size = new Size(161, 26);
             ukončitToolStripMenuItem.Text = "Konec";
             ukončitToolStripMenuItem.Click += ukončitToolStripMenuItem_Click;
-            // 
-            // dataToolStripMenuItem
-            // 
-            dataToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { importToolStripMenuItem, exportToolStripMenuItem });
-            dataToolStripMenuItem.Name = "dataToolStripMenuItem";
-            dataToolStripMenuItem.Size = new Size(55, 24);
-            dataToolStripMenuItem.Text = "Data";
-            // 
-            // importToolStripMenuItem
-            // 
-            importToolStripMenuItem.Image = Properties.Resources.Fax_Received_Succesfully1;
-            importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(137, 26);
-            importToolStripMenuItem.Text = "Import";
-            importToolStripMenuItem.Click += importToolStripMenuItem_Click;
-            // 
-            // exportToolStripMenuItem
-            // 
-            exportToolStripMenuItem.Image = Properties.Resources.Fax_Sent_Succesfully1;
-            exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(137, 26);
-            exportToolStripMenuItem.Text = "Export";
-            exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
             // 
             // studentToolStripMenuItem
             // 
@@ -192,6 +166,7 @@
             novýToolStripMenuItem1.Name = "novýToolStripMenuItem1";
             novýToolStripMenuItem1.Size = new Size(192, 26);
             novýToolStripMenuItem1.Text = "Nový učitel";
+            novýToolStripMenuItem1.Click += novýToolStripMenuItem1_Click;
             // 
             // upravitToolStripMenuItem1
             // 
@@ -199,6 +174,7 @@
             upravitToolStripMenuItem1.Name = "upravitToolStripMenuItem1";
             upravitToolStripMenuItem1.Size = new Size(192, 26);
             upravitToolStripMenuItem1.Text = "Upravit učitele";
+            upravitToolStripMenuItem1.Click += upravitToolStripMenuItem1_Click;
             // 
             // seznamUčitelůToolStripMenuItem
             // 
@@ -206,6 +182,7 @@
             seznamUčitelůToolStripMenuItem.Name = "seznamUčitelůToolStripMenuItem";
             seznamUčitelůToolStripMenuItem.Size = new Size(192, 26);
             seznamUčitelůToolStripMenuItem.Text = "Seznam učitelů";
+            seznamUčitelůToolStripMenuItem.Click += seznamUčitelůToolStripMenuItem_Click;
             // 
             // školaToolStripMenuItem
             // 
@@ -218,7 +195,7 @@
             // 
             nováToolStripMenuItem.Image = Properties.Resources.Add1;
             nováToolStripMenuItem.Name = "nováToolStripMenuItem";
-            nováToolStripMenuItem.Size = new Size(224, 26);
+            nováToolStripMenuItem.Size = new Size(178, 26);
             nováToolStripMenuItem.Text = "Nová škola";
             nováToolStripMenuItem.Click += nováToolStripMenuItem_Click;
             // 
@@ -226,14 +203,14 @@
             // 
             upravitToolStripMenuItem2.Image = Properties.Resources.OE_Signature1;
             upravitToolStripMenuItem2.Name = "upravitToolStripMenuItem2";
-            upravitToolStripMenuItem2.Size = new Size(224, 26);
+            upravitToolStripMenuItem2.Size = new Size(178, 26);
             upravitToolStripMenuItem2.Text = "Upravit školu";
             // 
             // seznamŠkolToolStripMenuItem
             // 
             seznamŠkolToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
             seznamŠkolToolStripMenuItem.Name = "seznamŠkolToolStripMenuItem";
-            seznamŠkolToolStripMenuItem.Size = new Size(224, 26);
+            seznamŠkolToolStripMenuItem.Size = new Size(178, 26);
             seznamŠkolToolStripMenuItem.Text = "Seznam škol";
             // 
             // třídaToolStripMenuItem
@@ -257,6 +234,7 @@
             upravitToolStripMenuItem3.Name = "upravitToolStripMenuItem3";
             upravitToolStripMenuItem3.Size = new Size(224, 26);
             upravitToolStripMenuItem3.Text = "Upravit třídu";
+            upravitToolStripMenuItem3.Click += upravitToolStripMenuItem3_Click;
             // 
             // seznamTřídToolStripMenuItem
             // 
@@ -264,6 +242,7 @@
             seznamTřídToolStripMenuItem.Name = "seznamTřídToolStripMenuItem";
             seznamTřídToolStripMenuItem.Size = new Size(224, 26);
             seznamTřídToolStripMenuItem.Text = "Seznam tříd";
+            seznamTřídToolStripMenuItem.Click += seznamTřídToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
@@ -363,9 +342,6 @@
         #endregion
         private MenuStrip menuStrip;
         private ToolStripMenuItem souborToolStripMenuItem;
-        private ToolStripMenuItem dataToolStripMenuItem;
-        private ToolStripMenuItem importToolStripMenuItem;
-        private ToolStripMenuItem exportToolStripMenuItem;
         private ToolStripMenuItem oAplikaciToolStripMenuItem;
         private ToolStripMenuItem nápovědaToolStripMenuItem;
         private ToolStripMenuItem ukončitToolStripMenuItem;

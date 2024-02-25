@@ -1,5 +1,4 @@
-﻿using Ivan.Forms;
-using Ivan.Helpers;
+﻿using SediM.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +18,7 @@ namespace SediM
         private SoundPlayer player;
         private Main okno = new Main();
 
-        private HlavniPomoc pomoc;
+        private MainHelp pomoc;
 
         bool haIvanRead = false;
         bool ivanSeNacitaRead = false;
@@ -30,10 +29,10 @@ namespace SediM
         {
             InitializeComponent();
 
-            pomoc = new HlavniPomoc();
+            pomoc = new MainHelp();
             lblTip.Text = "";
 
-            player = new SoundPlayer(SediM.Properties.Resources.loading);
+            player = new SoundPlayer(Properties.Resources.loading);
             // player.Play();
         }
 
@@ -41,10 +40,10 @@ namespace SediM
         {
             loadingBar.Value = loadingBar.Value + 1;
             Random nahoda = new Random();
-            int cislo = nahoda.Next(20, 70);
+            int cislo = nahoda.Next(1, 100);
 
             double sanceNaNahodu = 20; // například 20% šance
-            double nahodneCislo = nahoda.Next(-20, 90); // předpokládáme funkci pro generování náhodného čísla
+            double nahodneCislo = nahoda.Next(-20, 20); // předpokládáme funkci pro generování náhodného čísla
 
             if (loadingBar.Value >= 0 && loadingBar.Value < 25 && !haIvanRead)
             {
@@ -54,11 +53,15 @@ namespace SediM
             }
             else if (loadingBar.Value >= 25 && loadingBar.Value < 70 && !ivanSeNacitaRead)
             {
-                lblTip.Text = "Ivan se načítá";
                 if (nahodneCislo < sanceNaNahodu)
                 {
-                    //lblTip.Text = pomoc.NahodnyIvan(cislo); // nahrazení textu náhodnou větou
+                    lblTip.Text = pomoc.NahodnyIvan(cislo); // nahrazení textu náhodnou větou
                 }
+                else
+                {
+                    lblTip.Text = "Ivan se načítá";
+                }
+
                 pomoc.RekniTo(lblTip.Text, true);
                 ivanSeNacitaRead = true;
             }

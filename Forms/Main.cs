@@ -248,10 +248,35 @@ namespace SediM
         {
             DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
 
-            if(stav == DialogResult.OK)
+            if (stav == DialogResult.OK)
             {
                 NactiData();
             }
+        }
+
+        private void novýToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Vytvořit nového učitele");
+        }
+
+        private void upravitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Úpravit existujícího učitele");
+        }
+
+        private void seznamUčitelůToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Zobrazit seznam učitelů");
+        }
+
+        private void upravitToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Upravit nerozsazenou třídu");
+        }
+
+        private void seznamTřídToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Zobrazit seznam rozsazených i nerozsazených tříd");
         }
     }
 }
