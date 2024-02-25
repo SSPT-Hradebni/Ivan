@@ -234,6 +234,12 @@ namespace SediM
             mainHelp.ShowHelp(this);
         }
 
+        private void upravitTriduToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Trida_Uprava okno = new Trida_Uprava(tridy);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
         private void picbox_StudentNovy_Click(object sender, EventArgs e)
         {
             DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);

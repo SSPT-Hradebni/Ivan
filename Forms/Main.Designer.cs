@@ -251,7 +251,7 @@
             nováToolStripMenuItem1.Text = "Nová třída";
             nováToolStripMenuItem1.Click += nováToolStripMenuItem1_Click;
             // 
-            // upravitToolStripMenuItem3
+            // upravitTriduToolStripMenuItem
             // 
             upravitToolStripMenuItem3.Image = Properties.Resources.OE_Signature;
             upravitToolStripMenuItem3.Name = "upravitToolStripMenuItem3";
@@ -383,7 +383,7 @@
         private ToolStripMenuItem nováToolStripMenuItem;
         private ToolStripMenuItem upravitToolStripMenuItem2;
         private ToolStripMenuItem nováToolStripMenuItem1;
-        private ToolStripMenuItem upravitToolStripMenuItem3;
+        private ToolStripMenuItem upravitTriduToolStripMenuItem;
         private ToolStripMenuItem seznamToolStripMenuItem;
         private ToolStripMenuItem seznamUčitelůToolStripMenuItem;
         private ToolStripMenuItem seznamŠkolToolStripMenuItem;
