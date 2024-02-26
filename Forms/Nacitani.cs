@@ -1,15 +1,5 @@
 ﻿using SediM.Helpers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SediM
 {
@@ -34,6 +24,7 @@ namespace SediM
 
             player = new SoundPlayer(Properties.Resources.loading);
             // player.Play();
+            loading.Interval = 10;
         }
 
         private void loading_Tick(object sender, EventArgs e)
@@ -48,7 +39,7 @@ namespace SediM
             if (loadingBar.Value >= 0 && loadingBar.Value < 25 && !haIvanRead)
             {
                 lblTip.Text = "Ha, Ivan!";
-                pomoc.RekniTo(lblTip.Text, true);
+                //pomoc.RekniTo(lblTip.Text, true); -- temp
                 haIvanRead = true;
             }
             else if (loadingBar.Value >= 25 && loadingBar.Value < 70 && !ivanSeNacitaRead)
@@ -62,19 +53,19 @@ namespace SediM
                     lblTip.Text = "Ivan se načítá";
                 }
 
-                pomoc.RekniTo(lblTip.Text, true);
+                //pomoc.RekniTo(lblTip.Text, true); -- temp
                 ivanSeNacitaRead = true;
             }
             else if (loadingBar.Value >= 70 && loadingBar.Value < 95 && !ivanSkoroJeRead)
             {
                 lblTip.Text = "Ivan už skoro je ...";
-                pomoc.RekniTo(lblTip.Text, true);
+                //pomoc.RekniTo(lblTip.Text, true); -- temp
                 ivanSkoroJeRead = true;
             }
             else if (loadingBar.Value >= 95 && loadingBar.Value < 100 && !ivanNactenyRead)
             {
                 lblTip.Text = "... načtený!";
-                pomoc.RekniTo(lblTip.Text, true);
+                //pomoc.RekniTo(lblTip.Text, true); -- temp
                 ivanNactenyRead = true;
             }
 

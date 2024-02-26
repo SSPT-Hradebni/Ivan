@@ -8,6 +8,7 @@
         private int kategorie;
         private int skola;
         private int trida;
+        private bool jeRozsazen = false;
 
         private int x;
         private int y;
@@ -18,10 +19,12 @@
         public string Prijmeni { get { return prijmeni; } }
         public int Kategorie { get { return kategorie; } set { kategorie = value; } }
         public int Skola { get { return skola; } set { skola = value; } }
+        public int Trida { get { return trida; } set { trida = value; } }
+        public bool JeRozsazen { get { return jeRozsazen; } set { jeRozsazen = value; } }
+
         public int X { get { return x; } set { x = value; } }
         public int Y { get { return y; } set { y = value; } }
         public int Misto { get { return misto; } set { misto = value; } }
-        public int Trida { get { return trida; } set { trida = value; } }
 
         /// <summary>
         /// Klasický konstruktor studenta

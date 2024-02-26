@@ -50,7 +50,7 @@
             seznamŠkolToolStripMenuItem = new ToolStripMenuItem();
             třídaToolStripMenuItem = new ToolStripMenuItem();
             nováToolStripMenuItem1 = new ToolStripMenuItem();
-            upravitToolStripMenuItem3 = new ToolStripMenuItem();
+            upravitTriduToolStripMenuItem = new ToolStripMenuItem();
             seznamTřídToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             novéRozsazenítoolStripMenuItem1 = new ToolStripMenuItem();
@@ -215,7 +215,7 @@
             // 
             // třídaToolStripMenuItem
             // 
-            třídaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nováToolStripMenuItem1, upravitToolStripMenuItem3, seznamTřídToolStripMenuItem, toolStripSeparator1, novéRozsazenítoolStripMenuItem1, upravitRozsazenítoolStripMenuItem1 });
+            třídaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nováToolStripMenuItem1, upravitTriduToolStripMenuItem, seznamTřídToolStripMenuItem, toolStripSeparator1, novéRozsazenítoolStripMenuItem1, upravitRozsazenítoolStripMenuItem1 });
             třídaToolStripMenuItem.Name = "třídaToolStripMenuItem";
             třídaToolStripMenuItem.Size = new Size(56, 24);
             třídaToolStripMenuItem.Text = "Třída";
@@ -230,11 +230,11 @@
             // 
             // upravitTriduToolStripMenuItem
             // 
-            upravitToolStripMenuItem3.Image = Properties.Resources.OE_Signature1;
-            upravitToolStripMenuItem3.Name = "upravitToolStripMenuItem3";
-            upravitToolStripMenuItem3.Size = new Size(224, 26);
-            upravitToolStripMenuItem3.Text = "Upravit třídu";
-            upravitToolStripMenuItem3.Click += upravitToolStripMenuItem3_Click;
+            upravitTriduToolStripMenuItem.Image = Properties.Resources.OE_Signature1;
+            upravitTriduToolStripMenuItem.Name = "upravitTriduToolStripMenuItem";
+            upravitTriduToolStripMenuItem.Size = new Size(224, 26);
+            upravitTriduToolStripMenuItem.Text = "Upravit třídu";
+            upravitTriduToolStripMenuItem.Click += upravitTriduToolStripMenuItem_Click;
             // 
             // seznamTřídToolStripMenuItem
             // 
