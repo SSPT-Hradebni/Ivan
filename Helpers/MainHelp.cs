@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using SediM.Forms;
+﻿using SediM.Forms;
 using System.Data;
 using System.Speech.Synthesis;
 using System.Text;
@@ -389,7 +388,7 @@ namespace SediM.Helpers
 
         public void JesteNeni(string? coNeni)
         {
-            if(coNeni == null)
+            if (coNeni == null)
             {
                 MessageBox.Show("Tato část aplikace není hotová.", "Nehotová část", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

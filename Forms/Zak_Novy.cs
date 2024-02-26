@@ -1,5 +1,4 @@
-﻿using Npgsql;
-using SediM.Helpers;
+﻿using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -117,7 +116,7 @@ namespace SediM
                 vytvorStudenta.Parameters.AddWithValue("@jmeno", $"{jmeno}");
                 vytvorStudenta.Parameters.AddWithValue("@prijmeni", $"{prijmeni}");
                 vytvorStudenta.Parameters.AddWithValue("@kategorie", kategorie);
-                vytvorStudenta.Parameters.AddWithValue("@skola", skola+ 1);
+                vytvorStudenta.Parameters.AddWithValue("@skola", skola + 1);
 
                 int stav = vytvorStudenta.ExecuteNonQuery();
 
