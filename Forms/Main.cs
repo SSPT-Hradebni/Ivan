@@ -175,9 +175,15 @@ namespace SediM
         */
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, zaci);
-            formularRozsazeni.Owner = this;
-            formularRozsazeni.ShowDialog();
+            FormularRozsazeni okno = new FormularRozsazeni(tridy, zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                NactiData();
+            }
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -240,6 +246,8 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
+        }
+
         private void picbox_StudentNovy_Click(object sender, EventArgs e)
         {
             DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
@@ -273,11 +281,6 @@ namespace SediM
         private void seznamUčitelůToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainHelp.JesteNeni("Zobrazit seznam učitelů");
-        }
-
-        private void upravitToolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Upravit nerozsazenou třídu");
         }
 
         private void seznamTřídToolStripMenuItem_Click(object sender, EventArgs e)
