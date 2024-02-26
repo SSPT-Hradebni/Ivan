@@ -1,5 +1,4 @@
-﻿using Npgsql;
-using SediM.Forms;
+﻿using SediM.Forms;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
@@ -98,7 +97,12 @@ namespace SediM
         public void NactiData()
         {
             data = NactiStudenty();
-            zaci = mainHelp.ListZaku(data);
+            List<Zak> aktualizovaniZaci = mainHelp.ListZaku(data);
+            // Zabrání přepsání hodnot žáků pokud se již nachází v listu.
+            // Jinak řečeno přidá pouze ty žáky, kteří se v listu zaci nenachází
+            foreach (Zak zak in aktualizovaniZaci)
+                if (!zaci.Exists(z => z.Id == zak.Id))
+                    zaci.Add(zak);
 
             data = NactiSkoly();
             skoly = mainHelp.ListSkol(data);
@@ -246,6 +250,11 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                NactiData();
+            }
         }
 
         private void picbox_StudentNovy_Click(object sender, EventArgs e)
@@ -275,7 +284,7 @@ namespace SediM
 
         private void upravitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            mainHelp.JesteNeni("Úpravit existujícího učitele");
+            mainHelp.JesteNeni("Upravit existujícího učitele");
         }
 
         private void seznamUčitelůToolStripMenuItem_Click(object sender, EventArgs e)

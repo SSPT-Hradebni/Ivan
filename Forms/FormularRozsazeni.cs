@@ -1,9 +1,7 @@
-using Npgsql;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using SediM.Helpers;
-using System.Data.SqlClient;
 
 namespace SediM
 {
@@ -110,9 +108,14 @@ namespace SediM
                 // Opakuje pro každé místo v řádku ve třídě
                 for (int s = 0; s < aktualniTrida.Sirka; s++)
                 {
+                    // Pravda pokud máme zvolenou třídu a ID žáka na daném místě není -1 (není prázdné místo)
+                    bool vyplnitBarevne = indexVyplneneTridy != -1
+                        ? tridyZaku[indexVyplneneTridy][r, s].Id != -1
+                        : false;
+
                     g.FillRectangle(
                         ZiskejBarvuDleKategorie(
-                            indexVyplneneTridy != -1
+                            vyplnitBarevne
                                 ? (r * 2 + s) % pocetKategoriiNaTridu[indexVyplneneTridy]
                                 : -1),
                         pocatekPlochyMist.X + s * mistoSirka + s,
@@ -160,9 +163,9 @@ namespace SediM
             {
                 // Rozsah randomu je omezen na <0,65) [prakticky však <0,64>] (namísto <0,256)),
                 // kvůli zvýšení kontrastu mezi barvami
-                int r = rng.Next(0, 64+1) * 4;
-                int g = rng.Next(0, 64+1) * 4;
-                int b = rng.Next(0, 64+1) * 4;
+                int r = rng.Next(0, 64 + 1) * 4;
+                int g = rng.Next(0, 64 + 1) * 4;
+                int b = rng.Next(0, 64 + 1) * 4;
 
                 SolidBrush sb = new SolidBrush(
                     Color.FromArgb(
@@ -231,6 +234,7 @@ namespace SediM
             cboxTridy.Items.Clear();
             cboxTridy.DataSource = tridy;
 
+            // "Překlikne" na nově vyplněnou třídu
             cboxTridy.SelectedIndex = -1;
             listbxVyplneneTridy.SelectedIndex = listbxVyplneneTridy.Items.Count - 1;
         }
@@ -274,7 +278,7 @@ namespace SediM
             if (kopieZaku.Find(zak => zak.Kategorie == kategorie) != null)
             {
                 returnZak = kopieZaku.Find(zak => zak.Kategorie == kategorie);
-                zaci.RemoveAt(zaci.FindIndex(zak => zak.Id == returnZak.Id));
+                zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].JeRozsazen = true;
                 kopieZaku.RemoveAll(zak => zak.Kategorie == kategorie && zak.Skola == returnZak.Skola);
             }
 
@@ -298,9 +302,9 @@ namespace SediM
                 if (zaciDleKategorie.Exists(kategorie => zak.Kategorie == kategorie[0].Kategorie))
                     continue;
 
-                // Dočasně uloží veškeré žáky nevložené kategorie do proměnné
+                // Dočasně uloží veškeré nerozsazené žáky nevložené kategorie do proměnné
                 List<Zak> novaKategorie = new List<Zak>();
-                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.Kategorie == zak.Kategorie);
+                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.Kategorie == zak.Kategorie && !hledanyZak.JeRozsazen);
 
                 // Vytvoří kopii této kategorie
                 List<Zak> kopiekategorie = new List<Zak>();
@@ -414,11 +418,11 @@ namespace SediM
         {
             List<Trida> volneTridy = new List<Trida>();
 
-            for(int i = 0; i < tridy.Count; i++)
+            for (int i = 0; i < tridy.Count; i++)
             {
                 Trida trida = tridy[i];
 
-                if(trida.Rozsazena == false)
+                if (trida.Rozsazena == false)
                 {
                     volneTridy.Add(trida);
                 }
