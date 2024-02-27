@@ -306,5 +306,10 @@ namespace SediM
         {
             mainHelp.JesteNeni("Upravit existující školu");
         }
+
+        private void zobrazitRozsazenítoolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Zobrazit rozsazenou třídu");
+        }
     }
 }
