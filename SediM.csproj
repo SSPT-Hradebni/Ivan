@@ -11,6 +11,7 @@
     <ApplicationIcon>SediM.ico</ApplicationIcon>
     <StartupObject>SediM.Program</StartupObject>
     <UserSecretsId>44ba1f1c-f1bf-4f83-b582-4136e75a6b8a</UserSecretsId>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>

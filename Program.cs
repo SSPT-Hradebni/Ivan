@@ -10,7 +10,7 @@ namespace SediM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Nacitani());
+            Application.Run(new Main());
         }
     }
 }

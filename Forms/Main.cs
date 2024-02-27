@@ -296,5 +296,15 @@ namespace SediM
         {
             mainHelp.JesteNeni("Zobrazit seznam rozsazených i nerozsazených tříd");
         }
+
+        private void seznamŠkolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Zobrazit seznam škol");
+        }
+
+        private void upravitToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Upravit existující školu");
+        }
     }
 }

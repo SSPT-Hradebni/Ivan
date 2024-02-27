@@ -195,7 +195,7 @@
             // 
             nováToolStripMenuItem.Image = Properties.Resources.Add1;
             nováToolStripMenuItem.Name = "nováToolStripMenuItem";
-            nováToolStripMenuItem.Size = new Size(178, 26);
+            nováToolStripMenuItem.Size = new Size(224, 26);
             nováToolStripMenuItem.Text = "Nová škola";
             nováToolStripMenuItem.Click += nováToolStripMenuItem_Click;
             // 
@@ -203,15 +203,17 @@
             // 
             upravitToolStripMenuItem2.Image = Properties.Resources.OE_Signature1;
             upravitToolStripMenuItem2.Name = "upravitToolStripMenuItem2";
-            upravitToolStripMenuItem2.Size = new Size(178, 26);
+            upravitToolStripMenuItem2.Size = new Size(224, 26);
             upravitToolStripMenuItem2.Text = "Upravit školu";
+            upravitToolStripMenuItem2.Click += upravitToolStripMenuItem2_Click;
             // 
             // seznamŠkolToolStripMenuItem
             // 
             seznamŠkolToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
             seznamŠkolToolStripMenuItem.Name = "seznamŠkolToolStripMenuItem";
-            seznamŠkolToolStripMenuItem.Size = new Size(178, 26);
+            seznamŠkolToolStripMenuItem.Size = new Size(224, 26);
             seznamŠkolToolStripMenuItem.Text = "Seznam škol";
+            seznamŠkolToolStripMenuItem.Click += seznamŠkolToolStripMenuItem_Click;
             // 
             // třídaToolStripMenuItem
             // 
@@ -224,7 +226,7 @@
             // 
             nováToolStripMenuItem1.Image = Properties.Resources.Add1;
             nováToolStripMenuItem1.Name = "nováToolStripMenuItem1";
-            nováToolStripMenuItem1.Size = new Size(224, 26);
+            nováToolStripMenuItem1.Size = new Size(206, 26);
             nováToolStripMenuItem1.Text = "Nová třída";
             nováToolStripMenuItem1.Click += nováToolStripMenuItem1_Click;
             // 
@@ -232,7 +234,7 @@
             // 
             upravitTriduToolStripMenuItem.Image = Properties.Resources.OE_Signature1;
             upravitTriduToolStripMenuItem.Name = "upravitTriduToolStripMenuItem";
-            upravitTriduToolStripMenuItem.Size = new Size(224, 26);
+            upravitTriduToolStripMenuItem.Size = new Size(206, 26);
             upravitTriduToolStripMenuItem.Text = "Upravit třídu";
             upravitTriduToolStripMenuItem.Click += upravitTriduToolStripMenuItem_Click;
             // 
@@ -240,20 +242,20 @@
             // 
             seznamTřídToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
             seznamTřídToolStripMenuItem.Name = "seznamTřídToolStripMenuItem";
-            seznamTřídToolStripMenuItem.Size = new Size(224, 26);
+            seznamTřídToolStripMenuItem.Size = new Size(206, 26);
             seznamTřídToolStripMenuItem.Text = "Seznam tříd";
             seznamTřídToolStripMenuItem.Click += seznamTřídToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(221, 6);
+            toolStripSeparator1.Size = new Size(203, 6);
             // 
             // novéRozsazenítoolStripMenuItem1
             // 
             novéRozsazenítoolStripMenuItem1.Image = Properties.Resources.Add1;
             novéRozsazenítoolStripMenuItem1.Name = "novéRozsazenítoolStripMenuItem1";
-            novéRozsazenítoolStripMenuItem1.Size = new Size(224, 26);
+            novéRozsazenítoolStripMenuItem1.Size = new Size(206, 26);
             novéRozsazenítoolStripMenuItem1.Text = "Nové rozsazení";
             novéRozsazenítoolStripMenuItem1.Click += noveRozsazeniToolStripMenuItem_Click;
             // 
@@ -261,7 +263,7 @@
             // 
             upravitRozsazenítoolStripMenuItem1.Image = Properties.Resources.OE_Signature1;
             upravitRozsazenítoolStripMenuItem1.Name = "upravitRozsazenítoolStripMenuItem1";
-            upravitRozsazenítoolStripMenuItem1.Size = new Size(224, 26);
+            upravitRozsazenítoolStripMenuItem1.Size = new Size(206, 26);
             upravitRozsazenítoolStripMenuItem1.Text = "Upravit rozsazení";
             // 
             // groupBox_Studenti
