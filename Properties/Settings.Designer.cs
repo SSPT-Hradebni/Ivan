@@ -25,7 +25,7 @@ namespace SediM.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("sstp-sedim-12289.8nj.cockroachlabs.cloud")]
+        [global::System.Configuration.DefaultSettingValueAttribute("37.60.252.204")]
         public string MySQL_server {
             get {
                 return ((string)(this["MySQL_server"]));
@@ -34,7 +34,7 @@ namespace SediM.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("sspt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ivan")]
         public string MySQL_uzivatel {
             get {
                 return ((string)(this["MySQL_uzivatel"]));
@@ -43,7 +43,7 @@ namespace SediM.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("kQzI129YtsJOcy2lyudNow")]
+        [global::System.Configuration.DefaultSettingValueAttribute("mE3xBa0it8dVOGr")]
         public string MySQL_heslo {
             get {
                 return ((string)(this["MySQL_heslo"]));
@@ -52,7 +52,7 @@ namespace SediM.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("sedim")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ivan")]
         public string MySQL_databaze {
             get {
                 return ((string)(this["MySQL_databaze"]));
@@ -61,7 +61,7 @@ namespace SediM.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("26257")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1443")]
         public string MySQL_port {
             get {
                 return ((string)(this["MySQL_port"]));
