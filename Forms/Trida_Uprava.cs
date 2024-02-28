@@ -1,13 +1,13 @@
 ﻿using Npgsql;
 using SediM.Helpers;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SediM.Forms
 {
     public partial class Trida_Uprava : Form
     {
-        private static NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder($"Host={Properties.Settings.Default.MySQL_server};Port={Properties.Settings.Default.MySQL_port};Username={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo};Database={Properties.Settings.Default.MySQL_databaze};");
-        private static NpgsqlDataSource dataSource = dataSourceBuilder.Build();
-        private NpgsqlConnection? connection;
+        private SqlConnection connection = new SqlConnection(@"Data Source=37.60.252.204;Initial Catalog=Ivan;User ID=ivan;Password=mE3xBa0it8dVOGr");
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
@@ -20,12 +20,12 @@ namespace SediM.Forms
 
             InitializeComponent();
 
-            var conn = dataSource.OpenConnectionAsync();
-            connection = conn.Result;
+            connection.Open();
+            ConnectionState stavDB = connection.State;
 
             try
             {
-                if (conn.IsFaulted && jePripojen == false)
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
                 {
                     DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     if (pripojen == DialogResult.Cancel)
@@ -36,9 +36,9 @@ namespace SediM.Forms
                     return;
                 }
             }
-            catch (NpgsqlException e)
+            catch (SqlException e)
             {
-                mainHelp.Alert("Chyba PostgreSQL", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
 
@@ -127,7 +127,7 @@ namespace SediM.Forms
                     throw new Exception("Název třídy nesmí být prázdný");
                 }
 
-                NpgsqlCommand vytvorTridu = new NpgsqlCommand($"UPDATE tridy SET nazev = @nazev, sirka = @sirka, vyska = @vyska WHERE id = @id", connection);
+                SqlCommand vytvorTridu = new SqlCommand($"UPDATE tridy SET nazev = @nazev, sirka = @sirka, vyska = @vyska WHERE id = @id", connection);
 
                 vytvorTridu.Parameters.AddWithValue("@id", id);
                 vytvorTridu.Parameters.AddWithValue("@nazev", nazev);
