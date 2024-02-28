@@ -125,8 +125,6 @@ namespace SediM
             data = NactiTridy(nerozsazeneTridy);
             tridy = mainHelp.ListTrid(data);
 
-            MessageBox.Show(tridy.Count.ToString());
-
             data = NactiUcitele();
             ucitele = mainHelp.ListUcitelu(data);
         }

@@ -4,8 +4,6 @@ using PdfSharp.Pdf;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SediM
 {
@@ -227,16 +225,14 @@ namespace SediM
         {
             if (cboxTridy.SelectedIndex == -1) return;
 
+            NastavParametryProVyplneni(cboxTridy.SelectedIndex);
+        }
+
+        private void NastavParametryProVyplneni(int selectedIndex)
+        {
             // Získáme aktuální vybranou třídu
             Trida aktualniTrida = ZiskejAktualniTridu();
 
-            // MessageBox.Show($"Aktuální třída: {aktualniTrida.Nazev}\nŠířka: {aktualniTrida.Sirka} míst\nVýška: {aktualniTrida.Vyska} míst");
-
-            NastavParametryProVyplneni(cboxTridy.SelectedIndex, aktualniTrida);
-        }
-
-        private void NastavParametryProVyplneni(int selectedIndex, Trida aktualniTrida)
-        {
             // Vytvoří 2D pole objektů Zak - naši třídu
             tridyZaku.Add(new Zak[aktualniTrida.Vyska, aktualniTrida.Sirka]);
 
@@ -253,6 +249,8 @@ namespace SediM
             // Vyplní právě přidanou třídu žáky
             VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, kopieZaku, aktualniTrida);
 
+            aktualniTrida.Rozsazena = true;
+
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(cboxTridy.Items[selectedIndex]);
             vyplneneTridy.Add(aktualniTrida);
@@ -261,7 +259,7 @@ namespace SediM
             tridy.Remove(aktualniTrida);
             cboxTridy.DataSource = null; // při DataSource nejde vymazat cbox, proto nastaveno teď na null
             cboxTridy.Items.Clear();
-            cboxTridy.DataSource = tridy;
+            cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
 
             // "Překlikne" na nově vyplněnou třídu
             cboxTridy.SelectedIndex = -1;
@@ -306,8 +304,6 @@ namespace SediM
             try
             {
                 SqlCommand vyplnTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @stav, DataRozsazeni = @data WHERE TridaId = @id", connection);
-
-                MessageBox.Show($"ID třídy: {aktualniTrida.Id}");
 
                 vyplnTridu.Parameters.AddWithValue("@stav", 1);
                 vyplnTridu.Parameters.AddWithValue("@data", data);
@@ -479,28 +475,16 @@ namespace SediM
 
         private void FormularRozsazeni_Load(object sender, EventArgs e)
         {
-            List<Trida> volneTridy = new List<Trida>();
-
-            for (int i = 0; i < tridy.Count; i++)
-            {
-                Trida trida = tridy[i];
-
-                if (trida.Rozsazena == false)
-                {
-                    volneTridy.Add(trida);
-                }
-            }
-
-            cboxTridy.DataSource = volneTridy;
             cboxTridy.ValueMember = "Id";
             cboxTridy.DisplayMember = "Nazev";
+            cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
         }
 
         private Trida ZiskejAktualniTridu()
         {
             if (cboxTridy.SelectedIndex != -1)
             {
-                return tridy[cboxTridy.SelectedIndex];
+                return tridy.Find(tridy => tridy.Id == (long)cboxTridy.SelectedValue);
             }
             else if (listbxVyplneneTridy.SelectedIndex != -1)
             {
