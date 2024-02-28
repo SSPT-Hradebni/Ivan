@@ -8,7 +8,7 @@ namespace SediM
 {
     public partial class Main : Form
     {
-        private SqlConnection connection = new SqlConnection(@"Data Source=37.60.252.204;Initial Catalog=Ivan;User ID=ivan;Password=mE3xBa0it8dVOGr");
+        private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
         private DataTable? data;
 
         public MainHelp mainHelp = new MainHelp();
@@ -58,11 +58,26 @@ namespace SediM
             return data;
         }
 
-        private DataTable NactiTridy()
+        /// <summary>
+        /// Načte třídy z databáze
+        /// </summary>
+        /// <param name="jenNerozsazene">Zda se mají načíst pouze nerozsazené třídy</param>
+        /// <returns>Tabulka dat tříd</returns>
+        private DataTable NactiTridy(bool jenNerozsazene = false)
         {
             DataTable data = new DataTable();
             SqlDataAdapter dataAdapter;
-            SqlCommand cmd = new("SELECT * FROM Tridy", connection);
+
+            SqlCommand cmd;
+
+            if (jenNerozsazene)
+            {
+                cmd = new($"SELECT * FROM Tridy WHERE JeRozsazena = 0", connection);
+            }
+            else
+            {
+                cmd = new($"SELECT * FROM Tridy", connection);
+            }
 
             dataAdapter = new SqlDataAdapter(cmd);
             dataAdapter.Fill(data);
@@ -94,7 +109,7 @@ namespace SediM
             return data;
         }
 
-        public void NactiData()
+        public void NactiData(bool nerozsazeneTridy = false)
         {
             data = NactiStudenty();
             List<Zak> aktualizovaniZaci = mainHelp.ListZaku(data);
@@ -107,8 +122,10 @@ namespace SediM
             data = NactiSkoly();
             skoly = mainHelp.ListSkol(data);
 
-            data = NactiTridy();
+            data = NactiTridy(nerozsazeneTridy);
             tridy = mainHelp.ListTrid(data);
+
+            MessageBox.Show(tridy.Count.ToString());
 
             data = NactiUcitele();
             ucitele = mainHelp.ListUcitelu(data);
@@ -186,7 +203,7 @@ namespace SediM
 
             if (stav == DialogResult.OK)
             {
-                NactiData();
+                NactiData(true);
             }
         }
 

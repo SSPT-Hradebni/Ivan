@@ -2,12 +2,19 @@ using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using SediM.Helpers;
+using System.Data;
+using System.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SediM
 {
     public partial class FormularRozsazeni : Form
     {
-        private MainHelp mainHelp = new MainHelp();
+        private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
+
+        public MainHelp mainHelp = new MainHelp();
+        public bool jePripojen = false;
 
         // TODO/FIXME: Když uživatel zavře a znovu otevře tento form bez ukončení aplikace (formulář Main)
         // tak zůstanou nastaveny globální proměnné. To je nežádoucí.
@@ -31,6 +38,28 @@ namespace SediM
         public FormularRozsazeni(List<Trida> tridy, List<Zak> zaci)
         {
             InitializeComponent();
+
+            try
+            {
+                connection.Open();
+                ConnectionState stavDB = connection.State;
+
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
+                {
+                    DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                    if (pripojen == DialogResult.Cancel)
+                    {
+                        Application.Exit();
+                    }
+
+                    return;
+                }
+            }
+            catch (SqlException e)
+            {
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
 
             this.tridy = tridy;
             this.zaci = zaci;
@@ -222,7 +251,7 @@ namespace SediM
             List<Zak> kopieZaku = NastavListZaku();
 
             // Vyplní právě přidanou třídu žáky
-            VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, kopieZaku);
+            VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, kopieZaku, aktualniTrida);
 
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(cboxTridy.Items[selectedIndex]);
@@ -238,6 +267,7 @@ namespace SediM
             cboxTridy.SelectedIndex = -1;
             listbxVyplneneTridy.SelectedIndex = listbxVyplneneTridy.Items.Count - 1;
         }
+
         /// <summary>
         /// Procykluje každé místo ve třídě a přiradí do dvourozměrného pole představující třídu žáka, 
         /// který je vrácen funkcí ZiskejZaka, algoritmem Knight.
@@ -246,8 +276,11 @@ namespace SediM
         /// <param name="sirka">Šířka třídy v místech</param>
         /// <param name="vyska">Výška třídy v místech</param>
         /// <param name="kopieZaku">List, který je kopií globálního listu zaci, vyžadován funkcí ZiskejZaka.</param>
-        private void VyplnTridu(int indexTridy, int sirka, int vyska, List<Zak> kopieZaku)
+        /// <param name="aktualniTrida">Aktuální vyplňovaná třída</param>
+        private void VyplnTridu(int indexTridy, int sirka, int vyska, List<Zak> kopieZaku, Trida aktualniTrida)
         {
+            string data = "";
+
             // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < vyska; r++)
             {
@@ -256,10 +289,39 @@ namespace SediM
                 {
                     // Přidá žáka podle kategorie pomocí funkce ziskejZaka - tento řádek
                     // je implementovám aby řadil žáky pouze podle aloritmu Knight!
-                    tridyZaku[indexTridy][r, s] = ZiskejZaka(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
+                    Zak zak = ZiskejZaka(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
+
+                    data += $"{zak.Misto}={zak.Id}";
+
+                    // Pokud nejsme na posledním místě, přidejte oddělovač
+                    if (!(r == vyska - 1 && s == sirka - 1))
+                    {
+                        data += ",";
+                    }
+
+                    tridyZaku[indexTridy][r, s] = zak;
                 }
             }
+
+            try
+            {
+                SqlCommand vyplnTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @stav, DataRozsazeni = @data WHERE TridaId = @id", connection);
+
+                MessageBox.Show($"ID třídy: {aktualniTrida.Id}");
+
+                vyplnTridu.Parameters.AddWithValue("@stav", 1);
+                vyplnTridu.Parameters.AddWithValue("@data", data);
+                vyplnTridu.Parameters.AddWithValue("@id", aktualniTrida.Id);
+
+                int stav = vyplnTridu.ExecuteNonQuery();
+                // int stav = 0;
+            }
+            catch (SqlException ex)
+            {
+                mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         /// <summary>
         /// Získá žáka ze zadaného listu, jehož kategorie je rovna parametru této funkce.
         /// V případě nálezu žáka splňující požadavek kategorie, odstraní se tato kategorie ze školy, ve které se nachází.
@@ -286,6 +348,7 @@ namespace SediM
             mistoZaka++;
             return returnZak;
         }
+
         // Osobně se mi moc toto řešení nelíbí jelikož modifikace kategorie dle mého
         // není ideální metodou a pravděpodobně zavedu dodatečnou proměnnou
         // ve třídě Zak i přesto, že to není příliš paměťově úsporné. - TODO
@@ -447,11 +510,6 @@ namespace SediM
             {
                 return null;
             }
-        }
-
-        private void UpdateData(Trida trida)
-        {
-
         }
     }
 }
