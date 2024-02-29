@@ -52,10 +52,18 @@ namespace SediM.Forms
 
         private void dataviewTridy_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataviewTridy.CurrentCell.ColumnIndex != 4)
+            // Funkce se přeruší za předpokladu, že není nakliknuta buňka vypisující
+            // stav rozsazení a nebo je označen celý řádek
+            if (dataviewTridy.CurrentCell.ColumnIndex != 4 || dataviewTridy.SelectedRows.Count == 1)
                 return;
 
             bool jeRozsazena = dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value == "Ano" ? true : false;
+
+            if (!jeRozsazena)
+            {
+                mainHelp.Alert("Chyba!", "Nelze nastavit nerozsazenou třídu zpět na rozsazenou.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             try
             {
@@ -64,21 +72,20 @@ namespace SediM.Forms
                 SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @jeRozsazena WHERE TridaId = @id", connection);
 
                 vytvorTridu.Parameters.AddWithValue("@id", id);
-                // Stav rozsazení se prohodí
-                vytvorTridu.Parameters.AddWithValue("@jeRozsazena", jeRozsazena ? 0 : 1);
+                vytvorTridu.Parameters.AddWithValue("@jeRozsazena", 0);
 
                 int stav = vytvorTridu.ExecuteNonQuery();
 
                 if (stav != 0)
                 {
-                    // Text buňky značící stav rozsazení se také změní
-                    dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value = jeRozsazena ? "Ne" : "Ano";
+                    // Text buňky značící stav rozsazení se změní
+                    dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value = "Ne";
 
                     dataZmenena = true;
                 }
                 else
                 {
-                    mainHelp.Alert("Chyba!", "Při přidání nové třídy do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mainHelp.Alert("Chyba!", "Při úpravě stavu rozsazení třídy v systému nastala chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -91,6 +98,48 @@ namespace SediM.Forms
         private void Trida_Seznam_FormClosed(object sender, FormClosedEventArgs e)
         {
             DialogResult = dataZmenena ? DialogResult.OK : DialogResult.Cancel;
+        }
+
+        private void dataviewTridy_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Pokud je stisknuta klávesa Backspace a zároveň je označený celý řádek.
+            if (!(e.KeyChar == (char)Keys.Back && dataviewTridy.SelectedRows.Count == 1))
+                return;
+
+            bool jeRozsazena = dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value == "Ano" ? true : false;
+
+            if (jeRozsazena)
+            {
+                DialogResult result = mainHelp.Alert("Upozornění", "Třída, kterou se chystáte vymazat, je rozsazená. Jste si jisti?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                if (result != DialogResult.OK)
+                    return;
+            }
+
+            try
+            {
+                int id = int.Parse(dataviewTridy[0, dataviewTridy.CurrentRow.Index].Value.ToString());
+
+                SqlCommand vytvorTridu = new SqlCommand($"DELETE FROM Tridy WHERE TridaId = @id", connection);
+
+                vytvorTridu.Parameters.AddWithValue("@id", id);
+
+                int stav = vytvorTridu.ExecuteNonQuery();
+
+                if (stav != 0)
+                {
+                    dataviewTridy.Rows.RemoveAt(dataviewTridy.CurrentRow.Index);
+                    dataZmenena = true;
+                }
+                else
+                {
+                    mainHelp.Alert("Chyba!", "Při odebírání třídy v systému nastala chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -48,6 +48,7 @@
             dataviewTridy.Dock = DockStyle.Fill;
             dataviewTridy.Location = new Point(0, 0);
             dataviewTridy.Margin = new Padding(3, 4, 3, 4);
+            dataviewTridy.MultiSelect = false;
             dataviewTridy.Name = "dataviewTridy";
             dataviewTridy.ReadOnly = true;
             dataviewTridy.RowHeadersWidth = 51;
@@ -55,6 +56,7 @@
             dataviewTridy.Size = new Size(800, 450);
             dataviewTridy.TabIndex = 6;
             dataviewTridy.CellDoubleClick += dataviewTridy_CellDoubleClick;
+            dataviewTridy.KeyPress += dataviewTridy_KeyPress;
             // 
             // id
             // 
