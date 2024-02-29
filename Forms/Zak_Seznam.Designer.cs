@@ -34,7 +34,6 @@
             this.jmeno_prijmeni = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kategorie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.skola = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.jeRozsazen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataviewStudenti)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,8 +48,7 @@
             this.id,
             this.jmeno_prijmeni,
             this.kategorie,
-            this.skola,
-            this.jeRozsazen});
+            this.skola});
             this.dataviewStudenti.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataviewStudenti.Location = new System.Drawing.Point(0, 0);
             this.dataviewStudenti.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -89,12 +87,6 @@
             this.skola.Name = "skola";
             this.skola.ReadOnly = true;
             // 
-            // jeRozsazen
-            // 
-            this.jeRozsazen.HeaderText = "Je rozsazen?";
-            this.jeRozsazen.Name = "jeRozsazen";
-            this.jeRozsazen.ReadOnly = true;
-            // 
             // Zak_Seznam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -121,6 +113,5 @@
         private DataGridViewTextBoxColumn jmeno_prijmeni;
         private DataGridViewTextBoxColumn kategorie;
         private DataGridViewTextBoxColumn skola;
-        private DataGridViewTextBoxColumn jeRozsazen;
     }
 }

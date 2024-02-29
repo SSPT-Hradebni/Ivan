@@ -33,7 +33,7 @@
             this.nazev = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sirka = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vyska = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cboxJeRozsazena = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.jeRozsazena = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataviewTridy)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +49,7 @@
             this.nazev,
             this.sirka,
             this.vyska,
-            this.cboxJeRozsazena});
+            this.jeRozsazena});
             this.dataviewTridy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataviewTridy.Location = new System.Drawing.Point(0, 0);
             this.dataviewTridy.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -59,6 +59,7 @@
             this.dataviewTridy.RowTemplate.Height = 25;
             this.dataviewTridy.Size = new System.Drawing.Size(800, 450);
             this.dataviewTridy.TabIndex = 6;
+            this.dataviewTridy.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataviewTridy_CellDoubleClick);
             // 
             // id
             // 
@@ -88,14 +89,11 @@
             this.vyska.Name = "vyska";
             this.vyska.ReadOnly = true;
             // 
-            // cboxJeRozsazena
+            // jeRozsazena
             // 
-            this.cboxJeRozsazena.HeaderText = "Je rozsazena?";
-            this.cboxJeRozsazena.Items.AddRange(new object[] {
-            "Ne",
-            "Ano"});
-            this.cboxJeRozsazena.Name = "cboxJeRozsazena";
-            this.cboxJeRozsazena.ReadOnly = true;
+            this.jeRozsazena.HeaderText = "Je rozsazena?";
+            this.jeRozsazena.Name = "jeRozsazena";
+            this.jeRozsazena.ReadOnly = true;
             // 
             // Trida_Seznam
             // 
@@ -118,6 +116,6 @@
         private DataGridViewTextBoxColumn nazev;
         private DataGridViewTextBoxColumn sirka;
         private DataGridViewTextBoxColumn vyska;
-        private DataGridViewComboBoxColumn cboxJeRozsazena;
+        private DataGridViewTextBoxColumn jeRozsazena;
     }
 }
