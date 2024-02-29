@@ -29,7 +29,7 @@ namespace SediM
         private List<Trida> vyplneneTridy = new List<Trida>();
         private List<Zak> zaci = new List<Zak>();
 
-        // Proměnná, jejíž hodnota se přiřadí každému dalšímu zákovi při řazení do třídy.
+        // Proměnná, jejíž hodnota se přiřadí každému dalšímu žákovi při řazení do třídy.
         // Po nastavení její hodnoty žákovi se inkrementuje aby se předešlo dvěma místům se stejnou hodnotou
         private int mistoZaka = 1;
 
@@ -64,6 +64,7 @@ namespace SediM
 
             // Automaticky zvolí jediný doposud vyřešený algoritmus - Knight (Jezdec)
             combobxAlgoritmus.SelectedIndex = 0;
+            combobxAlgoritmus.Enabled = false;
         }
 
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
