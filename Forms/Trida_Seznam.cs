@@ -27,5 +27,11 @@ namespace SediM.Forms
             foreach (Trida trida in tridy)
                 dataviewTridy.Rows.Add(trida.Id, trida.Nazev, trida.Sirka, trida.Vyska, trida.Rozsazena ? "Ano" : "Ne");
         }
+
+        private void dataviewTridy_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show($"Clicked cell\r\n{dataviewTridy[1, dataviewTridy.CurrentRow.Index].Value}");
+
+        }
     }
 }

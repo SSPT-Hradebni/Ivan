@@ -33,7 +33,7 @@
             this.nazev = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sirka = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vyska = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.jeRozsazena = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cboxJeRozsazena = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataviewTridy)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +49,7 @@
             this.nazev,
             this.sirka,
             this.vyska,
-            this.jeRozsazena});
+            this.cboxJeRozsazena});
             this.dataviewTridy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataviewTridy.Location = new System.Drawing.Point(0, 0);
             this.dataviewTridy.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -88,11 +88,14 @@
             this.vyska.Name = "vyska";
             this.vyska.ReadOnly = true;
             // 
-            // jeRozsazena
+            // cboxJeRozsazena
             // 
-            this.jeRozsazena.HeaderText = "Je rozsazena?";
-            this.jeRozsazena.Name = "jeRozsazena";
-            this.jeRozsazena.ReadOnly = true;
+            this.cboxJeRozsazena.HeaderText = "Je rozsazena?";
+            this.cboxJeRozsazena.Items.AddRange(new object[] {
+            "Ne",
+            "Ano"});
+            this.cboxJeRozsazena.Name = "cboxJeRozsazena";
+            this.cboxJeRozsazena.ReadOnly = true;
             // 
             // Trida_Seznam
             // 
@@ -115,6 +118,6 @@
         private DataGridViewTextBoxColumn nazev;
         private DataGridViewTextBoxColumn sirka;
         private DataGridViewTextBoxColumn vyska;
-        private DataGridViewTextBoxColumn jeRozsazena;
+        private DataGridViewComboBoxColumn cboxJeRozsazena;
     }
 }
