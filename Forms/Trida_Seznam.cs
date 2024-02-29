@@ -8,9 +8,10 @@ namespace SediM.Forms
     {
         private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
 
-        public bool jePripojen = false;
+        private bool jePripojen = false;
         private List<Trida> tridy = new List<Trida>();
         private MainHelp mainHelp = new MainHelp();
+        private bool dataZmenena;
 
         public Trida_Seznam(List<Trida> tridy)
         {
@@ -54,21 +55,26 @@ namespace SediM.Forms
             if (dataviewTridy.CurrentCell.ColumnIndex != 4)
                 return;
 
+            bool jeRozsazena = dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value == "Ano" ? true : false;
+
             try
             {
-                int id = (int)dataviewTridy[0, dataviewTridy.CurrentRow.Index].Value;
+                int id = int.Parse(dataviewTridy[0, dataviewTridy.CurrentRow.Index].Value.ToString());
 
                 SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @jeRozsazena WHERE TridaId = @id", connection);
 
                 vytvorTridu.Parameters.AddWithValue("@id", id);
-                vytvorTridu.Parameters.AddWithValue("@nazev", 0);
+                // Stav rozsazení se prohodí
+                vytvorTridu.Parameters.AddWithValue("@jeRozsazena", jeRozsazena ? 0 : 1);
 
                 int stav = vytvorTridu.ExecuteNonQuery();
 
                 if (stav != 0)
                 {
-                    DialogResult = DialogResult.OK;
-                    Close();
+                    // Text buňky značící stav rozsazení se také změní
+                    dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value = jeRozsazena ? "Ne" : "Ano";
+
+                    dataZmenena = true;
                 }
                 else
                 {
@@ -80,6 +86,11 @@ namespace SediM.Forms
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void Trida_Seznam_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            DialogResult = dataZmenena ? DialogResult.OK : DialogResult.Cancel;
         }
     }
 }
