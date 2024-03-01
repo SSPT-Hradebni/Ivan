@@ -50,22 +50,22 @@ namespace SediM
                 }
                 else
                 {
-                    lblTip.Text = "Ivan se načítá";
+                    lblTip.Text = "Ivan is loading";
                 }
 
-                //pomoc.RekniTo(lblTip.Text, true); -- temp
+                pomoc.RekniTo(lblTip.Text, true);
                 ivanSeNacitaRead = true;
             }
             else if (loadingBar.Value >= 70 && loadingBar.Value < 95 && !ivanSkoroJeRead)
             {
-                lblTip.Text = "Ivan už skoro je ...";
-                //pomoc.RekniTo(lblTip.Text, true); -- temp
+                lblTip.Text = "Ivan is almost ...";
+                pomoc.RekniTo(lblTip.Text, true);
                 ivanSkoroJeRead = true;
             }
             else if (loadingBar.Value >= 95 && loadingBar.Value < 100 && !ivanNactenyRead)
             {
-                lblTip.Text = "... načtený!";
-                //pomoc.RekniTo(lblTip.Text, true); -- temp
+                lblTip.Text = "... loaded!";
+                pomoc.RekniTo(lblTip.Text, true);
                 ivanNactenyRead = true;
             }
 

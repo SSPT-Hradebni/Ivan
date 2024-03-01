@@ -112,21 +112,24 @@ namespace SediM
         public void NactiData(bool nerozsazeneTridy = false)
         {
             data = NactiStudenty();
-            List<Zak> aktualizovaniZaci = mainHelp.ListZaku(data);
-            // Zabrání přepsání hodnot žáků pokud se již nachází v listu.
-            // Jinak řečeno přidá pouze ty žáky, kteří se v listu zaci nenachází
-            foreach (Zak zak in aktualizovaniZaci)
-                if (!zaci.Exists(z => z.Id == zak.Id))
-                    zaci.Add(zak);
+            List<Zak> noveZaci = mainHelp.ListZaku(data);
+            zaci.Clear(); // vymazání starých údajů
+            zaci = noveZaci;
 
             data = NactiSkoly();
-            skoly = mainHelp.ListSkol(data);
+            List<Skola> noveSkoly = mainHelp.ListSkol(data);
+            skoly.Clear(); // vymazání starých údajů
+            skoly = noveSkoly;
 
             data = NactiTridy(nerozsazeneTridy);
-            tridy = mainHelp.ListTrid(data);
+            List<Trida> noveTridy = mainHelp.ListTrid(data);
+            tridy.Clear(); // vymazání starých údajů
+            tridy = noveTridy;
 
             data = NactiUcitele();
-            ucitele = mainHelp.ListUcitelu(data);
+            List<Ucitel> noveUcitele = mainHelp.ListUcitelu(data);
+            ucitele.Clear(); // vymazání starých údajů
+            ucitele = noveUcitele;
         }
 
         private void Exportovat()
