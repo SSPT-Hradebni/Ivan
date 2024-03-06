@@ -58,26 +58,14 @@ namespace SediM
             return data;
         }
 
-        /// <summary>
-        /// Načte třídy z databáze
-        /// </summary>
-        /// <param name="jenNerozsazene">Zda se mají načíst pouze nerozsazené třídy</param>
-        /// <returns>Tabulka dat tříd</returns>
-        private DataTable NactiTridy(bool jenNerozsazene = false)
+        private DataTable NactiTridy()
         {
             DataTable data = new DataTable();
             SqlDataAdapter dataAdapter;
 
             SqlCommand cmd;
 
-            if (jenNerozsazene)
-            {
-                cmd = new($"SELECT * FROM Tridy WHERE JeRozsazena = 0", connection);
-            }
-            else
-            {
-                cmd = new($"SELECT * FROM Tridy", connection);
-            }
+            cmd = new($"SELECT * FROM Tridy", connection);
 
             dataAdapter = new SqlDataAdapter(cmd);
             dataAdapter.Fill(data);
@@ -109,7 +97,7 @@ namespace SediM
             return data;
         }
 
-        public void NactiData(bool nerozsazeneTridy = false)
+        public void NactiData()
         {
             data = NactiStudenty();
             List<Zak> aktualizovaniZaci = mainHelp.ListZaku(data);
@@ -122,7 +110,7 @@ namespace SediM
             data = NactiSkoly();
             skoly = mainHelp.ListSkol(data);
 
-            data = NactiTridy(nerozsazeneTridy);
+            data = NactiTridy();
             tridy = mainHelp.ListTrid(data);
 
             data = NactiUcitele();
@@ -164,12 +152,20 @@ namespace SediM
             NactiData();
         }
 
-        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Exportovat();
+            Version verzeAplikace = Assembly.GetExecutingAssembly().GetName().Version;
+            string verze = $"Verze {verzeAplikace.Major}.{verzeAplikace.Minor}.{verzeAplikace.Build}";
+
+            MessageBox.Show($"Aplikace Ivan\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace umožňuje správu a organizaci krajského kola matematické soutěže pro Královéhradecký kraj.");
         }
 
-        private void ukončitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void napovedaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.ShowHelp(this);
+        }
+
+        private void ukoncitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult opravdu = MessageBox.Show(this, "Opravdu chcete aplikaci ukončit? Všechna neuložená data budou ztracena.", "Ukončit aplikaci", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
@@ -179,48 +175,17 @@ namespace SediM
             }
         }
 
-        private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Version verzeAplikace = Assembly.GetExecutingAssembly().GetName().Version;
-            string verze = $"Verze {verzeAplikace.Major}.{verzeAplikace.Minor}.{verzeAplikace.Build}";
-
-            MessageBox.Show($"Aplikace Ivan\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace umožňuje správu a organizaci krajského kola matematické soutěže pro Královéhradecký kraj.");
-        }
-        /* POZNÁMKA:
-         * Při rozsazování se odebírají jak studenti, tak třídy. 
-         * Nejsem si však jistý, jestli je to žádoucí chování, či nikoliv.
-         * Odebírání studentů dle mého není žádoucí, odebírání tříd však
-         * pravděpodobně ano kvůli pozdější implementaci úpravy rozsazení.
-        */
-        private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormularRozsazeni okno = new FormularRozsazeni(tridy, zaci);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            if (stav == DialogResult.OK)
-            {
-                NactiData(true);
-            }
-        }
-
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Importovat();
-        }
-
         /// <summary>
         /// Toolstrip pro otevření okna pro vytvoření nového studenta
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void novýToolStripMenuItem_Click(object sender, EventArgs e)
+        private void novyStudentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainHelp.StudentForm_New(this, skoly, zaci);
         }
 
-        private void upravitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void upravitStudentaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Zak_Upravit okno = new Zak_Upravit(skoly, zaci);
             okno.Owner = this;
@@ -233,7 +198,7 @@ namespace SediM
             }
         }
 
-        private void seznamToolStripMenuItem_Click(object sender, EventArgs e)
+        private void seznamStudentuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Zak_Seznam okno = new Zak_Seznam(zaci);
             okno.Owner = this;
@@ -241,7 +206,42 @@ namespace SediM
             DialogResult stav = okno.ShowDialog();
         }
 
-        private void nováToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void novyUcitelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Vytvořit nového učitele");
+        }
+
+        private void upravitUciteleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Upravit existujícího učitele");
+        }
+
+        private void seznamUciteluToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Zobrazit seznam učitelů");
+        }
+
+        private void novaSkolaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
+
+            if (stav == DialogResult.OK)
+            {
+                NactiData();
+            }
+        }
+
+        private void upravitSkoluToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Úprava stávající školy");
+        }
+
+        private void seznamSkolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Zobrazení seznamu škol");
+        }
+
+        private void novaTridaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Trida_Nova okno = new Trida_Nova(tridy);
             okno.Owner = this;
@@ -252,11 +252,6 @@ namespace SediM
             {
                 NactiData();
             }
-        }
-
-        private void nápovědaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            mainHelp.ShowHelp(this);
         }
 
         private void upravitTriduToolStripMenuItem_Click(object sender, EventArgs e)
@@ -272,6 +267,37 @@ namespace SediM
             }
         }
 
+        private void seznamTridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Trida_Seznam okno = new Trida_Seznam(tridy);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                NactiData();
+            }
+        }
+
+        private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormularRozsazeni okno = new FormularRozsazeni(tridy, zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            if (stav == DialogResult.OK)
+            {
+                NactiData();
+            }
+        }
+
+        private void zobrazitRozsazenitoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Zobrazení rozsazených tříd");
+        }
+
         private void picbox_StudentNovy_Click(object sender, EventArgs e)
         {
             DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
@@ -280,51 +306,6 @@ namespace SediM
             {
                 NactiData();
             }
-        }
-
-        private void nováToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
-
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
-        }
-
-        private void novýToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Vytvořit nového učitele");
-        }
-
-        private void upravitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Upravit existujícího učitele");
-        }
-
-        private void seznamUčitelůToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Zobrazit seznam učitelů");
-        }
-
-        private void seznamTřídToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Zobrazit seznam rozsazených i nerozsazených tříd");
-        }
-
-        private void seznamŠkolToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Zobrazit seznam škol");
-        }
-
-        private void upravitToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Upravit existující školu");
-        }
-
-        private void zobrazitRozsazenítoolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Zobrazit rozsazenou třídu");
         }
     }
 }
