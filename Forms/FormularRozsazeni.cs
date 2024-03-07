@@ -1,3 +1,4 @@
+using System.Drawing.Imaging;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
@@ -75,6 +76,8 @@ namespace SediM
             if (cboxTridy.SelectedIndex == -1) return;
             listbxVyplneneTridy.SelectedIndex = -1;
             panelVykresleniRozsazeni.Invalidate();
+
+            toolStripButton_Tisk.Visible = false;
         }
 
         private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,6 +85,8 @@ namespace SediM
             if (listbxVyplneneTridy.SelectedIndex == -1) return;
             cboxTridy.SelectedIndex = -1;
             panelVykresleniRozsazeni.Invalidate();
+
+            toolStripButton_Tisk.Visible = true;
         }
 
         private void panelVykresleniRozsazeni_Paint(object sender, PaintEventArgs e)
@@ -162,7 +167,7 @@ namespace SediM
 
                         // Vykreslí řetězec na střed buňky (místa)
                         g.DrawString(
-                            tridyZaku[indexVyplneneTridy][r, s].Misto.ToString(),
+                            $"♿ {tridyZaku[indexVyplneneTridy][r, s].Misto}\r\n🇧🇾: {tridyZaku[indexVyplneneTridy][r, s].Kategorie}",
                             new Font("Arial", 10),
                             Brushes.Black,
                             pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostCisla.Width / 2,
@@ -173,6 +178,7 @@ namespace SediM
                             tridyZaku[indexVyplneneTridy][r, s].CeleJmeno == "MÍSTO PRÁZDNÉ"
                             ? "PRÁZDNÉ MÍSTO"
                             : tridyZaku[indexVyplneneTridy][r, s].CeleJmeno;
+
                         listbxSeznamStudentu.Items.Add(
                             $"{tridyZaku[indexVyplneneTridy][r, s].Misto} - " +
                             $"{prazdnyNeboJmeno}");
@@ -508,6 +514,33 @@ namespace SediM
             {
                 return null;
             }
+        }
+
+        private void toolStripButton_Tisk_Click(object sender, EventArgs e)
+        {
+            // Získáme rozměry panelu
+            int width = panelVykresleniRozsazeni.Width;
+            int height = panelVykresleniRozsazeni.Height;
+
+            // Vytvoříme bitmapu pro uložení obsahu panelu
+            Bitmap bmp = new Bitmap(width, height);
+
+            // Vykreslíme obsah panelu na bitmapu
+            panelVykresleniRozsazeni.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
+
+            // Uložíme bitmapu jako JPG
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JPEG Image|*.jpg";
+            saveFileDialog.Title = "Uložit panel jako obrázek";
+            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName != "")
+            {
+                bmp.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
+                MessageBox.Show("Panel byl uložen jako obrázek.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            bmp.Dispose();
         }
     }
 }

@@ -400,5 +400,40 @@ namespace SediM.Helpers
                 MessageBox.Show($"Část \"{coNeni}\" v aplikaci není hotová.", "Nehotová část", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        public static string CisloKategorieNaRimske(int cislo)
+        {
+            string rimsky;
+
+            switch (cislo)
+            {
+                case 1:
+                    rimsky = "I.";
+                    break;
+                case 2:
+                    rimsky = "II.";
+                    break;
+                case 3:
+                    rimsky = "III.";
+                    break;
+                case 4:
+                    rimsky = "IV.";
+                    break;
+                case 5:
+                    rimsky = "V.";
+                    break;
+                case 6:
+                    rimsky = "VI.";
+                    break;
+                case 7:
+                    rimsky = "VII.";
+                    break;
+                default:
+                    rimsky = "undefined";
+                    break;
+            }
+
+            return rimsky;
+        }
     }
 }
