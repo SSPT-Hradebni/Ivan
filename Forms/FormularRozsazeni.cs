@@ -245,23 +245,8 @@ namespace SediM
             if ((int)numupdownKategoriiNaTridu.Value > barvyKategorii.Count)
                 AktualizujListBarev();
 
-            // Rozsazení podle pravidel SPC&SPC (Single pupil's category and school per classroom) - kdyžtak přejmenuju
-            if (cboxRuleset.SelectedIndex == 0)
-            {
-                pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
-
-                // Překopíruje globální list žáků a přeskupí kategorie
-                // podle nejvyššího počtu žáků v kategorii
-                List<Zak> kopieZaku = NastavListZaku();
-
-                // Vyplní právě přidanou třídu žáky
-                VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, kopieZaku, aktualniTrida);
-            }
-            // Rozsazení podle HvAR
-            else if (cboxRuleset.SelectedIndex == 1)
-            {
-                // TODO - Rozsazení podle HvAR
-            }
+            // Vyplní právě přidanou třídu žáky
+            VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, aktualniTrida);
 
             aktualniTrida.Rozsazena = true;
 
@@ -282,15 +267,28 @@ namespace SediM
 
         /// <summary>
         /// Procykluje každé místo ve třídě a přiradí do dvourozměrného pole představující třídu žáka, 
-        /// který je vrácen funkcí ZiskejZaka, algoritmem Knight.
+        /// který je vrácen funkcí ZiskejZaka, algoritmem Knight, zvoleným rulesetem.
         /// </summary>
         /// <param name="indexTridy">Index určující právě vyplňovanou třídu</param>
         /// <param name="sirka">Šířka třídy v místech</param>
         /// <param name="vyska">Výška třídy v místech</param>
         /// <param name="kopieZaku">List, který je kopií globálního listu zaci, vyžadován funkcí ZiskejZaka.</param>
         /// <param name="aktualniTrida">Aktuální vyplňovaná třída</param>
-        private void VyplnTridu(int indexTridy, int sirka, int vyska, List<Zak> kopieZaku, Trida aktualniTrida)
+        private void VyplnTridu(int indexTridy, int sirka, int vyska, Trida aktualniTrida)
         {
+            List<Zak> kopieZaku = new List<Zak>();
+            List<string>[,] volneKombinace = new List<string>[0,0]; // Inicializace kvůli tomu, aby kompilátor nekřičel.
+            if (cboxRuleset.SelectedIndex == 0)
+            {
+                pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
+
+                // Překopíruje globální list žáků a přeskupí kategorie
+                // podle nejvyššího počtu žáků v kategorii
+                kopieZaku = NastavListZaku();
+            }
+            else if (cboxRuleset.SelectedIndex == 1)
+                volneKombinace = VyplnKombinacemiRAR(vyska, sirka);
+
             string data = "";
 
             // Opakuje pro každý řádek míst ve třídě
@@ -300,8 +298,17 @@ namespace SediM
                 for (int s = 0; s < sirka; s++)
                 {
                     // Přidá žáka podle kategorie pomocí funkce ziskejZaka - tento řádek
-                    // je implementovám aby řadil žáky pouze podle aloritmu Knight!
-                    Zak zak = ZiskejZaka(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
+                    // je implementován, aby řadil žáky pouze podle aloritmu Knight (rulesetu SPC&SPC)!
+                    Zak zak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
+
+                    if (cboxRuleset.SelectedIndex == 0)
+                        zak = ZiskejZakaSPC2(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
+                    else if (cboxRuleset.SelectedIndex == 1)
+                    {
+                        zak = ZiskejZakaRAR();
+                        if (zak.Id != -1)
+                            UpravMistaKolemZakaRAR(volneKombinace);
+                    }
 
                     data += $"{zak.Misto}={zak.Id}";
 
@@ -341,7 +348,7 @@ namespace SediM
         /// <param name="kategorie">Kategorie, který musí hledaný žák mít.</param>
         /// <param name="kopieZaku">List, ze kterého se hledá kandidát splňující požadavek kategorie.</param>
         /// <returns>Žák, který splňuje požadavek kategorie, jinak instanci Zak se jménem "PRÁZDNÉ MÍSTO".</returns>
-        private Zak ZiskejZaka(int kategorie, List<Zak> kopieZaku)
+        private Zak ZiskejZakaSPC2(int kategorie, List<Zak> kopieZaku)
         {
             // Vytvoříme žáka returnZak s jménem "PRÁZDNÉ MÍSTO" pro případ, že by
             // for cyklus došel do konce bez přenastavení této proměnné
@@ -357,6 +364,34 @@ namespace SediM
             returnZak.Misto = mistoZaka;
             mistoZaka++;
             return returnZak;
+        }
+
+        private Zak ZiskejZakaRAR()
+        {
+            /*
+             * TODO - vybere žáka podle dostupných dvojic kombinací
+             */
+            return new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
+        }
+
+        private void UpravMistaKolemZakaRAR(List<string>[,] volneMista)
+        {
+            /*
+             * TODO - upraví místa podle pravidel
+             * NOTE: bylo mi řečeno že žák určité kategorie a školy múže být pouze jeden na třídu - upravit dvojice kombinací 
+             * pro každé místo ve třídě
+             */
+        }
+
+        private List<string>[,] VyplnKombinacemiRAR(int vyska, int sirka)
+        {
+            List<string>[,] volneKombinace = new List<string>[vyska, sirka];
+
+            /*
+             * TODO - vyplnit kombinace dvojicemi kategorií a škol
+             */
+
+            return volneKombinace;
         }
 
         // Osobně se mi moc toto řešení nelíbí jelikož modifikace kategorie dle mého

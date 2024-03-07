@@ -191,7 +191,7 @@
             this.cboxRuleset.FormattingEnabled = true;
             this.cboxRuleset.Items.AddRange(new object[] {
             "SPC&SPC",
-            "HvAR"});
+            "RAR"});
             this.cboxRuleset.Location = new System.Drawing.Point(98, 46);
             this.cboxRuleset.Name = "cboxRuleset";
             this.cboxRuleset.Size = new System.Drawing.Size(125, 23);
