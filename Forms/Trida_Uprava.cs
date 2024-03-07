@@ -127,7 +127,7 @@ namespace SediM.Forms
                     throw new Exception("Název třídy nesmí být prázdný");
                 }
 
-                SqlCommand vytvorTridu = new SqlCommand($"UPDATE tridy SET nazev = @nazev, sirka = @sirka, vyska = @vyska WHERE id = @id", connection);
+                SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET Nazev = @nazev, Sirka = @sirka, Vyska = @vyska WHERE TridaId = @id", connection);
 
                 vytvorTridu.Parameters.AddWithValue("@id", id);
                 vytvorTridu.Parameters.AddWithValue("@nazev", nazev);

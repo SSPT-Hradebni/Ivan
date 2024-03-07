@@ -29,7 +29,7 @@ namespace SediM
         private List<Trida> vyplneneTridy = new List<Trida>();
         private List<Zak> zaci = new List<Zak>();
 
-        // Proměnná, jejíž hodnota se přiřadí každému dalšímu zákovi při řazení do třídy.
+        // Proměnná, jejíž hodnota se přiřadí každému dalšímu žákovi při řazení do třídy.
         // Po nastavení její hodnoty žákovi se inkrementuje aby se předešlo dvěma místům se stejnou hodnotou
         private int mistoZaka = 1;
 
@@ -64,6 +64,10 @@ namespace SediM
 
             // Automaticky zvolí jediný doposud vyřešený algoritmus - Knight (Jezdec)
             combobxAlgoritmus.SelectedIndex = 0;
+            combobxAlgoritmus.Enabled = false;
+            // Zvolí ruleset SPC&SPC protože je jediný, který je ve funkčním stavu
+            cboxRuleset.SelectedIndex = 0;
+            cboxRuleset.Enabled = false;
         }
 
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
@@ -224,6 +228,7 @@ namespace SediM
         private void btnVyplnit_Click(object sender, EventArgs e)
         {
             if (cboxTridy.SelectedIndex == -1) return;
+            else if (cboxRuleset.SelectedIndex == -1) return;
 
             NastavParametryProVyplneni(cboxTridy.SelectedIndex);
         }
@@ -236,18 +241,27 @@ namespace SediM
             // Vytvoří 2D pole objektů Zak - naši třídu
             tridyZaku.Add(new Zak[aktualniTrida.Vyska, aktualniTrida.Sirka]);
 
-            pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
-
             // Rozšíří list barev je-li třeba přidat další barvy
             if ((int)numupdownKategoriiNaTridu.Value > barvyKategorii.Count)
                 AktualizujListBarev();
 
-            // Překopíruje globální list žáků a přeskupí kategorie
-            // podle nejvyššího počtu žáků v kategorii
-            List<Zak> kopieZaku = NastavListZaku();
+            // Rozsazení podle pravidel SPC&SPC (Single pupil's category and school per classroom) - kdyžtak přejmenuju
+            if (cboxRuleset.SelectedIndex == 0)
+            {
+                pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
 
-            // Vyplní právě přidanou třídu žáky
-            VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, kopieZaku, aktualniTrida);
+                // Překopíruje globální list žáků a přeskupí kategorie
+                // podle nejvyššího počtu žáků v kategorii
+                List<Zak> kopieZaku = NastavListZaku();
+
+                // Vyplní právě přidanou třídu žáky
+                VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, kopieZaku, aktualniTrida);
+            }
+            // Rozsazení podle HvAR
+            else if (cboxRuleset.SelectedIndex == 1)
+            {
+                // TODO - Rozsazení podle HvAR
+            }
 
             aktualniTrida.Rozsazena = true;
 
