@@ -42,9 +42,9 @@ namespace SediM.Forms
                 Application.Exit();
             }
 
-            cboxTridy.DataSource = tridy;
             cboxTridy.ValueMember = "Id";
             cboxTridy.DisplayMember = "Nazev";
+            cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
         }
 
         private void numSirka_ValueChanged(object sender, EventArgs e)

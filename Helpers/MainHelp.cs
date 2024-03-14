@@ -401,7 +401,7 @@ namespace SediM.Helpers
             }
         }
 
-        public static string CisloKategorieNaRimske(int cislo)
+        public string CisloKategorieNaRimske(int cislo)
         {
             string rimsky;
 

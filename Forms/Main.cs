@@ -193,7 +193,12 @@ namespace SediM
         /// <param name="e"></param>
         private void novyStudentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mainHelp.StudentForm_New(this, skoly, zaci);
+            Zak_Novy okno = new Zak_Novy(skoly, zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            NactiData();
         }
 
         private void upravitStudentaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -203,10 +208,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void seznamStudentuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -215,6 +217,8 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
+
+            NactiData();
         }
 
         private void novyUcitelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -236,10 +240,7 @@ namespace SediM
         {
             DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void upravitSkoluToolStripMenuItem_Click(object sender, EventArgs e)
@@ -259,10 +260,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void upravitTriduToolStripMenuItem_Click(object sender, EventArgs e)
@@ -272,10 +270,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void seznamTridToolStripMenuItem_Click(object sender, EventArgs e)
@@ -285,10 +280,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
@@ -298,10 +290,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void zobrazitRozsazenitoolStripMenuItem_Click(object sender, EventArgs e)
@@ -313,10 +302,7 @@ namespace SediM
         {
             DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
     }
 }
