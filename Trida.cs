@@ -8,6 +8,7 @@
         private int vyska;
         private bool rozsazena;
         private string data;
+        private List<int[]>[,] prijatelneKategorieMista;
 
         public long Id { get { return id; } }
         public string Nazev { get { return nazev; } set { nazev = value; } }
@@ -15,6 +16,7 @@
         public int Vyska { get { return vyska; } set { vyska = value; } }
         public bool Rozsazena { get { return rozsazena; } set { rozsazena = value; } }
         public string Data { get { return data; } set { data = value; } }
+        public List<int[]>[,] PrijatelneKategorieASkolyMista { get { return prijatelneKategorieMista; } set { prijatelneKategorieMista = value; } }
 
         /// <summary>
         /// Konstruktor třídy
@@ -33,6 +35,7 @@
             this.vyska = vyska;
             this.rozsazena = rozsazena;
             this.data = data;
+            prijatelneKategorieMista = new List<int[]>[vyska, sirka];
         }
 
         public override string ToString()

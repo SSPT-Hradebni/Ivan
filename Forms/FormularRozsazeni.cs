@@ -67,7 +67,7 @@ namespace SediM
             combobxAlgoritmus.Enabled = false;
             // Zvolí ruleset SPC&SPC protože je jediný, který je ve funkčním stavu
             cboxRuleset.SelectedIndex = 0;
-            cboxRuleset.Enabled = false;
+            //cboxRuleset.Enabled = false;
         }
 
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
@@ -277,17 +277,15 @@ namespace SediM
         private void VyplnTridu(int indexTridy, int sirka, int vyska, Trida aktualniTrida)
         {
             List<Zak> kopieZaku = new List<Zak>();
-            List<string>[,] volneKombinace = new List<string>[0,0]; // Inicializace kvůli tomu, aby kompilátor nekřičel.
-            if (cboxRuleset.SelectedIndex == 0)
-            {
-                pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
 
-                // Překopíruje globální list žáků a přeskupí kategorie
-                // podle nejvyššího počtu žáků v kategorii
-                kopieZaku = NastavListZaku();
-            }
+            // Překopíruje globální list žáků a přeskupí kategorie
+            // podle nejvyššího počtu žáků v kategorii
+            kopieZaku = NastavListZaku();
+
+            if (cboxRuleset.SelectedIndex == 0)
+                pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
             else if (cboxRuleset.SelectedIndex == 1)
-                volneKombinace = VyplnKombinacemiRAR(vyska, sirka);
+                VyplnKombinacemiRAR(aktualniTrida, kopieZaku);
 
             string data = "";
 
@@ -304,11 +302,7 @@ namespace SediM
                     if (cboxRuleset.SelectedIndex == 0)
                         zak = ZiskejZakaSPC2(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
                     else if (cboxRuleset.SelectedIndex == 1)
-                    {
-                        zak = ZiskejZakaRAR();
-                        if (zak.Id != -1)
-                            UpravMistaKolemZakaRAR(volneKombinace);
-                    }
+                        zak = ZiskejZakaRAR(aktualniTrida, r, s, kopieZaku);
 
                     data += $"{zak.Misto}={zak.Id}";
 
@@ -366,16 +360,29 @@ namespace SediM
             return returnZak;
         }
 
-        private Zak ZiskejZakaRAR()
+        private Zak ZiskejZakaRAR(Trida trida, int vyska, int sirka, List<Zak> kopieZaku)
         {
-            /*
-             * TODO - vybere žáka podle dostupných dvojic kombinací
-             */
+            Zak zak;
+
+            List<int[]> listParametru = trida.PrijatelneKategorieASkolyMista[vyska, sirka];
+            // Prohledá dostupné žáky zda-li nemají vhodnou kategorii a třídu
+            foreach (int[] parametry in listParametru)
+            {
+                if ((zak = kopieZaku.Find(hledanyZak => hledanyZak.Skola == parametry[0] && hledanyZak.Kategorie == parametry[1])) != null)
+                {
+                    UpravMistaTridyRAR(trida, parametry, vyska, sirka);
+                    return zak;
+                }
+            }
+
+
             return new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
         }
 
-        private void UpravMistaKolemZakaRAR(List<string>[,] volneMista)
+        private void UpravMistaTridyRAR(Trida trida, int[] parametry, int vyska, int sirka)
         {
+
+
             /*
              * TODO - upraví místa podle pravidel
              * NOTE: bylo mi řečeno že žák určité kategorie a školy múže být pouze jeden na třídu - upravit dvojice kombinací 
@@ -383,15 +390,30 @@ namespace SediM
              */
         }
 
-        private List<string>[,] VyplnKombinacemiRAR(int vyska, int sirka)
+        private void VyplnKombinacemiRAR(Trida trida, List<Zak> kopieZaku)
         {
-            List<string>[,] volneKombinace = new List<string>[vyska, sirka];
+            List<int[]> unikatniKategorieSkoly = new List<int[]>();
 
-            /*
-             * TODO - vyplnit kombinace dvojicemi kategorií a škol
-             */
+            foreach (Zak zak in kopieZaku)
+            {
+                // Vloží novou kombinaci pokud se nenachází již v listu
+                if (unikatniKategorieSkoly.Find(parametry => parametry[0] == zak.Skola && parametry[1] == zak.Kategorie) == null)
+                    unikatniKategorieSkoly.Add(new int[] { zak.Skola, zak.Kategorie });
+            }
 
-            return volneKombinace;
+            for (int r = 0; r < trida.Vyska; r++)
+            {
+                for (int s = 0; s < trida.Sirka; s++)
+                {
+                    // Jelikož list je referenční datový typ, pro každé místo musíme tedy vytvořit samostatný list (aby se nepřepisovaly)
+                    List<int[]> kopieListu = new List<int[]>();
+
+                    foreach (int[] parametry in unikatniKategorieSkoly)
+                        kopieListu.Add(parametry);
+
+                    trida.PrijatelneKategorieASkolyMista[r, s] = kopieListu;
+                }
+            }
         }
 
         // Osobně se mi moc toto řešení nelíbí jelikož modifikace kategorie dle mého
