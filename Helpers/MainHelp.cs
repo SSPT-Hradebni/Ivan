@@ -1,5 +1,6 @@
 ﻿using SediM.Forms;
 using System.Data;
+using System.Globalization;
 using System.Speech.Synthesis;
 using System.Text;
 
@@ -257,8 +258,8 @@ namespace SediM.Helpers
             SpeechSynthesizer synthesizer = new SpeechSynthesizer();
 
             // Nastavení hlasu na český hlas
-            synthesizer.SelectVoice("Microsoft Jakub");
-            // synthesizer.SelectVoiceByHints(VoiceGender.Female, VoiceAge.NotSet, 0, CultureInfo.GetCultureInfo("en-US"));
+            // synthesizer.SelectVoice("Microsoft Jakub");
+            synthesizer.SelectVoiceByHints(VoiceGender.Female, VoiceAge.NotSet, 0, CultureInfo.GetCultureInfo("en-US"));
 
             if (muzeMluvit)
             {
@@ -375,13 +376,13 @@ namespace SediM.Helpers
             switch (nahoda)
             {
                 case int n when (n <= 30):
-                    veta = "Tohle bude na dlouho";
+                    veta = "This is gonna be a long one.";
                     break;
                 case int n when (n > 30 && n <= 65):
-                    veta = "Doufám, že se dneska máte dobře";
+                    veta = "I hope you're well today.";
                     break;
                 default:
-                    veta = "Tady nic není";
+                    veta = "There's nothing here";
                     break;
             }
 
@@ -398,6 +399,41 @@ namespace SediM.Helpers
             {
                 MessageBox.Show($"Část \"{coNeni}\" v aplikaci není hotová.", "Nehotová část", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        public string CisloKategorieNaRimske(int cislo)
+        {
+            string rimsky;
+
+            switch (cislo)
+            {
+                case 1:
+                    rimsky = "I.";
+                    break;
+                case 2:
+                    rimsky = "II.";
+                    break;
+                case 3:
+                    rimsky = "III.";
+                    break;
+                case 4:
+                    rimsky = "IV.";
+                    break;
+                case 5:
+                    rimsky = "V.";
+                    break;
+                case 6:
+                    rimsky = "VI.";
+                    break;
+                case 7:
+                    rimsky = "VII.";
+                    break;
+                default:
+                    rimsky = "undefined";
+                    break;
+            }
+
+            return rimsky;
         }
     }
 }

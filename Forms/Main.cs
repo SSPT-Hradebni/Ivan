@@ -16,6 +16,7 @@ namespace SediM
 
         public List<Zak> zaci = new List<Zak>();
         public List<Trida> tridy = new List<Trida>();
+        public List<Trida> nerozsazeneTridy = new List<Trida>();
         private List<Skola> skoly = new List<Skola>();
         private List<Ucitel> ucitele = new List<Ucitel>();
 
@@ -58,14 +59,21 @@ namespace SediM
             return data;
         }
 
-        private DataTable NactiTridy()
+        private DataTable NactiTridy(bool jenNerozsazene = false)
         {
             DataTable data = new DataTable();
             SqlDataAdapter dataAdapter;
 
             SqlCommand cmd;
 
-            cmd = new($"SELECT * FROM Tridy", connection);
+            if (jenNerozsazene)
+            {
+                cmd = new($"SELECT * FROM Tridy WHERE JeRozsazena = 0", connection);
+            }
+            else
+            {
+                cmd = new($"SELECT * FROM Tridy", connection);
+            }
 
             dataAdapter = new SqlDataAdapter(cmd);
             dataAdapter.Fill(data);
@@ -100,21 +108,24 @@ namespace SediM
         public void NactiData()
         {
             data = NactiStudenty();
-            List<Zak> aktualizovaniZaci = mainHelp.ListZaku(data);
-            // Zabrání přepsání hodnot žáků pokud se již nachází v listu.
-            // Jinak řečeno přidá pouze ty žáky, kteří se v listu zaci nenachází
-            foreach (Zak zak in aktualizovaniZaci)
-                if (!zaci.Exists(z => z.Id == zak.Id))
-                    zaci.Add(zak);
+            List<Zak> noveZaci = mainHelp.ListZaku(data);
+            zaci.Clear(); // vymazání starých údajů
+            zaci = noveZaci;
 
             data = NactiSkoly();
-            skoly = mainHelp.ListSkol(data);
+            List<Skola> noveSkoly = mainHelp.ListSkol(data);
+            skoly.Clear(); // vymazání starých údajů
+            skoly = noveSkoly;
 
             data = NactiTridy();
-            tridy = mainHelp.ListTrid(data);
+            List<Trida> noveTridy = mainHelp.ListTrid(data);
+            tridy.Clear(); // vymazání starých údajů
+            tridy = noveTridy;
 
             data = NactiUcitele();
-            ucitele = mainHelp.ListUcitelu(data);
+            List<Ucitel> noveUcitele = mainHelp.ListUcitelu(data);
+            ucitele.Clear(); // vymazání starých údajů
+            ucitele = noveUcitele;
         }
 
         private void Exportovat()
@@ -157,7 +168,7 @@ namespace SediM
             Version verzeAplikace = Assembly.GetExecutingAssembly().GetName().Version;
             string verze = $"Verze {verzeAplikace.Major}.{verzeAplikace.Minor}.{verzeAplikace.Build}";
 
-            MessageBox.Show($"Aplikace Ivan\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace umožňuje správu a organizaci krajského kola matematické soutěže pro Královéhradecký kraj.");
+            MessageBox.Show($"Aplikace {Properties.Settings.Default.AppName}\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU, Hradec Králové\n\n{verze}\n\nAplikace umožňuje organizaci přihlašování a rozsazení žáků celostátního kola matematické soutěže.");
         }
 
         private void napovedaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -182,7 +193,12 @@ namespace SediM
         /// <param name="e"></param>
         private void novyStudentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mainHelp.StudentForm_New(this, skoly, zaci);
+            Zak_Novy okno = new Zak_Novy(skoly, zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            NactiData();
         }
 
         private void upravitStudentaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -192,10 +208,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void seznamStudentuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -204,6 +217,8 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
+
+            NactiData();
         }
 
         private void novyUcitelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -225,10 +240,7 @@ namespace SediM
         {
             DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void upravitSkoluToolStripMenuItem_Click(object sender, EventArgs e)
@@ -248,10 +260,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void upravitTriduToolStripMenuItem_Click(object sender, EventArgs e)
@@ -261,10 +270,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void seznamTridToolStripMenuItem_Click(object sender, EventArgs e)
@@ -274,10 +280,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
@@ -287,10 +290,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
 
         private void zobrazitRozsazenitoolStripMenuItem_Click(object sender, EventArgs e)
@@ -302,10 +302,7 @@ namespace SediM
         {
             DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            NactiData();
         }
     }
 }

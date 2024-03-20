@@ -1,15 +1,18 @@
+using System.Drawing.Imaging;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using static Azure.Core.HttpHeader;
 
 namespace SediM
 {
     public partial class FormularRozsazeni : Form
     {
         private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
+        private DataTable? data;
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
@@ -75,6 +78,8 @@ namespace SediM
             if (cboxTridy.SelectedIndex == -1) return;
             listbxVyplneneTridy.SelectedIndex = -1;
             panelVykresleniRozsazeni.Invalidate();
+
+            toolStripButton_Tisk.Visible = false;
         }
 
         private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
@@ -82,6 +87,8 @@ namespace SediM
             if (listbxVyplneneTridy.SelectedIndex == -1) return;
             cboxTridy.SelectedIndex = -1;
             panelVykresleniRozsazeni.Invalidate();
+
+            toolStripButton_Tisk.Visible = true;
         }
 
         private void panelVykresleniRozsazeni_Paint(object sender, PaintEventArgs e)
@@ -160,11 +167,14 @@ namespace SediM
                             tridyZaku[indexVyplneneTridy][r, s].Misto.ToString(),
                             new Font("Arial", 10));
 
+                        // kontrast textu s barvou pozadí buňky
+                        float barva = ZiskejBarvuDleKategorie(vyplnitBarevne ? (r * 2 + s) % pocetKategoriiNaTridu[indexVyplneneTridy] : -1).Color.GetBrightness();
+
                         // Vykreslí řetězec na střed buňky (místa)
                         g.DrawString(
-                            tridyZaku[indexVyplneneTridy][r, s].Misto.ToString(),
+                            $"{tridyZaku[indexVyplneneTridy][r, s].Misto}\r\n{mainHelp.CisloKategorieNaRimske(tridyZaku[indexVyplneneTridy][r, s].Kategorie)}",
                             new Font("Arial", 10),
-                            Brushes.Black,
+                            barva > 0.65 ? Brushes.Black : Brushes.White,
                             pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostCisla.Width / 2,
                             pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostCisla.Height / 2);
 
@@ -173,6 +183,7 @@ namespace SediM
                             tridyZaku[indexVyplneneTridy][r, s].CeleJmeno == "MÍSTO PRÁZDNÉ"
                             ? "PRÁZDNÉ MÍSTO"
                             : tridyZaku[indexVyplneneTridy][r, s].CeleJmeno;
+
                         listbxSeznamStudentu.Items.Add(
                             $"{tridyZaku[indexVyplneneTridy][r, s].Misto} - " +
                             $"{prazdnyNeboJmeno}");
@@ -549,6 +560,66 @@ namespace SediM
             cboxTridy.ValueMember = "Id";
             cboxTridy.DisplayMember = "Nazev";
             cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
+
+            if(PocetVolnychTrid(tridy.Count) == 0)
+            {
+                DialogResult nejsouTridy = mainHelp.Alert("Upozornění", "Program nenalezl žádnou třídu, kterou by bylo možné rozsadit.\r\nChcete automaticky vytvořit novou třídu o výchzozí velikosti?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                
+                if(nejsouTridy == DialogResult.No)
+                {
+                    Close();
+                }
+                else
+                {
+                    SqlCommand vytvorTridu = new SqlCommand($"INSERT INTO Tridy (Nazev, Sirka, Vyska, JeRozsazena) VALUES(@nazev, @sirka, @vyska, @jeRozsazena)", connection);
+
+                    vytvorTridu.Parameters.AddWithValue("@nazev", $"Trida{tridy.Count + 1}");
+                    vytvorTridu.Parameters.AddWithValue("@sirka", 6);
+                    vytvorTridu.Parameters.AddWithValue("@vyska", 5);
+                    vytvorTridu.Parameters.AddWithValue("@jeRozsazena", 0);
+
+                    int stav = vytvorTridu.ExecuteNonQuery();
+
+                    if (stav == 0)
+                    {
+                        mainHelp.Alert("Chyba!", "Při automatickém vytvoření nové třídy do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Close();
+                    }
+
+                    data = NactiTridy();
+                    List<Trida> noveTridy = mainHelp.ListTrid(data);
+                    tridy.Clear(); // vymazání starých údajů
+                    tridy = noveTridy;
+
+                    cboxTridy.DataSource = null;
+
+                    cboxTridy.ValueMember = "Id";
+                    cboxTridy.DisplayMember = "Nazev";
+                    cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
+                }
+            }
+        }
+
+        private DataTable NactiTridy(bool jenNerozsazene = false)
+        {
+            DataTable data = new DataTable();
+            SqlDataAdapter dataAdapter;
+
+            SqlCommand cmd;
+
+            if (jenNerozsazene)
+            {
+                cmd = new($"SELECT * FROM Tridy WHERE JeRozsazena = 0", connection);
+            }
+            else
+            {
+                cmd = new($"SELECT * FROM Tridy", connection);
+            }
+
+            dataAdapter = new SqlDataAdapter(cmd);
+            dataAdapter.Fill(data);
+
+            return data;
         }
 
         private Trida ZiskejAktualniTridu()
@@ -565,6 +636,51 @@ namespace SediM
             {
                 return null;
             }
+        }
+
+        private void toolStripButton_Tisk_Click(object sender, EventArgs e)
+        {
+            // Získáme rozměry panelu
+            int width = panelVykresleniRozsazeni.Width;
+            int height = panelVykresleniRozsazeni.Height;
+
+            // Vytvoříme bitmapu pro uložení obsahu panelu
+            Bitmap bmp = new Bitmap(width, height);
+
+            // Vykreslíme obsah panelu na bitmapu
+            panelVykresleniRozsazeni.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
+
+            // Uložíme bitmapu jako JPG
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JPEG Image|*.jpg";
+            saveFileDialog.Title = "Uložit panel jako obrázek";
+            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName != "")
+            {
+                bmp.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
+                MessageBox.Show("Panel byl uložen jako obrázek.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            bmp.Dispose();
+        }
+
+        // Metoda pro kontrolu počtu volných tříd
+        private int PocetVolnychTrid(int celek)
+        {
+            int celkovyPocetTrid = celek; // Předávaný počet tříd
+            int pocetRozsazenychTrid = 0;
+
+            foreach (Trida trida in tridy)
+            {
+                if (trida.Rozsazena)
+                {
+                    pocetRozsazenychTrid++;
+                }
+            }
+
+            int pocetVolnychTrid = celkovyPocetTrid - pocetRozsazenychTrid;
+            return pocetVolnychTrid;
         }
     }
 }

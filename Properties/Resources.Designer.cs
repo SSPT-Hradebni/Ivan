@@ -458,6 +458,26 @@ namespace SediM.Properties {
         }
         
         /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Print_to_file {
+            get {
+                object obj = ResourceManager.GetObject("Print_to_file", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PrintToFile {
+            get {
+                object obj = ResourceManager.GetObject("PrintToFile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Icon podobný (Ikona).
         /// </summary>
         internal static System.Drawing.Icon Prohibited {
