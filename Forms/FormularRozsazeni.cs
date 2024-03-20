@@ -296,7 +296,7 @@ namespace SediM
             if (cboxRuleset.SelectedIndex == 0)
                 pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
             else if (cboxRuleset.SelectedIndex == 1)
-                VyplnKombinacemiRAR(aktualniTrida, kopieZaku);
+                VyplnTriduKombinacemiRAR(aktualniTrida, kopieZaku);
 
             string data = "";
 
@@ -371,17 +371,17 @@ namespace SediM
             return returnZak;
         }
 
-        private Zak ZiskejZakaRAR(Trida trida, int vyska, int sirka, List<Zak> kopieZaku)
+        private Zak ZiskejZakaRAR(Trida trida, int radek, int sloupec, List<Zak> kopieZaku)
         {
             Zak zak;
 
-            List<int[]> listParametru = trida.PrijatelneKategorieASkolyMista[vyska, sirka];
+            List<int[]> listParametru = trida.PrijatelneKategorieASkolyMista[radek, sloupec];
             // Prohledá dostupné žáky zda-li nemají vhodnou kategorii a třídu
             foreach (int[] parametry in listParametru)
             {
                 if ((zak = kopieZaku.Find(hledanyZak => hledanyZak.Skola == parametry[0] && hledanyZak.Kategorie == parametry[1])) != null)
                 {
-                    UpravMistaTridyRAR(trida, parametry, vyska, sirka);
+                    UpravMistaTridyRAR(trida, parametry, radek, sloupec);
                     return zak;
                 }
             }
@@ -390,18 +390,50 @@ namespace SediM
             return new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
         }
 
-        private void UpravMistaTridyRAR(Trida trida, int[] parametry, int vyska, int sirka)
+        private void UpravMistaTridyRAR(Trida trida, int[] parametry, int radek, int sloupec)
         {
-
+            /*
+             * Musí se upravit místa na souřadnicích:
+             *                                     [radek-2, sloupec]
+             *                [radek-1, sloupec-1] [radek-1, sloupec] [radek-1, sloupec+1]
+             *  [radek, sloupec-2] [radek, sloupec-1] [MÍSTO ŽÁKA] [radek, sloupec+1] [radek, sloupec+2]
+             *                [radek+1, sloupec-1] [radek+1, sloupec] [radek+1, sloupec+1]
+             *                                     [radek+2, sloupec]
+             *  
+             *  Pokud jsou v jedné z buněk proměnné radek nebo sloupec nižší než 0, 
+             *  přeskočíme úpravu této buňnky jelikož zasahuje mimo třídu (buňka se nenachází ve třídě)
+             *  
+             *  V těchto buňkách odstraníme veškeré kombinace, které obsahují třídu či kategorii 
+             *  totožnou s třídou či kategorií umístěného žáka
+             *  
+             *  Ve všech ostatních buňkách odstraníme přesnou kombinaci třídy a kategorie (můžeme začít na místě umístěného žáka
+             *  pro drobné urychlení)
+             */
 
             /*
              * TODO - upraví místa podle pravidel
              * NOTE: bylo mi řečeno že žák určité kategorie a školy múže být pouze jeden na třídu - upravit dvojice kombinací 
              * pro každé místo ve třídě
              */
+
+            //if (radek-2 >= 0)
+                //trida.PrijatelneKategorieASkolyMista[ra]
+
+            /* Když tak přemýšlím tak potřebuji pouze upravovat dolní polovinu míst pomyslné hvězdy a pravou stranu
+             * horizontály od umístěného žáka (vynechat místa na 9.-2. hodině po směru hod. ruč.). Drobná vizualizace níže.
+             * '*' je místo, kde je třeba upravit kombinace, 'x' je místo, kde je umístěný žák a '-' je místo, které by mělo být možné vyjmout
+             * z úpravy. Proč? Protože algoritmus prochází třídu zleva doprava, zhora dolů. Úprava míst, která algoritmus již prošel je
+             * tedy nadbytečná.
+             *
+             *   *        -
+             *  ***      ---
+             * **x** -> --x**
+             *  ***      ***
+             *   *        *
+             */
         }
 
-        private void VyplnKombinacemiRAR(Trida trida, List<Zak> kopieZaku)
+        private void VyplnTriduKombinacemiRAR(Trida trida, List<Zak> kopieZaku)
         {
             List<int[]> unikatniKategorieSkoly = new List<int[]>();
 
