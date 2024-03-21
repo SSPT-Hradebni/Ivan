@@ -1,11 +1,10 @@
-using System.Drawing.Imaging;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
-using static Azure.Core.HttpHeader;
+using System.Drawing.Imaging;
 
 namespace SediM
 {
@@ -408,18 +407,15 @@ namespace SediM
              *  
              *  Ve všech ostatních buňkách odstraníme přesnou kombinaci třídy a kategorie (můžeme začít na místě umístěného žáka
              *  pro drobné urychlení)
-             */
+             *
 
-            /*
+             *
              * TODO - upraví místa podle pravidel
              * NOTE: bylo mi řečeno že žák určité kategorie a školy múže být pouze jeden na třídu - upravit dvojice kombinací 
              * pro každé místo ve třídě
-             */
+             *
 
-            //if (radek-2 >= 0)
-                //trida.PrijatelneKategorieASkolyMista[ra]
-
-            /* Když tak přemýšlím tak potřebuji pouze upravovat dolní polovinu míst pomyslné hvězdy a pravou stranu
+             * Když tak přemýšlím tak potřebuji pouze upravovat dolní polovinu míst pomyslné hvězdy a pravou stranu
              * horizontály od umístěného žáka (vynechat místa na 9.-2. hodině po směru hod. ruč.). Drobná vizualizace níže.
              * '*' je místo, kde je třeba upravit kombinace, 'x' je místo, kde je umístěný žák a '-' je místo, které by mělo být možné vyjmout
              * z úpravy. Proč? Protože algoritmus prochází třídu zleva doprava, zhora dolů. Úprava míst, která algoritmus již prošel je
@@ -430,7 +426,22 @@ namespace SediM
              * **x** -> --x**
              *  ***      ***
              *   *        *
+             *   
+             * Pozor na to, že proměnné řádek a sloupec jsou číslované od nuly! Pokud tedy kontrolujeme zápis mimo třídu musíme kontrolovat, 
+             * zda-li výpočet (např. radek-2 nebo sloupec+1) nejsou menší než nula a nebo větší než šířka-1 nebo výška-1. Pokud jsou, zasáhli bychom mimo třídu
              */
+
+            /*int[,] bunkyProKontrolu = new int[,] { // TODO
+                {radek, sloupec + 1}, 
+                {radek, sloupec + 2}, 
+                {radek + 1, sloupec - 1}, 
+                {radek + 1, sloupec}, 
+                {radek + 1, sloupec + 1 }, 
+                {radek + 2, sloupec}};
+
+            foreach (int[] in bunkyProKontrolu)
+                trida.PrijatelneKategorieASkolyMista[radek - 2, sloupec].RemoveAt(trida.PrijatelneKategorieASkolyMista[radek - 2, sloupec].FindIndex(hledanyParametr => hledanyParametr[0] == parametry[0] && hledanyParametr[1] == parametry[1]));
+            */
         }
 
         private void VyplnTriduKombinacemiRAR(Trida trida, List<Zak> kopieZaku)
@@ -593,11 +604,11 @@ namespace SediM
             cboxTridy.DisplayMember = "Nazev";
             cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
 
-            if(PocetVolnychTrid(tridy.Count) == 0)
+            if (PocetVolnychTrid(tridy.Count) == 0)
             {
                 DialogResult nejsouTridy = mainHelp.Alert("Upozornění", "Program nenalezl žádnou třídu, kterou by bylo možné rozsadit.\r\nChcete automaticky vytvořit novou třídu o výchzozí velikosti?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                
-                if(nejsouTridy == DialogResult.No)
+
+                if (nejsouTridy == DialogResult.No)
                 {
                     Close();
                 }
