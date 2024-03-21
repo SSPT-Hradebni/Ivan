@@ -431,17 +431,27 @@ namespace SediM
              * zda-li výpočet (např. radek-2 nebo sloupec+1) nejsou menší než nula a nebo větší než šířka-1 nebo výška-1. Pokud jsou, zasáhli bychom mimo třídu
              */
 
-            /*int[,] bunkyProKontrolu = new int[,] { // TODO
-                {radek, sloupec + 1}, 
-                {radek, sloupec + 2}, 
-                {radek + 1, sloupec - 1}, 
-                {radek + 1, sloupec}, 
-                {radek + 1, sloupec + 1 }, 
+
+            // Procykluje buňky kolem umístěného žáka (mimo předešlých buněk) a odstraní parametry obsahující stejné školy nebo kategorie
+            int[,] bunky = new int[,] {
+                {radek, sloupec + 1},
+                {radek, sloupec + 2},
+                {radek + 1, sloupec - 1},
+                {radek + 1, sloupec},
+                {radek + 1, sloupec + 1 },
                 {radek + 2, sloupec}};
 
-            foreach (int[] in bunkyProKontrolu)
-                trida.PrijatelneKategorieASkolyMista[radek - 2, sloupec].RemoveAt(trida.PrijatelneKategorieASkolyMista[radek - 2, sloupec].FindIndex(hledanyParametr => hledanyParametr[0] == parametry[0] && hledanyParametr[1] == parametry[1]));
-            */
+            for (int i = 0; i < bunky.GetLength(0); i++)
+                if (bunky[i, 0] < trida.Vyska && bunky[i, 1] >= 0 && bunky[i, 1] < trida.Sirka)
+                    trida.PrijatelneKategorieASkolyMista[bunky[i, 0], bunky[i, 1]]
+                        .RemoveAll(hledanyParametr => hledanyParametr[0] == parametry[0] || hledanyParametr[1] == parametry[1]);
+
+            // Procykluje třídu počínaje řádkem umístěného žáka a pokračuje až na konec třídy
+            for (int r = radek; r < trida.Vyska; r++)
+                for (int s = 0; s < trida.Sirka; s++)
+                    trida.PrijatelneKategorieASkolyMista[r, s]
+                        .RemoveAll(hledanyParametr => hledanyParametr[0] == parametry[0] && hledanyParametr[1] == parametry[1]);
+
         }
 
         private void VyplnTriduKombinacemiRAR(Trida trida, List<Zak> kopieZaku)
