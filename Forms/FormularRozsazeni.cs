@@ -1,16 +1,22 @@
 using System.Drawing.Imaging;
-using PdfSharp.Drawing;
-using PdfSharp.Drawing.Layout;
-using PdfSharp.Pdf;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
-using static Azure.Core.HttpHeader;
+using iText.IO.Image;
+using iText.Kernel.Events;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
 
 namespace SediM
 {
     public partial class FormularRozsazeni : Form
     {
+        public static readonly PdfNumber PORTRAIT = new PdfNumber(0);
+        public static readonly PdfNumber LANDSCAPE = new PdfNumber(90);
+        public static readonly PdfNumber INVERTEDPORTRAIT = new PdfNumber(180);
+        public static readonly PdfNumber SEASCAPE = new PdfNumber(270);
+
         private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
         private DataTable? data;
 
@@ -429,75 +435,6 @@ namespace SediM
             return serazeniZaci;
         }
 
-        private void ExportToPdf(string filePath)
-        {
-            // Vytvoření nového dokumentu PDF
-            PdfDocument document = new PdfDocument();
-
-            // Vytvoření stránky v dokumentu
-            PdfPage page = document.AddPage();
-            XGraphics g = XGraphics.FromPdfPage(page);
-
-            XTextFormatter tf = new XTextFormatter(g);
-            tf.Alignment = XParagraphAlignment.Center;
-
-            // Slouží pouze jako test. Později bude optimalizováno - TODO
-
-            int width = 720, height = 480;
-            // Vytvořen "počáteční" bod pro vykreslování míst
-            Point pocatekPlochyMist = new Point(
-                (int)(width * 0.05),
-                (int)(height * 0.05));
-
-            // Extrahuje dimenze třídy z právě označeného listboxu ve formátu [0] - šířka, [1] - výška
-            int[] dimenze = { tridyZaku[0].GetLength(1), tridyZaku[0].GetLength(0) };
-
-            // Vypočítá velikost jednoho místa na základě velikosti dimenzí - stejný princip jako ve formuláři Main
-            int mistoSirka = (int)((width * 0.9) / dimenze[0]);
-            int mistoVyska = (int)((height * 0.65) / dimenze[1]);
-
-            page.Size = PdfSharp.PageSize.A4;
-            page.Orientation = PdfSharp.PageOrientation.Landscape;
-
-            // Opakuje pro každý řádek míst ve třídě
-            for (int r = 0; r < dimenze[1]; r++)
-            {
-                // Opakuje pro každé místo v řádku ve třídě
-                for (int s = 0; s < dimenze[0]; s++)
-                {
-                    g.DrawRectangle(
-                        new XPen(Color.Black),
-                        pocatekPlochyMist.X + s * mistoSirka + s,
-                        pocatekPlochyMist.Y + r * mistoVyska + r,
-                        mistoSirka, mistoVyska);
-
-                    // Zjistí velikost vykreslovaného řetězce
-                    XSize velikostCisla = g.MeasureString(
-                        $"{tridyZaku[0][r, s].Misto}",
-                        new XFont("Arial", 10, XFontStyleEx.Regular));
-
-                    // 
-                    XSize velikostJmena = g.MeasureString(
-                        tridyZaku[0][r, s].Jmeno,
-                        new XFont("Arial", 10, XFontStyleEx.Regular));
-
-                    // Vykreslí řetězec na střed buňky (místa)
-                    tf.DrawString(
-                        $"{tridyZaku[0][r, s].Misto}\n{tridyZaku[0][r, s].Jmeno}",
-                        new XFont("Arial", 10, XFontStyleEx.Regular),
-                        XBrushes.Black,
-                        new XRect(pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostJmena.Width / 2,
-                        pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostJmena.Height / 2, mistoSirka, mistoVyska));
-                }
-            }
-
-            // Uložení dokumentu do souboru
-            document.Save(filePath);
-
-            // Zavření dokumentu
-            document.Close();
-        }
-
         private void FormularRozsazeni_Load(object sender, EventArgs e)
         {
             cboxTridy.ValueMember = "Id";
@@ -583,26 +520,45 @@ namespace SediM
 
         private void toolStripButton_Tisk_Click(object sender, EventArgs e)
         {
-            // Získáme rozměry panelu
             int width = panelVykresleniRozsazeni.Width;
             int height = panelVykresleniRozsazeni.Height;
 
-            // Vytvoříme bitmapu pro uložení obsahu panelu
             Bitmap bmp = new Bitmap(width, height);
-
-            // Vykreslíme obsah panelu na bitmapu
             panelVykresleniRozsazeni.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
 
-            // Uložíme bitmapu jako JPG
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "JPEG Image|*.jpg";
-            saveFileDialog.Title = "Uložit panel jako obrázek";
+            saveFileDialog.Filter = "PDF files|*.pdf";
+            saveFileDialog.Title = "Exportovat jako PDF";
             saveFileDialog.ShowDialog();
 
             if (saveFileDialog.FileName != "")
             {
-                bmp.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
-                MessageBox.Show("Panel byl uložen jako obrázek.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (var memoryStream = new MemoryStream())
+                {
+                    bmp.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); // Uložíme jako PNG pro kvalitu
+
+                    using (var pdfWriter = new PdfWriter(saveFileDialog.FileName))
+                    {
+                        using (var pdfDocument = new PdfDocument(pdfWriter))
+                        {
+                            var pageSize = new iText.Kernel.Geom.PageSize(height, width); // Orientace na šířku
+                            pdfDocument.SetDefaultPageSize(pageSize);
+
+                            var document = new Document(pdfDocument);
+
+                            PageRotationEventHandler eventHandler = new PageRotationEventHandler();
+                            pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, eventHandler);
+
+                            var image = new iText.Layout.Element.Image(ImageDataFactory.Create(memoryStream.ToArray()));
+                            image.SetAutoScale(true);
+                            eventHandler.SetRotation(PORTRAIT);
+                            document.Add(image);
+                            document.Close();
+                        }
+                    }
+
+                    MessageBox.Show("Panel byl uložen jako PDF.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
 
             bmp.Dispose();
@@ -624,6 +580,22 @@ namespace SediM
 
             int pocetVolnychTrid = celkovyPocetTrid - pocetRozsazenychTrid;
             return pocetVolnychTrid;
+        }
+
+        private class PageRotationEventHandler : IEventHandler
+        {
+            private PdfNumber rotation = PORTRAIT;
+
+            public void SetRotation(PdfNumber orientation)
+            {
+                this.rotation = orientation;
+            }
+
+            public void HandleEvent(Event currentEvent)
+            {
+                PdfDocumentEvent docEvent = (PdfDocumentEvent)currentEvent;
+                docEvent.GetPage().Put(PdfName.Rotate, rotation);
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Npgsql;
-using SediM.Helpers;
+﻿using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 
