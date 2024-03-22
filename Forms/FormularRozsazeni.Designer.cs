@@ -67,6 +67,7 @@
             // 
             numupdownKategoriiNaTridu.Location = new Point(179, 74);
             numupdownKategoriiNaTridu.Margin = new Padding(3, 2, 3, 2);
+            numupdownKategoriiNaTridu.Maximum = new decimal(new int[] { 12, 0, 0, 0 });
             numupdownKategoriiNaTridu.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             numupdownKategoriiNaTridu.Name = "numupdownKategoriiNaTridu";
             numupdownKategoriiNaTridu.Size = new Size(44, 23);
@@ -181,14 +182,12 @@
             // 
             // cboxRuleset
             // 
-            this.cboxRuleset.FormattingEnabled = true;
-            this.cboxRuleset.Items.AddRange(new object[] {
-            "SPC&SPC",
-            "RAR"});
-            this.cboxRuleset.Location = new System.Drawing.Point(98, 46);
-            this.cboxRuleset.Name = "cboxRuleset";
-            this.cboxRuleset.Size = new System.Drawing.Size(125, 23);
-            this.cboxRuleset.TabIndex = 18;
+            cboxRuleset.FormattingEnabled = true;
+            cboxRuleset.Items.AddRange(new object[] { "SPC&SPC", "RAR" });
+            cboxRuleset.Location = new Point(98, 46);
+            cboxRuleset.Name = "cboxRuleset";
+            cboxRuleset.Size = new Size(125, 23);
+            cboxRuleset.TabIndex = 18;
             // 
             // cboxTridy
             // 

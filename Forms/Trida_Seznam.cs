@@ -47,7 +47,7 @@ namespace SediM.Forms
             dataviewTridy.Rows.Clear();
 
             foreach (Trida trida in tridy)
-                dataviewTridy.Rows.Add(trida.Id, trida.Nazev, trida.Sirka, trida.Vyska, trida.Rozsazena ? "Ano" : "Ne");
+                dataviewTridy.Rows.Add(trida.Id, trida.Nazev, trida.Sirka, trida.Vyska, trida.JeRozsazena ? "Ano" : "Ne");
         }
 
         private void dataviewTridy_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
