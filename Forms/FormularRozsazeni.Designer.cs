@@ -57,7 +57,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(15, 82);
+            label1.Location = new Point(12, 76);
             label1.Name = "label1";
             label1.Size = new Size(98, 15);
             label1.TabIndex = 0;
@@ -183,7 +183,7 @@
             // cboxRuleset
             // 
             cboxRuleset.FormattingEnabled = true;
-            cboxRuleset.Items.AddRange(new object[] { "SPC&SPC", "RAR" });
+            cboxRuleset.Items.AddRange(new object[] { "RAR", "SPC&SPC" });
             cboxRuleset.Location = new Point(98, 46);
             cboxRuleset.Name = "cboxRuleset";
             cboxRuleset.Size = new Size(125, 23);
