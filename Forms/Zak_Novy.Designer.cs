@@ -37,98 +37,95 @@
             lblKategorie = new Label();
             lblSkola = new Label();
             cboxSkoly = new ComboBox();
-            btnVytvořit = new Button();
+            btnVytvorit = new Button();
             ((System.ComponentModel.ISupportInitialize)numKategorie).BeginInit();
             SuspendLayout();
             // 
             // lblJmeno
             // 
             lblJmeno.AutoSize = true;
-            lblJmeno.Location = new Point(14, 12);
+            lblJmeno.Location = new Point(12, 9);
             lblJmeno.Name = "lblJmeno";
-            lblJmeno.Size = new Size(52, 20);
+            lblJmeno.Size = new Size(42, 15);
             lblJmeno.TabIndex = 0;
             lblJmeno.Text = "Jméno";
             // 
             // tboxJmeno
             // 
-            tboxJmeno.Location = new Point(14, 36);
-            tboxJmeno.Margin = new Padding(3, 4, 3, 4);
+            tboxJmeno.Location = new Point(12, 27);
             tboxJmeno.Name = "tboxJmeno";
-            tboxJmeno.Size = new Size(298, 27);
+            tboxJmeno.Size = new Size(261, 23);
             tboxJmeno.TabIndex = 1;
             // 
             // tboxPrijmeni
             // 
-            tboxPrijmeni.Location = new Point(14, 107);
-            tboxPrijmeni.Margin = new Padding(3, 4, 3, 4);
+            tboxPrijmeni.Location = new Point(12, 80);
             tboxPrijmeni.Name = "tboxPrijmeni";
-            tboxPrijmeni.Size = new Size(298, 27);
+            tboxPrijmeni.Size = new Size(261, 23);
             tboxPrijmeni.TabIndex = 2;
             // 
             // lblPrijmeni
             // 
             lblPrijmeni.AutoSize = true;
-            lblPrijmeni.Location = new Point(14, 83);
+            lblPrijmeni.Location = new Point(12, 62);
             lblPrijmeni.Name = "lblPrijmeni";
-            lblPrijmeni.Size = new Size(63, 20);
+            lblPrijmeni.Size = new Size(51, 15);
             lblPrijmeni.TabIndex = 3;
             lblPrijmeni.Text = "Příjmení";
             // 
             // numKategorie
             // 
-            numKategorie.Location = new Point(14, 189);
-            numKategorie.Margin = new Padding(3, 4, 3, 4);
+            numKategorie.Location = new Point(12, 142);
             numKategorie.Maximum = new decimal(new int[] { 7, 0, 0, 0 });
             numKategorie.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numKategorie.Name = "numKategorie";
-            numKategorie.Size = new Size(298, 27);
+            numKategorie.Size = new Size(261, 23);
             numKategorie.TabIndex = 4;
             numKategorie.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // lblKategorie
             // 
             lblKategorie.AutoSize = true;
-            lblKategorie.Location = new Point(14, 165);
+            lblKategorie.Location = new Point(12, 124);
             lblKategorie.Name = "lblKategorie";
-            lblKategorie.Size = new Size(74, 20);
+            lblKategorie.Size = new Size(57, 15);
             lblKategorie.TabIndex = 5;
             lblKategorie.Text = "Kategorie";
             // 
             // lblSkola
             // 
             lblSkola.AutoSize = true;
-            lblSkola.Location = new Point(14, 243);
+            lblSkola.Location = new Point(12, 182);
             lblSkola.Name = "lblSkola";
-            lblSkola.Size = new Size(45, 20);
+            lblSkola.Size = new Size(35, 15);
             lblSkola.TabIndex = 6;
             lblSkola.Text = "Škola";
             // 
             // cboxSkoly
             // 
             cboxSkoly.FormattingEnabled = true;
-            cboxSkoly.Location = new Point(11, 267);
-            cboxSkoly.Margin = new Padding(3, 4, 3, 4);
+            cboxSkoly.Location = new Point(10, 200);
             cboxSkoly.Name = "cboxSkoly";
-            cboxSkoly.Size = new Size(300, 28);
+            cboxSkoly.Size = new Size(263, 23);
             cboxSkoly.TabIndex = 10;
             // 
-            // btnVytvořit
+            // btnVytvorit
             // 
-            btnVytvořit.Location = new Point(14, 311);
-            btnVytvořit.Name = "btnVytvořit";
-            btnVytvořit.Size = new Size(298, 31);
-            btnVytvořit.TabIndex = 11;
-            btnVytvořit.Text = "Vytvořit";
-            btnVytvořit.UseVisualStyleBackColor = true;
-            btnVytvořit.Click += btnVytvořit_Click;
+            btnVytvorit.Location = new Point(12, 233);
+            btnVytvorit.Margin = new Padding(3, 2, 3, 2);
+            btnVytvorit.Name = "btnVytvorit";
+            btnVytvorit.Size = new Size(261, 23);
+            btnVytvorit.TabIndex = 11;
+            btnVytvorit.Text = "Vytvořit";
+            btnVytvorit.UseVisualStyleBackColor = true;
+            btnVytvorit.Click += btnVytvorit_Click;
             // 
             // Zak_Novy
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(331, 359);
-            Controls.Add(btnVytvořit);
+            ClientSize = new Size(290, 269);
+            Controls.Add(btnVytvorit);
             Controls.Add(cboxSkoly);
             Controls.Add(lblSkola);
             Controls.Add(lblKategorie);
@@ -140,13 +137,12 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Zak_Novy";
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Nový student";
+            Text = "Nový žák";
             HelpButtonClicked += Zak_Novy_HelpButtonClicked;
             Load += Zak_Novy_Load;
             ((System.ComponentModel.ISupportInitialize)numKategorie).EndInit();
@@ -164,6 +160,6 @@
         private Label lblKategorie;
         private Label lblSkola;
         private ComboBox cboxSkoly;
-        private Button btnVytvořit;
+        private Button btnVytvorit;
     }
 }

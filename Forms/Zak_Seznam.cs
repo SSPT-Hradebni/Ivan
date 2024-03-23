@@ -12,10 +12,10 @@
 
         private void Zak_Seznam_Load(object sender, EventArgs e)
         {
-            dataviewStudenti.Rows.Clear();
+            dataviewZaci.Rows.Clear();
 
             foreach (Zak zak in zaci)
-                dataviewStudenti.Rows.Add(zak.Id, zak.CeleJmeno, zak.Kategorie, zak.Skola);
+                dataviewZaci.Rows.Add(zak.Id, zak.CeleJmeno, zak.Kategorie, zak.Skola);
         }
     }
 }

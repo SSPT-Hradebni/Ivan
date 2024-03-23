@@ -12,7 +12,7 @@ namespace SediM
         public bool jePripojen = false;
 
         private List<Skola> _skoly;
-        private List<Zak> _studenti;
+        private List<Zak> _zaci;
 
         public Zak_Upravit()
         {
@@ -41,10 +41,10 @@ namespace SediM
             }
         }
 
-        public Zak_Upravit(List<Skola> skoly, List<Zak> studenti)
+        public Zak_Upravit(List<Skola> skoly, List<Zak> zaci)
         {
             _skoly = skoly;
-            _studenti = studenti;
+            _zaci = zaci;
 
             InitializeComponent();
 
@@ -83,27 +83,16 @@ namespace SediM
             cboxSkoly.ValueMember = "id";
             cboxSkoly.DisplayMember = "nazev";
 
-            _studenti.Sort(); // seřazení
+            _zaci.Sort(); // seřazení
 
-            // načtení studentů
-            cboxStudenti.DataSource = _studenti;
-            cboxStudenti.ValueMember = "Id";
-            cboxStudenti.DisplayMember = "CeleJmeno";
+            // načtení žáků
+            cboxZaci.DataSource = _zaci;
+            cboxZaci.ValueMember = "Id";
+            cboxZaci.DisplayMember = "CeleJmeno";
 
             // povolení autocomplete
-            cboxStudenti.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cboxStudenti.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-
-        private void cboxStudenti_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Zak student = _studenti[cboxStudenti.SelectedIndex];
-
-            tboxJmeno.Text = student.Jmeno;
-            tboxPrijmeni.Text = student.Prijmeni;
-            numKategorie.Value = student.Kategorie;
-            cboxSkoly.SelectedIndex = (int)student.Skola - 1;
-            lblStudentID.Text = $"{student.Id}";
+            cboxZaci.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cboxZaci.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
         private void btnUlozit_Click(object sender, EventArgs e)
@@ -112,19 +101,19 @@ namespace SediM
             string prijmeni = tboxPrijmeni.Text;
             int kategorie = (int)numKategorie.Value;
             int skola = cboxSkoly.SelectedIndex + 1;
-            int studentID = int.Parse(lblStudentID.Text);
+            int zakID = int.Parse(lblZakID.Text);
 
             try
             {
-                SqlCommand vytvorStudenta = new SqlCommand($"UPDATE Studenti SET Jmeno = @jmeno, Prijmeni = @prijmeni, Kategorie = @kategorie, Skola = @skola WHERE StudentId = @id", connection);
+                SqlCommand vytvorZaka = new SqlCommand($"UPDATE Studenti SET Jmeno = @jmeno, Prijmeni = @prijmeni, Kategorie = @kategorie, Skola = @skola WHERE StudentId = @id", connection);
 
-                vytvorStudenta.Parameters.AddWithValue("@jmeno", $"{jmeno}");
-                vytvorStudenta.Parameters.AddWithValue("@prijmeni", $"{prijmeni}");
-                vytvorStudenta.Parameters.AddWithValue("@kategorie", kategorie);
-                vytvorStudenta.Parameters.AddWithValue("@skola", skola);
-                vytvorStudenta.Parameters.AddWithValue("@id", studentID);
+                vytvorZaka.Parameters.AddWithValue("@jmeno", $"{jmeno}");
+                vytvorZaka.Parameters.AddWithValue("@prijmeni", $"{prijmeni}");
+                vytvorZaka.Parameters.AddWithValue("@kategorie", kategorie);
+                vytvorZaka.Parameters.AddWithValue("@skola", skola);
+                vytvorZaka.Parameters.AddWithValue("@id", zakID);
 
-                int stav = vytvorStudenta.ExecuteNonQuery();
+                int stav = vytvorZaka.ExecuteNonQuery();
 
                 if (stav != 0)
                 {
@@ -133,13 +122,24 @@ namespace SediM
                 }
                 else
                 {
-                    mainHelp.Alert("Chyba!", "Při ukládání úprav studenta do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mainHelp.Alert("Chyba!", "Při ukládání úprav žáka do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void cboxZaci_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Zak zak = _zaci[cboxZaci.SelectedIndex];
+
+            tboxJmeno.Text = zak.Jmeno;
+            tboxPrijmeni.Text = zak.Prijmeni;
+            numKategorie.Value = zak.Kategorie;
+            cboxSkoly.SelectedIndex = (int)zak.Skola - 1;
+            lblZakID.Text = $"{zak.Id}";
         }
     }
 }

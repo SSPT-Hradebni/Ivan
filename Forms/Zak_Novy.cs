@@ -6,13 +6,13 @@ namespace SediM
 {
     public partial class Zak_Novy : Form
     {
-        private SqlConnection connection = new SqlConnection(@"Data Source=37.60.252.204;Initial Catalog=Ivan;User ID=ivan;Password=mE3xBa0it8dVOGr");
+        private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
 
         private List<Skola> _skoly;
-        private List<Zak> _studenti;
+        private List<Zak> _zaci;
 
         public Zak_Novy()
         {
@@ -41,10 +41,10 @@ namespace SediM
             }
         }
 
-        public Zak_Novy(List<Skola> skoly, List<Zak> studenti)
+        public Zak_Novy(List<Skola> skoly, List<Zak> zaci)
         {
             _skoly = skoly;
-            _studenti = studenti;
+            _zaci = zaci;
 
             InitializeComponent();
 
@@ -79,7 +79,12 @@ namespace SediM
             cboxSkoly.DisplayMember = "nazev";
         }
 
-        private void btnVytvořit_Click(object sender, EventArgs e)
+        private void Zak_Novy_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            mainHelp.ShowHelp(this, "student-novy.html");
+        }
+
+        private void btnVytvorit_Click(object sender, EventArgs e)
         {
             try
             {
@@ -88,37 +93,23 @@ namespace SediM
                 int kategorie = (int)numKategorie.Value;
                 int skola = cboxSkoly.SelectedIndex;
 
-                // ID posledního vloženého studenta do databáze (kvůli indexování o +1)
-                int posledniID = _studenti.Count() + 1;
-
                 if (jmeno == "")
-                {
-                    throw new Exception("Křestní jméno studenta nesmí být prázdné");
-                }
-
+                    throw new Exception("Křestní jméno žáka nesmí být prázdné");
                 if (prijmeni == "")
-                {
-                    throw new Exception("Příjmení studenta nesmí být prázdné");
-                }
-
-                if (kategorie < 1 || kategorie > 7)
-                {
-                    throw new Exception("Kategorie musí být v intervalu od 1 do 7 (včetně)");
-                }
-
-                if (skola < 0)
-                {
+                    throw new Exception("Příjmení žáka nesmí být prázdné");
+                if ((jmeno + prijmeni).Length > 45)
+                    throw new Exception("Délka jména a příjmení nesmí přesáhnout 45 znaků");
+                if (skola == -1)
                     throw new Exception("Platná škola musí být vybrána");
-                }
 
-                SqlCommand vytvorStudenta = new SqlCommand($"INSERT INTO Studenti (Jmeno, Prijmeni, Kategorie, Skola) VALUES(@jmeno, @prijmeni, @kategorie, @skola)", connection);
+                SqlCommand vytvorZaka = new SqlCommand($"INSERT INTO Studenti (Jmeno, Prijmeni, Kategorie, Skola) VALUES(@jmeno, @prijmeni, @kategorie, @skola)", connection);
 
-                vytvorStudenta.Parameters.AddWithValue("@jmeno", $"{jmeno}");
-                vytvorStudenta.Parameters.AddWithValue("@prijmeni", $"{prijmeni}");
-                vytvorStudenta.Parameters.AddWithValue("@kategorie", kategorie);
-                vytvorStudenta.Parameters.AddWithValue("@skola", skola + 1);
+                vytvorZaka.Parameters.AddWithValue("@jmeno", $"{jmeno}");
+                vytvorZaka.Parameters.AddWithValue("@prijmeni", $"{prijmeni}");
+                vytvorZaka.Parameters.AddWithValue("@kategorie", kategorie);
+                vytvorZaka.Parameters.AddWithValue("@skola", skola + 1);
 
-                int stav = vytvorStudenta.ExecuteNonQuery();
+                int stav = vytvorZaka.ExecuteNonQuery();
 
                 if (stav != 0)
                 {
@@ -127,18 +118,13 @@ namespace SediM
                 }
                 else
                 {
-                    mainHelp.Alert("Chyba!", "Při přidání nového studenta do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mainHelp.Alert("Chyba!", "Při přidání nového žáka do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void Zak_Novy_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            mainHelp.ShowHelp(this, "student-novy.html");
         }
     }
 }
