@@ -175,21 +175,33 @@ namespace SediM
                             ? "PRÁZDNÉ MÍSTO"
                             : zak.CeleJmeno;
 
-                        string textVBunce = $"{zak.Misto}\r\n{jmenoZaka}\r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}";
-
                         // Zjistí velikost vykreslovaného řetězce
-                        SizeF velikostCisla = g.MeasureString(textVBunce, new Font("Arial", 10));
+                        SizeF velikostTextuMista = g.MeasureString($"{zak.Misto}\r\n \r\n ", new Font("Arial", 10));
+                        SizeF velikostTextuJmena = g.MeasureString($" \r\n{jmenoZaka}\r\n ", new Font("Arial", 9));
+                        SizeF velikostTextuKategorieASkoly = g.MeasureString($" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}", new Font("Arial", 10));
 
                         // kontrast textu s barvou pozadí buňky
                         float svetlostBarvy = ZiskejBarvuDleKategorie(vyplnitBarevne ? zak.Kategorie : -1).Color.GetBrightness();
 
                         // Vykreslí řetězec na střed buňky (místa)
                         g.DrawString(
-                            textVBunce,
+                            $"{zak.Misto}\r\n \r\n ",
                             new Font("Arial", 10),
                             svetlostBarvy > 0.65 ? Brushes.Black : Brushes.White,
-                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostCisla.Width / 2,
-                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostCisla.Height / 2);
+                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuMista.Width / 2,
+                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuMista.Height / 2);
+                        g.DrawString(
+                            $" \r\n{jmenoZaka}\r\n ",
+                            new Font("Arial", 9),
+                            svetlostBarvy > 0.65 ? Brushes.Black : Brushes.White,
+                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuJmena.Width / 2,
+                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuJmena.Height/ 2);
+                        g.DrawString(
+                            $" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}",
+                            new Font("Arial", 10),
+                            svetlostBarvy > 0.65 ? Brushes.Black : Brushes.White,
+                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuKategorieASkoly.Width / 2,
+                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuKategorieASkoly.Height / 2);
 
                         // Přidá žáka včetně jeho místa do listboxu seznamu studentů ve třídě
                         listbxSeznamStudentu.Items.Add(
@@ -357,10 +369,10 @@ namespace SediM
             // for cyklus došel do konce bez přenastavení této proměnné
             Zak returnZak;
 
-            if ((returnZak = kopieZaku.Find(zak => zak.Kategorie == kategorie)) != null)
+            if ((returnZak = kopieZaku.Find(zak => zak.DynKategorie == kategorie)) != null)
             {
                 zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].JeRozsazen = true;
-                kopieZaku.RemoveAll(zak => zak.Kategorie == kategorie && zak.Skola == returnZak.Skola);
+                kopieZaku.RemoveAll(zak => zak.DynKategorie == kategorie && zak.Skola == returnZak.Skola);
                 return returnZak;
             }
 
@@ -375,7 +387,7 @@ namespace SediM
             // Prohledá dostupné žáky zda-li nemají vhodnou kategorii a třídu
             foreach (int[] parametry in listParametru)
             {
-                if ((returnZak = kopieZaku.Find(hledanyZak => hledanyZak.Skola == parametry[0] && hledanyZak.Kategorie == parametry[1])) != null)
+                if ((returnZak = kopieZaku.Find(hledanyZak => hledanyZak.Skola == parametry[0] && hledanyZak.DynKategorie == parametry[1])) != null)
                 {
                     zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].JeRozsazen = true;
                     kopieZaku.RemoveAt(kopieZaku.FindIndex(zak => zak.Id == returnZak.Id));
@@ -460,8 +472,8 @@ namespace SediM
             foreach (Zak zak in kopieZaku)
             {
                 // Vloží novou kombinaci pokud se nenachází již v listu
-                if (unikatniKategorieSkoly.Find(parametry => parametry[0] == zak.Skola && parametry[1] == zak.Kategorie) == null)
-                    unikatniKategorieSkoly.Add(new int[] { zak.Skola, zak.Kategorie });
+                if (unikatniKategorieSkoly.Find(parametry => parametry[0] == zak.Skola && parametry[1] == zak.DynKategorie) == null)
+                    unikatniKategorieSkoly.Add(new int[] { zak.Skola, zak.DynKategorie });
             }
 
             for (int r = 0; r < trida.Vyska; r++)
@@ -479,9 +491,6 @@ namespace SediM
             }
         }
 
-        // Osobně se mi moc toto řešení nelíbí jelikož modifikace kategorie dle mého
-        // není ideální metodou a pravděpodobně zavedu dodatečnou proměnnou
-        // ve třídě Zak i přesto, že to není příliš paměťově úsporné. - TODO
         private List<Zak> NastavListZaku()
         {
             List<Zak> serazeniZaci = new List<Zak>();
@@ -492,12 +501,12 @@ namespace SediM
             foreach (Zak zak in zaci)
             {
                 // Pokud se kategorie žáka nachází v proměnné, přeskoč na dalšího žáka
-                if (zaciDleKategorie.Exists(kategorie => zak.Kategorie == kategorie[0].Kategorie))
+                if (zaciDleKategorie.Exists(kategorie => zak.DynKategorie == kategorie[0].DynKategorie))
                     continue;
 
                 // Dočasně uloží veškeré nerozsazené žáky nevložené kategorie do proměnné
                 List<Zak> novaKategorie = new List<Zak>();
-                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.Kategorie == zak.Kategorie && !hledanyZak.JeRozsazen);
+                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.DynKategorie == zak.DynKategorie && !hledanyZak.JeRozsazen);
 
                 // Vytvoří kopii této kategorie
                 List<Zak> kopiekategorie = new List<Zak>();
@@ -529,7 +538,7 @@ namespace SediM
             {
                 // Procykluje každého žáka v kategorii
                 foreach (Zak zak in zaciDleKategorie[i])
-                    zak.Kategorie = i + 1;
+                    zak.DynKategorie = i + 1;
 
                 // Vloží žáky s modifikovanou kategorií (prioritou) do listu
                 serazeniZaci.AddRange(zaciDleKategorie[i]);

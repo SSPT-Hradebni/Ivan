@@ -5,6 +5,7 @@
         private int id;
         private string jmeno;
         private string prijmeni;
+        private int dynKategorie;
         private int kategorie;
         private int skola;
         private int trida;
@@ -17,7 +18,8 @@
         public int Id { get { return id; } }
         public string Jmeno { get { return jmeno; } }
         public string Prijmeni { get { return prijmeni; } }
-        public int Kategorie { get { return kategorie; } set { kategorie = value; } }
+        public int DynKategorie { get { return dynKategorie; } set { dynKategorie = value; } }
+        public int Kategorie { get { return kategorie; } }
         public int Skola { get { return skola; } set { skola = value; } }
         public int Trida { get { return trida; } set { trida = value; } }
         public bool JeRozsazen { get { return jeRozsazen; } set { jeRozsazen = value; } }
@@ -39,6 +41,7 @@
             this.id = id;
             this.jmeno = jmeno;
             this.prijmeni = prijmeni;
+            this.dynKategorie = kategorie;
             this.kategorie = kategorie;
             this.skola = skola;
             this.trida = trida;
