@@ -103,7 +103,7 @@ namespace SediM.Forms
 
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Trida trida = _tridy[cboxTridy.SelectedIndex];
+            Trida trida = _tridy[_tridy.FindIndex(hledanaTrida => hledanaTrida.Id == (long)cboxTridy.SelectedValue)];
             tboxNazev.Text = trida.Nazev;
             numSirka.Value = trida.Sirka;
             numVyska.Value = trida.Vyska;
@@ -114,15 +114,15 @@ namespace SediM.Forms
         {
             try
             {
-                int id = cboxTridy.SelectedIndex + 1;
+                long id = (long)cboxTridy.SelectedValue;
                 string nazev = tboxNazev.Text;
                 int sirka = (int)numSirka.Value;
                 int vyska = (int)numVyska.Value;
 
                 if (nazev == "")
-                {
                     throw new Exception("Název třídy nesmí být prázdný");
-                }
+                if (_tridy.Exists(hledanaTrida => hledanaTrida.Nazev == nazev && hledanaTrida.Id != id))
+                    throw new Exception("Název třídy se shoduje s další, již existující, třídou.");
 
                 SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET Nazev = @nazev, Sirka = @sirka, Vyska = @vyska WHERE TridaId = @id", connection);
 

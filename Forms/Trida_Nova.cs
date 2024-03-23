@@ -133,9 +133,9 @@ namespace SediM.Forms
                 int vyska = (int)numVyska.Value;
 
                 if (nazev == "")
-                {
                     throw new Exception("Název třídy nesmí být prázdný");
-                }
+                if (_tridy.Exists(hledanaTrida => hledanaTrida.Nazev == nazev))
+                    throw new Exception("Název třídy se shoduje s již existující třídou");
 
                 SqlCommand vytvorTridu = new SqlCommand($"INSERT INTO Tridy (Nazev, Sirka, Vyska, JeRozsazena) VALUES(@nazev, @sirka, @vyska, @jeRozsazena)", connection);
 

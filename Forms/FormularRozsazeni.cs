@@ -1,12 +1,10 @@
-using System.Drawing.Imaging;
-using SediM.Helpers;
-using System.Data;
-using System.Data.SqlClient;
 using iText.IO.Image;
 using iText.Kernel.Events;
 using iText.Kernel.Pdf;
 using iText.Layout;
-using iText.Layout.Element;
+using SediM.Helpers;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SediM
 {
@@ -118,7 +116,7 @@ namespace SediM
             if (cboxTridy.SelectedIndex == -1 && listbxVyplneneTridy.SelectedIndex == -1) return;
 
             // Získáme aktuální vybranou třídu
-            Trida? aktualniTrida = listbxVyplneneTridy.SelectedIndex != -1 ? vyplneneTridy[listbxVyplneneTridy.SelectedIndex] : tridy.Find(tridy => tridy.Id == (long)cboxTridy.SelectedValue);
+            Trida? aktualniTrida = listbxVyplneneTridy.SelectedIndex != -1 ? vyplneneTridy[listbxVyplneneTridy.SelectedIndex] : tridy.Find(hledanaTrida => hledanaTrida.Id == (long)cboxTridy.SelectedValue);
 
             // Vyvoláme metodu pro vykreslení míst
             VykresleniMist(g, aktualniTrida);
@@ -195,7 +193,7 @@ namespace SediM
                             new Font("Arial", 9),
                             svetlostBarvy > 0.65 ? Brushes.Black : Brushes.White,
                             pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuJmena.Width / 2,
-                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuJmena.Height/ 2);
+                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuJmena.Height / 2);
                         g.DrawString(
                             $" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}",
                             new Font("Arial", 10),
