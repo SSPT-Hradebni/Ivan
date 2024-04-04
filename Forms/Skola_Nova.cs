@@ -1,6 +1,7 @@
 ﻿using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SediM.Forms
 {
@@ -115,6 +116,19 @@ namespace SediM.Forms
                 if (ucitel == 0)
                 {
                     throw new Exception("Odpovědný učitel školy musí být platný");
+                }
+
+                // Vytvoření příkazu pro zjištění počtu škol se stejným názvem
+                SqlCommand vyberSkoly = new SqlCommand("SELECT COUNT(SkolaId) FROM Skoly WHERE Nazev = @nazev", connection);
+                vyberSkoly.Parameters.AddWithValue("@nazev", nazev);
+
+                // Získání počtu škol se stejným názvem
+                int pocetShodnychSkol = (int)vyberSkoly.ExecuteScalar();
+
+                // Pokud je počet větší než 0, škola již existuje, vyhodit výjimku
+                if (pocetShodnychSkol > 0)
+                {
+                    throw new Exception("Škola s tímto názvem již byla vytvořena");
                 }
 
                 SqlCommand vyvorSkolu = new SqlCommand($"INSERT INTO Skoly (Nazev, Ulice, CisloPopisne, PSC, Mesto, Ucitel) VALUES(@nazev, @ulice, @cp, @psc, @mesto, @ucitel)", connection);

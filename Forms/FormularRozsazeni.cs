@@ -1,13 +1,12 @@
-using iText.IO.Image;
-using iText.Kernel.Events;
-using iText.Kernel.Geom;
-using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas;
-using iText.Layout;
+using System.Drawing.Imaging;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
-using Point = System.Drawing.Point;
+using iText.IO.Image;
+using iText.Kernel.Events;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
 
 namespace SediM
 {
@@ -297,59 +296,70 @@ namespace SediM
         /// <param name="aktualniTrida">Aktuální vyplňovaná třída</param>
         private void VyplnTridu(int indexTridy, int sirka, int vyska, Trida aktualniTrida)
         {
-            List<Zak> kopieZaku = new List<Zak>();
-
-            // Překopíruje globální list žáků a přeskupí kategorie
-            // podle nejvyššího počtu žáků v kategorii
-            kopieZaku = NastavListZaku();
-
-            if (cboxRuleset.SelectedIndex == 0)
-                VyplnTriduKombinacemiRAR(aktualniTrida, kopieZaku);
-
-            string data = "";
-
-            // Opakuje pro každý řádek míst ve třídě
-            for (int r = 0; r < vyska; r++)
-            {
-                // Opakuje pro každé místo v řádku ve třídě
-                for (int s = 0; s < sirka; s++)
-                {
-                    // Přidá žáka podle kategorie pomocí funkce ziskejZaka příslušného rulesetu
-                    Zak zak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
-
-                    if (cboxRuleset.SelectedIndex == 0)
-                        zak = ZiskejZakaRAR(aktualniTrida, r, s, kopieZaku);
-                    else if (cboxRuleset.SelectedIndex == 1)
-                        // U numupdown je + 1 kvůli tomu, že kategorie číslujeme od 1
-                        zak = ZiskejZakaSPC2(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
-
-                    zak.Misto = mistoZaka;
-                    mistoZaka++;
-
-                    data += $"{zak.Misto}={zak.Id}";
-
-                    // Pokud nejsme na posledním místě, přidejte oddělovač
-                    if (!(r == vyska - 1 && s == sirka - 1))
-                    {
-                        data += ",";
-                    }
-
-                    tridyZaku[indexTridy][r, s] = zak;
-                }
-            }
-
             try
             {
+                List<Zak> kopieZaku = new List<Zak>();
+
+                // Překopíruje globální list žáků a přeskupí kategorie
+                // podle nejvyššího počtu žáků v kategorii
+                kopieZaku = NastavListZaku();
+
+                if (cboxRuleset.SelectedIndex == 0)
+                    VyplnTriduKombinacemiRAR(aktualniTrida, kopieZaku);
+
+                string data = "";
+
+                // Opakuje pro každý řádek míst ve třídě
+                for (int r = 0; r < vyska; r++)
+                {
+                    // Opakuje pro každé místo v řádku ve třídě
+                    for (int s = 0; s < sirka; s++)
+                    {
+                        // Přidá žáka podle kategorie pomocí funkce ziskejZaka příslušného rulesetu
+                        Zak zak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
+
+                        if (cboxRuleset.SelectedIndex == 0)
+                            zak = ZiskejZakaRAR(aktualniTrida, r, s, kopieZaku);
+                        else if (cboxRuleset.SelectedIndex == 1)
+                            // U numupdown je + 1 kvůli tomu, že kategorie číslujeme od 1
+                            zak = ZiskejZakaSPC2(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
+
+                        zak.Misto = mistoZaka;
+                        mistoZaka++;
+
+                        data += $"{zak.Misto}={zak.Id}";
+
+                        // Pokud nejsme na posledním místě, přidejte oddělovač
+                        if (!(r == vyska - 1 && s == sirka - 1))
+                        {
+                            data += ",";
+                        }
+
+                        tridyZaku[indexTridy][r, s] = zak;
+
+                        if (zak.Id > 0)
+                        {
+                            SqlCommand upravZaka = new SqlCommand("UPDATE Studenti SET Trida = @trida WHERE StudentId = @student", connection);
+
+                            upravZaka.Parameters.AddWithValue("@trida", aktualniTrida.Id);
+                            upravZaka.Parameters.AddWithValue("@student", zak.Id);
+
+                            int stav_zak = upravZaka.ExecuteNonQuery();
+                            // int stav_zak = 0;
+                        }
+                    }
+                }
+
                 SqlCommand vyplnTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @stav, DataRozsazeni = @data WHERE TridaId = @id", connection);
 
                 vyplnTridu.Parameters.AddWithValue("@stav", 1);
                 vyplnTridu.Parameters.AddWithValue("@data", data);
                 vyplnTridu.Parameters.AddWithValue("@id", aktualniTrida.Id);
 
-                int stav = vyplnTridu.ExecuteNonQuery();
-                // int stav = 0;
+                int stav_trida = vyplnTridu.ExecuteNonQuery();
+                // int stav_trida = 0;
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -390,10 +400,10 @@ namespace SediM
             {
                 if ((returnZak = kopieZaku.Find(hledanyZak => hledanyZak.Skola == parametry[0] && hledanyZak.DynKategorie == parametry[1])) != null)
                 {
-                    zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].JeRozsazen = true;
+                    zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].Trida = trida.Id;
                     kopieZaku.RemoveAt(kopieZaku.FindIndex(zak => zak.Id == returnZak.Id));
                     UpravMistaTridyRAR(trida, parametry, radek, sloupec);
-                    return returnZak;
+                    return zaci[kopieZaku.FindIndex(zak => zak.Id == returnZak.Id)];
                 }
             }
 
@@ -507,7 +517,7 @@ namespace SediM
 
                 // Dočasně uloží veškeré nerozsazené žáky nevložené kategorie do proměnné
                 List<Zak> novaKategorie = new List<Zak>();
-                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.DynKategorie == zak.DynKategorie && !hledanyZak.JeRozsazen);
+                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.DynKategorie == zak.DynKategorie && hledanyZak.Trida == 0);
 
                 // Vytvoří kopii této kategorie
                 List<Zak> kopiekategorie = new List<Zak>();
@@ -617,15 +627,16 @@ namespace SediM
 
         private void toolStripButton_Tisk_Click(object sender, EventArgs e)
         {
-            int sirkaDokumentu = 1080;
-            int vyskaDokumentu = 1920;
+            int width = panelVykresleniRozsazeni.Width;
+            int height = panelVykresleniRozsazeni.Height;
 
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "PDF files|*.pdf";
-            sfd.Title = "Exportovat jako PDF";
+            Bitmap bmp = new Bitmap(width, height);
+            panelVykresleniRozsazeni.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
 
-            if (sfd.ShowDialog() != DialogResult.OK)
-                return;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PDF files|*.pdf";
+            saveFileDialog.Title = "Exportovat jako PDF";
+            saveFileDialog.ShowDialog();
 
             Zak[,] vyplnenaTrida = tridyZaku[listbxVyplneneTridy.SelectedIndex];
 
@@ -637,17 +648,25 @@ namespace SediM
 
             PdfCanvas canvas = new PdfCanvas(doc.AddNewPage());
 
-            float sirka = velikostStrany.GetWidth();
-            float vyska = velikostStrany.GetHeight();
+                    using (var pdfWriter = new PdfWriter(saveFileDialog.FileName))
+                    {
+                        using (var pdfDocument = new PdfDocument(pdfWriter))
+                        {
+                            var pageSize = new iText.Kernel.Geom.PageSize(height, width); // Orientace na šířku
+                            pdfDocument.SetDefaultPageSize(pageSize);
 
             Size pocatekStrany = new Size((int)(sirka * 0.05), (int)(vyska * 0.05));
 
-            int pocetRadku = vyplnenaTrida.GetLength(0);
-            int pocetSloupcu = vyplnenaTrida.GetLength(1);
+                            PageRotationEventHandler eventHandler = new PageRotationEventHandler();
+                            pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, eventHandler);
 
-            // Vypočítá velikost jednoho místa na základě velikosti dimenzí
-            int mistoSirka = (int)((sirka * 0.9 - pocetSloupcu) / pocetSloupcu);
-            int mistoVyska = (int)((sirka * 0.9 - pocetRadku) / pocetRadku);
+                            var image = new iText.Layout.Element.Image(ImageDataFactory.Create(memoryStream.ToArray()));
+                            image.SetAutoScale(true);
+                            eventHandler.SetRotation(PORTRAIT);
+                            document.Add(image);
+                            document.Close();
+                        }
+                    }
 
             //canvas.SetColor(iText.Kernel.Colors.ColorConstants.BLACK, false);
             canvas.SetFillColorCmyk(0f, 0f, 0f, 0f);
