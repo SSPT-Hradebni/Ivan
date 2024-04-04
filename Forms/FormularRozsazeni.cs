@@ -632,14 +632,15 @@ namespace SediM
             PdfDocument doc = new PdfDocument(new PdfWriter(sfd.FileName));
 
             PageSize velikostStrany = new PageSize(sirkaDokumentu, vyskaDokumentu);
-            doc.SetDefaultPageSize(velikostStrany);
+            doc.SetDefaultPageSize(velikostStrany.Rotate());
+
 
             PdfCanvas canvas = new PdfCanvas(doc.AddNewPage());
 
             float sirka = velikostStrany.GetWidth();
             float vyska = velikostStrany.GetHeight();
 
-            Point pocatekStrany = new Point((int)(sirka * 0.05), (int)(vyska * 0.05));
+            Size pocatekStrany = new Size((int)(sirka * 0.05), (int)(vyska * 0.05));
 
             int pocetRadku = vyplnenaTrida.GetLength(0);
             int pocetSloupcu = vyplnenaTrida.GetLength(1);
@@ -648,21 +649,29 @@ namespace SediM
             int mistoSirka = (int)((sirka * 0.9 - pocetSloupcu) / pocetSloupcu);
             int mistoVyska = (int)((sirka * 0.9 - pocetRadku) / pocetRadku);
 
-            canvas.SetFillColor(iText.Kernel.Colors.ColorConstants.WHITE);
+            //canvas.SetColor(iText.Kernel.Colors.ColorConstants.BLACK, false);
+            canvas.SetFillColorCmyk(0f, 0f, 0f, 0f);
+            canvas.SetStrokeColorCmyk(1f,1f,1f,1f);
 
             for (int radek = 0; radek < pocetRadku; radek++)
             {
                 for (int sloupec = 0; sloupec < pocetSloupcu; sloupec++)
                 {
-                    /*canvas.Rectangle(
-                        sloupec*mistoSirka+sloupec,
-                        );*/
+                    canvas.Rectangle(
+                        pocatekStrany.Width+sloupec*mistoSirka+sloupec,
+                        pocatekStrany.Height+radek*mistoVyska+radek,
+                        mistoSirka,
+                        mistoVyska
+                        );
+                    canvas.Stroke();
                 }
             }
 
             canvas.Fill();
 
             doc.Close();
+
+            MessageBox.Show("Panel byl uložen jako PDF.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
