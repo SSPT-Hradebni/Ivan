@@ -1,15 +1,9 @@
-using System.Drawing.Imaging;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
-using iText.IO.Image;
-using iText.Kernel.Events;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using iText.Kernel.Geom;
-using Rectangle = System.Drawing.Rectangle;
-using iText.Kernel.Pdf.Canvas;
 using Point = System.Drawing.Point;
 
 namespace SediM
@@ -266,11 +260,9 @@ namespace SediM
             // Získáme aktuální vybranou třídu
             Trida? aktualniTrida = tridy.Find(tridy => tridy.Id == (int)cboxTridy.SelectedValue);
 
-            // Vytvoří 2D pole objektů Zak - naši třídu
-            tridyZaku.Add(new Zak[aktualniTrida.Vyska, aktualniTrida.Sirka]);
-
             // Vyplní právě přidanou třídu žáky
-            VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, aktualniTrida);
+            if (VyplnTridu(aktualniTrida.Sirka, aktualniTrida.Vyska, aktualniTrida) == -1)
+                return;
 
             aktualniTrida.JeRozsazena = true;
 
@@ -298,7 +290,7 @@ namespace SediM
         /// <param name="vyska">Výška třídy v místech</param>
         /// <param name="kopieZaku">List, který je kopií globálního listu zaci, vyžadován funkcí ZiskejZaka.</param>
         /// <param name="aktualniTrida">Aktuální vyplňovaná třída</param>
-        private void VyplnTridu(int indexTridy, int sirka, int vyska, Trida aktualniTrida)
+        private int VyplnTridu(int sirka, int vyska, Trida aktualniTrida)
         {
             try
             {
@@ -308,10 +300,24 @@ namespace SediM
                 // podle nejvyššího počtu žáků v kategorii
                 kopieZaku = NastavListZaku();
 
+                if (kopieZaku.Count == 0)
+                {
+                    MessageBox.Show(
+                        "Nebyl nalezen dostatečný počet žáků k rozsazení. Učebna nebude vyplněna.",
+                        "Upozornění",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return -1;
+                }
+
+                // Vytvoří 2D pole objektů Zak - naši třídu
+                tridyZaku.Add(new Zak[aktualniTrida.Vyska, aktualniTrida.Sirka]);
+
                 if (cboxRuleset.SelectedIndex == 0)
                     VyplnTriduKombinacemiRAR(aktualniTrida, kopieZaku);
 
                 string data = "";
+                int indexTridy = tridyZaku.Count - 1;
 
                 // Opakuje pro každý řádek míst ve třídě
                 for (int r = 0; r < vyska; r++)
@@ -362,10 +368,12 @@ namespace SediM
 
                 int stav_trida = vyplnTridu.ExecuteNonQuery();
                 // int stav_trida = 0;
+                return 0;
             }
             catch (Exception ex)
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
             }
         }
 
@@ -475,7 +483,7 @@ namespace SediM
             foreach (Zak zak in zaci)
             {
                 // Pokud se kategorie žáka nachází v proměnné, přeskoč na dalšího žáka
-                if (zaciDleKategorie.Exists(kategorie => zak.DynKategorie == kategorie[0].DynKategorie))
+                if (zaciDleKategorie.Exists(kategorie => zak.DynKategorie == kategorie[0].DynKategorie) || zak.Trida != 0)
                     continue;
 
                 // Dočasně uloží veškeré nerozsazené žáky nevložené kategorie do proměnné
