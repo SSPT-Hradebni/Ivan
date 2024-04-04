@@ -56,6 +56,7 @@
             tboxJmeno.Name = "tboxJmeno";
             tboxJmeno.Size = new Size(261, 23);
             tboxJmeno.TabIndex = 1;
+            tboxJmeno.TextChanged += tboxJmeno_TextChanged;
             // 
             // tboxPrijmeni
             // 
