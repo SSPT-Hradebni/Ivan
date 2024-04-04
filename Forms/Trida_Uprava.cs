@@ -43,7 +43,7 @@ namespace SediM.Forms
 
             cboxTridy.ValueMember = "Id";
             cboxTridy.DisplayMember = "Nazev";
-            cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
+            cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
         }
 
         private void numSirka_ValueChanged(object sender, EventArgs e)
@@ -63,31 +63,29 @@ namespace SediM.Forms
             // Obrys třídy
             g.DrawRectangle(
                 Pens.Gray,
-                0, 0, // Počáteční bod (vlevo nahoře)
-                panelEditClassroom.Width - 1, panelEditClassroom.Height - 1); // Koncový bod (vpravo dole)
+                0, 0,
+                panelEditClassroom.Width - 1, panelEditClassroom.Height - 1);
+
             // Tabule
             g.FillRectangle(
                 Brushes.DarkGreen,
-                0, panelEditClassroom.Height / 4, // Počáteční bod (0% od levé stěny, 25% od horní stěny)
-                (int)(panelEditClassroom.Width * 0.02), // Šířka - 2%
-                panelEditClassroom.Height / 2); // Délka (výška) - 50%
+                panelEditClassroom.Width / 4, (int)(panelEditClassroom.Height * 0.98),
+                panelEditClassroom.Width / 2, (int)(panelEditClassroom.Height * 0.02));
+
             // Katedra
             g.FillRectangle(
                 Brushes.Black,
-                (int)(panelEditClassroom.Height * 0.1), // Roh katedry (10% od levé stěny)
-                panelEditClassroom.Height - (int)(panelEditClassroom.Height * 0.2), // Roh katedry (20% od dolní stěny)
-                (int)(panelEditClassroom.Height * 0.15), // Šířka - 15%
-                (int)(panelEditClassroom.Width * 0.2)); // Délka (výška) - 20%
+                (int)(panelEditClassroom.Width * 0.7), (int)(panelEditClassroom.Height * 0.75),
+                (int)(panelEditClassroom.Width * 0.3), (int)(panelEditClassroom.Height * 0.15));
 
-            // Místa pro studenty
-            // Poznámka: plocha pro vykreslování míst studentů je snížena o 5% od stěn a katedry
-            Point pocatekPlochyMist = new Point((int)(panelEditClassroom.Width * 0.2), (int)(panelEditClassroom.Height * 0.05));
-            // Vypočítá podíl rozdílu šířky plochy pro vykreslení míst a hodnoty numericUpDown
-            // pro počet míst ve třídě do šířky hodnotou numericUpDown ... do šířky
-            int mistoSirka = (int)((panelEditClassroom.Width * 0.75 - (double)numSirka.Value) / (double)numSirka.Value);
+            // Vytvořen "počáteční" bod pro vykreslování míst
+            Point pocatekPlochyMist = new Point(
+                (int)(panelEditClassroom.Width * 0.05),
+                (int)(panelEditClassroom.Height * 0.05));
 
-            // Stejný princip ale pro počet míst ve třídě do výšky
-            int mistoVyska = (int)((panelEditClassroom.Height * 0.9 - (double)numVyska.Value) / (double)numVyska.Value);
+            // Vypočítá velikost jednoho místa na základě velikosti dimenzí
+            int mistoSirka = (int)((panelEditClassroom.Width * 0.9) / (double)numSirka.Value);
+            int mistoVyska = (int)((panelEditClassroom.Height * 0.65) / (double)numVyska.Value);
 
             for (int r = 0; r < numVyska.Value; r++) // r - řádek
             {
@@ -105,7 +103,7 @@ namespace SediM.Forms
 
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Trida trida = _tridy[cboxTridy.SelectedIndex];
+            Trida trida = _tridy[_tridy.FindIndex(hledanaTrida => hledanaTrida.Id == (long)cboxTridy.SelectedValue)];
             tboxNazev.Text = trida.Nazev;
             numSirka.Value = trida.Sirka;
             numVyska.Value = trida.Vyska;
@@ -116,15 +114,15 @@ namespace SediM.Forms
         {
             try
             {
-                int id = cboxTridy.SelectedIndex + 1;
+                long id = (long)cboxTridy.SelectedValue;
                 string nazev = tboxNazev.Text;
                 int sirka = (int)numSirka.Value;
                 int vyska = (int)numVyska.Value;
 
                 if (nazev == "")
-                {
                     throw new Exception("Název třídy nesmí být prázdný");
-                }
+                if (_tridy.Exists(hledanaTrida => hledanaTrida.Nazev == nazev && hledanaTrida.Id != id))
+                    throw new Exception("Název třídy se shoduje s další, již existující, třídou.");
 
                 SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET Nazev = @nazev, Sirka = @sirka, Vyska = @vyska WHERE TridaId = @id", connection);
 

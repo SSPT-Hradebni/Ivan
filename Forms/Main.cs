@@ -186,41 +186,6 @@ namespace SediM
             }
         }
 
-        /// <summary>
-        /// Toolstrip pro otevření okna pro vytvoření nového studenta
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void novyStudentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Zak_Novy okno = new Zak_Novy(skoly, zaci);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            NactiData();
-        }
-
-        private void upravitStudentaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Zak_Upravit okno = new Zak_Upravit(skoly, zaci);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            NactiData();
-        }
-
-        private void seznamStudentuToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Zak_Seznam okno = new Zak_Seznam(zaci);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            NactiData();
-        }
-
         private void novyUcitelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainHelp.JesteNeni("Vytvořit nového učitele");
@@ -298,7 +263,37 @@ namespace SediM
             mainHelp.JesteNeni("Zobrazení rozsazených tříd");
         }
 
-        private void picbox_StudentNovy_Click(object sender, EventArgs e)
+        private void novyZakToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zak_Novy okno = new Zak_Novy(skoly, zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            NactiData();
+        }
+
+        private void upravitZakaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zak_Upravit okno = new Zak_Upravit(skoly, zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            NactiData();
+        }
+
+        private void seznamZakuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zak_Seznam okno = new Zak_Seznam(zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            NactiData();
+        }
+
+        private void picbox_NovyZak_Click(object sender, EventArgs e)
         {
             DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
 

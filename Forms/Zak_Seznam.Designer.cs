@@ -29,86 +29,81 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Zak_Seznam));
-            this.dataviewStudenti = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.jmeno_prijmeni = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kategorie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.skola = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataviewStudenti)).BeginInit();
-            this.SuspendLayout();
+            dataviewZaci = new DataGridView();
+            id = new DataGridViewTextBoxColumn();
+            jmeno_prijmeni = new DataGridViewTextBoxColumn();
+            kategorie = new DataGridViewTextBoxColumn();
+            skola = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dataviewZaci).BeginInit();
+            SuspendLayout();
             // 
-            // dataviewStudenti
+            // dataviewZaci
             // 
-            this.dataviewStudenti.AllowUserToAddRows = false;
-            this.dataviewStudenti.AllowUserToDeleteRows = false;
-            this.dataviewStudenti.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataviewStudenti.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            this.dataviewStudenti.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataviewStudenti.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
-            this.jmeno_prijmeni,
-            this.kategorie,
-            this.skola});
-            this.dataviewStudenti.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataviewStudenti.Location = new System.Drawing.Point(0, 0);
-            this.dataviewStudenti.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dataviewStudenti.Name = "dataviewStudenti";
-            this.dataviewStudenti.ReadOnly = true;
-            this.dataviewStudenti.RowHeadersWidth = 51;
-            this.dataviewStudenti.RowTemplate.Height = 25;
-            this.dataviewStudenti.Size = new System.Drawing.Size(800, 450);
-            this.dataviewStudenti.TabIndex = 5;
+            dataviewZaci.AllowUserToAddRows = false;
+            dataviewZaci.AllowUserToDeleteRows = false;
+            dataviewZaci.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataviewZaci.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            dataviewZaci.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataviewZaci.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola });
+            dataviewZaci.Dock = DockStyle.Fill;
+            dataviewZaci.Location = new Point(0, 0);
+            dataviewZaci.Margin = new Padding(3, 4, 3, 4);
+            dataviewZaci.Name = "dataviewZaci";
+            dataviewZaci.ReadOnly = true;
+            dataviewZaci.RowHeadersWidth = 51;
+            dataviewZaci.RowTemplate.Height = 25;
+            dataviewZaci.Size = new Size(800, 450);
+            dataviewZaci.TabIndex = 5;
             // 
             // id
             // 
-            this.id.HeaderText = "ID";
-            this.id.MinimumWidth = 6;
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
+            id.HeaderText = "ID";
+            id.MinimumWidth = 6;
+            id.Name = "id";
+            id.ReadOnly = true;
             // 
             // jmeno_prijmeni
             // 
-            this.jmeno_prijmeni.HeaderText = "Jméno a přijmení";
-            this.jmeno_prijmeni.MinimumWidth = 6;
-            this.jmeno_prijmeni.Name = "jmeno_prijmeni";
-            this.jmeno_prijmeni.ReadOnly = true;
+            jmeno_prijmeni.HeaderText = "Jméno a přijmení";
+            jmeno_prijmeni.MinimumWidth = 6;
+            jmeno_prijmeni.Name = "jmeno_prijmeni";
+            jmeno_prijmeni.ReadOnly = true;
             // 
             // kategorie
             // 
-            this.kategorie.HeaderText = "Kategorie";
-            this.kategorie.MinimumWidth = 6;
-            this.kategorie.Name = "kategorie";
-            this.kategorie.ReadOnly = true;
+            kategorie.HeaderText = "Kategorie";
+            kategorie.MinimumWidth = 6;
+            kategorie.Name = "kategorie";
+            kategorie.ReadOnly = true;
             // 
             // skola
             // 
-            this.skola.HeaderText = "Škola";
-            this.skola.MinimumWidth = 6;
-            this.skola.Name = "skola";
-            this.skola.ReadOnly = true;
+            skola.HeaderText = "Škola";
+            skola.MinimumWidth = 6;
+            skola.Name = "skola";
+            skola.ReadOnly = true;
             // 
             // Zak_Seznam
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dataviewStudenti);
-            this.HelpButton = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "Zak_Seznam";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Seznam studentů";
-            this.Load += new System.EventHandler(this.Zak_Seznam_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataviewStudenti)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(dataviewZaci);
+            HelpButton = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "Zak_Seznam";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Seznam žáků";
+            Load += Zak_Seznam_Load;
+            ((System.ComponentModel.ISupportInitialize)dataviewZaci).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dataviewStudenti;
+        private DataGridView dataviewZaci;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn jmeno_prijmeni;
         private DataGridViewTextBoxColumn kategorie;

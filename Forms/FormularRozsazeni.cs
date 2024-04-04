@@ -26,12 +26,6 @@ namespace SediM
         // TODO/FIXME: Když uživatel zavře a znovu otevře tento form bez ukončení aplikace (formulář Main)
         // tak zůstanou nastaveny globální proměnné. To je nežádoucí.
 
-        // List polí barev. Počet barev v poli na daném indexu odpovídá počtu kategorií vyplněné třídy
-        private List<SolidBrush> barvyKategorii = new List<SolidBrush>();
-
-        // Uchovává počet kategorií pro každou vyplňovanou třídu.
-        private List<int> pocetKategoriiNaTridu = new List<int>();
-
         // List vyplněných tříd žáky. Každý index dané položky v listu odpovídá indexu vyplněné třídy v listboxu vyplněných tříd
         private List<Zak[,]> tridyZaku = new List<Zak[,]>();
         private List<Trida> tridy = new List<Trida>();
@@ -74,9 +68,11 @@ namespace SediM
             // Automaticky zvolí jediný doposud vyřešený algoritmus - Knight (Jezdec)
             combobxAlgoritmus.SelectedIndex = 0;
             combobxAlgoritmus.Enabled = false;
-            // Zvolí ruleset SPC&SPC protože je jediný, který je ve funkčním stavu
+
+            // Zvolí ruleset RAR a zablokuje možnost změny
             cboxRuleset.SelectedIndex = 0;
             cboxRuleset.Enabled = false;
+            numupdownKategoriiNaTridu.Enabled = false;
         }
 
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
@@ -122,13 +118,13 @@ namespace SediM
             if (cboxTridy.SelectedIndex == -1 && listbxVyplneneTridy.SelectedIndex == -1) return;
 
             // Získáme aktuální vybranou třídu
-            Trida aktualniTrida = ZiskejAktualniTridu();
+            Trida? aktualniTrida = listbxVyplneneTridy.SelectedIndex != -1 ? vyplneneTridy[listbxVyplneneTridy.SelectedIndex] : tridy.Find(hledanaTrida => hledanaTrida.Id == (long)cboxTridy.SelectedValue);
 
             // Vyvoláme metodu pro vykreslení míst
             VykresleniMist(g, aktualniTrida);
         }
 
-        private void VykresleniMist(Graphics g, Trida aktualniTrida)
+        private void VykresleniMist(Graphics g, Trida? aktualniTrida)
         {
             // Odstraní veškeré studenty z listboxu aby se nepřidávali přes sebe
             listbxSeznamStudentu.Items.Clear();
@@ -146,21 +142,27 @@ namespace SediM
 
             int indexVyplneneTridy = listbxVyplneneTridy.SelectedIndex;
 
+            // Hodnoty, které se opakovaně přenastaví ve for cyklech jsou-li třeba
+            Zak zak = null;
+            bool vyplnitBarevne = false;
+
             // Opakuje pro každý řádek míst ve třídě
             for (int r = 0; r < aktualniTrida.Vyska; r++)
             {
                 // Opakuje pro každé místo v řádku ve třídě
                 for (int s = 0; s < aktualniTrida.Sirka; s++)
                 {
-                    // Pravda pokud máme zvolenou třídu a ID žáka na daném místě není -1 (není prázdné místo)
-                    bool vyplnitBarevne = indexVyplneneTridy != -1
-                        ? tridyZaku[indexVyplneneTridy][r, s].Id != -1
-                        : false;
+                    if (indexVyplneneTridy != -1)
+                    {
+                        // Aktuální objekt žáka, ze kterého získáváme potřebná data
+                        zak = tridyZaku[indexVyplneneTridy][r, s];
+                        vyplnitBarevne = true;
+                    }
 
                     g.FillRectangle(
                         ZiskejBarvuDleKategorie(
                             vyplnitBarevne
-                                ? (r * 2 + s) % pocetKategoriiNaTridu[indexVyplneneTridy]
+                                ? zak.Kategorie
                                 : -1),
                         pocatekPlochyMist.X + s * mistoSirka + s,
                         pocatekPlochyMist.Y + r * mistoVyska + r,
@@ -168,62 +170,45 @@ namespace SediM
 
                     if (indexVyplneneTridy != -1)
                     {
+                        string jmenoZaka =
+                            zak.CeleJmeno == "MÍSTO PRÁZDNÉ"
+                            ? "PRÁZDNÉ MÍSTO"
+                            : zak.CeleJmeno;
+
                         // Zjistí velikost vykreslovaného řetězce
-                        SizeF velikostCisla = g.MeasureString(
-                            tridyZaku[indexVyplneneTridy][r, s].Misto.ToString(),
-                            new Font("Arial", 10));
+                        SizeF velikostTextuMista = g.MeasureString($"{zak.Misto}\r\n \r\n ", new Font("Arial", 10));
+                        SizeF velikostTextuJmena = g.MeasureString($" \r\n{jmenoZaka}\r\n ", new Font("Arial", 9));
+                        SizeF velikostTextuKategorieASkoly = g.MeasureString($" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}", new Font("Arial", 10));
 
                         // kontrast textu s barvou pozadí buňky
-                        float barva = ZiskejBarvuDleKategorie(vyplnitBarevne ? (r * 2 + s) % pocetKategoriiNaTridu[indexVyplneneTridy] : -1).Color.GetBrightness();
+                        float svetlostBarvy = ZiskejBarvuDleKategorie(vyplnitBarevne ? zak.Kategorie : -1).Color.GetBrightness();
 
                         // Vykreslí řetězec na střed buňky (místa)
                         g.DrawString(
-                            $"{tridyZaku[indexVyplneneTridy][r, s].Misto}\r\n{mainHelp.CisloKategorieNaRimske(tridyZaku[indexVyplneneTridy][r, s].Kategorie)}",
+                            $"{zak.Misto}\r\n \r\n ",
                             new Font("Arial", 10),
-                            barva > 0.65 ? Brushes.Black : Brushes.White,
-                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostCisla.Width / 2,
-                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostCisla.Height / 2);
+                            svetlostBarvy > 0.65 ? Brushes.Black : Brushes.White,
+                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuMista.Width / 2,
+                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuMista.Height / 2);
+                        g.DrawString(
+                            $" \r\n{jmenoZaka}\r\n ",
+                            new Font("Arial", 9),
+                            svetlostBarvy > 0.65 ? Brushes.Black : Brushes.White,
+                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuJmena.Width / 2,
+                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuJmena.Height / 2);
+                        g.DrawString(
+                            $" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}",
+                            new Font("Arial", 10),
+                            svetlostBarvy > 0.65 ? Brushes.Black : Brushes.White,
+                            pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuKategorieASkoly.Width / 2,
+                            pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuKategorieASkoly.Height / 2);
 
                         // Přidá žáka včetně jeho místa do listboxu seznamu studentů ve třídě
-                        string prazdnyNeboJmeno =
-                            tridyZaku[indexVyplneneTridy][r, s].CeleJmeno == "MÍSTO PRÁZDNÉ"
-                            ? "PRÁZDNÉ MÍSTO"
-                            : tridyZaku[indexVyplneneTridy][r, s].CeleJmeno;
-
                         listbxSeznamStudentu.Items.Add(
-                            $"{tridyZaku[indexVyplneneTridy][r, s].Misto} - " +
-                            $"{prazdnyNeboJmeno}");
+                            $"{zak.Misto} - " +
+                            $"{jmenoZaka}");
                     }
                 }
-            }
-        }
-        /// <summary>
-        /// Vygeneruje dodatečné barvy, obsahuje-li list barvyKategorii nižší počet barev, 
-        /// než je zadáno počtem kategorií na třídu v numericUpDown.
-        /// Barvy se generují v rozpětí 0 až 64 v intervalu uzavřeném o obou stran z 
-        /// důvodu zvýšení kontrastu při vykreslování jednotlivých míst. - TODO: Dopsat popisky
-        /// </summary>
-        private void AktualizujListBarev()
-        {
-            Random rng = new Random();
-
-            while (barvyKategorii.Count < numupdownKategoriiNaTridu.Value)
-            {
-                // Rozsah randomu je omezen na <0,65) [prakticky však <0,64>] (namísto <0,256)),
-                // kvůli zvýšení kontrastu mezi barvami
-                int r = rng.Next(0, 64 + 1) * 4;
-                int g = rng.Next(0, 64 + 1) * 4;
-                int b = rng.Next(0, 64 + 1) * 4;
-
-                SolidBrush sb = new SolidBrush(
-                    Color.FromArgb(
-                        r == 256 ? r - 1 : r,
-                        g == 256 ? g - 1 : g,
-                        b == 256 ? b - 1 : b));
-
-                // Přeskočí přidání duplicitní barvy
-                if (barvyKategorii.Exists(barva => barva.Color == sb.Color)) continue;
-                barvyKategorii.Add(sb);
             }
         }
         /// <summary>
@@ -235,10 +220,32 @@ namespace SediM
         {
             switch (kategorie)
             {
-                case -1:
-                    return new SolidBrush(Color.FromArgb(100, 100, 100));
+                case 1:
+                    return new SolidBrush(Color.LightGreen);
+                case 2:
+                    return new SolidBrush(Color.Purple);
+                case 3:
+                    return new SolidBrush(Color.Firebrick);
+                case 4:
+                    return new SolidBrush(Color.ForestGreen);
+                case 5:
+                    return new SolidBrush(Color.Indigo);
+                case 6:
+                    return new SolidBrush(Color.Maroon);
+                case 7:
+                    return new SolidBrush(Color.PaleVioletRed);
+                case 8:
+                    return new SolidBrush(Color.SaddleBrown);
+                case 9:
+                    return new SolidBrush(Color.RoyalBlue);
+                case 10:
+                    return new SolidBrush(Color.MediumTurquoise);
+                case 11:
+                    return new SolidBrush(Color.MediumSeaGreen);
+                case 12:
+                    return new SolidBrush(Color.MidnightBlue);
                 default:
-                    return barvyKategorii[kategorie];
+                    return new SolidBrush(Color.FromArgb(100, 100, 100));
             }
         }
 
@@ -253,34 +260,15 @@ namespace SediM
         private void NastavParametryProVyplneni(int selectedIndex)
         {
             // Získáme aktuální vybranou třídu
-            Trida aktualniTrida = ZiskejAktualniTridu();
+            Trida? aktualniTrida = tridy.Find(tridy => tridy.Id == (long)cboxTridy.SelectedValue);
 
             // Vytvoří 2D pole objektů Zak - naši třídu
             tridyZaku.Add(new Zak[aktualniTrida.Vyska, aktualniTrida.Sirka]);
 
-            // Rozšíří list barev je-li třeba přidat další barvy
-            if ((int)numupdownKategoriiNaTridu.Value > barvyKategorii.Count)
-                AktualizujListBarev();
+            // Vyplní právě přidanou třídu žáky
+            VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, aktualniTrida);
 
-            // Rozsazení podle pravidel SPC&SPC (Single pupil's category and school per classroom) - kdyžtak přejmenuju
-            if (cboxRuleset.SelectedIndex == 0)
-            {
-                pocetKategoriiNaTridu.Add((int)numupdownKategoriiNaTridu.Value);
-
-                // Překopíruje globální list žáků a přeskupí kategorie
-                // podle nejvyššího počtu žáků v kategorii
-                List<Zak> kopieZaku = NastavListZaku();
-
-                // Vyplní právě přidanou třídu žáky
-                VyplnTridu(tridyZaku.Count - 1, aktualniTrida.Sirka, aktualniTrida.Vyska, kopieZaku, aktualniTrida);
-            }
-            // Rozsazení podle HvAR
-            else if (cboxRuleset.SelectedIndex == 1)
-            {
-                // TODO - Rozsazení podle HvAR
-            }
-
-            aktualniTrida.Rozsazena = true;
+            aktualniTrida.JeRozsazena = true;
 
             // Přesune zvolenou třídu mezi vyplněné třídy
             listbxVyplneneTridy.Items.Add(cboxTridy.Items[selectedIndex]);
@@ -290,7 +278,7 @@ namespace SediM
             tridy.Remove(aktualniTrida);
             cboxTridy.DataSource = null; // při DataSource nejde vymazat cbox, proto nastaveno teď na null
             cboxTridy.Items.Clear();
-            cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
+            cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
 
             // "Překlikne" na nově vyplněnou třídu
             cboxTridy.SelectedIndex = -1;
@@ -299,15 +287,24 @@ namespace SediM
 
         /// <summary>
         /// Procykluje každé místo ve třídě a přiradí do dvourozměrného pole představující třídu žáka, 
-        /// který je vrácen funkcí ZiskejZaka, algoritmem Knight.
+        /// který je vrácen funkcí ZiskejZaka, algoritmem Knight, zvoleným rulesetem.
         /// </summary>
         /// <param name="indexTridy">Index určující právě vyplňovanou třídu</param>
         /// <param name="sirka">Šířka třídy v místech</param>
         /// <param name="vyska">Výška třídy v místech</param>
         /// <param name="kopieZaku">List, který je kopií globálního listu zaci, vyžadován funkcí ZiskejZaka.</param>
         /// <param name="aktualniTrida">Aktuální vyplňovaná třída</param>
-        private void VyplnTridu(int indexTridy, int sirka, int vyska, List<Zak> kopieZaku, Trida aktualniTrida)
+        private void VyplnTridu(int indexTridy, int sirka, int vyska, Trida aktualniTrida)
         {
+            List<Zak> kopieZaku = new List<Zak>();
+
+            // Překopíruje globální list žáků a přeskupí kategorie
+            // podle nejvyššího počtu žáků v kategorii
+            kopieZaku = NastavListZaku();
+
+            if (cboxRuleset.SelectedIndex == 0)
+                VyplnTriduKombinacemiRAR(aktualniTrida, kopieZaku);
+
             string data = "";
 
             // Opakuje pro každý řádek míst ve třídě
@@ -316,9 +313,17 @@ namespace SediM
                 // Opakuje pro každé místo v řádku ve třídě
                 for (int s = 0; s < sirka; s++)
                 {
-                    // Přidá žáka podle kategorie pomocí funkce ziskejZaka - tento řádek
-                    // je implementovám aby řadil žáky pouze podle aloritmu Knight!
-                    Zak zak = ZiskejZaka(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
+                    // Přidá žáka podle kategorie pomocí funkce ziskejZaka příslušného rulesetu
+                    Zak zak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
+
+                    if (cboxRuleset.SelectedIndex == 0)
+                        zak = ZiskejZakaRAR(aktualniTrida, r, s, kopieZaku);
+                    else if (cboxRuleset.SelectedIndex == 1)
+                        // U numupdown je + 1 kvůli tomu, že kategorie číslujeme od 1
+                        zak = ZiskejZakaSPC2(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
+
+                    zak.Misto = mistoZaka;
+                    mistoZaka++;
 
                     data += $"{zak.Misto}={zak.Id}";
 
@@ -358,27 +363,134 @@ namespace SediM
         /// <param name="kategorie">Kategorie, který musí hledaný žák mít.</param>
         /// <param name="kopieZaku">List, ze kterého se hledá kandidát splňující požadavek kategorie.</param>
         /// <returns>Žák, který splňuje požadavek kategorie, jinak instanci Zak se jménem "PRÁZDNÉ MÍSTO".</returns>
-        private Zak ZiskejZaka(int kategorie, List<Zak> kopieZaku)
+        private Zak ZiskejZakaSPC2(int kategorie, List<Zak> kopieZaku)
         {
             // Vytvoříme žáka returnZak s jménem "PRÁZDNÉ MÍSTO" pro případ, že by
             // for cyklus došel do konce bez přenastavení této proměnné
-            Zak returnZak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
+            Zak returnZak;
 
-            if (kopieZaku.Find(zak => zak.Kategorie == kategorie) != null)
+            if ((returnZak = kopieZaku.Find(zak => zak.DynKategorie == kategorie)) != null)
             {
-                returnZak = kopieZaku.Find(zak => zak.Kategorie == kategorie);
                 zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].JeRozsazen = true;
-                kopieZaku.RemoveAll(zak => zak.Kategorie == kategorie && zak.Skola == returnZak.Skola);
+                kopieZaku.RemoveAll(zak => zak.DynKategorie == kategorie && zak.Skola == returnZak.Skola);
+                return returnZak;
             }
 
-            returnZak.Misto = mistoZaka;
-            mistoZaka++;
-            return returnZak;
+            return new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
         }
 
-        // Osobně se mi moc toto řešení nelíbí jelikož modifikace kategorie dle mého
-        // není ideální metodou a pravděpodobně zavedu dodatečnou proměnnou
-        // ve třídě Zak i přesto, že to není příliš paměťově úsporné. - TODO
+        private Zak ZiskejZakaRAR(Trida trida, int radek, int sloupec, List<Zak> kopieZaku)
+        {
+            Zak returnZak;
+
+            List<int[]> listParametru = trida.PrijatelneKategorieASkolyMista[radek, sloupec];
+            // Prohledá dostupné žáky zda-li nemají vhodnou kategorii a třídu
+            foreach (int[] parametry in listParametru)
+            {
+                if ((returnZak = kopieZaku.Find(hledanyZak => hledanyZak.Skola == parametry[0] && hledanyZak.DynKategorie == parametry[1])) != null)
+                {
+                    zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].JeRozsazen = true;
+                    kopieZaku.RemoveAt(kopieZaku.FindIndex(zak => zak.Id == returnZak.Id));
+                    UpravMistaTridyRAR(trida, parametry, radek, sloupec);
+                    return returnZak;
+                }
+            }
+
+
+            return new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
+        }
+
+        private void UpravMistaTridyRAR(Trida trida, int[] parametry, int radek, int sloupec)
+        {
+            /*
+             * Musí se upravit místa na souřadnicích:
+             *                                     [radek-2, sloupec]
+             *                [radek-1, sloupec-1] [radek-1, sloupec] [radek-1, sloupec+1]
+             *  [radek, sloupec-2] [radek, sloupec-1] [MÍSTO ŽÁKA] [radek, sloupec+1] [radek, sloupec+2]
+             *                [radek+1, sloupec-1] [radek+1, sloupec] [radek+1, sloupec+1]
+             *                                     [radek+2, sloupec]
+             *  
+             *  Pokud jsou v jedné z buněk proměnné radek nebo sloupec nižší než 0, 
+             *  přeskočíme úpravu této buňnky jelikož zasahuje mimo třídu (buňka se nenachází ve třídě)
+             *  
+             *  V těchto buňkách odstraníme veškeré kombinace, které obsahují třídu či kategorii 
+             *  totožnou s třídou či kategorií umístěného žáka
+             *  
+             *  Ve všech ostatních buňkách odstraníme přesnou kombinaci třídy a kategorie (můžeme začít na místě umístěného žáka
+             *  pro drobné urychlení)
+             *
+
+             *
+             * TODO - upraví místa podle pravidel
+             * NOTE: bylo mi řečeno že žák určité kategorie a školy múže být pouze jeden na třídu - upravit dvojice kombinací 
+             * pro každé místo ve třídě
+             *
+
+             * Když tak přemýšlím tak potřebuji pouze upravovat dolní polovinu míst pomyslné hvězdy a pravou stranu
+             * horizontály od umístěného žáka (vynechat místa na 9.-2. hodině po směru hod. ruč.). Drobná vizualizace níže.
+             * '*' je místo, kde je třeba upravit kombinace, 'x' je místo, kde je umístěný žák a '-' je místo, které by mělo být možné vyjmout
+             * z úpravy. Proč? Protože algoritmus prochází třídu zleva doprava, zhora dolů. Úprava míst, která algoritmus již prošel je
+             * tedy nadbytečná.
+             *
+             *   *        -
+             *  ***      ---
+             * **x** -> --x**
+             *  ***      ***
+             *   *        *
+             *   
+             * Pozor na to, že proměnné řádek a sloupec jsou číslované od nuly! Pokud tedy kontrolujeme zápis mimo třídu musíme kontrolovat, 
+             * zda-li výpočet (např. radek-2 nebo sloupec+1) nejsou menší než nula a nebo větší než šířka-1 nebo výška-1. Pokud jsou, zasáhli bychom mimo třídu
+             */
+
+
+            // Procykluje buňky kolem umístěného žáka (mimo předešlých buněk) a odstraní parametry obsahující stejné školy nebo kategorie
+            int[,] bunky = new int[,] {
+                {radek, sloupec + 1},
+                {radek, sloupec + 2},
+                {radek + 1, sloupec - 1},
+                {radek + 1, sloupec},
+                {radek + 1, sloupec + 1 },
+                {radek + 2, sloupec}};
+
+            for (int i = 0; i < bunky.GetLength(0); i++)
+                if (bunky[i, 0] < trida.Vyska && bunky[i, 1] >= 0 && bunky[i, 1] < trida.Sirka)
+                    trida.PrijatelneKategorieASkolyMista[bunky[i, 0], bunky[i, 1]]
+                        .RemoveAll(hledanyParametr => hledanyParametr[0] == parametry[0] || hledanyParametr[1] == parametry[1]);
+
+            // Procykluje třídu počínaje řádkem umístěného žáka a pokračuje až na konec třídy
+            for (int r = radek; r < trida.Vyska; r++)
+                for (int s = 0; s < trida.Sirka; s++)
+                    trida.PrijatelneKategorieASkolyMista[r, s]
+                        .RemoveAll(hledanyParametr => hledanyParametr[0] == parametry[0] && hledanyParametr[1] == parametry[1]);
+
+        }
+
+        private void VyplnTriduKombinacemiRAR(Trida trida, List<Zak> kopieZaku)
+        {
+            List<int[]> unikatniKategorieSkoly = new List<int[]>();
+
+            foreach (Zak zak in kopieZaku)
+            {
+                // Vloží novou kombinaci pokud se nenachází již v listu
+                if (unikatniKategorieSkoly.Find(parametry => parametry[0] == zak.Skola && parametry[1] == zak.DynKategorie) == null)
+                    unikatniKategorieSkoly.Add(new int[] { zak.Skola, zak.DynKategorie });
+            }
+
+            for (int r = 0; r < trida.Vyska; r++)
+            {
+                for (int s = 0; s < trida.Sirka; s++)
+                {
+                    // Jelikož list je referenční datový typ, pro každé místo musíme tedy vytvořit samostatný list (aby se nepřepisovaly)
+                    List<int[]> kopieListu = new List<int[]>();
+
+                    foreach (int[] parametry in unikatniKategorieSkoly)
+                        kopieListu.Add(parametry);
+
+                    trida.PrijatelneKategorieASkolyMista[r, s] = kopieListu;
+                }
+            }
+        }
+
         private List<Zak> NastavListZaku()
         {
             List<Zak> serazeniZaci = new List<Zak>();
@@ -389,12 +501,12 @@ namespace SediM
             foreach (Zak zak in zaci)
             {
                 // Pokud se kategorie žáka nachází v proměnné, přeskoč na dalšího žáka
-                if (zaciDleKategorie.Exists(kategorie => zak.Kategorie == kategorie[0].Kategorie))
+                if (zaciDleKategorie.Exists(kategorie => zak.DynKategorie == kategorie[0].DynKategorie))
                     continue;
 
                 // Dočasně uloží veškeré nerozsazené žáky nevložené kategorie do proměnné
                 List<Zak> novaKategorie = new List<Zak>();
-                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.Kategorie == zak.Kategorie && !hledanyZak.JeRozsazen);
+                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.DynKategorie == zak.DynKategorie && !hledanyZak.JeRozsazen);
 
                 // Vytvoří kopii této kategorie
                 List<Zak> kopiekategorie = new List<Zak>();
@@ -426,7 +538,7 @@ namespace SediM
             {
                 // Procykluje každého žáka v kategorii
                 foreach (Zak zak in zaciDleKategorie[i])
-                    zak.Kategorie = i + 1;
+                    zak.DynKategorie = i + 1;
 
                 // Vloží žáky s modifikovanou kategorií (prioritou) do listu
                 serazeniZaci.AddRange(zaciDleKategorie[i]);
@@ -439,13 +551,13 @@ namespace SediM
         {
             cboxTridy.ValueMember = "Id";
             cboxTridy.DisplayMember = "Nazev";
-            cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
+            cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
 
-            if(PocetVolnychTrid(tridy.Count) == 0)
+            if (tridy.FindAll(trida => !trida.JeRozsazena).Count == 0)
             {
                 DialogResult nejsouTridy = mainHelp.Alert("Upozornění", "Program nenalezl žádnou třídu, kterou by bylo možné rozsadit.\r\nChcete automaticky vytvořit novou třídu o výchzozí velikosti?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                
-                if(nejsouTridy == DialogResult.No)
+
+                if (nejsouTridy == DialogResult.No)
                 {
                     Close();
                 }
@@ -475,7 +587,7 @@ namespace SediM
 
                     cboxTridy.ValueMember = "Id";
                     cboxTridy.DisplayMember = "Nazev";
-                    cboxTridy.DataSource = tridy.FindAll(trida => trida.Rozsazena == false);
+                    cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
                 }
             }
         }
@@ -500,22 +612,6 @@ namespace SediM
             dataAdapter.Fill(data);
 
             return data;
-        }
-
-        private Trida ZiskejAktualniTridu()
-        {
-            if (cboxTridy.SelectedIndex != -1)
-            {
-                return tridy.Find(tridy => tridy.Id == (long)cboxTridy.SelectedValue);
-            }
-            else if (listbxVyplneneTridy.SelectedIndex != -1)
-            {
-                return vyplneneTridy[listbxVyplneneTridy.SelectedIndex];
-            }
-            else
-            {
-                return null;
-            }
         }
 
         private void toolStripButton_Tisk_Click(object sender, EventArgs e)
@@ -561,25 +657,9 @@ namespace SediM
                 }
             }
 
-            bmp.Dispose();
-        }
+            canvas.Fill();
 
-        // Metoda pro kontrolu počtu volných tříd
-        private int PocetVolnychTrid(int celek)
-        {
-            int celkovyPocetTrid = celek; // Předávaný počet tříd
-            int pocetRozsazenychTrid = 0;
-
-            foreach (Trida trida in tridy)
-            {
-                if (trida.Rozsazena)
-                {
-                    pocetRozsazenychTrid++;
-                }
-            }
-
-            int pocetVolnychTrid = celkovyPocetTrid - pocetRozsazenychTrid;
-            return pocetVolnychTrid;
+            doc.Close();
         }
 
         private class PageRotationEventHandler : IEventHandler
