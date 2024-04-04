@@ -1,10 +1,13 @@
 using iText.IO.Image;
 using iText.Kernel.Events;
+using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas;
 using iText.Layout;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using Point = System.Drawing.Point;
 
 namespace SediM
 {
@@ -614,64 +617,52 @@ namespace SediM
 
         private void toolStripButton_Tisk_Click(object sender, EventArgs e)
         {
-            int width = panelVykresleniRozsazeni.Width;
-            int height = panelVykresleniRozsazeni.Height;
+            int sirkaDokumentu = 1080;
+            int vyskaDokumentu = 1920;
 
-            Bitmap bmp = new Bitmap(width, height);
-            panelVykresleniRozsazeni.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "PDF files|*.pdf";
+            sfd.Title = "Exportovat jako PDF";
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "PDF files|*.pdf";
-            saveFileDialog.Title = "Exportovat jako PDF";
-            saveFileDialog.ShowDialog();
+            if (sfd.ShowDialog() != DialogResult.OK)
+                return;
 
-            if (saveFileDialog.FileName != "")
+            Zak[,] vyplnenaTrida = tridyZaku[listbxVyplneneTridy.SelectedIndex];
+
+            PdfDocument doc = new PdfDocument(new PdfWriter(sfd.FileName));
+
+            PageSize velikostStrany = new PageSize(sirkaDokumentu, vyskaDokumentu);
+            doc.SetDefaultPageSize(velikostStrany);
+
+            PdfCanvas canvas = new PdfCanvas(doc.AddNewPage());
+
+            float sirka = velikostStrany.GetWidth();
+            float vyska = velikostStrany.GetHeight();
+
+            Point pocatekStrany = new Point((int)(sirka * 0.05), (int)(vyska * 0.05));
+
+            int pocetRadku = vyplnenaTrida.GetLength(0);
+            int pocetSloupcu = vyplnenaTrida.GetLength(1);
+
+            // Vypočítá velikost jednoho místa na základě velikosti dimenzí
+            int mistoSirka = (int)((sirka * 0.9 - pocetSloupcu) / pocetSloupcu);
+            int mistoVyska = (int)((sirka * 0.9 - pocetRadku) / pocetRadku);
+
+            canvas.SetFillColor(iText.Kernel.Colors.ColorConstants.WHITE);
+
+            for (int radek = 0; radek < pocetRadku; radek++)
             {
-                using (var memoryStream = new MemoryStream())
+                for (int sloupec = 0; sloupec < pocetSloupcu; sloupec++)
                 {
-                    bmp.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png); // Uložíme jako PNG pro kvalitu
-
-                    using (var pdfWriter = new PdfWriter(saveFileDialog.FileName))
-                    {
-                        using (var pdfDocument = new PdfDocument(pdfWriter))
-                        {
-                            var pageSize = new iText.Kernel.Geom.PageSize(height, width); // Orientace na šířku
-                            pdfDocument.SetDefaultPageSize(pageSize);
-
-                            var document = new Document(pdfDocument);
-
-                            PageRotationEventHandler eventHandler = new PageRotationEventHandler();
-                            pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, eventHandler);
-
-                            var image = new iText.Layout.Element.Image(ImageDataFactory.Create(memoryStream.ToArray()));
-                            image.SetAutoScale(true);
-                            eventHandler.SetRotation(PORTRAIT);
-                            document.Add(image);
-                            document.Close();
-                        }
-                    }
-
-                    MessageBox.Show("Panel byl uložen jako PDF.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    /*canvas.Rectangle(
+                        sloupec*mistoSirka+sloupec,
+                        );*/
                 }
             }
 
-            bmp.Dispose();
-        }
+            canvas.Fill();
 
-        private class PageRotationEventHandler : IEventHandler
-        {
-            private PdfNumber rotation = PORTRAIT;
-
-            public void SetRotation(PdfNumber orientation)
-            {
-                this.rotation = orientation;
-            }
-
-            public void HandleEvent(Event currentEvent)
-            {
-                PdfDocumentEvent docEvent = (PdfDocumentEvent)currentEvent;
-                docEvent.GetPage().Put(PdfName.Rotate, rotation);
-            }
+            doc.Close();
         }
     }
 }
