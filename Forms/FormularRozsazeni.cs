@@ -296,59 +296,70 @@ namespace SediM
         /// <param name="aktualniTrida">Aktuální vyplňovaná třída</param>
         private void VyplnTridu(int indexTridy, int sirka, int vyska, Trida aktualniTrida)
         {
-            List<Zak> kopieZaku = new List<Zak>();
-
-            // Překopíruje globální list žáků a přeskupí kategorie
-            // podle nejvyššího počtu žáků v kategorii
-            kopieZaku = NastavListZaku();
-
-            if (cboxRuleset.SelectedIndex == 0)
-                VyplnTriduKombinacemiRAR(aktualniTrida, kopieZaku);
-
-            string data = "";
-
-            // Opakuje pro každý řádek míst ve třídě
-            for (int r = 0; r < vyska; r++)
-            {
-                // Opakuje pro každé místo v řádku ve třídě
-                for (int s = 0; s < sirka; s++)
-                {
-                    // Přidá žáka podle kategorie pomocí funkce ziskejZaka příslušného rulesetu
-                    Zak zak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
-
-                    if (cboxRuleset.SelectedIndex == 0)
-                        zak = ZiskejZakaRAR(aktualniTrida, r, s, kopieZaku);
-                    else if (cboxRuleset.SelectedIndex == 1)
-                        // U numupdown je + 1 kvůli tomu, že kategorie číslujeme od 1
-                        zak = ZiskejZakaSPC2(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
-
-                    zak.Misto = mistoZaka;
-                    mistoZaka++;
-
-                    data += $"{zak.Misto}={zak.Id}";
-
-                    // Pokud nejsme na posledním místě, přidejte oddělovač
-                    if (!(r == vyska - 1 && s == sirka - 1))
-                    {
-                        data += ",";
-                    }
-
-                    tridyZaku[indexTridy][r, s] = zak;
-                }
-            }
-
             try
             {
+                List<Zak> kopieZaku = new List<Zak>();
+
+                // Překopíruje globální list žáků a přeskupí kategorie
+                // podle nejvyššího počtu žáků v kategorii
+                kopieZaku = NastavListZaku();
+
+                if (cboxRuleset.SelectedIndex == 0)
+                    VyplnTriduKombinacemiRAR(aktualniTrida, kopieZaku);
+
+                string data = "";
+
+                // Opakuje pro každý řádek míst ve třídě
+                for (int r = 0; r < vyska; r++)
+                {
+                    // Opakuje pro každé místo v řádku ve třídě
+                    for (int s = 0; s < sirka; s++)
+                    {
+                        // Přidá žáka podle kategorie pomocí funkce ziskejZaka příslušného rulesetu
+                        Zak zak = new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, 0);
+
+                        if (cboxRuleset.SelectedIndex == 0)
+                            zak = ZiskejZakaRAR(aktualniTrida, r, s, kopieZaku);
+                        else if (cboxRuleset.SelectedIndex == 1)
+                            // U numupdown je + 1 kvůli tomu, že kategorie číslujeme od 1
+                            zak = ZiskejZakaSPC2(((r * 2 + s) % (int)numupdownKategoriiNaTridu.Value) + 1, kopieZaku);
+
+                        zak.Misto = mistoZaka;
+                        mistoZaka++;
+
+                        data += $"{zak.Misto}={zak.Id}";
+
+                        // Pokud nejsme na posledním místě, přidejte oddělovač
+                        if (!(r == vyska - 1 && s == sirka - 1))
+                        {
+                            data += ",";
+                        }
+
+                        tridyZaku[indexTridy][r, s] = zak;
+
+                        if (zak.Id > 0)
+                        {
+                            SqlCommand upravZaka = new SqlCommand("UPDATE Studenti SET Trida = @trida WHERE StudentId = @student", connection);
+
+                            upravZaka.Parameters.AddWithValue("@trida", aktualniTrida.Id);
+                            upravZaka.Parameters.AddWithValue("@student", zak.Id);
+
+                            int stav_zak = upravZaka.ExecuteNonQuery();
+                            // int stav_zak = 0;
+                        }
+                    }
+                }
+
                 SqlCommand vyplnTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @stav, DataRozsazeni = @data WHERE TridaId = @id", connection);
 
                 vyplnTridu.Parameters.AddWithValue("@stav", 1);
                 vyplnTridu.Parameters.AddWithValue("@data", data);
                 vyplnTridu.Parameters.AddWithValue("@id", aktualniTrida.Id);
 
-                int stav = vyplnTridu.ExecuteNonQuery();
-                // int stav = 0;
+                int stav_trida = vyplnTridu.ExecuteNonQuery();
+                // int stav_trida = 0;
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -389,10 +400,10 @@ namespace SediM
             {
                 if ((returnZak = kopieZaku.Find(hledanyZak => hledanyZak.Skola == parametry[0] && hledanyZak.DynKategorie == parametry[1])) != null)
                 {
-                    zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].JeRozsazen = true;
+                    zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].Trida = trida.Id;
                     kopieZaku.RemoveAt(kopieZaku.FindIndex(zak => zak.Id == returnZak.Id));
                     UpravMistaTridyRAR(trida, parametry, radek, sloupec);
-                    return returnZak;
+                    return zaci[kopieZaku.FindIndex(zak => zak.Id == returnZak.Id)];
                 }
             }
 
@@ -506,7 +517,7 @@ namespace SediM
 
                 // Dočasně uloží veškeré nerozsazené žáky nevložené kategorie do proměnné
                 List<Zak> novaKategorie = new List<Zak>();
-                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.DynKategorie == zak.DynKategorie && !hledanyZak.JeRozsazen);
+                novaKategorie = zaci.FindAll(hledanyZak => hledanyZak.DynKategorie == zak.DynKategorie && hledanyZak.Trida == 0);
 
                 // Vytvoří kopii této kategorie
                 List<Zak> kopiekategorie = new List<Zak>();
@@ -656,10 +667,6 @@ namespace SediM
                     MessageBox.Show("Panel byl uložen jako PDF.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-
-            canvas.Fill();
-
-            doc.Close();
         }
 
         private class PageRotationEventHandler : IEventHandler
