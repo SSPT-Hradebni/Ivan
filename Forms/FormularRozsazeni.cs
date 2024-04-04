@@ -7,6 +7,10 @@ using iText.Kernel.Events;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
+using iText.Kernel.Geom;
+using Rectangle = System.Drawing.Rectangle;
+using iText.Kernel.Pdf.Canvas;
+using Point = System.Drawing.Point;
 
 namespace SediM
 {
@@ -118,7 +122,7 @@ namespace SediM
             if (cboxTridy.SelectedIndex == -1 && listbxVyplneneTridy.SelectedIndex == -1) return;
 
             // Získáme aktuální vybranou třídu
-            Trida? aktualniTrida = listbxVyplneneTridy.SelectedIndex != -1 ? vyplneneTridy[listbxVyplneneTridy.SelectedIndex] : tridy.Find(hledanaTrida => hledanaTrida.Id == (long)cboxTridy.SelectedValue);
+            Trida? aktualniTrida = listbxVyplneneTridy.SelectedIndex != -1 ? vyplneneTridy[listbxVyplneneTridy.SelectedIndex] : tridy.Find(hledanaTrida => hledanaTrida.Id == (int)cboxTridy.SelectedValue);
 
             // Vyvoláme metodu pro vykreslení míst
             VykresleniMist(g, aktualniTrida);
@@ -260,7 +264,7 @@ namespace SediM
         private void NastavParametryProVyplneni(int selectedIndex)
         {
             // Získáme aktuální vybranou třídu
-            Trida? aktualniTrida = tridy.Find(tridy => tridy.Id == (long)cboxTridy.SelectedValue);
+            Trida? aktualniTrida = tridy.Find(tridy => tridy.Id == (int)cboxTridy.SelectedValue);
 
             // Vytvoří 2D pole objektů Zak - naši třídu
             tridyZaku.Add(new Zak[aktualniTrida.Vyska, aktualniTrida.Sirka]);
@@ -403,7 +407,7 @@ namespace SediM
                     zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].Trida = trida.Id;
                     kopieZaku.RemoveAt(kopieZaku.FindIndex(zak => zak.Id == returnZak.Id));
                     UpravMistaTridyRAR(trida, parametry, radek, sloupec);
-                    return zaci[kopieZaku.FindIndex(zak => zak.Id == returnZak.Id)];
+                    return zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)];
                 }
             }
 
@@ -413,47 +417,6 @@ namespace SediM
 
         private void UpravMistaTridyRAR(Trida trida, int[] parametry, int radek, int sloupec)
         {
-            /*
-             * Musí se upravit místa na souřadnicích:
-             *                                     [radek-2, sloupec]
-             *                [radek-1, sloupec-1] [radek-1, sloupec] [radek-1, sloupec+1]
-             *  [radek, sloupec-2] [radek, sloupec-1] [MÍSTO ŽÁKA] [radek, sloupec+1] [radek, sloupec+2]
-             *                [radek+1, sloupec-1] [radek+1, sloupec] [radek+1, sloupec+1]
-             *                                     [radek+2, sloupec]
-             *  
-             *  Pokud jsou v jedné z buněk proměnné radek nebo sloupec nižší než 0, 
-             *  přeskočíme úpravu této buňnky jelikož zasahuje mimo třídu (buňka se nenachází ve třídě)
-             *  
-             *  V těchto buňkách odstraníme veškeré kombinace, které obsahují třídu či kategorii 
-             *  totožnou s třídou či kategorií umístěného žáka
-             *  
-             *  Ve všech ostatních buňkách odstraníme přesnou kombinaci třídy a kategorie (můžeme začít na místě umístěného žáka
-             *  pro drobné urychlení)
-             *
-
-             *
-             * TODO - upraví místa podle pravidel
-             * NOTE: bylo mi řečeno že žák určité kategorie a školy múže být pouze jeden na třídu - upravit dvojice kombinací 
-             * pro každé místo ve třídě
-             *
-
-             * Když tak přemýšlím tak potřebuji pouze upravovat dolní polovinu míst pomyslné hvězdy a pravou stranu
-             * horizontály od umístěného žáka (vynechat místa na 9.-2. hodině po směru hod. ruč.). Drobná vizualizace níže.
-             * '*' je místo, kde je třeba upravit kombinace, 'x' je místo, kde je umístěný žák a '-' je místo, které by mělo být možné vyjmout
-             * z úpravy. Proč? Protože algoritmus prochází třídu zleva doprava, zhora dolů. Úprava míst, která algoritmus již prošel je
-             * tedy nadbytečná.
-             *
-             *   *        -
-             *  ***      ---
-             * **x** -> --x**
-             *  ***      ***
-             *   *        *
-             *   
-             * Pozor na to, že proměnné řádek a sloupec jsou číslované od nuly! Pokud tedy kontrolujeme zápis mimo třídu musíme kontrolovat, 
-             * zda-li výpočet (např. radek-2 nebo sloupec+1) nejsou menší než nula a nebo větší než šířka-1 nebo výška-1. Pokud jsou, zasáhli bychom mimo třídu
-             */
-
-
             // Procykluje buňky kolem umístěného žáka (mimo předešlých buněk) a odstraní parametry obsahující stejné školy nebo kategorie
             int[,] bunky = new int[,] {
                 {radek, sloupec + 1},
@@ -627,16 +590,15 @@ namespace SediM
 
         private void toolStripButton_Tisk_Click(object sender, EventArgs e)
         {
-            int width = panelVykresleniRozsazeni.Width;
-            int height = panelVykresleniRozsazeni.Height;
+            int sirkaDokumentu = 1080;
+            int vyskaDokumentu = 1920;
 
-            Bitmap bmp = new Bitmap(width, height);
-            panelVykresleniRozsazeni.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "PDF files|*.pdf";
+            sfd.Title = "Exportovat jako PDF";
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "PDF files|*.pdf";
-            saveFileDialog.Title = "Exportovat jako PDF";
-            saveFileDialog.ShowDialog();
+            if (sfd.ShowDialog() != DialogResult.OK)
+                return;
 
             Zak[,] vyplnenaTrida = tridyZaku[listbxVyplneneTridy.SelectedIndex];
 
@@ -648,37 +610,29 @@ namespace SediM
 
             PdfCanvas canvas = new PdfCanvas(doc.AddNewPage());
 
-                    using (var pdfWriter = new PdfWriter(saveFileDialog.FileName))
-                    {
-                        using (var pdfDocument = new PdfDocument(pdfWriter))
-                        {
-                            var pageSize = new iText.Kernel.Geom.PageSize(height, width); // Orientace na šířku
-                            pdfDocument.SetDefaultPageSize(pageSize);
+            float sirka = velikostStrany.GetWidth();
+            float vyska = velikostStrany.GetHeight();
 
             Size pocatekStrany = new Size((int)(sirka * 0.05), (int)(vyska * 0.05));
 
-                            PageRotationEventHandler eventHandler = new PageRotationEventHandler();
-                            pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, eventHandler);
+            int pocetRadku = vyplnenaTrida.GetLength(0);
+            int pocetSloupcu = vyplnenaTrida.GetLength(1);
 
-                            var image = new iText.Layout.Element.Image(ImageDataFactory.Create(memoryStream.ToArray()));
-                            image.SetAutoScale(true);
-                            eventHandler.SetRotation(PORTRAIT);
-                            document.Add(image);
-                            document.Close();
-                        }
-                    }
+            // Vypočítá velikost jednoho místa na základě velikosti dimenzí
+            int mistoSirka = (int)((sirka * 0.9 - pocetSloupcu) / pocetSloupcu);
+            int mistoVyska = (int)((sirka * 0.9 - pocetRadku) / pocetRadku);
 
             //canvas.SetColor(iText.Kernel.Colors.ColorConstants.BLACK, false);
             canvas.SetFillColorCmyk(0f, 0f, 0f, 0f);
-            canvas.SetStrokeColorCmyk(1f,1f,1f,1f);
+            canvas.SetStrokeColorCmyk(1f, 1f, 1f, 1f);
 
             for (int radek = 0; radek < pocetRadku; radek++)
             {
                 for (int sloupec = 0; sloupec < pocetSloupcu; sloupec++)
                 {
                     canvas.Rectangle(
-                        pocatekStrany.Width+sloupec*mistoSirka+sloupec,
-                        pocatekStrany.Height+radek*mistoVyska+radek,
+                        pocatekStrany.Width + sloupec * mistoSirka + sloupec,
+                        pocatekStrany.Height + radek * mistoVyska + radek,
                         mistoSirka,
                         mistoVyska
                         );
