@@ -1,4 +1,4 @@
-using iText.Kernel.Colors;
+using iText.IO.Font;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
@@ -608,7 +608,6 @@ namespace SediM
             Zak[,] vyplnenaTrida = tridyZaku[listbxVyplneneTridy.SelectedIndex];
 
             PdfDocument doc = new PdfDocument(new PdfWriter(sfd.FileName));
-            Document document = new Document(doc);
 
             PageSize velikostStrany = PageSize.A4.Rotate();
             doc.SetDefaultPageSize(velikostStrany);
@@ -630,9 +629,13 @@ namespace SediM
             // Odsazení: 8% nahoře, 5% dole -> 100% - 8% - 5% = 87% výšky dokumentu...
             int mistoVyska = (int)((vyska * 0.87) / pocetRadku);
 
+            // Nastavíme Arial font jelikož základní nezobrazuje korektně diakritiku
+            PdfFont font = PdfFontFactory.CreateFont(System.Environment.GetFolderPath(
+System.Environment.SpecialFolder.Fonts) + "\\arial.ttf", PdfEncodings.IDENTITY_H);
+
             // Název třídy v horní části dokumentu
             Paragraph nazevTridy = new Paragraph(vyplneneTridy[listbxVyplneneTridy.SelectedIndex].Nazev);
-            new Canvas(canvas, velikostStrany).Add(nazevTridy.SetTextAlignment(TextAlignment.CENTER));
+            new Canvas(canvas, velikostStrany).Add(nazevTridy.SetTextAlignment(TextAlignment.CENTER).SetFont(font));
 
             Rectangle misto = new Rectangle(mistoSirka, mistoVyska);
 
@@ -642,11 +645,15 @@ namespace SediM
                 {
                     misto.SetX(pocatekStrany.Width + mistoSirka * sloupec);
                     misto.SetY(vyska - pocatekStrany.Height - mistoVyska - mistoVyska * radek);
+
+                    // Vykreslení místa
                     canvas.Rectangle(misto).Stroke();
+
+                    // Vykleslení textu do místa
                     Canvas grafikaMista = new Canvas(canvas, misto);
-                    grafikaMista.Add(new Paragraph(vyplnenaTrida[radek,sloupec].Misto.ToString()).SetTextAlignment(TextAlignment.CENTER));
-                    grafikaMista.Add(new Paragraph(vyplnenaTrida[radek, sloupec].CeleJmeno).SetTextAlignment(TextAlignment.CENTER));
-                    grafikaMista.Add(new Paragraph($"{mainHelp.CisloKategorieNaRimske(vyplnenaTrida[radek, sloupec].Kategorie)} {vyplnenaTrida[radek, sloupec].Skola}").SetTextAlignment(TextAlignment.CENTER));
+                    grafikaMista.Add(new Paragraph(vyplnenaTrida[radek, sloupec].Misto.ToString()).SetTextAlignment(TextAlignment.CENTER).SetFont(font));
+                    grafikaMista.Add(new Paragraph(vyplnenaTrida[radek, sloupec].CeleJmeno).SetTextAlignment(TextAlignment.CENTER).SetFont(font));
+                    grafikaMista.Add(new Paragraph($"{mainHelp.CisloKategorieNaRimske(vyplnenaTrida[radek, sloupec].Kategorie)} {vyplnenaTrida[radek, sloupec].Skola}").SetTextAlignment(TextAlignment.CENTER).SetFont(font));
                 }
             }
 
