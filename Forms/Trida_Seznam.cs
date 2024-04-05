@@ -69,10 +69,11 @@ namespace SediM.Forms
             {
                 int id = int.Parse(dataviewTridy[0, dataviewTridy.CurrentRow.Index].Value.ToString());
 
-                SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @jeRozsazena WHERE TridaId = @id", connection);
+                SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @jeRozsazena, DataRozsazeni = @data WHERE TridaId = @id", connection);
 
                 vytvorTridu.Parameters.AddWithValue("@id", id);
                 vytvorTridu.Parameters.AddWithValue("@jeRozsazena", 0);
+                vytvorTridu.Parameters.AddWithValue("@data", "");
 
                 int stav = vytvorTridu.ExecuteNonQuery();
 

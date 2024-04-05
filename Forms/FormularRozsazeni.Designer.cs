@@ -46,6 +46,7 @@
             label6 = new Label();
             toolStrip1 = new ToolStrip();
             toolStripButton_Tisk = new ToolStripButton();
+            toolStripButton_ResetStudenty = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)numupdownKategoriiNaTridu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
             splitContainer.Panel1.SuspendLayout();
@@ -219,7 +220,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton_Tisk });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton_Tisk, toolStripButton_ResetStudenty });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1216, 25);
@@ -236,6 +237,16 @@
             toolStripButton_Tisk.Text = "Vytisknout rozsazení do souboru";
             toolStripButton_Tisk.Visible = false;
             toolStripButton_Tisk.Click += toolStripButton_Tisk_Click;
+            // 
+            // toolStripButton_ResetStudenty
+            // 
+            toolStripButton_ResetStudenty.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton_ResetStudenty.Image = Properties.Resources.User_Accounts1;
+            toolStripButton_ResetStudenty.ImageTransparentColor = Color.Magenta;
+            toolStripButton_ResetStudenty.Name = "toolStripButton_ResetStudenty";
+            toolStripButton_ResetStudenty.Size = new Size(23, 22);
+            toolStripButton_ResetStudenty.Text = "Resetovat stav rozsazení žáků";
+            toolStripButton_ResetStudenty.Click += toolStripButton_ResetStudenty_Click;
             // 
             // FormularRozsazeni
             // 
@@ -286,5 +297,6 @@
         private ComboBox cboxRuleset;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton_Tisk;
+        private ToolStripButton toolStripButton_ResetStudenty;
     }
 }

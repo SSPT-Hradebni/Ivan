@@ -429,7 +429,7 @@ namespace SediM.Helpers
                     rimsky = "VII.";
                     break;
                 default:
-                    rimsky = "undefined";
+                    rimsky = "Err";
                     break;
             }
 

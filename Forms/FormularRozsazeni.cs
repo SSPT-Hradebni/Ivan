@@ -1,10 +1,17 @@
+using iText.Kernel.Colors;
+using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
+using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
+using Rectangle = iText.Kernel.Geom.Rectangle;
 
 namespace SediM
 {
@@ -273,7 +280,6 @@ namespace SediM
             // odstranění vyplněné třídy z comboboxu
             tridy.Remove(aktualniTrida);
             cboxTridy.DataSource = null; // při DataSource nejde vymazat cbox, proto nastaveno teď na null
-            cboxTridy.Items.Clear();
             cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
 
             // "Překlikne" na nově vyplněnou třídu
@@ -341,9 +347,7 @@ namespace SediM
 
                         // Pokud nejsme na posledním místě, přidejte oddělovač
                         if (!(r == vyska - 1 && s == sirka - 1))
-                        {
                             data += ",";
-                        }
 
                         tridyZaku[indexTridy][r, s] = zak;
 
@@ -354,8 +358,7 @@ namespace SediM
                             upravZaka.Parameters.AddWithValue("@trida", aktualniTrida.Id);
                             upravZaka.Parameters.AddWithValue("@student", zak.Id);
 
-                            int stav_zak = upravZaka.ExecuteNonQuery();
-                            // int stav_zak = 0;
+                            upravZaka.ExecuteNonQuery();
                         }
                     }
                 }
@@ -366,8 +369,8 @@ namespace SediM
                 vyplnTridu.Parameters.AddWithValue("@data", data);
                 vyplnTridu.Parameters.AddWithValue("@id", aktualniTrida.Id);
 
-                int stav_trida = vyplnTridu.ExecuteNonQuery();
-                // int stav_trida = 0;
+                vyplnTridu.ExecuteNonQuery();
+
                 return 0;
             }
             catch (Exception ex)
@@ -458,6 +461,17 @@ namespace SediM
                     unikatniKategorieSkoly.Add(new int[] { zak.Skola, zak.DynKategorie });
             }
 
+            // Seřadí parametry v listu na základě dynamických kategorií (vzestupně)
+            unikatniKategorieSkoly.Sort((p1, p2) =>
+            {
+                // Dynamická kategorie kombinace p1 je nižší hodnoty (vyšší priority) - je tedy posunuta blíže k začátku listu
+                if (p1[1] < p2[1])
+                    return -1;
+                // Jinak je kombinace p2 nižší hodnoty, tu tedy přesuneme blíže k začátku listu
+                else
+                    return 1;
+            });
+
             for (int r = 0; r < trida.Vyska; r++)
             {
                 for (int s = 0; s < trida.Sirka; s++)
@@ -482,8 +496,8 @@ namespace SediM
             // Separuje veškeré žáky do kategorií pro následovné řazení
             foreach (Zak zak in zaci)
             {
-                // Pokud se kategorie žáka nachází v proměnné, přeskoč na dalšího žáka
-                if (zaciDleKategorie.Exists(kategorie => zak.DynKategorie == kategorie[0].DynKategorie) || zak.Trida != 0)
+                // Pokud je žák již rozsazen nebo se kategorie žáka nachází v proměnné, přeskoč na dalšího žáka
+                if (zak.Trida != 0 || zaciDleKategorie.Exists(kategorie => zak.DynKategorie == kategorie[0].DynKategorie))
                     continue;
 
                 // Dočasně uloží veškeré nerozsazené žáky nevložené kategorie do proměnné
@@ -560,35 +574,21 @@ namespace SediM
                         Close();
                     }
 
-                    data = NactiTridy();
-                    List<Trida> noveTridy = mainHelp.ListTrid(data);
                     tridy.Clear(); // vymazání starých údajů
-                    tridy = noveTridy;
+                    tridy = mainHelp.ListTrid(NactiTridy());
 
                     cboxTridy.DataSource = null;
-
-                    cboxTridy.ValueMember = "Id";
-                    cboxTridy.DisplayMember = "Nazev";
                     cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
                 }
             }
         }
 
-        private DataTable NactiTridy(bool jenNerozsazene = false)
+        private DataTable NactiTridy()
         {
             DataTable data = new DataTable();
             SqlDataAdapter dataAdapter;
 
-            SqlCommand cmd;
-
-            if (jenNerozsazene)
-            {
-                cmd = new($"SELECT * FROM Tridy WHERE JeRozsazena = 0", connection);
-            }
-            else
-            {
-                cmd = new($"SELECT * FROM Tridy", connection);
-            }
+            SqlCommand cmd = new($"SELECT * FROM Tridy", connection);
 
             dataAdapter = new SqlDataAdapter(cmd);
             dataAdapter.Fill(data);
@@ -598,9 +598,6 @@ namespace SediM
 
         private void toolStripButton_Tisk_Click(object sender, EventArgs e)
         {
-            int sirkaDokumentu = 1080;
-            int vyskaDokumentu = 1920;
-
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "PDF files|*.pdf";
             sfd.Title = "Exportovat jako PDF";
@@ -611,9 +608,10 @@ namespace SediM
             Zak[,] vyplnenaTrida = tridyZaku[listbxVyplneneTridy.SelectedIndex];
 
             PdfDocument doc = new PdfDocument(new PdfWriter(sfd.FileName));
+            Document document = new Document(doc);
 
-            PageSize velikostStrany = new PageSize(sirkaDokumentu, vyskaDokumentu);
-            doc.SetDefaultPageSize(velikostStrany.Rotate());
+            PageSize velikostStrany = PageSize.A4.Rotate();
+            doc.SetDefaultPageSize(velikostStrany);
 
 
             PdfCanvas canvas = new PdfCanvas(doc.AddNewPage());
@@ -621,38 +619,69 @@ namespace SediM
             float sirka = velikostStrany.GetWidth();
             float vyska = velikostStrany.GetHeight();
 
-            Size pocatekStrany = new Size((int)(sirka * 0.05), (int)(vyska * 0.05));
+            Size pocatekStrany = new Size((int)(sirka * 0.05), (int)(vyska * 0.08));
 
             int pocetRadku = vyplnenaTrida.GetLength(0);
             int pocetSloupcu = vyplnenaTrida.GetLength(1);
 
             // Vypočítá velikost jednoho místa na základě velikosti dimenzí
-            int mistoSirka = (int)((sirka * 0.9 - pocetSloupcu) / pocetSloupcu);
-            int mistoVyska = (int)((sirka * 0.9 - pocetRadku) / pocetRadku);
+            // Odsazení: 5% vlevo, 5% vpravo -> 100% - 2x5% = 90% šířky dokumentu vyhrazeno pro vykreslení míst
+            int mistoSirka = (int)((sirka * 0.9) / pocetSloupcu);
+            // Odsazení: 8% nahoře, 5% dole -> 100% - 8% - 5% = 87% výšky dokumentu...
+            int mistoVyska = (int)((vyska * 0.87) / pocetRadku);
 
-            //canvas.SetColor(iText.Kernel.Colors.ColorConstants.BLACK, false);
-            canvas.SetFillColorCmyk(0f, 0f, 0f, 0f);
-            canvas.SetStrokeColorCmyk(1f, 1f, 1f, 1f);
+            // Název třídy v horní části dokumentu
+            Paragraph nazevTridy = new Paragraph(vyplneneTridy[listbxVyplneneTridy.SelectedIndex].Nazev);
+            new Canvas(canvas, velikostStrany).Add(nazevTridy.SetTextAlignment(TextAlignment.CENTER));
+
+            Rectangle misto = new Rectangle(mistoSirka, mistoVyska);
 
             for (int radek = 0; radek < pocetRadku; radek++)
             {
                 for (int sloupec = 0; sloupec < pocetSloupcu; sloupec++)
                 {
-                    canvas.Rectangle(
-                        pocatekStrany.Width + sloupec * mistoSirka + sloupec,
-                        pocatekStrany.Height + radek * mistoVyska + radek,
-                        mistoSirka,
-                        mistoVyska
-                        );
-                    canvas.Stroke();
+                    misto.SetX(pocatekStrany.Width + mistoSirka * sloupec);
+                    misto.SetY(vyska - pocatekStrany.Height - mistoVyska - mistoVyska * radek);
+                    canvas.Rectangle(misto).Stroke();
+                    Canvas grafikaMista = new Canvas(canvas, misto);
+                    grafikaMista.Add(new Paragraph(vyplnenaTrida[radek,sloupec].Misto.ToString()).SetTextAlignment(TextAlignment.CENTER));
+                    grafikaMista.Add(new Paragraph(vyplnenaTrida[radek, sloupec].CeleJmeno).SetTextAlignment(TextAlignment.CENTER));
+                    grafikaMista.Add(new Paragraph($"{mainHelp.CisloKategorieNaRimske(vyplnenaTrida[radek, sloupec].Kategorie)} {vyplnenaTrida[radek, sloupec].Skola}").SetTextAlignment(TextAlignment.CENTER));
                 }
             }
-
-            canvas.Fill();
 
             doc.Close();
 
             MessageBox.Show("Panel byl uložen jako PDF.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void toolStripButton_ResetStudenty_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                List<Zak> rozsazeniZaci = zaci.FindAll(zak => zak.Trida != 0);
+
+                foreach (Zak zak in rozsazeniZaci)
+                {
+                    SqlCommand upravZaka = new SqlCommand("UPDATE Studenti SET Trida = @trida WHERE StudentId = @student", connection);
+
+                    upravZaka.Parameters.AddWithValue("@trida", 0);
+                    upravZaka.Parameters.AddWithValue("@student", zak.Id);
+
+                    int stav = upravZaka.ExecuteNonQuery();
+
+                    if (stav == 0)
+                        throw new Exception($"Žákovi s ID číslo {zak.Id} nebylo možné obnovit přiřazenou třídu.\r\nReset byl přerušen.");
+
+                    zak.Trida = 0;
+                }
+
+                MessageBox.Show("Studentům byly úspěšně resetovány přiřazené učebny.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
