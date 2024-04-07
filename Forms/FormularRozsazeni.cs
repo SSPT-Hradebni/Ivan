@@ -545,10 +545,6 @@ namespace SediM
 
         private void FormularRozsazeni_Load(object sender, EventArgs e)
         {
-            cboxTridy.ValueMember = "Id";
-            cboxTridy.DisplayMember = "Nazev";
-            cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
-
             if (tridy.FindAll(trida => !trida.JeRozsazena).Count == 0)
             {
                 DialogResult nejsouTridy = mainHelp.Alert("Upozornění", "Program nenalezl žádnou třídu, kterou by bylo možné rozsadit.\r\nChcete automaticky vytvořit novou třídu o výchzozí velikosti?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -576,11 +572,12 @@ namespace SediM
 
                     tridy.Clear(); // vymazání starých údajů
                     tridy = mainHelp.ListTrid(NactiTridy());
-
-                    cboxTridy.DataSource = null;
-                    cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
                 }
             }
+
+            cboxTridy.ValueMember = "Id";
+            cboxTridy.DisplayMember = "Nazev";
+            cboxTridy.DataSource = tridy.FindAll(trida => !trida.JeRozsazena);
         }
 
         private DataTable NactiTridy()

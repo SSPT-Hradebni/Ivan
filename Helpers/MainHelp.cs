@@ -99,7 +99,7 @@ namespace SediM.Helpers
         public List<Ucitel> ListUcitelu(DataTable data)
         {
             // vytvoření dočasného listu učitelů
-            List<Ucitel> skoly = new List<Ucitel>();
+            List<Ucitel> ucitele = new List<Ucitel>();
 
             foreach (DataRow radek in data.Rows)
             {
@@ -108,11 +108,11 @@ namespace SediM.Helpers
                 // [2] - Příjmení
                 // [3] - Email
                 // [4] - Heslo
-                Ucitel skola = new Ucitel(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), radek[3].ToString(), radek[4].ToString());
-                skoly.Add(skola);
+                Ucitel ucitel = new Ucitel(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), radek[3].ToString(), radek[4].ToString());
+                ucitele.Add(ucitel);
             }
 
-            return skoly;
+            return ucitele;
         }
 
         /// <summary>

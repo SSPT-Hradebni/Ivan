@@ -27,7 +27,7 @@
             this.id = id;
             this.jmeno = jmeno;
             this.prijmeni = prijmeni;
-            this.email = prijmeni;
+            this.email = email;
             this.heslo = heslo;
         }
 
