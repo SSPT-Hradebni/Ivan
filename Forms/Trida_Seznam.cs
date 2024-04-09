@@ -81,6 +81,7 @@ namespace SediM.Forms
                 {
                     // Text buňky značící stav rozsazení se změní
                     dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value = "Ne";
+                    UpravTridyStudentu(tridy[dataviewTridy.CurrentRow.Index]);
 
                     dataZmenena = true;
                 }
@@ -94,6 +95,37 @@ namespace SediM.Forms
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void UpravTridyStudentu(Trida trida)
+        {
+            try
+            {
+                List<Zak> rozsazeniZaci = new List<Zak>();
+                for (int r = 0; r < trida.Vyska; r++)
+                    for (int s = 0; s < trida.Sirka; s++)
+                        rozsazeniZaci.Add(trida.RozsazeniZaci[r, s]);
+
+                foreach (Zak zak in rozsazeniZaci)
+                {
+                    if (zak.Id == -1)
+                        continue;
+
+                    SqlCommand upravZaka = new SqlCommand("UPDATE Studenti SET Trida = @trida WHERE StudentId = @student", connection);
+
+                    upravZaka.Parameters.AddWithValue("@trida", 0);
+                    upravZaka.Parameters.AddWithValue("@student", zak.Id);
+
+                    int stav = upravZaka.ExecuteNonQuery();
+
+                    if (stav == 0)
+                        throw new Exception($"Žákovi s ID číslo {zak.Id} nebylo možné obnovit přiřazenou třídu.\r\nReset byl přerušen.");
+                }
+            }
+            catch (Exception ex)
+            {
+                mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Trida_Seznam_FormClosed(object sender, FormClosedEventArgs e)

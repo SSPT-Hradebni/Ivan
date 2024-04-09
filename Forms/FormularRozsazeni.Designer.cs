@@ -29,25 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormularRozsazeni));
-            label1 = new Label();
-            numupdownKategoriiNaTridu = new NumericUpDown();
             btnVyplnit = new Button();
             label2 = new Label();
-            combobxAlgoritmus = new ComboBox();
-            label4 = new Label();
             panelVykresleniRozsazeni = new Panel();
             listbxVyplneneTridy = new ListBox();
             label5 = new Label();
             splitContainer = new SplitContainer();
-            label3 = new Label();
-            cboxRuleset = new ComboBox();
             cboxTridy = new ComboBox();
             listbxSeznamStudentu = new ListBox();
             label6 = new Label();
             toolStrip1 = new ToolStrip();
             toolStripButton_Tisk = new ToolStripButton();
-            toolStripButton_ResetStudenty = new ToolStripButton();
-            ((System.ComponentModel.ISupportInitialize)numupdownKategoriiNaTridu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
             splitContainer.Panel1.SuspendLayout();
             splitContainer.Panel2.SuspendLayout();
@@ -55,29 +47,9 @@
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 76);
-            label1.Name = "label1";
-            label1.Size = new Size(98, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Kategorií na třídu";
-            // 
-            // numupdownKategoriiNaTridu
-            // 
-            numupdownKategoriiNaTridu.Location = new Point(179, 74);
-            numupdownKategoriiNaTridu.Margin = new Padding(3, 2, 3, 2);
-            numupdownKategoriiNaTridu.Maximum = new decimal(new int[] { 12, 0, 0, 0 });
-            numupdownKategoriiNaTridu.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
-            numupdownKategoriiNaTridu.Name = "numupdownKategoriiNaTridu";
-            numupdownKategoriiNaTridu.Size = new Size(44, 23);
-            numupdownKategoriiNaTridu.TabIndex = 1;
-            numupdownKategoriiNaTridu.Value = new decimal(new int[] { 7, 0, 0, 0 });
-            // 
             // btnVyplnit
             // 
-            btnVyplnit.Location = new Point(15, 156);
+            btnVyplnit.Location = new Point(12, 53);
             btnVyplnit.Margin = new Padding(3, 2, 3, 2);
             btnVyplnit.Name = "btnVyplnit";
             btnVyplnit.Size = new Size(88, 22);
@@ -89,30 +61,11 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(15, 112);
+            label2.Location = new Point(12, 9);
             label2.Name = "label2";
             label2.Size = new Size(89, 15);
             label2.TabIndex = 7;
             label2.Text = "Třída k vyplnění";
-            // 
-            // combobxAlgoritmus
-            // 
-            combobxAlgoritmus.FormattingEnabled = true;
-            combobxAlgoritmus.Items.AddRange(new object[] { "Knight (Jezdec)" });
-            combobxAlgoritmus.Location = new Point(98, 18);
-            combobxAlgoritmus.Margin = new Padding(3, 2, 3, 2);
-            combobxAlgoritmus.Name = "combobxAlgoritmus";
-            combobxAlgoritmus.Size = new Size(125, 23);
-            combobxAlgoritmus.TabIndex = 10;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(15, 21);
-            label4.Name = "label4";
-            label4.Size = new Size(66, 15);
-            label4.TabIndex = 11;
-            label4.Text = "Algoritmus";
             // 
             // panelVykresleniRozsazeni
             // 
@@ -128,7 +81,7 @@
             // 
             listbxVyplneneTridy.FormattingEnabled = true;
             listbxVyplneneTridy.ItemHeight = 15;
-            listbxVyplneneTridy.Location = new Point(15, 197);
+            listbxVyplneneTridy.Location = new Point(12, 106);
             listbxVyplneneTridy.Margin = new Padding(3, 2, 3, 2);
             listbxVyplneneTridy.Name = "listbxVyplneneTridy";
             listbxVyplneneTridy.Size = new Size(208, 79);
@@ -138,7 +91,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(15, 180);
+            label5.Location = new Point(12, 89);
             label5.Name = "label5";
             label5.Size = new Size(83, 15);
             label5.TabIndex = 14;
@@ -151,19 +104,13 @@
             // 
             // splitContainer.Panel1
             // 
-            splitContainer.Panel1.Controls.Add(label3);
-            splitContainer.Panel1.Controls.Add(cboxRuleset);
             splitContainer.Panel1.Controls.Add(cboxTridy);
             splitContainer.Panel1.Controls.Add(listbxSeznamStudentu);
             splitContainer.Panel1.Controls.Add(label6);
-            splitContainer.Panel1.Controls.Add(label4);
-            splitContainer.Panel1.Controls.Add(label1);
             splitContainer.Panel1.Controls.Add(label2);
             splitContainer.Panel1.Controls.Add(label5);
-            splitContainer.Panel1.Controls.Add(numupdownKategoriiNaTridu);
             splitContainer.Panel1.Controls.Add(listbxVyplneneTridy);
             splitContainer.Panel1.Controls.Add(btnVyplnit);
-            splitContainer.Panel1.Controls.Add(combobxAlgoritmus);
             // 
             // splitContainer.Panel2
             // 
@@ -172,31 +119,13 @@
             splitContainer.SplitterDistance = 236;
             splitContainer.TabIndex = 15;
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(15, 49);
-            label3.Name = "label3";
-            label3.Size = new Size(77, 15);
-            label3.TabIndex = 19;
-            label3.Text = "Sada pravidel";
-            // 
-            // cboxRuleset
-            // 
-            cboxRuleset.FormattingEnabled = true;
-            cboxRuleset.Items.AddRange(new object[] { "RAR", "SPC&SPC" });
-            cboxRuleset.Location = new Point(98, 46);
-            cboxRuleset.Name = "cboxRuleset";
-            cboxRuleset.Size = new Size(125, 23);
-            cboxRuleset.TabIndex = 18;
-            // 
             // cboxTridy
             // 
             cboxTridy.FormattingEnabled = true;
-            cboxTridy.Location = new Point(15, 129);
+            cboxTridy.Location = new Point(12, 26);
             cboxTridy.Margin = new Padding(3, 2, 3, 2);
             cboxTridy.Name = "cboxTridy";
-            cboxTridy.Size = new Size(208, 23);
+            cboxTridy.Size = new Size(221, 23);
             cboxTridy.TabIndex = 17;
             cboxTridy.SelectedIndexChanged += cboxTridy_SelectedIndexChanged;
             // 
@@ -204,15 +133,15 @@
             // 
             listbxSeznamStudentu.FormattingEnabled = true;
             listbxSeznamStudentu.ItemHeight = 15;
-            listbxSeznamStudentu.Location = new Point(15, 296);
+            listbxSeznamStudentu.Location = new Point(12, 205);
             listbxSeznamStudentu.Name = "listbxSeznamStudentu";
-            listbxSeznamStudentu.Size = new Size(208, 259);
+            listbxSeznamStudentu.Size = new Size(208, 364);
             listbxSeznamStudentu.TabIndex = 16;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(15, 278);
+            label6.Location = new Point(12, 187);
             label6.Name = "label6";
             label6.Size = new Size(98, 15);
             label6.TabIndex = 15;
@@ -220,7 +149,7 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton_Tisk, toolStripButton_ResetStudenty });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton_Tisk });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1216, 25);
@@ -237,16 +166,6 @@
             toolStripButton_Tisk.Text = "Vytisknout rozsazení do souboru";
             toolStripButton_Tisk.Visible = false;
             toolStripButton_Tisk.Click += toolStripButton_Tisk_Click;
-            // 
-            // toolStripButton_ResetStudenty
-            // 
-            toolStripButton_ResetStudenty.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton_ResetStudenty.Image = Properties.Resources.User_Accounts1;
-            toolStripButton_ResetStudenty.ImageTransparentColor = Color.Magenta;
-            toolStripButton_ResetStudenty.Name = "toolStripButton_ResetStudenty";
-            toolStripButton_ResetStudenty.Size = new Size(23, 22);
-            toolStripButton_ResetStudenty.Text = "Resetovat stav rozsazení žáků";
-            toolStripButton_ResetStudenty.Click += toolStripButton_ResetStudenty_Click;
             // 
             // FormularRozsazeni
             // 
@@ -266,7 +185,6 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Nové rozsazení";
             Load += FormularRozsazeni_Load;
-            ((System.ComponentModel.ISupportInitialize)numupdownKategoriiNaTridu).EndInit();
             splitContainer.Panel1.ResumeLayout(false);
             splitContainer.Panel1.PerformLayout();
             splitContainer.Panel2.ResumeLayout(false);
@@ -279,13 +197,8 @@
         }
 
         #endregion
-
-        private Label label1;
-        private NumericUpDown numupdownKategoriiNaTridu;
         private Button btnVyplnit;
         private Label label2;
-        private ComboBox combobxAlgoritmus;
-        private Label label4;
         private Panel panelVykresleniRozsazeni;
         private ListBox listbxVyplneneTridy;
         private Label label5;
@@ -293,10 +206,7 @@
         private ListBox listbxSeznamStudentu;
         private Label label6;
         private ComboBox cboxTridy;
-        private Label label3;
-        private ComboBox cboxRuleset;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton_Tisk;
-        private ToolStripButton toolStripButton_ResetStudenty;
     }
 }
