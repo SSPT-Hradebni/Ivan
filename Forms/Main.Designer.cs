@@ -29,313 +29,319 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            rocnik = new DataGridViewTextBoxColumn();
-            souradnice = new DataGridViewTextBoxColumn();
-            menuStrip = new MenuStrip();
-            souborToolStripMenuItem = new ToolStripMenuItem();
-            oAplikaciToolStripMenuItem = new ToolStripMenuItem();
-            napovedaToolStripMenuItem = new ToolStripMenuItem();
-            ukoncitToolStripMenuItem = new ToolStripMenuItem();
-            studentToolStripMenuItem = new ToolStripMenuItem();
-            novyZakToolStripMenuItem = new ToolStripMenuItem();
-            upravitZakaToolStripMenuItem = new ToolStripMenuItem();
-            seznamZakuToolStripMenuItem = new ToolStripMenuItem();
-            učitelToolStripMenuItem = new ToolStripMenuItem();
-            novyUcitelToolStripMenuItem = new ToolStripMenuItem();
-            upravitUciteleToolStripMenuItem = new ToolStripMenuItem();
-            seznamUciteluToolStripMenuItem = new ToolStripMenuItem();
-            školaToolStripMenuItem = new ToolStripMenuItem();
-            novaSkolaToolStripMenuItem = new ToolStripMenuItem();
-            upravitSkoluToolStripMenuItem = new ToolStripMenuItem();
-            seznamSkolToolStripMenuItem = new ToolStripMenuItem();
-            třídaToolStripMenuItem = new ToolStripMenuItem();
-            novaTridaToolStripMenuItem = new ToolStripMenuItem();
-            upravitTriduToolStripMenuItem = new ToolStripMenuItem();
-            seznamTridToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator1 = new ToolStripSeparator();
-            noveRozsazenitoolStripMenuItem = new ToolStripMenuItem();
-            zobrazitRozsazenitoolStripMenuItem = new ToolStripMenuItem();
-            groupBox_Studenti = new GroupBox();
-            tableLayout_Studenti = new TableLayoutPanel();
-            picbox_NovyZak = new PictureBox();
-            menuStrip.SuspendLayout();
-            groupBox_Studenti.SuspendLayout();
-            tableLayout_Studenti.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picbox_NovyZak).BeginInit();
-            SuspendLayout();
+            this.rocnik = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.souradnice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.souborToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oAplikaciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.napovedaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ukoncitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.studentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.novyZakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.upravitZakaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.seznamZakuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.učitelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.novyUcitelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.upravitUciteleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.seznamUciteluToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.školaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.novaSkolaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.upravitSkoluToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.seznamSkolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.třídaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.novaTridaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.upravitTriduToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.seznamTridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.noveRozsazenitoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zobrazitRozsazenitoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox_Studenti = new System.Windows.Forms.GroupBox();
+            this.tableLayout_Studenti = new System.Windows.Forms.TableLayoutPanel();
+            this.picbox_NovyZak = new System.Windows.Forms.PictureBox();
+            this.menuStrip.SuspendLayout();
+            this.groupBox_Studenti.SuspendLayout();
+            this.tableLayout_Studenti.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picbox_NovyZak)).BeginInit();
+            this.SuspendLayout();
             // 
             // rocnik
             // 
-            rocnik.HeaderText = "Ročník";
-            rocnik.MinimumWidth = 6;
-            rocnik.Name = "rocnik";
-            rocnik.ReadOnly = true;
-            rocnik.Width = 125;
+            this.rocnik.HeaderText = "Ročník";
+            this.rocnik.MinimumWidth = 6;
+            this.rocnik.Name = "rocnik";
+            this.rocnik.ReadOnly = true;
+            this.rocnik.Width = 125;
             // 
             // souradnice
             // 
-            souradnice.HeaderText = "Souřadnice";
-            souradnice.MinimumWidth = 6;
-            souradnice.Name = "souradnice";
-            souradnice.ReadOnly = true;
-            souradnice.Width = 125;
+            this.souradnice.HeaderText = "Souřadnice";
+            this.souradnice.MinimumWidth = 6;
+            this.souradnice.Name = "souradnice";
+            this.souradnice.ReadOnly = true;
+            this.souradnice.Width = 125;
             // 
             // menuStrip
             // 
-            menuStrip.ImageScalingSize = new Size(20, 20);
-            menuStrip.Items.AddRange(new ToolStripItem[] { souborToolStripMenuItem, studentToolStripMenuItem, učitelToolStripMenuItem, školaToolStripMenuItem, třídaToolStripMenuItem });
-            menuStrip.Location = new Point(0, 0);
-            menuStrip.Name = "menuStrip";
-            menuStrip.Padding = new Padding(7, 3, 0, 3);
-            menuStrip.Size = new Size(566, 25);
-            menuStrip.TabIndex = 1;
-            menuStrip.Text = "menuStrip1";
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.souborToolStripMenuItem,
+            this.studentToolStripMenuItem,
+            this.učitelToolStripMenuItem,
+            this.školaToolStripMenuItem,
+            this.třídaToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
+            this.menuStrip.Size = new System.Drawing.Size(566, 25);
+            this.menuStrip.TabIndex = 1;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // souborToolStripMenuItem
             // 
-            souborToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { oAplikaciToolStripMenuItem, napovedaToolStripMenuItem, ukoncitToolStripMenuItem });
-            souborToolStripMenuItem.Name = "souborToolStripMenuItem";
-            souborToolStripMenuItem.Size = new Size(41, 19);
-            souborToolStripMenuItem.Text = "Ivan";
+            this.souborToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.oAplikaciToolStripMenuItem,
+            this.napovedaToolStripMenuItem,
+            this.ukoncitToolStripMenuItem});
+            this.souborToolStripMenuItem.Name = "souborToolStripMenuItem";
+            this.souborToolStripMenuItem.Size = new System.Drawing.Size(41, 19);
+            this.souborToolStripMenuItem.Text = "Ivan";
             // 
             // oAplikaciToolStripMenuItem
             // 
-            oAplikaciToolStripMenuItem.Image = Properties.Resources.Information1;
-            oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
-            oAplikaciToolStripMenuItem.Size = new Size(128, 22);
-            oAplikaciToolStripMenuItem.Text = "O aplikaci";
-            oAplikaciToolStripMenuItem.Click += oAplikaciToolStripMenuItem_Click;
+            this.oAplikaciToolStripMenuItem.Image = global::SediM.Properties.Resources.Information1;
+            this.oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
+            this.oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.oAplikaciToolStripMenuItem.Text = "O aplikaci";
             // 
             // napovedaToolStripMenuItem
             // 
-            napovedaToolStripMenuItem.Image = Properties.Resources.Help_and_Support1;
-            napovedaToolStripMenuItem.Name = "napovedaToolStripMenuItem";
-            napovedaToolStripMenuItem.Size = new Size(128, 22);
-            napovedaToolStripMenuItem.Text = "Nápověda";
-            napovedaToolStripMenuItem.Click += napovedaToolStripMenuItem_Click;
+            this.napovedaToolStripMenuItem.Image = global::SediM.Properties.Resources.Help_and_Support1;
+            this.napovedaToolStripMenuItem.Name = "napovedaToolStripMenuItem";
+            this.napovedaToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.napovedaToolStripMenuItem.Text = "Nápověda";
             // 
             // ukoncitToolStripMenuItem
             // 
-            ukoncitToolStripMenuItem.Image = Properties.Resources.Power1;
-            ukoncitToolStripMenuItem.Name = "ukoncitToolStripMenuItem";
-            ukoncitToolStripMenuItem.Size = new Size(128, 22);
-            ukoncitToolStripMenuItem.Text = "Konec";
-            ukoncitToolStripMenuItem.Click += ukoncitToolStripMenuItem_Click;
+            this.ukoncitToolStripMenuItem.Image = global::SediM.Properties.Resources.Power1;
+            this.ukoncitToolStripMenuItem.Name = "ukoncitToolStripMenuItem";
+            this.ukoncitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.ukoncitToolStripMenuItem.Text = "Konec";
             // 
             // studentToolStripMenuItem
             // 
-            studentToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { novyZakToolStripMenuItem, upravitZakaToolStripMenuItem, seznamZakuToolStripMenuItem });
-            studentToolStripMenuItem.Name = "studentToolStripMenuItem";
-            studentToolStripMenuItem.Size = new Size(38, 19);
-            studentToolStripMenuItem.Text = "Žák";
+            this.studentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.novyZakToolStripMenuItem,
+            this.upravitZakaToolStripMenuItem,
+            this.seznamZakuToolStripMenuItem});
+            this.studentToolStripMenuItem.Name = "studentToolStripMenuItem";
+            this.studentToolStripMenuItem.Size = new System.Drawing.Size(38, 19);
+            this.studentToolStripMenuItem.Text = "Žák";
             // 
             // novyZakToolStripMenuItem
             // 
-            novyZakToolStripMenuItem.Image = Properties.Resources.Add1;
-            novyZakToolStripMenuItem.Name = "novyZakToolStripMenuItem";
-            novyZakToolStripMenuItem.Size = new Size(184, 26);
-            novyZakToolStripMenuItem.Text = "Nový žák";
-            novyZakToolStripMenuItem.Click += novyZakToolStripMenuItem_Click;
+            this.novyZakToolStripMenuItem.Image = global::SediM.Properties.Resources.Add1;
+            this.novyZakToolStripMenuItem.Name = "novyZakToolStripMenuItem";
+            this.novyZakToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.novyZakToolStripMenuItem.Text = "Nový žák";
             // 
             // upravitZakaToolStripMenuItem
             // 
-            upravitZakaToolStripMenuItem.Image = Properties.Resources.OE_Signature1;
-            upravitZakaToolStripMenuItem.Name = "upravitZakaToolStripMenuItem";
-            upravitZakaToolStripMenuItem.Size = new Size(184, 26);
-            upravitZakaToolStripMenuItem.Text = "Upravit žáka";
-            upravitZakaToolStripMenuItem.Click += upravitZakaToolStripMenuItem_Click;
+            this.upravitZakaToolStripMenuItem.Image = global::SediM.Properties.Resources.OE_Signature1;
+            this.upravitZakaToolStripMenuItem.Name = "upravitZakaToolStripMenuItem";
+            this.upravitZakaToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.upravitZakaToolStripMenuItem.Text = "Upravit žáka";
             // 
             // seznamZakuToolStripMenuItem
             // 
-            seznamZakuToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
-            seznamZakuToolStripMenuItem.Name = "seznamZakuToolStripMenuItem";
-            seznamZakuToolStripMenuItem.Size = new Size(184, 26);
-            seznamZakuToolStripMenuItem.Text = "Seznam žáků";
-            seznamZakuToolStripMenuItem.Click += seznamZakuToolStripMenuItem_Click;
+            this.seznamZakuToolStripMenuItem.Image = global::SediM.Properties.Resources.User_Accounts1;
+            this.seznamZakuToolStripMenuItem.Name = "seznamZakuToolStripMenuItem";
+            this.seznamZakuToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.seznamZakuToolStripMenuItem.Text = "Seznam žáků";
             // 
             // učitelToolStripMenuItem
             // 
-            učitelToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { novyUcitelToolStripMenuItem, upravitUciteleToolStripMenuItem, seznamUciteluToolStripMenuItem });
-            učitelToolStripMenuItem.Name = "učitelToolStripMenuItem";
-            učitelToolStripMenuItem.Size = new Size(49, 19);
-            učitelToolStripMenuItem.Text = "Učitel";
+            this.učitelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.novyUcitelToolStripMenuItem,
+            this.upravitUciteleToolStripMenuItem,
+            this.seznamUciteluToolStripMenuItem});
+            this.učitelToolStripMenuItem.Name = "učitelToolStripMenuItem";
+            this.učitelToolStripMenuItem.Size = new System.Drawing.Size(49, 19);
+            this.učitelToolStripMenuItem.Text = "Učitel";
             // 
             // novyUcitelToolStripMenuItem
             // 
-            novyUcitelToolStripMenuItem.Image = Properties.Resources.Add1;
-            novyUcitelToolStripMenuItem.Name = "novyUcitelToolStripMenuItem";
-            novyUcitelToolStripMenuItem.Size = new Size(154, 22);
-            novyUcitelToolStripMenuItem.Text = "Nový učitel";
-            novyUcitelToolStripMenuItem.Click += novyUcitelToolStripMenuItem_Click;
+            this.novyUcitelToolStripMenuItem.Image = global::SediM.Properties.Resources.Add1;
+            this.novyUcitelToolStripMenuItem.Name = "novyUcitelToolStripMenuItem";
+            this.novyUcitelToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.novyUcitelToolStripMenuItem.Text = "Nový učitel";
             // 
             // upravitUciteleToolStripMenuItem
             // 
-            upravitUciteleToolStripMenuItem.Image = Properties.Resources.OE_Signature1;
-            upravitUciteleToolStripMenuItem.Name = "upravitUciteleToolStripMenuItem";
-            upravitUciteleToolStripMenuItem.Size = new Size(154, 22);
-            upravitUciteleToolStripMenuItem.Text = "Upravit učitele";
-            upravitUciteleToolStripMenuItem.Click += upravitUciteleToolStripMenuItem_Click;
+            this.upravitUciteleToolStripMenuItem.Image = global::SediM.Properties.Resources.OE_Signature1;
+            this.upravitUciteleToolStripMenuItem.Name = "upravitUciteleToolStripMenuItem";
+            this.upravitUciteleToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.upravitUciteleToolStripMenuItem.Text = "Upravit učitele";
             // 
             // seznamUciteluToolStripMenuItem
             // 
-            seznamUciteluToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
-            seznamUciteluToolStripMenuItem.Name = "seznamUciteluToolStripMenuItem";
-            seznamUciteluToolStripMenuItem.Size = new Size(154, 22);
-            seznamUciteluToolStripMenuItem.Text = "Seznam učitelů";
-            seznamUciteluToolStripMenuItem.Click += seznamUciteluToolStripMenuItem_Click;
+            this.seznamUciteluToolStripMenuItem.Image = global::SediM.Properties.Resources.User_Accounts1;
+            this.seznamUciteluToolStripMenuItem.Name = "seznamUciteluToolStripMenuItem";
+            this.seznamUciteluToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.seznamUciteluToolStripMenuItem.Text = "Seznam učitelů";
             // 
             // školaToolStripMenuItem
             // 
-            školaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { novaSkolaToolStripMenuItem, upravitSkoluToolStripMenuItem, seznamSkolToolStripMenuItem });
-            školaToolStripMenuItem.Name = "školaToolStripMenuItem";
-            školaToolStripMenuItem.Size = new Size(47, 19);
-            školaToolStripMenuItem.Text = "Škola";
+            this.školaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.novaSkolaToolStripMenuItem,
+            this.upravitSkoluToolStripMenuItem,
+            this.seznamSkolToolStripMenuItem});
+            this.školaToolStripMenuItem.Name = "školaToolStripMenuItem";
+            this.školaToolStripMenuItem.Size = new System.Drawing.Size(47, 19);
+            this.školaToolStripMenuItem.Text = "Škola";
             // 
             // novaSkolaToolStripMenuItem
             // 
-            novaSkolaToolStripMenuItem.Image = Properties.Resources.Add1;
-            novaSkolaToolStripMenuItem.Name = "novaSkolaToolStripMenuItem";
-            novaSkolaToolStripMenuItem.Size = new Size(143, 22);
-            novaSkolaToolStripMenuItem.Text = "Nová škola";
-            novaSkolaToolStripMenuItem.Click += novaSkolaToolStripMenuItem_Click;
+            this.novaSkolaToolStripMenuItem.Image = global::SediM.Properties.Resources.Add1;
+            this.novaSkolaToolStripMenuItem.Name = "novaSkolaToolStripMenuItem";
+            this.novaSkolaToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.novaSkolaToolStripMenuItem.Text = "Nová škola";
             // 
             // upravitSkoluToolStripMenuItem
             // 
-            upravitSkoluToolStripMenuItem.Image = Properties.Resources.OE_Signature1;
-            upravitSkoluToolStripMenuItem.Name = "upravitSkoluToolStripMenuItem";
-            upravitSkoluToolStripMenuItem.Size = new Size(143, 22);
-            upravitSkoluToolStripMenuItem.Text = "Upravit školu";
-            upravitSkoluToolStripMenuItem.Click += upravitSkoluToolStripMenuItem_Click;
+            this.upravitSkoluToolStripMenuItem.Image = global::SediM.Properties.Resources.OE_Signature1;
+            this.upravitSkoluToolStripMenuItem.Name = "upravitSkoluToolStripMenuItem";
+            this.upravitSkoluToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.upravitSkoluToolStripMenuItem.Text = "Upravit školu";
             // 
             // seznamSkolToolStripMenuItem
             // 
-            seznamSkolToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
-            seznamSkolToolStripMenuItem.Name = "seznamSkolToolStripMenuItem";
-            seznamSkolToolStripMenuItem.Size = new Size(143, 22);
-            seznamSkolToolStripMenuItem.Text = "Seznam škol";
-            seznamSkolToolStripMenuItem.Click += seznamSkolToolStripMenuItem_Click;
+            this.seznamSkolToolStripMenuItem.Image = global::SediM.Properties.Resources.User_Accounts1;
+            this.seznamSkolToolStripMenuItem.Name = "seznamSkolToolStripMenuItem";
+            this.seznamSkolToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.seznamSkolToolStripMenuItem.Text = "Seznam škol";
+            this.seznamSkolToolStripMenuItem.Click += new System.EventHandler(this.seznamSkolToolStripMenuItem_Click_1);
             // 
             // třídaToolStripMenuItem
             // 
-            třídaToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { novaTridaToolStripMenuItem, upravitTriduToolStripMenuItem, seznamTridToolStripMenuItem, toolStripSeparator1, noveRozsazenitoolStripMenuItem, zobrazitRozsazenitoolStripMenuItem });
-            třídaToolStripMenuItem.Name = "třídaToolStripMenuItem";
-            třídaToolStripMenuItem.Size = new Size(44, 19);
-            třídaToolStripMenuItem.Text = "Třída";
+            this.třídaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.novaTridaToolStripMenuItem,
+            this.upravitTriduToolStripMenuItem,
+            this.seznamTridToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.noveRozsazenitoolStripMenuItem,
+            this.zobrazitRozsazenitoolStripMenuItem});
+            this.třídaToolStripMenuItem.Name = "třídaToolStripMenuItem";
+            this.třídaToolStripMenuItem.Size = new System.Drawing.Size(44, 19);
+            this.třídaToolStripMenuItem.Text = "Třída";
             // 
             // novaTridaToolStripMenuItem
             // 
-            novaTridaToolStripMenuItem.Image = Properties.Resources.Add1;
-            novaTridaToolStripMenuItem.Name = "novaTridaToolStripMenuItem";
-            novaTridaToolStripMenuItem.Size = new Size(168, 22);
-            novaTridaToolStripMenuItem.Text = "Nová třída";
-            novaTridaToolStripMenuItem.Click += novaTridaToolStripMenuItem_Click;
+            this.novaTridaToolStripMenuItem.Image = global::SediM.Properties.Resources.Add1;
+            this.novaTridaToolStripMenuItem.Name = "novaTridaToolStripMenuItem";
+            this.novaTridaToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.novaTridaToolStripMenuItem.Text = "Nová třída";
             // 
             // upravitTriduToolStripMenuItem
             // 
-            upravitTriduToolStripMenuItem.Image = Properties.Resources.OE_Signature1;
-            upravitTriduToolStripMenuItem.Name = "upravitTriduToolStripMenuItem";
-            upravitTriduToolStripMenuItem.Size = new Size(168, 22);
-            upravitTriduToolStripMenuItem.Text = "Upravit třídu";
-            upravitTriduToolStripMenuItem.Click += upravitTriduToolStripMenuItem_Click;
+            this.upravitTriduToolStripMenuItem.Image = global::SediM.Properties.Resources.OE_Signature1;
+            this.upravitTriduToolStripMenuItem.Name = "upravitTriduToolStripMenuItem";
+            this.upravitTriduToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.upravitTriduToolStripMenuItem.Text = "Upravit třídu";
             // 
             // seznamTridToolStripMenuItem
             // 
-            seznamTridToolStripMenuItem.Image = Properties.Resources.User_Accounts1;
-            seznamTridToolStripMenuItem.Name = "seznamTridToolStripMenuItem";
-            seznamTridToolStripMenuItem.Size = new Size(168, 22);
-            seznamTridToolStripMenuItem.Text = "Seznam tříd";
-            seznamTridToolStripMenuItem.Click += seznamTridToolStripMenuItem_Click;
+            this.seznamTridToolStripMenuItem.Image = global::SediM.Properties.Resources.User_Accounts1;
+            this.seznamTridToolStripMenuItem.Name = "seznamTridToolStripMenuItem";
+            this.seznamTridToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.seznamTridToolStripMenuItem.Text = "Seznam tříd";
             // 
             // toolStripSeparator1
             // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(165, 6);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(165, 6);
             // 
             // noveRozsazenitoolStripMenuItem
             // 
-            noveRozsazenitoolStripMenuItem.Image = Properties.Resources.Add1;
-            noveRozsazenitoolStripMenuItem.Name = "noveRozsazenitoolStripMenuItem";
-            noveRozsazenitoolStripMenuItem.Size = new Size(168, 22);
-            noveRozsazenitoolStripMenuItem.Text = "Nové rozsazení";
-            noveRozsazenitoolStripMenuItem.Click += noveRozsazeniToolStripMenuItem_Click;
+            this.noveRozsazenitoolStripMenuItem.Image = global::SediM.Properties.Resources.Add1;
+            this.noveRozsazenitoolStripMenuItem.Name = "noveRozsazenitoolStripMenuItem";
+            this.noveRozsazenitoolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.noveRozsazenitoolStripMenuItem.Text = "Nové rozsazení";
             // 
             // zobrazitRozsazenitoolStripMenuItem
             // 
-            zobrazitRozsazenitoolStripMenuItem.Image = Properties.Resources.Search;
-            zobrazitRozsazenitoolStripMenuItem.Name = "zobrazitRozsazenitoolStripMenuItem";
-            zobrazitRozsazenitoolStripMenuItem.Size = new Size(168, 22);
-            zobrazitRozsazenitoolStripMenuItem.Text = "Zobrazit rozsazení";
-            zobrazitRozsazenitoolStripMenuItem.Click += zobrazitRozsazenitoolStripMenuItem_Click;
+            this.zobrazitRozsazenitoolStripMenuItem.Image = global::SediM.Properties.Resources.Search;
+            this.zobrazitRozsazenitoolStripMenuItem.Name = "zobrazitRozsazenitoolStripMenuItem";
+            this.zobrazitRozsazenitoolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.zobrazitRozsazenitoolStripMenuItem.Text = "Zobrazit rozsazení";
             // 
             // groupBox_Studenti
             // 
-            groupBox_Studenti.Controls.Add(tableLayout_Studenti);
-            groupBox_Studenti.Dock = DockStyle.Top;
-            groupBox_Studenti.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBox_Studenti.Location = new Point(0, 25);
-            groupBox_Studenti.Name = "groupBox_Studenti";
-            groupBox_Studenti.Size = new Size(566, 117);
-            groupBox_Studenti.TabIndex = 2;
-            groupBox_Studenti.TabStop = false;
-            groupBox_Studenti.Text = "Žáci";
+            this.groupBox_Studenti.Controls.Add(this.tableLayout_Studenti);
+            this.groupBox_Studenti.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox_Studenti.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox_Studenti.Location = new System.Drawing.Point(0, 25);
+            this.groupBox_Studenti.Name = "groupBox_Studenti";
+            this.groupBox_Studenti.Size = new System.Drawing.Size(566, 117);
+            this.groupBox_Studenti.TabIndex = 2;
+            this.groupBox_Studenti.TabStop = false;
+            this.groupBox_Studenti.Text = "Žáci";
             // 
             // tableLayout_Studenti
             // 
-            tableLayout_Studenti.ColumnCount = 5;
-            tableLayout_Studenti.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            tableLayout_Studenti.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            tableLayout_Studenti.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            tableLayout_Studenti.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            tableLayout_Studenti.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            tableLayout_Studenti.Controls.Add(picbox_NovyZak, 0, 0);
-            tableLayout_Studenti.Dock = DockStyle.Fill;
-            tableLayout_Studenti.GrowStyle = TableLayoutPanelGrowStyle.AddColumns;
-            tableLayout_Studenti.Location = new Point(3, 23);
-            tableLayout_Studenti.Name = "tableLayout_Studenti";
-            tableLayout_Studenti.RowCount = 1;
-            tableLayout_Studenti.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayout_Studenti.Size = new Size(560, 91);
-            tableLayout_Studenti.TabIndex = 0;
+            this.tableLayout_Studenti.ColumnCount = 5;
+            this.tableLayout_Studenti.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayout_Studenti.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayout_Studenti.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayout_Studenti.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayout_Studenti.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayout_Studenti.Controls.Add(this.picbox_NovyZak, 0, 0);
+            this.tableLayout_Studenti.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayout_Studenti.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
+            this.tableLayout_Studenti.Location = new System.Drawing.Point(3, 23);
+            this.tableLayout_Studenti.Name = "tableLayout_Studenti";
+            this.tableLayout_Studenti.RowCount = 1;
+            this.tableLayout_Studenti.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayout_Studenti.Size = new System.Drawing.Size(560, 91);
+            this.tableLayout_Studenti.TabIndex = 0;
             // 
             // picbox_NovyZak
             // 
-            picbox_NovyZak.Cursor = Cursors.Hand;
-            picbox_NovyZak.Dock = DockStyle.Fill;
-            picbox_NovyZak.Image = Properties.Resources.IkonaMenu_Student;
-            picbox_NovyZak.Location = new Point(3, 3);
-            picbox_NovyZak.Name = "picbox_NovyZak";
-            picbox_NovyZak.Size = new Size(78, 85);
-            picbox_NovyZak.SizeMode = PictureBoxSizeMode.Zoom;
-            picbox_NovyZak.TabIndex = 0;
-            picbox_NovyZak.TabStop = false;
-            picbox_NovyZak.Click += picbox_NovyZak_Click;
+            this.picbox_NovyZak.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picbox_NovyZak.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picbox_NovyZak.Image = global::SediM.Properties.Resources.IkonaMenu_Student;
+            this.picbox_NovyZak.Location = new System.Drawing.Point(3, 3);
+            this.picbox_NovyZak.Name = "picbox_NovyZak";
+            this.picbox_NovyZak.Size = new System.Drawing.Size(78, 85);
+            this.picbox_NovyZak.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picbox_NovyZak.TabIndex = 0;
+            this.picbox_NovyZak.TabStop = false;
             // 
             // Main
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(566, 676);
-            Controls.Add(groupBox_Studenti);
-            Controls.Add(menuStrip);
-            DoubleBuffered = true;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            MainMenuStrip = menuStrip;
-            Margin = new Padding(3, 4, 3, 4);
-            MaximizeBox = false;
-            Name = "Main";
-            SizeGripStyle = SizeGripStyle.Hide;
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Ivan";
-            Load += Main_Load;
-            menuStrip.ResumeLayout(false);
-            menuStrip.PerformLayout();
-            groupBox_Studenti.ResumeLayout(false);
-            tableLayout_Studenti.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)picbox_NovyZak).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(566, 676);
+            this.Controls.Add(this.groupBox_Studenti);
+            this.Controls.Add(this.menuStrip);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MaximizeBox = false;
+            this.Name = "Main";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Ivan";
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
+            this.groupBox_Studenti.ResumeLayout(false);
+            this.tableLayout_Studenti.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picbox_NovyZak)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

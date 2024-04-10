@@ -185,7 +185,7 @@ namespace SediM
                         // Zjistí velikost vykreslovaného řetězce
                         SizeF velikostTextuMista = g.MeasureString($"{zak.Misto}\r\n \r\n ", new Font("Arial", 10));
                         SizeF velikostTextuJmena = g.MeasureString($" \r\n{jmenoZaka}\r\n ", new Font("Arial", 9));
-                        SizeF velikostTextuKategorieASkoly = g.MeasureString($" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}", new Font("Arial", 10));
+                        SizeF velikostTextuKategorieASkoly = g.MeasureString($" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {mainHelp.SkolaNaPismeno(zak.Skola)}", new Font("Arial", 10));
 
                         // kontrast textu s barvou pozadí buňky
                         float svetlostBarvy = ZiskejBarvuDleKategorie(vyplnitBarevne ? zak.Kategorie : -1).Color.GetBrightness();
@@ -204,7 +204,7 @@ namespace SediM
                             pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuJmena.Width / 2,
                             pocatekPlochyMist.Y + r * mistoVyska + r + mistoVyska / 2 - velikostTextuJmena.Height / 2);
                         g.DrawString(
-                            $" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}",
+                            $" \r\n \r\n{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {mainHelp.SkolaNaPismeno(zak.Skola)}",
                             new Font("Arial", 10),
                             svetlostBarvy > 0.65 ? Brushes.Black : Brushes.White,
                             pocatekPlochyMist.X + s * mistoSirka + s + mistoSirka / 2 - velikostTextuKategorieASkoly.Width / 2,
@@ -596,7 +596,7 @@ namespace SediM
                         new Paragraph(zak.CeleJmeno == "MÍSTO PRÁZDNÉ" ? "PRÁZDNÉ MÍSTO" : zak.CeleJmeno)
                         .SetTextAlignment(TextAlignment.CENTER).SetFont(font));
                     grafikaMista.Add(
-                        new Paragraph($"{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {zak.Skola}")
+                        new Paragraph($"{mainHelp.CisloKategorieNaRimske(zak.Kategorie)} {mainHelp.SkolaNaPismeno(zak.Skola)}")
                         .SetTextAlignment(TextAlignment.CENTER).SetFont(font));
                 }
             }

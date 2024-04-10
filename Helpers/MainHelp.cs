@@ -294,6 +294,10 @@ namespace SediM.Helpers
             return veta;
         }
 
+        /// <summary>
+        /// Zobrazí box informující o nehotové/nedokončené části aplikace
+        /// </summary>
+        /// <param name="coNeni">Název části aplikace, které se oznámení týká</param>
         public void JesteNeni(string? coNeni)
         {
             if (coNeni == null)
@@ -339,6 +343,48 @@ namespace SediM.Helpers
             }
 
             return rimsky;
+        }
+
+        /// <summary>
+        /// Převedení ID školy na písmeno
+        /// </summary>
+        /// <param name="cislo">ID školy</param>
+        /// <returns>Písmeno (písmena) abecedy označující školu</returns>
+        public string SkolaNaPismeno(int cislo)
+        {
+            // Převedení ID školy na písmeno (bez háčků a čárek)
+            string abeceda = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Písmena abecedy bez háčků a čárek
+            int delkaAbecedy = abeceda.Length; // Celková délka abecedy
+
+            // Pokud je číslo mimo rozsah abecedy, spočítat další písmeno
+            if (cislo >= delkaAbecedy)
+            {
+                int zbytek = cislo;
+                string pismena = "";
+
+                while (zbytek >= delkaAbecedy)
+                {
+                    int indexPoslednihoPismena = (zbytek - 1) % delkaAbecedy; // Index posledního písmena v abecedě
+                    zbytek = (zbytek - 1) / delkaAbecedy; // Nový zbytek pro další iteraci
+
+                    char posledniPismeno = abeceda[indexPoslednihoPismena]; // Poslední písmeno pro aktuální číslo
+                    pismena = posledniPismeno + pismena; // Přidat písmeno na začátek řetězce
+                }
+
+                // Zbývající zbytek po výpočtu
+                char prvniPismeno = abeceda[zbytek - 1];
+                return prvniPismeno + pismena; // Vrátit kombinaci písmen
+            }
+
+            // Pokud je číslo v rámci rozsahu abecedy, vrátit příslušné písmeno
+            if (cislo >= 0 && cislo < delkaAbecedy)
+            {
+                char pismeno = abeceda[cislo]; // Písmeno odpovídající indexu čísla
+                return pismeno.ToString(); // Vrátit písmeno jako řetězec
+            }
+
+            // Pokud je číslo mimo rozsah abecedy, vrátit prázdný řetězec
+            return "";
         }
     }
 }

@@ -221,5 +221,13 @@ namespace SediM
 
             zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
+
+        private void seznamSkolToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Skola_Seznam okno = new Skola_Seznam(skoly);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+        }
     }
 }
