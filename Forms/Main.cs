@@ -16,7 +16,6 @@ namespace SediM
 
         public List<Zak> zaci = new List<Zak>();
         public List<Trida> tridy = new List<Trida>();
-        public List<Trida> nerozsazeneTridy = new List<Trida>();
         private List<Skola> skoly = new List<Skola>();
         private List<Ucitel> ucitele = new List<Ucitel>();
 
@@ -45,87 +44,6 @@ namespace SediM
                 mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
-        }
-
-        private DataTable NactiSkoly()
-        {
-            DataTable data = new DataTable();
-            SqlDataAdapter dataAdapter;
-            SqlCommand cmd = new("SELECT * FROM Skoly", connection);
-
-            dataAdapter = new SqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            return data;
-        }
-
-        private DataTable NactiTridy(bool jenNerozsazene = false)
-        {
-            DataTable data = new DataTable();
-            SqlDataAdapter dataAdapter;
-
-            SqlCommand cmd;
-
-            if (jenNerozsazene)
-            {
-                cmd = new($"SELECT * FROM Tridy WHERE JeRozsazena = 0", connection);
-            }
-            else
-            {
-                cmd = new($"SELECT * FROM Tridy", connection);
-            }
-
-            dataAdapter = new SqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            return data;
-        }
-
-        private DataTable NactiStudenty()
-        {
-            DataTable data = new DataTable();
-            SqlDataAdapter dataAdapter;
-            SqlCommand cmd = new("SELECT * FROM Studenti", connection);
-
-            dataAdapter = new SqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            return data;
-        }
-
-        private DataTable NactiUcitele()
-        {
-            DataTable data = new DataTable();
-            SqlDataAdapter dataAdapter;
-            SqlCommand cmd = new("SELECT * FROM Ucitele", connection);
-
-            dataAdapter = new SqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            return data;
-        }
-
-        public void NactiData()
-        {
-            data = NactiStudenty();
-            List<Zak> noveZaci = mainHelp.ListZaku(data);
-            zaci.Clear(); // vymazání starých údajů
-            zaci = noveZaci;
-
-            data = NactiSkoly();
-            List<Skola> noveSkoly = mainHelp.ListSkol(data);
-            skoly.Clear(); // vymazání starých údajů
-            skoly = noveSkoly;
-
-            data = NactiTridy();
-            List<Trida> noveTridy = mainHelp.ListTrid(data);
-            tridy.Clear(); // vymazání starých údajů
-            tridy = noveTridy;
-
-            data = NactiUcitele();
-            List<Ucitel> noveUcitele = mainHelp.ListUcitelu(data);
-            ucitele.Clear(); // vymazání starých údajů
-            ucitele = noveUcitele;
         }
 
         private void Exportovat()
@@ -160,7 +78,10 @@ namespace SediM
 
         private void Main_Load(object sender, EventArgs e)
         {
-            NactiData();
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+            skoly = DBNaObjekty.ZiskejListSkol(DBKomunikace.NactiSkoly());
+            ucitele = DBNaObjekty.ZiskejListUcitelu(DBKomunikace.NactiUcitele());
         }
 
         private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
@@ -205,7 +126,7 @@ namespace SediM
         {
             DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
 
-            NactiData();
+            skoly = DBNaObjekty.ZiskejListSkol(DBKomunikace.NactiSkoly());
         }
 
         private void upravitSkoluToolStripMenuItem_Click(object sender, EventArgs e)
@@ -225,7 +146,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            NactiData();
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
         }
 
         private void upravitTriduToolStripMenuItem_Click(object sender, EventArgs e)
@@ -235,7 +156,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            NactiData();
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
         }
 
         private void seznamTridToolStripMenuItem_Click(object sender, EventArgs e)
@@ -245,17 +166,20 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            NactiData();
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
 
         private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             FormularRozsazeni okno = new FormularRozsazeni(tridy, zaci);
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
 
-            NactiData();
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
 
         private void zobrazitRozsazenitoolStripMenuItem_Click(object sender, EventArgs e)
@@ -270,7 +194,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            NactiData();
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
 
         private void upravitZakaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -280,7 +204,7 @@ namespace SediM
 
             DialogResult stav = okno.ShowDialog();
 
-            NactiData();
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
 
         private void seznamZakuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -289,15 +213,13 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
-
-            NactiData();
         }
 
         private void picbox_NovyZak_Click(object sender, EventArgs e)
         {
             DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
 
-            NactiData();
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
     }
 }

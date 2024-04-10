@@ -5,27 +5,19 @@
         private int id;
         private string jmeno;
         private string prijmeni;
-        private int dynKategorie;
+        private int priorita = -1;
         private int kategorie;
         private int skola;
         private int trida;
-        private bool jeRozsazen = false;
-
-        private int x;
-        private int y;
         private int misto;
 
         public int Id { get { return id; } }
         public string Jmeno { get { return jmeno; } }
         public string Prijmeni { get { return prijmeni; } }
-        public int DynKategorie { get { return dynKategorie; } set { dynKategorie = value; } }
+        public int Priorita { get { return priorita; } set { priorita = value; } }
         public int Kategorie { get { return kategorie; } }
         public int Skola { get { return skola; } set { skola = value; } }
         public int Trida { get { return trida; } set { trida = value; } }
-        public bool JeRozsazen { get { return jeRozsazen; } set { jeRozsazen = value; } }
-
-        public int X { get { return x; } set { x = value; } }
-        public int Y { get { return y; } set { y = value; } }
         public int Misto { get { return misto; } set { misto = value; } }
 
         /// <summary>
@@ -41,21 +33,9 @@
             this.id = id;
             this.jmeno = jmeno;
             this.prijmeni = prijmeni;
-            this.dynKategorie = kategorie;
             this.kategorie = kategorie;
             this.skola = skola;
             this.trida = trida;
-        }
-
-        /// <summary>
-        /// Konstruktor pro pozice studentů
-        /// </summary>
-        /// <param name="x">Pozice X</param>
-        /// <param name="y">Pozice Y</param>
-        public Zak(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
         }
 
         public int CompareTo(Zak other)

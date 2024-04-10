@@ -73,22 +73,17 @@ namespace SediM
 
         private void Zak_Upravit_Load(object sender, EventArgs e)
         {
-
-            // _skoly.Sort(); // seřazení
-
-            // MessageBox.Show(_skoly.Count.ToString());
-
             // načtení škol
+            cboxSkoly.ValueMember = "Id";
+            cboxSkoly.DisplayMember = "Nazev";
             cboxSkoly.DataSource = _skoly;
-            cboxSkoly.ValueMember = "id";
-            cboxSkoly.DisplayMember = "nazev";
 
             _zaci.Sort(); // seřazení
 
             // načtení žáků
-            cboxZaci.DataSource = _zaci;
             cboxZaci.ValueMember = "Id";
             cboxZaci.DisplayMember = "CeleJmeno";
+            cboxZaci.DataSource = _zaci;
 
             // povolení autocomplete
             cboxZaci.AutoCompleteMode = AutoCompleteMode.Suggest;
@@ -100,8 +95,8 @@ namespace SediM
             string jmeno = tboxJmeno.Text;
             string prijmeni = tboxPrijmeni.Text;
             int kategorie = (int)numKategorie.Value;
-            int skola = cboxSkoly.SelectedIndex + 1;
-            int zakID = int.Parse(lblZakID.Text);
+            int skola = (int)cboxSkoly.SelectedValue;
+            int zakID = (int)cboxZaci.SelectedValue;
 
             try
             {
@@ -133,7 +128,7 @@ namespace SediM
 
         private void cboxZaci_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Zak zak = _zaci[cboxZaci.SelectedIndex];
+            Zak zak = _zaci.Find(zak => zak.Id == (int)cboxZaci.SelectedValue);
 
             tboxJmeno.Text = zak.Jmeno;
             tboxPrijmeni.Text = zak.Prijmeni;

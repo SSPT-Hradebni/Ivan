@@ -49,122 +49,115 @@
             // lblNazev
             // 
             lblNazev.AutoSize = true;
-            lblNazev.Location = new Point(14, 12);
+            lblNazev.Location = new Point(12, 9);
             lblNazev.Name = "lblNazev";
-            lblNazev.Size = new Size(50, 20);
+            lblNazev.Size = new Size(39, 15);
             lblNazev.TabIndex = 0;
             lblNazev.Text = "Název";
             // 
             // tboxNazev
             // 
-            tboxNazev.Location = new Point(14, 36);
-            tboxNazev.Margin = new Padding(3, 4, 3, 4);
+            tboxNazev.Location = new Point(12, 27);
             tboxNazev.Name = "tboxNazev";
-            tboxNazev.Size = new Size(298, 27);
+            tboxNazev.Size = new Size(261, 23);
             tboxNazev.TabIndex = 1;
             // 
             // lblUlice
             // 
             lblUlice.AutoSize = true;
-            lblUlice.Location = new Point(14, 85);
+            lblUlice.Location = new Point(12, 64);
             lblUlice.Name = "lblUlice";
-            lblUlice.Size = new Size(42, 20);
+            lblUlice.Size = new Size(33, 15);
             lblUlice.TabIndex = 2;
             lblUlice.Text = "Ulice";
             // 
             // tboxUlice
             // 
-            tboxUlice.Location = new Point(14, 109);
-            tboxUlice.Margin = new Padding(3, 4, 3, 4);
+            tboxUlice.Location = new Point(12, 82);
             tboxUlice.Name = "tboxUlice";
-            tboxUlice.Size = new Size(217, 27);
+            tboxUlice.Size = new Size(190, 23);
             tboxUlice.TabIndex = 3;
             // 
             // lblCP
             // 
             lblCP.AutoSize = true;
-            lblCP.Location = new Point(233, 85);
+            lblCP.Location = new Point(204, 64);
             lblCP.Name = "lblCP";
-            lblCP.Size = new Size(35, 20);
+            lblCP.Size = new Size(29, 15);
             lblCP.TabIndex = 4;
             lblCP.Text = "č. p.";
             // 
             // numCP
             // 
-            numCP.Location = new Point(238, 111);
-            numCP.Margin = new Padding(3, 4, 3, 4);
+            numCP.Location = new Point(208, 83);
             numCP.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
             numCP.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numCP.Name = "numCP";
-            numCP.Size = new Size(74, 27);
+            numCP.Size = new Size(65, 23);
             numCP.TabIndex = 5;
             numCP.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // lblMesto
             // 
             lblMesto.AutoSize = true;
-            lblMesto.Location = new Point(14, 160);
+            lblMesto.Location = new Point(12, 120);
             lblMesto.Name = "lblMesto";
-            lblMesto.Size = new Size(50, 20);
+            lblMesto.Size = new Size(40, 15);
             lblMesto.TabIndex = 6;
             lblMesto.Text = "Město";
             // 
             // cboxMesto
             // 
             cboxMesto.FormattingEnabled = true;
-            cboxMesto.Items.AddRange(new object[] { "Broumov", "Dobruška", "Dvůr Králové nad Labem", "Hořice", "Hradec Králové", "Janské Lázně", "Jaroměř", "Jičín", "Kostelec nad Orlicí", "Malé Svatoňovice", "Náchod", "Náchod", "Nová Paka", "Nový Bydžov", "Rychnov nad Kněžnou", "Trutnov", "Třebechovice pod Orebem", "Úpice", "Vrchlabí" });
-            cboxMesto.Location = new Point(14, 184);
-            cboxMesto.Margin = new Padding(3, 4, 3, 4);
+            cboxMesto.Items.AddRange(new object[] { "Broumov", "Dobruška", "Dvůr Králové nad Labem", "Hořice", "Hradec Králové", "Janské Lázně", "Jaroměř", "Jičín", "Kostelec nad Orlicí", "Malé Svatoňovice", "Náchod", "Náchod", "Nová Paka", "Nový Bydžov", "Rychnov nad Kněžnou", "Třebechovice pod Orebem", "Trutnov", "Úpice", "Vrchlabí" });
+            cboxMesto.Location = new Point(12, 138);
             cboxMesto.Name = "cboxMesto";
-            cboxMesto.Size = new Size(217, 28);
+            cboxMesto.Size = new Size(190, 23);
             cboxMesto.Sorted = true;
             cboxMesto.TabIndex = 7;
             // 
             // numPSC
             // 
-            numPSC.Location = new Point(238, 184);
-            numPSC.Margin = new Padding(3, 4, 3, 4);
+            numPSC.Location = new Point(208, 138);
             numPSC.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
             numPSC.Minimum = new decimal(new int[] { 10000, 0, 0, 0 });
             numPSC.Name = "numPSC";
-            numPSC.Size = new Size(74, 27);
+            numPSC.Size = new Size(65, 23);
             numPSC.TabIndex = 8;
             numPSC.Value = new decimal(new int[] { 10000, 0, 0, 0 });
             // 
             // lblPSC
             // 
             lblPSC.AutoSize = true;
-            lblPSC.Location = new Point(238, 160);
+            lblPSC.Location = new Point(208, 120);
             lblPSC.Name = "lblPSC";
-            lblPSC.Size = new Size(34, 20);
+            lblPSC.Size = new Size(28, 15);
             lblPSC.TabIndex = 9;
             lblPSC.Text = "PSČ";
             // 
             // cboxUcitel
             // 
             cboxUcitel.FormattingEnabled = true;
-            cboxUcitel.Items.AddRange(new object[] { "Broumov", "Dobruška", "Dvůr Králové nad Labem", "Hořice", "Hradec Králové", "Janské Lázně", "Jaroměř", "Jičín", "Kostelec nad Orlicí", "Malé Svatoňovice", "Náchod", "Náchod", "Nová Paka", "Nový Bydžov", "Rychnov nad Kněžnou", "Trutnov", "Třebechovice pod Orebem", "Úpice", "Vrchlabí" });
-            cboxUcitel.Location = new Point(14, 256);
-            cboxUcitel.Margin = new Padding(3, 4, 3, 4);
+            cboxUcitel.Location = new Point(12, 192);
             cboxUcitel.Name = "cboxUcitel";
-            cboxUcitel.Size = new Size(298, 28);
-            cboxUcitel.Sorted = true;
+            cboxUcitel.Size = new Size(261, 23);
             cboxUcitel.TabIndex = 10;
             // 
             // lblUcitel
             // 
             lblUcitel.AutoSize = true;
-            lblUcitel.Location = new Point(12, 232);
+            lblUcitel.Location = new Point(10, 174);
             lblUcitel.Name = "lblUcitel";
-            lblUcitel.Size = new Size(126, 20);
+            lblUcitel.Size = new Size(101, 15);
             lblUcitel.TabIndex = 11;
             lblUcitel.Text = "Odpovědný učitel";
             // 
             // btnVytvorit
             // 
-            btnVytvorit.Location = new Point(12, 309);
+            btnVytvorit.Location = new Point(10, 232);
+            btnVytvorit.Margin = new Padding(3, 2, 3, 2);
             btnVytvorit.Name = "btnVytvorit";
-            btnVytvorit.Size = new Size(300, 29);
+            btnVytvorit.Size = new Size(262, 22);
             btnVytvorit.TabIndex = 12;
             btnVytvorit.Text = "Vytvořit";
             btnVytvorit.UseVisualStyleBackColor = true;
@@ -172,9 +165,9 @@
             // 
             // Skola_Nova
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(332, 360);
+            ClientSize = new Size(290, 270);
             Controls.Add(btnVytvorit);
             Controls.Add(lblUcitel);
             Controls.Add(cboxUcitel);
@@ -191,7 +184,6 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "Skola_Nova";
             SizeGripStyle = SizeGripStyle.Hide;
