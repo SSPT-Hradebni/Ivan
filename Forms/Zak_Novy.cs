@@ -74,9 +74,12 @@ namespace SediM
         private void Zak_Novy_Load(object sender, EventArgs e)
         {
             // načtení škol
-            cboxSkoly.DataSource = _skoly;
             cboxSkoly.ValueMember = "id";
             cboxSkoly.DisplayMember = "nazev";
+            cboxSkoly.DataSource = _skoly;
+
+            // Nastavení formátování pro zobrazení zkratky
+            cboxSkoly.Format += (s, args) => args.Value = mainHelp.ZkratkySkol(args.ListItem.ToString());
         }
 
         private void Zak_Novy_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
@@ -125,11 +128,6 @@ namespace SediM
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void tboxJmeno_TextChanged(object sender, EventArgs e)
-        {
-            MessageBox.Show(tboxJmeno.Text);
         }
     }
 }
