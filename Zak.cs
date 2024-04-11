@@ -2,21 +2,26 @@
 {
     public class Zak : IComparable<Zak>
     {
-        private long id;
+        private int id;
         private string jmeno;
         private string prijmeni;
-        private long kategorie;
-        private long skola;
+        private int kategorie;
+        private int skola;
+        private int trida;
+        private bool jeRozsazen = false;
 
         private int x;
         private int y;
         private int misto;
 
-        public long Id { get { return id; } }
+        public int Id { get { return id; } }
         public string Jmeno { get { return jmeno; } }
         public string Prijmeni { get { return prijmeni; } }
-        public long Kategorie { get { return kategorie; } set { kategorie = value; } }
-        public long Skola { get { return skola; } set { skola = value; } }
+        public int Kategorie { get { return kategorie; } set { kategorie = value; } }
+        public int Skola { get { return skola; } set { skola = value; } }
+        public int Trida { get { return trida; } set { trida = value; } }
+        public bool JeRozsazen { get { return jeRozsazen; } set { jeRozsazen = value; } }
+
         public int X { get { return x; } set { x = value; } }
         public int Y { get { return y; } set { y = value; } }
         public int Misto { get { return misto; } set { misto = value; } }
@@ -29,13 +34,14 @@
         /// <param name="prijmeni">Příjmení studenta</param>
         /// <param name="kategorie">Kategorie studenta</param>
         /// <param name="skola">ID školy studenta</param>
-        public Zak(long id, string jmeno, string prijmeni, long kategorie, long skola)
+        public Zak(int id, string jmeno, string prijmeni, int kategorie, int skola, int trida)
         {
             this.id = id;
             this.jmeno = jmeno;
             this.prijmeni = prijmeni;
             this.kategorie = kategorie;
             this.skola = skola;
+            this.trida = trida;
         }
 
         /// <summary>
@@ -56,7 +62,7 @@
 
         public Zak Clone()
         {
-            return new Zak(this.Id, this.Jmeno, this.Prijmeni, this.Kategorie, this.Skola);
+            return new Zak(this.Id, this.Jmeno, this.Prijmeni, this.Kategorie, this.Skola, this.Trida);
         }
 
         public override string ToString()
