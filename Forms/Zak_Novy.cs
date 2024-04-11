@@ -126,5 +126,10 @@ namespace SediM
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void tboxJmeno_TextChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show(tboxJmeno.Text);
+        }
     }
 }

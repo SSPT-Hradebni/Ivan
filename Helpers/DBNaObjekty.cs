@@ -68,7 +68,12 @@ namespace SediM.Helpers
             {
                 // [0] - ID školy
                 // [1] - Název školy
-                Skola skola = new Skola(long.Parse(radek[0].ToString()), radek[1].ToString());
+                // [2] - Ulice
+                // [3] - Číslo popisné
+                // [4] - PSČ
+                // [5] - Město
+                // [6] - Učitel (ID)
+                Skola skola = new Skola(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), int.Parse(radek[3].ToString()), int.Parse(radek[4].ToString()), radek[5].ToString(), new Ucitel(int.Parse(radek[6].ToString()))); // TODO FIX
                 skoly.Add(skola);
             }
 

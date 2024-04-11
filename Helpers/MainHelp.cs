@@ -294,6 +294,10 @@ namespace SediM.Helpers
             return veta;
         }
 
+        /// <summary>
+        /// Zobrazí box informující o nehotové/nedokončené části aplikace
+        /// </summary>
+        /// <param name="coNeni">Název části aplikace, které se oznámení týká</param>
         public void JesteNeni(string? coNeni)
         {
             if (coNeni == null)
