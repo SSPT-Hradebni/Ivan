@@ -159,12 +159,7 @@ namespace SediM
             Zak_Seznam okno = new Zak_Seznam(zaci);
             okno.Owner = this;
 
-            DialogResult stav = okno.ShowDialog();
-        }
-
-        private void picbox_NovyZak_Click(object sender, EventArgs e)
-        {
-            DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
+            okno.Show();
 
             zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
@@ -202,7 +197,12 @@ namespace SediM
             Trida_Seznam okno = new Trida_Seznam(tridy);
             okno.Owner = this;
 
-            DialogResult stav = okno.ShowDialog();
+            okno.Show();
+        }
+
+        private void picbox_NovyZak_Click(object sender, EventArgs e)
+        {
+            DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
 
             tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
             zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
@@ -213,7 +213,7 @@ namespace SediM
             FormularRozsazeni okno = new FormularRozsazeni(tridy, zaci);
             okno.Owner = this;
 
-            DialogResult stav = okno.ShowDialog();
+            okno.Show();
 
             tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
             zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());

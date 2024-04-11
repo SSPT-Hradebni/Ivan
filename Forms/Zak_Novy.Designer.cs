@@ -54,15 +54,14 @@
             // 
             tboxJmeno.Location = new Point(12, 27);
             tboxJmeno.Name = "tboxJmeno";
-            tboxJmeno.Size = new Size(261, 23);
+            tboxJmeno.Size = new Size(410, 23);
             tboxJmeno.TabIndex = 1;
-            tboxJmeno.TextChanged += tboxJmeno_TextChanged;
             // 
             // tboxPrijmeni
             // 
             tboxPrijmeni.Location = new Point(12, 80);
             tboxPrijmeni.Name = "tboxPrijmeni";
-            tboxPrijmeni.Size = new Size(261, 23);
+            tboxPrijmeni.Size = new Size(410, 23);
             tboxPrijmeni.TabIndex = 2;
             // 
             // lblPrijmeni
@@ -80,7 +79,7 @@
             numKategorie.Maximum = new decimal(new int[] { 7, 0, 0, 0 });
             numKategorie.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numKategorie.Name = "numKategorie";
-            numKategorie.Size = new Size(261, 23);
+            numKategorie.Size = new Size(410, 23);
             numKategorie.TabIndex = 4;
             numKategorie.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -107,7 +106,7 @@
             cboxSkoly.FormattingEnabled = true;
             cboxSkoly.Location = new Point(10, 200);
             cboxSkoly.Name = "cboxSkoly";
-            cboxSkoly.Size = new Size(263, 23);
+            cboxSkoly.Size = new Size(412, 23);
             cboxSkoly.TabIndex = 10;
             // 
             // btnVytvorit
@@ -125,7 +124,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(290, 269);
+            ClientSize = new Size(434, 269);
             Controls.Add(btnVytvorit);
             Controls.Add(cboxSkoly);
             Controls.Add(lblSkola);
@@ -135,7 +134,7 @@
             Controls.Add(tboxPrijmeni);
             Controls.Add(tboxJmeno);
             Controls.Add(lblJmeno);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;

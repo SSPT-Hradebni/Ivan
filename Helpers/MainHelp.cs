@@ -1,6 +1,7 @@
 ﻿using SediM.Forms;
 using System.Data;
 using System.Globalization;
+using System.Linq;
 using System.Speech.Synthesis;
 using System.Text;
 
@@ -308,6 +309,48 @@ namespace SediM.Helpers
             {
                 MessageBox.Show($"Část \"{coNeni}\" v aplikaci není hotová.", "Nehotová část", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        public string ZkratkySkol(string nazev)
+        {
+            Dictionary<string, string> skoly = new Dictionary<string, string>()
+            {
+                {"České vysoké učení technické","ČVUT"},
+                {"Základní škola", "ZŠ"},
+                {"Základní umělecká škola", "ZUŠ"},
+                {"Střední škola", "SŠ"},
+                {"Střední odborná škola", "SOŠ"},
+                {"Střední průmyslová škola", "SPŠ"},
+                {"Střední odborné učeliště", "SOU"},
+                {"Střední škola informatiky, poštovnictví a finančnictví", "SŠIPF"},
+                {"Střední škola technická a ekonomická","SŠTE"},
+                {"Integrovaná střední škola","ISŠ"},
+                {"Střední zdravotnická škola","SZŠ"},
+                {"Střední škola elektrotechnická","SŠE"},
+                {"Střední škola polytechnická","SŠP"},
+                {"Střední škola technická a dopravní","SŠTD"},
+                {"Integrovaná střední škola technická a ekonomická","ISŠTE"},
+                {"Střední odborné učiliště strojírenské","SOUs"},
+                {"Obchodní akademie","OA"},
+                {"Jazyková škola","JŠ"},
+                {"Hotelová škola","HŠ"},
+                {"Gymnázium", "G"},
+                {"Hradec Králové", "HK"},
+                // Přidejte další školy podle potřeby
+            };
+
+            foreach(string s in skoly.Keys)
+            {
+                if (nazev.ToLower().Contains(s.ToLower()))
+                {
+                    string novyNazev = nazev.ToLower().Replace(s.ToLower(), skoly[s]);
+                    string DalsiNazev = ZkratkySkol(novyNazev);
+
+                    return DalsiNazev;
+                }
+            }
+
+            return nazev;
         }
     }
 }
