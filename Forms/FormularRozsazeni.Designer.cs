@@ -32,10 +32,10 @@
             btnVyplnit = new Button();
             label2 = new Label();
             panelVykresleniRozsazeni = new Panel();
-            listbxVyplneneTridy = new ListBox();
+            listbxVyplneneUcebny = new ListBox();
             label5 = new Label();
             splitContainer = new SplitContainer();
-            cboxTridy = new ComboBox();
+            cboxUcebny = new ComboBox();
             listbxSeznamStudentu = new ListBox();
             label6 = new Label();
             toolStrip1 = new ToolStrip();
@@ -79,14 +79,14 @@
             // 
             // listbxVyplneneUcebny
             // 
-            listbxVyplneneTridy.FormattingEnabled = true;
-            listbxVyplneneTridy.ItemHeight = 15;
-            listbxVyplneneTridy.Location = new Point(12, 106);
-            listbxVyplneneTridy.Margin = new Padding(3, 2, 3, 2);
-            listbxVyplneneTridy.Name = "listbxVyplneneTridy";
-            listbxVyplneneTridy.Size = new Size(208, 79);
-            listbxVyplneneTridy.TabIndex = 13;
-            listbxVyplneneTridy.SelectedIndexChanged += listbxVyplneneTridy_SelectedIndexChanged;
+            listbxVyplneneUcebny.FormattingEnabled = true;
+            listbxVyplneneUcebny.ItemHeight = 15;
+            listbxVyplneneUcebny.Location = new Point(12, 106);
+            listbxVyplneneUcebny.Margin = new Padding(3, 2, 3, 2);
+            listbxVyplneneUcebny.Name = "listbxVyplneneUcebny";
+            listbxVyplneneUcebny.Size = new Size(208, 79);
+            listbxVyplneneUcebny.TabIndex = 13;
+            listbxVyplneneUcebny.SelectedIndexChanged += listbxVyplneneUcebny_SelectedIndexChanged;
             // 
             // label5
             // 
@@ -104,12 +104,12 @@
             // 
             // splitContainer.Panel1
             // 
-            splitContainer.Panel1.Controls.Add(cboxTridy);
+            splitContainer.Panel1.Controls.Add(cboxUcebny);
             splitContainer.Panel1.Controls.Add(listbxSeznamStudentu);
             splitContainer.Panel1.Controls.Add(label6);
             splitContainer.Panel1.Controls.Add(label2);
             splitContainer.Panel1.Controls.Add(label5);
-            splitContainer.Panel1.Controls.Add(listbxVyplneneTridy);
+            splitContainer.Panel1.Controls.Add(listbxVyplneneUcebny);
             splitContainer.Panel1.Controls.Add(btnVyplnit);
             // 
             // splitContainer.Panel2
@@ -121,13 +121,13 @@
             // 
             // cboxUcebny
             // 
-            cboxTridy.FormattingEnabled = true;
-            cboxTridy.Location = new Point(12, 26);
-            cboxTridy.Margin = new Padding(3, 2, 3, 2);
-            cboxTridy.Name = "cboxTridy";
-            cboxTridy.Size = new Size(221, 23);
-            cboxTridy.TabIndex = 17;
-            cboxTridy.SelectedIndexChanged += cboxTridy_SelectedIndexChanged;
+            cboxUcebny.FormattingEnabled = true;
+            cboxUcebny.Location = new Point(12, 26);
+            cboxUcebny.Margin = new Padding(3, 2, 3, 2);
+            cboxUcebny.Name = "cboxUcebny";
+            cboxUcebny.Size = new Size(221, 23);
+            cboxUcebny.TabIndex = 17;
+            cboxUcebny.SelectedIndexChanged += cboxUcebny_SelectedIndexChanged;
             // 
             // listbxSeznamStudentu
             // 
