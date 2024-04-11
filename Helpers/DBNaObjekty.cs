@@ -73,7 +73,7 @@ namespace SediM.Helpers
                 // [4] - PSČ
                 // [5] - Město
                 // [6] - Učitel (ID)
-                Skola skola = new Skola(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), int.Parse(radek[3].ToString()), int.Parse(radek[4].ToString()), radek[5].ToString(), new Ucitel(int.Parse(radek[6].ToString()))); // TODO FIX
+                Skola skola = new Skola(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), int.Parse(radek[3].ToString()), int.Parse(radek[4].ToString()), radek[5].ToString(), new Ucitel(int.Parse(radek[6].ToString())));
                 skoly.Add(skola);
             }
 
@@ -102,6 +102,12 @@ namespace SediM.Helpers
             }
 
             return ucitele;
+        }
+
+        public static Ucitel ZiskejUcitele(DataTable data)
+        {
+            DataRow dataUcitele = data.Rows[0];
+            return new Ucitel(int.Parse(dataUcitele[0].ToString()), dataUcitele[1].ToString(), dataUcitele[2].ToString(), dataUcitele[3].ToString(), dataUcitele[4].ToString());
         }
     }
 }

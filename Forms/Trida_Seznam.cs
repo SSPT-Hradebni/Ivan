@@ -81,7 +81,7 @@ namespace SediM.Forms
                 {
                     // Text buňky značící stav rozsazení se změní
                     dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value = "Ne";
-                    UpravTridyStudentu(tridy[dataviewTridy.CurrentRow.Index]);
+                    UpravTridyStudentu(id);
 
                     dataZmenena = true;
                 }
@@ -97,30 +97,18 @@ namespace SediM.Forms
 
         }
 
-        private void UpravTridyStudentu(Trida trida)
+        private void UpravTridyStudentu(int tridaID)
         {
             try
             {
-                List<Zak> rozsazeniZaci = new List<Zak>();
-                for (int r = 0; r < trida.Vyska; r++)
-                    for (int s = 0; s < trida.Sirka; s++)
-                        rozsazeniZaci.Add(trida.RozsazeniZaci[r, s]);
+                SqlCommand upravZaka = new SqlCommand("UPDATE Studenti SET Trida = 0 WHERE Trida = @tridaID", connection);
 
-                foreach (Zak zak in rozsazeniZaci)
-                {
-                    if (zak.Id == -1)
-                        continue;
+                upravZaka.Parameters.AddWithValue("@tridaID", tridaID);
 
-                    SqlCommand upravZaka = new SqlCommand("UPDATE Studenti SET Trida = @trida WHERE StudentId = @student", connection);
+                int stav = upravZaka.ExecuteNonQuery();
 
-                    upravZaka.Parameters.AddWithValue("@trida", 0);
-                    upravZaka.Parameters.AddWithValue("@student", zak.Id);
-
-                    int stav = upravZaka.ExecuteNonQuery();
-
-                    if (stav == 0)
-                        throw new Exception($"Žákovi s ID číslo {zak.Id} nebylo možné obnovit přiřazenou třídu.\r\nReset byl přerušen.");
-                }
+                if (stav == 0)
+                    throw new Exception("Žákům z neznámého důvodu nebyly resetovány třídy.");
             }
             catch (Exception ex)
             {

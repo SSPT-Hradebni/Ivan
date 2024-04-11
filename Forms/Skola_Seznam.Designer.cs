@@ -124,6 +124,7 @@
             this.Name = "Skola_Seznam";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Seznam škol";
+            this.Load += new System.EventHandler(this.Zak_Seznam_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataviewSkoly)).EndInit();
             this.ResumeLayout(false);
 

@@ -134,11 +134,6 @@ namespace SediM
             mainHelp.JesteNeni("Úprava stávající školy");
         }
 
-        private void seznamSkolToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Zobrazení seznamu škol");
-        }
-
         private void novaTridaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Trida_Nova okno = new Trida_Nova(tridy);
@@ -222,7 +217,7 @@ namespace SediM
             zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
 
-        private void seznamSkolToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void seznamSkolToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Skola_Seznam okno = new Skola_Seznam(skoly);
             okno.Owner = this;
