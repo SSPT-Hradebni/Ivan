@@ -52,7 +52,11 @@ namespace SediM.Forms
             //}
             //catch { }
         }
-
+        //odplnit vyhledání uceben, vrací null
+        //https://github.com/SSPT-Hradebni/Ivan/blob/test
+        //optimalizovat vzdalenost/velikost polí,
+        //vykresluje konp. label
+        //katalog barev
 
         private void FormWiev_Paint(object sender, PaintEventArgs e)
         {
