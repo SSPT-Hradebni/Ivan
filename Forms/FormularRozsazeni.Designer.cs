@@ -32,10 +32,10 @@
             this.btnVyplnit = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.panelVykresleniRozsazeni = new System.Windows.Forms.Panel();
-            this.listbxVyplneneTridy = new System.Windows.Forms.ListBox();
+            this.listbxVyplneneUcebny = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.cboxTridy = new System.Windows.Forms.ComboBox();
+            this.cboxUcebny = new System.Windows.Forms.ComboBox();
             this.listbxSeznamStudentu = new System.Windows.Forms.ListBox();
             this.label6 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -53,7 +53,7 @@
             this.btnVyplnit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnVyplnit.Name = "btnVyplnit";
             this.btnVyplnit.Size = new System.Drawing.Size(88, 22);
-            this.btnVyplnit.TabIndex = 2;
+            this.btnVyplnit.TabIndex = 0;
             this.btnVyplnit.Text = "Vyplnit";
             this.btnVyplnit.UseVisualStyleBackColor = true;
             this.btnVyplnit.Click += new System.EventHandler(this.btnVyplnit_Click);
@@ -63,9 +63,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 15);
+            this.label2.Size = new System.Drawing.Size(104, 15);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Třída k vyplnění";
+            this.label2.Text = "Učebna k vyplnění";
             // 
             // panelVykresleniRozsazeni
             // 
@@ -75,26 +75,27 @@
             this.panelVykresleniRozsazeni.Name = "panelVykresleniRozsazeni";
             this.panelVykresleniRozsazeni.Size = new System.Drawing.Size(976, 574);
             this.panelVykresleniRozsazeni.TabIndex = 12;
+            this.panelVykresleniRozsazeni.Paint += new System.Windows.Forms.PaintEventHandler(this.panelVykresleniRozsazeni_Paint);
             // 
-            // listbxVyplneneTridy
+            // listbxVyplneneUcebny
             // 
-            this.listbxVyplneneTridy.FormattingEnabled = true;
-            this.listbxVyplneneTridy.ItemHeight = 15;
-            this.listbxVyplneneTridy.Location = new System.Drawing.Point(12, 106);
-            this.listbxVyplneneTridy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listbxVyplneneTridy.Name = "listbxVyplneneTridy";
-            this.listbxVyplneneTridy.Size = new System.Drawing.Size(208, 79);
-            this.listbxVyplneneTridy.TabIndex = 13;
-            this.listbxVyplneneTridy.SelectedIndexChanged += new System.EventHandler(this.listbxVyplneneTridy_SelectedIndexChanged);
+            this.listbxVyplneneUcebny.FormattingEnabled = true;
+            this.listbxVyplneneUcebny.ItemHeight = 15;
+            this.listbxVyplneneUcebny.Location = new System.Drawing.Point(12, 106);
+            this.listbxVyplneneUcebny.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listbxVyplneneUcebny.Name = "listbxVyplneneUcebny";
+            this.listbxVyplneneUcebny.Size = new System.Drawing.Size(208, 79);
+            this.listbxVyplneneUcebny.TabIndex = 2;
+            this.listbxVyplneneUcebny.SelectedIndexChanged += new System.EventHandler(this.listbxVyplneneUcebny_SelectedIndexChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(12, 89);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(83, 15);
+            this.label5.Size = new System.Drawing.Size(98, 15);
             this.label5.TabIndex = 14;
-            this.label5.Text = "Vyplněné třídy";
+            this.label5.Text = "Vyplněné učebny";
             // 
             // splitContainer
             // 
@@ -103,12 +104,12 @@
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.cboxTridy);
+            this.splitContainer.Panel1.Controls.Add(this.cboxUcebny);
             this.splitContainer.Panel1.Controls.Add(this.listbxSeznamStudentu);
             this.splitContainer.Panel1.Controls.Add(this.label6);
             this.splitContainer.Panel1.Controls.Add(this.label2);
             this.splitContainer.Panel1.Controls.Add(this.label5);
-            this.splitContainer.Panel1.Controls.Add(this.listbxVyplneneTridy);
+            this.splitContainer.Panel1.Controls.Add(this.listbxVyplneneUcebny);
             this.splitContainer.Panel1.Controls.Add(this.btnVyplnit);
             // 
             // splitContainer.Panel2
@@ -118,15 +119,15 @@
             this.splitContainer.SplitterDistance = 236;
             this.splitContainer.TabIndex = 15;
             // 
-            // cboxTridy
+            // cboxUcebny
             // 
-            this.cboxTridy.FormattingEnabled = true;
-            this.cboxTridy.Location = new System.Drawing.Point(12, 26);
-            this.cboxTridy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cboxTridy.Name = "cboxTridy";
-            this.cboxTridy.Size = new System.Drawing.Size(221, 23);
-            this.cboxTridy.TabIndex = 17;
-            this.cboxTridy.SelectedIndexChanged += new System.EventHandler(this.cboxTridy_SelectedIndexChanged);
+            this.cboxUcebny.FormattingEnabled = true;
+            this.cboxUcebny.Location = new System.Drawing.Point(12, 26);
+            this.cboxUcebny.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboxUcebny.Name = "cboxUcebny";
+            this.cboxUcebny.Size = new System.Drawing.Size(221, 23);
+            this.cboxUcebny.TabIndex = 1;
+            this.cboxUcebny.SelectedIndexChanged += new System.EventHandler(this.cboxUcebny_SelectedIndexChanged);
             // 
             // listbxSeznamStudentu
             // 
@@ -135,7 +136,7 @@
             this.listbxSeznamStudentu.Location = new System.Drawing.Point(12, 205);
             this.listbxSeznamStudentu.Name = "listbxSeznamStudentu";
             this.listbxSeznamStudentu.Size = new System.Drawing.Size(208, 364);
-            this.listbxSeznamStudentu.TabIndex = 16;
+            this.listbxSeznamStudentu.TabIndex = 3;
             // 
             // label6
             // 
@@ -201,12 +202,12 @@
         private Button btnVyplnit;
         private Label label2;
         private Panel panelVykresleniRozsazeni;
-        private ListBox listbxVyplneneTridy;
+        private ListBox listbxVyplneneUcebny;
         private Label label5;
         private SplitContainer splitContainer;
         private ListBox listbxSeznamStudentu;
         private Label label6;
-        private ComboBox cboxTridy;
+        private ComboBox cboxUcebny;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton_Tisk;
     }

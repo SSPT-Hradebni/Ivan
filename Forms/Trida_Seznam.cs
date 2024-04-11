@@ -44,20 +44,20 @@ namespace SediM.Forms
 
         private void Trida_Seznam_Load(object sender, EventArgs e)
         {
-            dataviewTridy.Rows.Clear();
+            dataviewUcebny.Rows.Clear();
 
             foreach (Trida trida in tridy)
-                dataviewTridy.Rows.Add(trida.Id, trida.Nazev, trida.Sirka, trida.Vyska, trida.JeRozsazena ? "Ano" : "Ne");
+                dataviewUcebny.Rows.Add(trida.Id, trida.Nazev, trida.Sirka, trida.Vyska, trida.JeRozsazena ? "Ano" : "Ne");
         }
 
         private void dataviewTridy_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Funkce se přeruší za předpokladu, že není nakliknuta buňka vypisující
             // stav rozsazení a nebo je označen celý řádek
-            if (dataviewTridy.CurrentCell.ColumnIndex != 4 || dataviewTridy.SelectedRows.Count == 1)
+            if (dataviewUcebny.CurrentCell.ColumnIndex != 4 || dataviewUcebny.SelectedRows.Count == 1)
                 return;
 
-            bool jeRozsazena = dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value == "Ano" ? true : false;
+            bool jeRozsazena = dataviewUcebny[4, dataviewUcebny.CurrentRow.Index].Value == "Ano" ? true : false;
 
             if (!jeRozsazena)
             {
@@ -67,7 +67,7 @@ namespace SediM.Forms
 
             try
             {
-                int id = int.Parse(dataviewTridy[0, dataviewTridy.CurrentRow.Index].Value.ToString());
+                int id = int.Parse(dataviewUcebny[0, dataviewUcebny.CurrentRow.Index].Value.ToString());
 
                 SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET JeRozsazena = @jeRozsazena, DataRozsazeni = @data WHERE TridaId = @id", connection);
 
@@ -80,7 +80,7 @@ namespace SediM.Forms
                 if (stav != 0)
                 {
                     // Text buňky značící stav rozsazení se změní
-                    dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value = "Ne";
+                    dataviewUcebny[4, dataviewUcebny.CurrentRow.Index].Value = "Ne";
                     UpravTridyStudentu(id);
 
                     dataZmenena = true;
@@ -124,10 +124,10 @@ namespace SediM.Forms
         private void dataviewTridy_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Pokud je stisknuta klávesa Backspace a zároveň je označený celý řádek.
-            if (!(e.KeyChar == (char)Keys.Back && dataviewTridy.SelectedRows.Count == 1))
+            if (!(e.KeyChar == (char)Keys.Back && dataviewUcebny.SelectedRows.Count == 1))
                 return;
 
-            bool jeRozsazena = dataviewTridy[4, dataviewTridy.CurrentRow.Index].Value == "Ano" ? true : false;
+            bool jeRozsazena = dataviewUcebny[4, dataviewUcebny.CurrentRow.Index].Value == "Ano" ? true : false;
 
             if (jeRozsazena)
             {
@@ -139,7 +139,7 @@ namespace SediM.Forms
 
             try
             {
-                int id = int.Parse(dataviewTridy[0, dataviewTridy.CurrentRow.Index].Value.ToString());
+                int id = int.Parse(dataviewUcebny[0, dataviewUcebny.CurrentRow.Index].Value.ToString());
 
                 SqlCommand vytvorTridu = new SqlCommand($"DELETE FROM Tridy WHERE TridaId = @id", connection);
 
@@ -149,7 +149,7 @@ namespace SediM.Forms
 
                 if (stav != 0)
                 {
-                    dataviewTridy.Rows.RemoveAt(dataviewTridy.CurrentRow.Index);
+                    dataviewUcebny.Rows.RemoveAt(dataviewUcebny.CurrentRow.Index);
                     dataZmenena = true;
                 }
                 else

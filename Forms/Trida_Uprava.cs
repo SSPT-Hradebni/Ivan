@@ -43,7 +43,7 @@ namespace SediM.Forms
 
             cboxTridy.ValueMember = "Id";
             cboxTridy.DisplayMember = "Nazev";
-            cboxTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena == false);
+            cboxTridy.DataSource = tridy.FindAll(trida => !trida.JeRozsazena);
         }
 
         private void numSirka_ValueChanged(object sender, EventArgs e)

@@ -134,54 +134,6 @@ namespace SediM
             mainHelp.JesteNeni("Úprava stávající školy");
         }
 
-        private void novaTridaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Trida_Nova okno = new Trida_Nova(tridy);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
-        }
-
-        private void upravitTriduToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Trida_Uprava okno = new Trida_Uprava(tridy);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
-        }
-
-        private void seznamTridToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Trida_Seznam okno = new Trida_Seznam(tridy);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
-            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
-        }
-
-        private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            FormularRozsazeni okno = new FormularRozsazeni(tridy, zaci);
-            okno.Owner = this;
-
-            DialogResult stav = okno.ShowDialog();
-
-            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
-            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
-        }
-
-        private void zobrazitRozsazenitoolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            mainHelp.JesteNeni("Zobrazení rozsazených tříd");
-        }
-
         private void novyZakToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Zak_Novy okno = new Zak_Novy(skoly, zaci);
@@ -223,6 +175,48 @@ namespace SediM
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
+        }
+
+        private void novaUcebnaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Trida_Nova okno = new Trida_Nova(tridy);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+        }
+
+        private void upravitUcebnuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Trida_Uprava okno = new Trida_Uprava(tridy);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+        }
+
+        private void seznamUcebenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Trida_Seznam okno = new Trida_Seznam(tridy);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
+        }
+
+        private void RozsazenitoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormularRozsazeni okno = new FormularRozsazeni(tridy, zaci);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
     }
 }
