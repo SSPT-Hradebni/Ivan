@@ -70,5 +70,21 @@ namespace SediM.Helpers
 
             return data;
         }
+
+        public static DataTable NactiUcitele(int id)
+        {
+            connection.Open();
+
+            DataTable data = new DataTable();
+            SqlDataAdapter dataAdapter;
+            SqlCommand cmd = new($"SELECT * FROM Ucitele WHERE UcitelId = {id}", connection);
+
+            dataAdapter = new SqlDataAdapter(cmd);
+            dataAdapter.Fill(data);
+
+            connection.Close();
+
+            return data;
+        }
     }
 }

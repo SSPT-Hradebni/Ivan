@@ -1,4 +1,6 @@
-﻿namespace SediM
+﻿using SediM.Helpers;
+
+namespace SediM
 {
     public class Ucitel
     {
@@ -29,6 +31,17 @@
             this.prijmeni = prijmeni;
             this.email = email;
             this.heslo = heslo;
+        }
+
+        public Ucitel(int id)
+        {
+            Ucitel tmpUcitel = DBNaObjekty.ZiskejUcitele(DBKomunikace.NactiUcitele(id));
+
+            this.id = tmpUcitel.Id;
+            this.jmeno = tmpUcitel.Jmeno;
+            this.prijmeni = tmpUcitel.Prijmeni;
+            this.email = tmpUcitel.Email;
+            this.heslo = tmpUcitel.Heslo;
         }
 
         public override string ToString()

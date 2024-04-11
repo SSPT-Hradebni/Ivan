@@ -112,6 +112,7 @@
             this.oAplikaciToolStripMenuItem.Name = "oAplikaciToolStripMenuItem";
             this.oAplikaciToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.oAplikaciToolStripMenuItem.Text = "O aplikaci";
+            this.oAplikaciToolStripMenuItem.Click += new System.EventHandler(this.oAplikaciToolStripMenuItem_Click);
             // 
             // napovedaToolStripMenuItem
             // 
@@ -119,6 +120,7 @@
             this.napovedaToolStripMenuItem.Name = "napovedaToolStripMenuItem";
             this.napovedaToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.napovedaToolStripMenuItem.Text = "Nápověda";
+            this.napovedaToolStripMenuItem.Click += new System.EventHandler(this.napovedaToolStripMenuItem_Click);
             // 
             // ukoncitToolStripMenuItem
             // 
@@ -126,6 +128,7 @@
             this.ukoncitToolStripMenuItem.Name = "ukoncitToolStripMenuItem";
             this.ukoncitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.ukoncitToolStripMenuItem.Text = "Konec";
+            this.ukoncitToolStripMenuItem.Click += new System.EventHandler(this.ukoncitToolStripMenuItem_Click);
             // 
             // studentToolStripMenuItem
             // 
@@ -143,6 +146,7 @@
             this.novyZakToolStripMenuItem.Name = "novyZakToolStripMenuItem";
             this.novyZakToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.novyZakToolStripMenuItem.Text = "Nový žák";
+            this.novyZakToolStripMenuItem.Click += new System.EventHandler(this.novyZakToolStripMenuItem_Click);
             // 
             // upravitZakaToolStripMenuItem
             // 
@@ -150,6 +154,7 @@
             this.upravitZakaToolStripMenuItem.Name = "upravitZakaToolStripMenuItem";
             this.upravitZakaToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.upravitZakaToolStripMenuItem.Text = "Upravit žáka";
+            this.upravitZakaToolStripMenuItem.Click += new System.EventHandler(this.upravitZakaToolStripMenuItem_Click);
             // 
             // seznamZakuToolStripMenuItem
             // 
@@ -157,6 +162,7 @@
             this.seznamZakuToolStripMenuItem.Name = "seznamZakuToolStripMenuItem";
             this.seznamZakuToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.seznamZakuToolStripMenuItem.Text = "Seznam žáků";
+            this.seznamZakuToolStripMenuItem.Click += new System.EventHandler(this.seznamZakuToolStripMenuItem_Click);
             // 
             // učitelToolStripMenuItem
             // 
@@ -174,6 +180,7 @@
             this.novyUcitelToolStripMenuItem.Name = "novyUcitelToolStripMenuItem";
             this.novyUcitelToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.novyUcitelToolStripMenuItem.Text = "Nový učitel";
+            this.novyUcitelToolStripMenuItem.Click += new System.EventHandler(this.novyUcitelToolStripMenuItem_Click);
             // 
             // upravitUciteleToolStripMenuItem
             // 
@@ -181,6 +188,7 @@
             this.upravitUciteleToolStripMenuItem.Name = "upravitUciteleToolStripMenuItem";
             this.upravitUciteleToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.upravitUciteleToolStripMenuItem.Text = "Upravit učitele";
+            this.upravitUciteleToolStripMenuItem.Click += new System.EventHandler(this.upravitUciteleToolStripMenuItem_Click);
             // 
             // seznamUciteluToolStripMenuItem
             // 
@@ -188,6 +196,7 @@
             this.seznamUciteluToolStripMenuItem.Name = "seznamUciteluToolStripMenuItem";
             this.seznamUciteluToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.seznamUciteluToolStripMenuItem.Text = "Seznam učitelů";
+            this.seznamUciteluToolStripMenuItem.Click += new System.EventHandler(this.seznamUciteluToolStripMenuItem_Click);
             // 
             // školaToolStripMenuItem
             // 
@@ -205,6 +214,7 @@
             this.novaSkolaToolStripMenuItem.Name = "novaSkolaToolStripMenuItem";
             this.novaSkolaToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.novaSkolaToolStripMenuItem.Text = "Nová škola";
+            this.novaSkolaToolStripMenuItem.Click += new System.EventHandler(this.novaSkolaToolStripMenuItem_Click);
             // 
             // upravitSkoluToolStripMenuItem
             // 
@@ -212,6 +222,7 @@
             this.upravitSkoluToolStripMenuItem.Name = "upravitSkoluToolStripMenuItem";
             this.upravitSkoluToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.upravitSkoluToolStripMenuItem.Text = "Upravit školu";
+            this.upravitSkoluToolStripMenuItem.Click += new System.EventHandler(this.upravitSkoluToolStripMenuItem_Click);
             // 
             // seznamSkolToolStripMenuItem
             // 
@@ -219,7 +230,7 @@
             this.seznamSkolToolStripMenuItem.Name = "seznamSkolToolStripMenuItem";
             this.seznamSkolToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.seznamSkolToolStripMenuItem.Text = "Seznam škol";
-            this.seznamSkolToolStripMenuItem.Click += new System.EventHandler(this.seznamSkolToolStripMenuItem_Click_1);
+            this.seznamSkolToolStripMenuItem.Click += new System.EventHandler(this.seznamSkolToolStripMenuItem_Click);
             // 
             // třídaToolStripMenuItem
             // 
@@ -240,6 +251,7 @@
             this.novaTridaToolStripMenuItem.Name = "novaTridaToolStripMenuItem";
             this.novaTridaToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.novaTridaToolStripMenuItem.Text = "Nová třída";
+            this.novaTridaToolStripMenuItem.Click += new System.EventHandler(this.novaTridaToolStripMenuItem_Click);
             // 
             // upravitTriduToolStripMenuItem
             // 
@@ -247,6 +259,7 @@
             this.upravitTriduToolStripMenuItem.Name = "upravitTriduToolStripMenuItem";
             this.upravitTriduToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.upravitTriduToolStripMenuItem.Text = "Upravit třídu";
+            this.upravitTriduToolStripMenuItem.Click += new System.EventHandler(this.upravitTriduToolStripMenuItem_Click);
             // 
             // seznamTridToolStripMenuItem
             // 
@@ -254,6 +267,7 @@
             this.seznamTridToolStripMenuItem.Name = "seznamTridToolStripMenuItem";
             this.seznamTridToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.seznamTridToolStripMenuItem.Text = "Seznam tříd";
+            this.seznamTridToolStripMenuItem.Click += new System.EventHandler(this.seznamTridToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -266,6 +280,7 @@
             this.noveRozsazenitoolStripMenuItem.Name = "noveRozsazenitoolStripMenuItem";
             this.noveRozsazenitoolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.noveRozsazenitoolStripMenuItem.Text = "Nové rozsazení";
+            this.noveRozsazenitoolStripMenuItem.Click += new System.EventHandler(this.noveRozsazeniToolStripMenuItem_Click);
             // 
             // zobrazitRozsazenitoolStripMenuItem
             // 
@@ -273,6 +288,7 @@
             this.zobrazitRozsazenitoolStripMenuItem.Name = "zobrazitRozsazenitoolStripMenuItem";
             this.zobrazitRozsazenitoolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.zobrazitRozsazenitoolStripMenuItem.Text = "Zobrazit rozsazení";
+            this.zobrazitRozsazenitoolStripMenuItem.Click += new System.EventHandler(this.zobrazitRozsazenitoolStripMenuItem_Click);
             // 
             // groupBox_Studenti
             // 
@@ -315,6 +331,7 @@
             this.picbox_NovyZak.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbox_NovyZak.TabIndex = 0;
             this.picbox_NovyZak.TabStop = false;
+            this.picbox_NovyZak.Click += new System.EventHandler(this.picbox_NovyZak_Click);
             // 
             // Main
             // 
@@ -334,6 +351,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ivan";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.groupBox_Studenti.ResumeLayout(false);

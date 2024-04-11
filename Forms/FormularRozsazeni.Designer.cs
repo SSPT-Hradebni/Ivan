@@ -29,171 +29,172 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormularRozsazeni));
-            btnVyplnit = new Button();
-            label2 = new Label();
-            panelVykresleniRozsazeni = new Panel();
-            listbxVyplneneTridy = new ListBox();
-            label5 = new Label();
-            splitContainer = new SplitContainer();
-            cboxTridy = new ComboBox();
-            listbxSeznamStudentu = new ListBox();
-            label6 = new Label();
-            toolStrip1 = new ToolStrip();
-            toolStripButton_Tisk = new ToolStripButton();
-            ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
-            splitContainer.Panel1.SuspendLayout();
-            splitContainer.Panel2.SuspendLayout();
-            splitContainer.SuspendLayout();
-            toolStrip1.SuspendLayout();
-            SuspendLayout();
+            this.btnVyplnit = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panelVykresleniRozsazeni = new System.Windows.Forms.Panel();
+            this.listbxVyplneneTridy = new System.Windows.Forms.ListBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.cboxTridy = new System.Windows.Forms.ComboBox();
+            this.listbxSeznamStudentu = new System.Windows.Forms.ListBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton_Tisk = new System.Windows.Forms.ToolStripButton();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // btnVyplnit
             // 
-            btnVyplnit.Location = new Point(12, 53);
-            btnVyplnit.Margin = new Padding(3, 2, 3, 2);
-            btnVyplnit.Name = "btnVyplnit";
-            btnVyplnit.Size = new Size(88, 22);
-            btnVyplnit.TabIndex = 2;
-            btnVyplnit.Text = "Vyplnit";
-            btnVyplnit.UseVisualStyleBackColor = true;
-            btnVyplnit.Click += btnVyplnit_Click;
+            this.btnVyplnit.Location = new System.Drawing.Point(12, 53);
+            this.btnVyplnit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnVyplnit.Name = "btnVyplnit";
+            this.btnVyplnit.Size = new System.Drawing.Size(88, 22);
+            this.btnVyplnit.TabIndex = 2;
+            this.btnVyplnit.Text = "Vyplnit";
+            this.btnVyplnit.UseVisualStyleBackColor = true;
+            this.btnVyplnit.Click += new System.EventHandler(this.btnVyplnit_Click);
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 9);
-            label2.Name = "label2";
-            label2.Size = new Size(89, 15);
-            label2.TabIndex = 7;
-            label2.Text = "Třída k vyplnění";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 15);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Třída k vyplnění";
             // 
             // panelVykresleniRozsazeni
             // 
-            panelVykresleniRozsazeni.Dock = DockStyle.Fill;
-            panelVykresleniRozsazeni.Location = new Point(0, 0);
-            panelVykresleniRozsazeni.Margin = new Padding(3, 2, 3, 2);
-            panelVykresleniRozsazeni.Name = "panelVykresleniRozsazeni";
-            panelVykresleniRozsazeni.Size = new Size(976, 574);
-            panelVykresleniRozsazeni.TabIndex = 12;
-            panelVykresleniRozsazeni.Paint += panelVykresleniRozsazeni_Paint;
+            this.panelVykresleniRozsazeni.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelVykresleniRozsazeni.Location = new System.Drawing.Point(0, 0);
+            this.panelVykresleniRozsazeni.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panelVykresleniRozsazeni.Name = "panelVykresleniRozsazeni";
+            this.panelVykresleniRozsazeni.Size = new System.Drawing.Size(976, 574);
+            this.panelVykresleniRozsazeni.TabIndex = 12;
             // 
             // listbxVyplneneTridy
             // 
-            listbxVyplneneTridy.FormattingEnabled = true;
-            listbxVyplneneTridy.ItemHeight = 15;
-            listbxVyplneneTridy.Location = new Point(12, 106);
-            listbxVyplneneTridy.Margin = new Padding(3, 2, 3, 2);
-            listbxVyplneneTridy.Name = "listbxVyplneneTridy";
-            listbxVyplneneTridy.Size = new Size(208, 79);
-            listbxVyplneneTridy.TabIndex = 13;
-            listbxVyplneneTridy.SelectedIndexChanged += listbxVyplneneTridy_SelectedIndexChanged;
+            this.listbxVyplneneTridy.FormattingEnabled = true;
+            this.listbxVyplneneTridy.ItemHeight = 15;
+            this.listbxVyplneneTridy.Location = new System.Drawing.Point(12, 106);
+            this.listbxVyplneneTridy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listbxVyplneneTridy.Name = "listbxVyplneneTridy";
+            this.listbxVyplneneTridy.Size = new System.Drawing.Size(208, 79);
+            this.listbxVyplneneTridy.TabIndex = 13;
+            this.listbxVyplneneTridy.SelectedIndexChanged += new System.EventHandler(this.listbxVyplneneTridy_SelectedIndexChanged);
             // 
             // label5
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(12, 89);
-            label5.Name = "label5";
-            label5.Size = new Size(83, 15);
-            label5.TabIndex = 14;
-            label5.Text = "Vyplněné třídy";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 89);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(83, 15);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Vyplněné třídy";
             // 
             // splitContainer
             // 
-            splitContainer.Location = new Point(0, 28);
-            splitContainer.Name = "splitContainer";
+            this.splitContainer.Location = new System.Drawing.Point(0, 28);
+            this.splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
             // 
-            splitContainer.Panel1.Controls.Add(cboxTridy);
-            splitContainer.Panel1.Controls.Add(listbxSeznamStudentu);
-            splitContainer.Panel1.Controls.Add(label6);
-            splitContainer.Panel1.Controls.Add(label2);
-            splitContainer.Panel1.Controls.Add(label5);
-            splitContainer.Panel1.Controls.Add(listbxVyplneneTridy);
-            splitContainer.Panel1.Controls.Add(btnVyplnit);
+            this.splitContainer.Panel1.Controls.Add(this.cboxTridy);
+            this.splitContainer.Panel1.Controls.Add(this.listbxSeznamStudentu);
+            this.splitContainer.Panel1.Controls.Add(this.label6);
+            this.splitContainer.Panel1.Controls.Add(this.label2);
+            this.splitContainer.Panel1.Controls.Add(this.label5);
+            this.splitContainer.Panel1.Controls.Add(this.listbxVyplneneTridy);
+            this.splitContainer.Panel1.Controls.Add(this.btnVyplnit);
             // 
             // splitContainer.Panel2
             // 
-            splitContainer.Panel2.Controls.Add(panelVykresleniRozsazeni);
-            splitContainer.Size = new Size(1216, 574);
-            splitContainer.SplitterDistance = 236;
-            splitContainer.TabIndex = 15;
+            this.splitContainer.Panel2.Controls.Add(this.panelVykresleniRozsazeni);
+            this.splitContainer.Size = new System.Drawing.Size(1216, 574);
+            this.splitContainer.SplitterDistance = 236;
+            this.splitContainer.TabIndex = 15;
             // 
             // cboxTridy
             // 
-            cboxTridy.FormattingEnabled = true;
-            cboxTridy.Location = new Point(12, 26);
-            cboxTridy.Margin = new Padding(3, 2, 3, 2);
-            cboxTridy.Name = "cboxTridy";
-            cboxTridy.Size = new Size(221, 23);
-            cboxTridy.TabIndex = 17;
-            cboxTridy.SelectedIndexChanged += cboxTridy_SelectedIndexChanged;
+            this.cboxTridy.FormattingEnabled = true;
+            this.cboxTridy.Location = new System.Drawing.Point(12, 26);
+            this.cboxTridy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboxTridy.Name = "cboxTridy";
+            this.cboxTridy.Size = new System.Drawing.Size(221, 23);
+            this.cboxTridy.TabIndex = 17;
+            this.cboxTridy.SelectedIndexChanged += new System.EventHandler(this.cboxTridy_SelectedIndexChanged);
             // 
             // listbxSeznamStudentu
             // 
-            listbxSeznamStudentu.FormattingEnabled = true;
-            listbxSeznamStudentu.ItemHeight = 15;
-            listbxSeznamStudentu.Location = new Point(12, 205);
-            listbxSeznamStudentu.Name = "listbxSeznamStudentu";
-            listbxSeznamStudentu.Size = new Size(208, 364);
-            listbxSeznamStudentu.TabIndex = 16;
+            this.listbxSeznamStudentu.FormattingEnabled = true;
+            this.listbxSeznamStudentu.ItemHeight = 15;
+            this.listbxSeznamStudentu.Location = new System.Drawing.Point(12, 205);
+            this.listbxSeznamStudentu.Name = "listbxSeznamStudentu";
+            this.listbxSeznamStudentu.Size = new System.Drawing.Size(208, 364);
+            this.listbxSeznamStudentu.TabIndex = 16;
             // 
             // label6
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(12, 187);
-            label6.Name = "label6";
-            label6.Size = new Size(98, 15);
-            label6.TabIndex = 15;
-            label6.Text = "Seznam studentů";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 187);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(98, 15);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Seznam studentů";
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton_Tisk });
-            toolStrip1.Location = new Point(0, 0);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(1216, 25);
-            toolStrip1.TabIndex = 16;
-            toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton_Tisk});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1216, 25);
+            this.toolStrip1.TabIndex = 16;
+            this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripButton_Tisk
             // 
-            toolStripButton_Tisk.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton_Tisk.Image = Properties.Resources.PrintToFile;
-            toolStripButton_Tisk.ImageTransparentColor = Color.Magenta;
-            toolStripButton_Tisk.Name = "toolStripButton_Tisk";
-            toolStripButton_Tisk.Size = new Size(23, 22);
-            toolStripButton_Tisk.Text = "Vytisknout rozsazení do souboru";
-            toolStripButton_Tisk.Visible = false;
-            toolStripButton_Tisk.Click += toolStripButton_Tisk_Click;
+            this.toolStripButton_Tisk.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_Tisk.Image = global::SediM.Properties.Resources.PrintToFile;
+            this.toolStripButton_Tisk.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Tisk.Name = "toolStripButton_Tisk";
+            this.toolStripButton_Tisk.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton_Tisk.Text = "Vytisknout rozsazení do souboru";
+            this.toolStripButton_Tisk.Visible = false;
+            this.toolStripButton_Tisk.Click += new System.EventHandler(this.toolStripButton_Tisk_Click);
             // 
             // FormularRozsazeni
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1216, 602);
-            Controls.Add(toolStrip1);
-            Controls.Add(splitContainer);
-            DoubleBuffered = true;
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 2, 3, 2);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "FormularRozsazeni";
-            SizeGripStyle = SizeGripStyle.Hide;
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Nové rozsazení";
-            Load += FormularRozsazeni_Load;
-            splitContainer.Panel1.ResumeLayout(false);
-            splitContainer.Panel1.PerformLayout();
-            splitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
-            splitContainer.ResumeLayout(false);
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1216, 602);
+            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.splitContainer);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "FormularRozsazeni";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Nové rozsazení";
+            this.Load += new System.EventHandler(this.FormularRozsazeni_Load);
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel1.PerformLayout();
+            this.splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

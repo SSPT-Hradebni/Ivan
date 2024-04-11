@@ -146,7 +146,7 @@ namespace SediM
             bool jeTridaRozrazena = listbxVyplneneTridy.SelectedIndex != -1;
 
             // Hodnoty, které se opakovaně přenastaví ve for cyklech jsou-li třeba
-            Zak zak = null;
+            Zak? zak = null;
             bool vyplnitBarevne = false;
 
             // Opakuje pro každý řádek míst ve třídě
