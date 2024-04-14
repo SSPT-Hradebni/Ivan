@@ -28,87 +28,89 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataviewTridy = new DataGridView();
-            id = new DataGridViewTextBoxColumn();
-            nazev = new DataGridViewTextBoxColumn();
-            sirka = new DataGridViewTextBoxColumn();
-            vyska = new DataGridViewTextBoxColumn();
-            jeRozsazena = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataviewTridy).BeginInit();
-            SuspendLayout();
+            this.dataviewUcebny = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nazev = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sirka = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vyska = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jeRozsazena = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataviewUcebny)).BeginInit();
+            this.SuspendLayout();
             // 
-            // dataviewTridy
+            // dataviewUcebny
             // 
-            dataviewTridy.AllowUserToAddRows = false;
-            dataviewTridy.AllowUserToDeleteRows = false;
-            dataviewTridy.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataviewTridy.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            dataviewTridy.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataviewTridy.Columns.AddRange(new DataGridViewColumn[] { id, nazev, sirka, vyska, jeRozsazena });
-            dataviewTridy.Dock = DockStyle.Fill;
-            dataviewTridy.Location = new Point(0, 0);
-            dataviewTridy.Margin = new Padding(3, 4, 3, 4);
-            dataviewTridy.MultiSelect = false;
-            dataviewTridy.Name = "dataviewTridy";
-            dataviewTridy.ReadOnly = true;
-            dataviewTridy.RowHeadersWidth = 51;
-            dataviewTridy.RowTemplate.Height = 25;
-            dataviewTridy.Size = new Size(800, 450);
-            dataviewTridy.TabIndex = 6;
-            dataviewTridy.CellDoubleClick += dataviewTridy_CellDoubleClick;
-            dataviewTridy.KeyPress += dataviewTridy_KeyPress;
+            this.dataviewUcebny.AllowUserToAddRows = false;
+            this.dataviewUcebny.AllowUserToDeleteRows = false;
+            this.dataviewUcebny.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataviewUcebny.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.dataviewUcebny.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataviewUcebny.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id,
+            this.nazev,
+            this.sirka,
+            this.vyska,
+            this.jeRozsazena});
+            this.dataviewUcebny.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataviewUcebny.Location = new System.Drawing.Point(0, 0);
+            this.dataviewUcebny.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dataviewUcebny.MultiSelect = false;
+            this.dataviewUcebny.Name = "dataviewUcebny";
+            this.dataviewUcebny.ReadOnly = true;
+            this.dataviewUcebny.RowHeadersWidth = 51;
+            this.dataviewUcebny.RowTemplate.Height = 25;
+            this.dataviewUcebny.Size = new System.Drawing.Size(800, 450);
+            this.dataviewUcebny.TabIndex = 6;
             // 
             // id
             // 
-            id.HeaderText = "ID";
-            id.MinimumWidth = 6;
-            id.Name = "id";
-            id.ReadOnly = true;
+            this.id.HeaderText = "ID";
+            this.id.MinimumWidth = 6;
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
             // 
             // nazev
             // 
-            nazev.HeaderText = "Název";
-            nazev.MinimumWidth = 6;
-            nazev.Name = "nazev";
-            nazev.ReadOnly = true;
+            this.nazev.HeaderText = "Název";
+            this.nazev.MinimumWidth = 6;
+            this.nazev.Name = "nazev";
+            this.nazev.ReadOnly = true;
             // 
             // sirka
             // 
-            sirka.HeaderText = "Šířka";
-            sirka.MinimumWidth = 6;
-            sirka.Name = "sirka";
-            sirka.ReadOnly = true;
+            this.sirka.HeaderText = "Šířka";
+            this.sirka.MinimumWidth = 6;
+            this.sirka.Name = "sirka";
+            this.sirka.ReadOnly = true;
             // 
             // vyska
             // 
-            vyska.HeaderText = "Výška";
-            vyska.MinimumWidth = 6;
-            vyska.Name = "vyska";
-            vyska.ReadOnly = true;
+            this.vyska.HeaderText = "Výška";
+            this.vyska.MinimumWidth = 6;
+            this.vyska.Name = "vyska";
+            this.vyska.ReadOnly = true;
             // 
             // jeRozsazena
             // 
-            jeRozsazena.HeaderText = "Je rozsazena?";
-            jeRozsazena.Name = "jeRozsazena";
-            jeRozsazena.ReadOnly = true;
+            this.jeRozsazena.HeaderText = "Je rozsazena?";
+            this.jeRozsazena.Name = "jeRozsazena";
+            this.jeRozsazena.ReadOnly = true;
             // 
             // Trida_Seznam
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(dataviewTridy);
-            Name = "Trida_Seznam";
-            Text = "Trida_Seznam";
-            FormClosed += Trida_Seznam_FormClosed;
-            Load += Trida_Seznam_Load;
-            ((System.ComponentModel.ISupportInitialize)dataviewTridy).EndInit();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataviewUcebny);
+            this.Name = "Trida_Seznam";
+            this.Text = "Seznam učeben";
+            ((System.ComponentModel.ISupportInitialize)(this.dataviewUcebny)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
 
-        private DataGridView dataviewTridy;
+        private DataGridView dataviewUcebny;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn nazev;
         private DataGridViewTextBoxColumn sirka;

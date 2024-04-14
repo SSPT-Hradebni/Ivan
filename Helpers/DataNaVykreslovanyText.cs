@@ -7,7 +7,7 @@
             switch (kategorie)
             {
                 case -1:
-                    return "ES"; // Empty Seat/Space - Prázdné místo; Anglicky aby se nepletlo s ostatními římskými číslicemi
+                    return "--"; // Empty Seat/Space - Prázdné místo; Anglicky aby se nepletlo s ostatními římskými číslicemi
                 case 1:
                     return "I.";
                 case 2:
@@ -30,8 +30,8 @@
         public static string SkolaNaPismeno(int skola)
         {
             if (skola == -1)
-                return "ES";
-            if (skola > 25)
+                return "--";
+            if (skola > 26)
                 return $"{skola}";
             if (skola < -1)
                 return "ERR";

@@ -29,123 +29,140 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Trida_Nova));
-            tboxNazev = new TextBox();
-            panelEditClassroom = new Panel();
-            btnVytvorit = new Button();
-            numVyska = new NumericUpDown();
-            numSirka = new NumericUpDown();
-            gboxVelikost = new GroupBox();
-            lblVyska = new Label();
-            lblSirka = new Label();
-            ((System.ComponentModel.ISupportInitialize)numVyska).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numSirka).BeginInit();
-            gboxVelikost.SuspendLayout();
-            SuspendLayout();
+            this.tboxNazev = new System.Windows.Forms.TextBox();
+            this.panelEditClassroom = new System.Windows.Forms.Panel();
+            this.btnVytvorit = new System.Windows.Forms.Button();
+            this.numVyska = new System.Windows.Forms.NumericUpDown();
+            this.numSirka = new System.Windows.Forms.NumericUpDown();
+            this.gboxVelikost = new System.Windows.Forms.GroupBox();
+            this.lblVyska = new System.Windows.Forms.Label();
+            this.lblSirka = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numVyska)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSirka)).BeginInit();
+            this.gboxVelikost.SuspendLayout();
+            this.SuspendLayout();
             // 
             // tboxNazev
             // 
-            tboxNazev.Location = new Point(12, 10);
-            tboxNazev.Margin = new Padding(3, 4, 3, 4);
-            tboxNazev.Name = "tboxNazev";
-            tboxNazev.PlaceholderText = "Název třídy";
-            tboxNazev.Size = new Size(142, 23);
-            tboxNazev.TabIndex = 15;
+            this.tboxNazev.Location = new System.Drawing.Point(12, 10);
+            this.tboxNazev.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tboxNazev.Name = "tboxNazev";
+            this.tboxNazev.PlaceholderText = "Název učebny";
+            this.tboxNazev.Size = new System.Drawing.Size(142, 23);
+            this.tboxNazev.TabIndex = 15;
             // 
             // panelEditClassroom
             // 
-            panelEditClassroom.Location = new Point(160, 10);
-            panelEditClassroom.Margin = new Padding(3, 4, 3, 4);
-            panelEditClassroom.Name = "panelEditClassroom";
-            panelEditClassroom.Size = new Size(976, 574);
-            panelEditClassroom.TabIndex = 14;
-            panelEditClassroom.Paint += panelEditClassroom_Paint;
+            this.panelEditClassroom.Location = new System.Drawing.Point(160, 10);
+            this.panelEditClassroom.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelEditClassroom.Name = "panelEditClassroom";
+            this.panelEditClassroom.Size = new System.Drawing.Size(976, 574);
+            this.panelEditClassroom.TabIndex = 14;
+            this.panelEditClassroom.Paint += new System.Windows.Forms.PaintEventHandler(this.panelEditClassroom_Paint);
             // 
             // btnVytvorit
             // 
-            btnVytvorit.Location = new Point(12, 162);
-            btnVytvorit.Margin = new Padding(3, 4, 3, 4);
-            btnVytvorit.Name = "btnVytvorit";
-            btnVytvorit.Size = new Size(142, 31);
-            btnVytvorit.TabIndex = 12;
-            btnVytvorit.Text = "Vytvořit";
-            btnVytvorit.UseVisualStyleBackColor = true;
-            btnVytvorit.Click += btnVytvorit_Click;
+            this.btnVytvorit.Location = new System.Drawing.Point(12, 162);
+            this.btnVytvorit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnVytvorit.Name = "btnVytvorit";
+            this.btnVytvorit.Size = new System.Drawing.Size(142, 31);
+            this.btnVytvorit.TabIndex = 12;
+            this.btnVytvorit.Text = "Vytvořit";
+            this.btnVytvorit.UseVisualStyleBackColor = true;
+            this.btnVytvorit.Click += new System.EventHandler(this.btnVytvorit_Click);
             // 
             // numVyska
             // 
-            numVyska.Location = new Point(6, 83);
-            numVyska.Margin = new Padding(3, 4, 3, 4);
-            numVyska.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numVyska.Name = "numVyska";
-            numVyska.Size = new Size(90, 23);
-            numVyska.TabIndex = 11;
-            numVyska.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            numVyska.ValueChanged += numVyska_ValueChanged;
+            this.numVyska.Location = new System.Drawing.Point(6, 83);
+            this.numVyska.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.numVyska.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numVyska.Name = "numVyska";
+            this.numVyska.Size = new System.Drawing.Size(90, 23);
+            this.numVyska.TabIndex = 11;
+            this.numVyska.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numVyska.ValueChanged += new System.EventHandler(this.numVyska_ValueChanged);
             // 
             // numSirka
             // 
-            numSirka.Location = new Point(6, 37);
-            numSirka.Margin = new Padding(3, 4, 3, 4);
-            numSirka.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numSirka.Name = "numSirka";
-            numSirka.Size = new Size(90, 23);
-            numSirka.TabIndex = 9;
-            numSirka.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            numSirka.ValueChanged += numSirka_ValueChanged;
+            this.numSirka.Location = new System.Drawing.Point(6, 37);
+            this.numSirka.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.numSirka.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSirka.Name = "numSirka";
+            this.numSirka.Size = new System.Drawing.Size(90, 23);
+            this.numSirka.TabIndex = 9;
+            this.numSirka.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSirka.ValueChanged += new System.EventHandler(this.numSirka_ValueChanged);
             // 
             // gboxVelikost
             // 
-            gboxVelikost.Controls.Add(lblVyska);
-            gboxVelikost.Controls.Add(lblSirka);
-            gboxVelikost.Controls.Add(numVyska);
-            gboxVelikost.Controls.Add(numSirka);
-            gboxVelikost.Location = new Point(12, 39);
-            gboxVelikost.Margin = new Padding(3, 2, 3, 2);
-            gboxVelikost.Name = "gboxVelikost";
-            gboxVelikost.Padding = new Padding(3, 2, 3, 2);
-            gboxVelikost.Size = new Size(142, 117);
-            gboxVelikost.TabIndex = 16;
-            gboxVelikost.TabStop = false;
-            gboxVelikost.Text = "Velikost třídy";
+            this.gboxVelikost.Controls.Add(this.lblVyska);
+            this.gboxVelikost.Controls.Add(this.lblSirka);
+            this.gboxVelikost.Controls.Add(this.numVyska);
+            this.gboxVelikost.Controls.Add(this.numSirka);
+            this.gboxVelikost.Location = new System.Drawing.Point(12, 39);
+            this.gboxVelikost.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gboxVelikost.Name = "gboxVelikost";
+            this.gboxVelikost.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gboxVelikost.Size = new System.Drawing.Size(142, 117);
+            this.gboxVelikost.TabIndex = 16;
+            this.gboxVelikost.TabStop = false;
+            this.gboxVelikost.Text = "Velikost učebny";
             // 
             // lblVyska
             // 
-            lblVyska.AutoSize = true;
-            lblVyska.Location = new Point(6, 64);
-            lblVyska.Name = "lblVyska";
-            lblVyska.Size = new Size(27, 15);
-            lblVyska.TabIndex = 13;
-            lblVyska.Text = "Řad";
+            this.lblVyska.AutoSize = true;
+            this.lblVyska.Location = new System.Drawing.Point(6, 64);
+            this.lblVyska.Name = "lblVyska";
+            this.lblVyska.Size = new System.Drawing.Size(27, 15);
+            this.lblVyska.TabIndex = 13;
+            this.lblVyska.Text = "Řad";
             // 
             // lblSirka
             // 
-            lblSirka.AutoSize = true;
-            lblSirka.Location = new Point(6, 18);
-            lblSirka.Name = "lblSirka";
-            lblSirka.Size = new Size(65, 15);
-            lblSirka.TabIndex = 12;
-            lblSirka.Text = "Míst v řadě";
+            this.lblSirka.AutoSize = true;
+            this.lblSirka.Location = new System.Drawing.Point(6, 18);
+            this.lblSirka.Name = "lblSirka";
+            this.lblSirka.Size = new System.Drawing.Size(65, 15);
+            this.lblSirka.TabIndex = 12;
+            this.lblSirka.Text = "Míst v řadě";
             // 
             // Trida_Nova
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1149, 594);
-            Controls.Add(gboxVelikost);
-            Controls.Add(tboxNazev);
-            Controls.Add(panelEditClassroom);
-            Controls.Add(btnVytvorit);
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 2, 3, 2);
-            Name = "Trida_Nova";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Nová třída";
-            ((System.ComponentModel.ISupportInitialize)numVyska).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numSirka).EndInit();
-            gboxVelikost.ResumeLayout(false);
-            gboxVelikost.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1149, 594);
+            this.Controls.Add(this.gboxVelikost);
+            this.Controls.Add(this.tboxNazev);
+            this.Controls.Add(this.panelEditClassroom);
+            this.Controls.Add(this.btnVytvorit);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "Trida_Nova";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Nová učebna";
+            ((System.ComponentModel.ISupportInitialize)(this.numVyska)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSirka)).EndInit();
+            this.gboxVelikost.ResumeLayout(false);
+            this.gboxVelikost.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

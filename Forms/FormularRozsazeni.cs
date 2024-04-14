@@ -78,24 +78,6 @@ namespace SediM
             return pocetRozsazenychMist + 1;
         }
 
-        private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboxTridy.SelectedIndex == -1) return;
-            listbxVyplneneTridy.SelectedIndex = -1;
-            panelVykresleniRozsazeni.Invalidate();
-
-            toolStripButton_Tisk.Visible = false;
-        }
-
-        private void listbxVyplneneTridy_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listbxVyplneneTridy.SelectedIndex == -1) return;
-            cboxTridy.SelectedIndex = -1;
-            panelVykresleniRozsazeni.Invalidate();
-
-            toolStripButton_Tisk.Visible = true;
-        }
-
         private void panelVykresleniRozsazeni_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -118,10 +100,10 @@ namespace SediM
                 (int)(panelVykresleniRozsazeni.Width * 0.7), (int)(panelVykresleniRozsazeni.Height * 0.75),
                 (int)(panelVykresleniRozsazeni.Width * 0.3), (int)(panelVykresleniRozsazeni.Height * 0.15));
 
-            if (cboxTridy.SelectedIndex == -1 && listbxVyplneneTridy.SelectedIndex == -1) return;
+            if (cboxUcebny.SelectedIndex == -1 && listbxVyplneneUcebny.SelectedIndex == -1) return;
 
             // Získáme aktuální vybranou třídu
-            Trida? aktualniTrida = tridy.Find(hledanaTrida => hledanaTrida.Id == (cboxTridy.SelectedIndex != -1 ? (int)cboxTridy.SelectedValue : (int)listbxVyplneneTridy.SelectedValue));
+            Trida? aktualniTrida = tridy.Find(hledanaTrida => hledanaTrida.Id == (cboxUcebny.SelectedIndex != -1 ? (int)cboxUcebny.SelectedValue : (int)listbxVyplneneUcebny.SelectedValue));
 
             // Vyvoláme metodu pro vykreslení míst
             VykresleniMist(g, aktualniTrida);
@@ -143,7 +125,7 @@ namespace SediM
             int mistoSirka = (int)((panelVykresleniRozsazeni.Width * 0.9) / aktualniTrida.Sirka);
             int mistoVyska = (int)((panelVykresleniRozsazeni.Height * 0.65) / aktualniTrida.Vyska);
 
-            bool jeTridaRozrazena = listbxVyplneneTridy.SelectedIndex != -1;
+            bool jeTridaRozrazena = listbxVyplneneUcebny.SelectedIndex != -1;
 
             // Hodnoty, které se opakovaně přenastaví ve for cyklech jsou-li třeba
             Zak? zak = null;
@@ -260,7 +242,7 @@ namespace SediM
 
         private void btnVyplnit_Click(object sender, EventArgs e)
         {
-            if (cboxTridy.SelectedIndex == -1) return;
+            if (cboxUcebny.SelectedIndex == -1) return;
 
             NastavParametryProVyplneni();
         }
@@ -268,21 +250,21 @@ namespace SediM
         private void NastavParametryProVyplneni()
         {
             // Získáme aktuální vybranou třídu
-            Trida? aktualniTrida = tridy.Find(tridy => tridy.Id == (int)cboxTridy.SelectedValue);
+            Trida? aktualniTrida = tridy.Find(tridy => tridy.Id == (int)cboxUcebny.SelectedValue);
 
             // Vyplní právě přidanou třídu žáky
-            if (VyplnTridu(aktualniTrida.Sirka, aktualniTrida.Vyska, aktualniTrida) == -1)
+            if (VyplnUcebnu(aktualniTrida.Sirka, aktualniTrida.Vyska, aktualniTrida) == -1)
                 return;
 
             aktualniTrida.JeRozsazena = true;
 
             // Přesune zvolenou třídu mezi vyplněné třídy
-            listbxVyplneneTridy.DataSource = null; // při DataSource nejde vymazat cbox, proto nastaveno teď na null
-            listbxVyplneneTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena);
+            listbxVyplneneUcebny.DataSource = null; // při DataSource nejde vymazat cbox, proto nastaveno teď na null
+            listbxVyplneneUcebny.DataSource = tridy.FindAll(trida => trida.JeRozsazena);
 
             // odstranění vyplněné třídy z comboboxu
-            cboxTridy.DataSource = null;
-            cboxTridy.DataSource = tridy.FindAll(trida => !trida.JeRozsazena);
+            cboxUcebny.DataSource = null;
+            cboxUcebny.DataSource = tridy.FindAll(trida => !trida.JeRozsazena);
         }
 
         /// <summary>
@@ -294,7 +276,7 @@ namespace SediM
         /// <param name="vyska">Výška třídy v místech</param>
         /// <param name="kopieZaku">List, který je kopií globálního listu zaci, vyžadován funkcí ZiskejZaka.</param>
         /// <param name="aktualniTrida">Aktuální vyplňovaná třída</param>
-        private int VyplnTridu(int sirka, int vyska, Trida aktualniTrida)
+        private int VyplnUcebnu(int sirka, int vyska, Trida aktualniTrida)
         {
             try
             {
@@ -312,7 +294,7 @@ namespace SediM
                     return -1;
                 }
 
-                VyplnTriduKombinacemi(aktualniTrida, nerozsazeniZaci);
+                VyplnUcebnuKombinacemi(aktualniTrida, nerozsazeniZaci);
 
                 string data = "";
 
@@ -376,7 +358,7 @@ namespace SediM
                 {
                     zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)].Trida = trida.Id;
                     zaciKRozsazeni.RemoveAt(zaciKRozsazeni.FindIndex(zak => zak.Id == returnZak.Id));
-                    UpravMistaTridy(trida, parametry, radek, sloupec);
+                    UpravMistaUcebny(trida, parametry, radek, sloupec);
                     return zaci[zaci.FindIndex(zak => zak.Id == returnZak.Id)];
                 }
             }
@@ -384,7 +366,7 @@ namespace SediM
             return new Zak(-1, "PRÁZDNÉ", "MÍSTO", -1, -1, -1);
         }
 
-        private void UpravMistaTridy(Trida trida, int[] parametry, int radek, int sloupec)
+        private void UpravMistaUcebny(Trida trida, int[] parametry, int radek, int sloupec)
         {
             // Procykluje buňky kolem umístěného žáka (mimo předešlých buněk) a odstraní parametry obsahující stejné školy nebo kategorie
             int[,] bunky = new int[,] {
@@ -408,7 +390,7 @@ namespace SediM
 
         }
 
-        private void VyplnTriduKombinacemi(Trida trida, List<Zak> zaciKRozsazeni)
+        private void VyplnUcebnuKombinacemi(Trida trida, List<Zak> zaciKRozsazeni)
         {
             List<int[]> unikatniKategorieSkoly = new List<int[]>();
 
@@ -528,13 +510,13 @@ namespace SediM
                 }
             }
 
-            cboxTridy.ValueMember = "Id";
-            cboxTridy.DisplayMember = "Nazev";
-            cboxTridy.DataSource = tridy.FindAll(trida => !trida.JeRozsazena);
+            cboxUcebny.ValueMember = "Id";
+            cboxUcebny.DisplayMember = "Nazev";
+            cboxUcebny.DataSource = tridy.FindAll(trida => !trida.JeRozsazena);
 
-            listbxVyplneneTridy.ValueMember = "Id";
-            listbxVyplneneTridy.DisplayMember = "Nazev";
-            listbxVyplneneTridy.DataSource = tridy.FindAll(trida => trida.JeRozsazena);
+            listbxVyplneneUcebny.ValueMember = "Id";
+            listbxVyplneneUcebny.DisplayMember = "Nazev";
+            listbxVyplneneUcebny.DataSource = tridy.FindAll(trida => trida.JeRozsazena);
         }
 
         private void toolStripButton_Tisk_Click(object sender, EventArgs e)
@@ -546,7 +528,7 @@ namespace SediM
             if (sfd.ShowDialog() != DialogResult.OK)
                 return;
 
-            Trida vyplnenaTrida = tridy.Find(trida => trida.Id == (int)listbxVyplneneTridy.SelectedValue);
+            Trida vyplnenaTrida = tridy.Find(trida => trida.Id == (int)listbxVyplneneUcebny.SelectedValue);
 
             PdfDocument doc = new PdfDocument(new PdfWriter(sfd.FileName));
 
@@ -610,6 +592,24 @@ namespace SediM
             doc.Close();
 
             MessageBox.Show("Panel byl uložen jako PDF.", "Úspěch", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void listbxVyplneneUcebny_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listbxVyplneneUcebny.SelectedIndex == -1) return;
+            cboxUcebny.SelectedIndex = -1;
+            panelVykresleniRozsazeni.Invalidate();
+
+            toolStripButton_Tisk.Visible = true;
+        }
+
+        private void cboxUcebny_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboxUcebny.SelectedIndex == -1) return;
+            listbxVyplneneUcebny.SelectedIndex = -1;
+            panelVykresleniRozsazeni.Invalidate();
+
+            toolStripButton_Tisk.Visible = false;
         }
     }
 }

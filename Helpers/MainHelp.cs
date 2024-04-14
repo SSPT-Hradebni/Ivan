@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SediM.Helpers
 {
@@ -314,43 +315,65 @@ namespace SediM.Helpers
         public string ZkratkySkol(string nazev)
         {
             Dictionary<string, string> skoly = new Dictionary<string, string>()
-            {
-                {"České vysoké učení technické","ČVUT"},
-                {"Základní škola", "ZŠ"},
-                {"Základní umělecká škola", "ZUŠ"},
-                {"Střední škola", "SŠ"},
-                {"Střední odborná škola", "SOŠ"},
-                {"Střední průmyslová škola", "SPŠ"},
-                {"Střední odborné učeliště", "SOU"},
-                {"Střední škola informatiky, poštovnictví a finančnictví", "SŠIPF"},
-                {"Střední škola technická a ekonomická","SŠTE"},
-                {"Integrovaná střední škola","ISŠ"},
-                {"Střední zdravotnická škola","SZŠ"},
-                {"Střední škola elektrotechnická","SŠE"},
-                {"Střední škola polytechnická","SŠP"},
-                {"Střední škola technická a dopravní","SŠTD"},
-                {"Integrovaná střední škola technická a ekonomická","ISŠTE"},
-                {"Střední odborné učiliště strojírenské","SOUs"},
-                {"Obchodní akademie","OA"},
-                {"Jazyková škola","JŠ"},
-                {"Hotelová škola","HŠ"},
-                {"Gymnázium", "G"},
-                {"Hradec Králové", "HK"},
-                // Přidejte další školy podle potřeby
-            };
+    {
+        {"České vysoké učení technické","ČVUT"},
+        {"české vysoké učení technické","ČVUT"},
+            {"Základní škola", "ZŠ"},
+            {"základní škola", "ZŠ"},
+            {"Základní umělecká škola", "ZUŠ"},
+            {"základní umělecká škola", "ZUŠ"},
+            {"Střední škola", "SŠ"},
+            {"střední škola", "SŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední odborná škola", "SOŠ"},
+            {"střední odborná škola", "SOŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední průmyslová škola", "SPŠ"},
+            {"střední průmyslová škola", "SPŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední odborné učiliště", "SOU"},
+            {"střední odborné učiliště", "SOU"}, // Varianta s malým počátečním písmenem
+            {"Střední škola informatiky, poštovnictví a finančnictví", "SŠIPF"},
+            {"střední škola informatiky, poštovnictví a finančnictví", "SŠIPF"}, // Varianta s malým počátečním písmenem
+            {"Střední škola technická a ekonomická","SŠTE"},
+            {"střední škola technická a ekonomická","SŠTE"}, // Varianta s malým počátečním písmenem
+            {"Integrovaná střední škola","ISŠ"},
+            {"integrovaná střední škola","ISŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední zdravotnická škola","SZŠ"},
+            {"střední zdravotnická škola","SZŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední škola elektrotechnická","SŠE"},
+            {"střední škola elektrotechnická","SŠE"}, // Varianta s malým počátečním písmenem
+            {"Střední škola polytechnická","SŠP"},
+            {"střední škola polytechnická","SŠP"}, // Varianta s malým počátečním písmenem
+            {"Střední škola technická a dopravní","SŠTD"},
+            {"střední škola technická a dopravní","SŠTD"}, // Varianta s malým počátečním písmenem
+            {"Integrovaná střední škola technická a ekonomická","ISŠTE"},
+            {"integrovaná střední škola technická a ekonomická","ISŠTE"}, // Varianta s malým počátečním písmenem
+            {"Střední odborné učiliště strojírenské","SOUs"},
+            {"střední odborné učiliště strojírenské","SOUs"}, // Varianta s malým počátečním písmenem
+            {"Obchodní akademie","OA"},
+            {"obchodní akademie","OA"}, // Varianta s malým počátečním písmenem
+            {"Jazyková škola","JŠ"},
+            {"jazyková škola","JŠ"}, // Varianta s malým počátečním písmenem
+            {"Hotelová škola","HŠ"},
+            {"hotelová škola","HŠ"}, // Varianta s malým počátečním písmenem
+            {"Gymnázium", "G"},
+            {"gymnázium", "G"}, // Varianta s malým počátečním písmenem
+            {"vyšší odborná škola", "VOŠ"}, // Varianta s malým počátečním písmenem
+            {"Vyšší odborná škola", "VOŠ"},
+            {"Zemědělská akademie", "ZA"},
+            {"zemědělská akademie", "ZA"}, // Varianta s malým počátečním písmenem
+            {"střední zemědělská škola","SZŠ" }, // Varianta s malým počátečním písmenem
+            {"Střední zemědělská škola","SZŠ" },
+            // Přidejte další školy podle potřeby
+    };
 
-            foreach(string s in skoly.Keys)
-            {
-                if (nazev.ToLower().Contains(s.ToLower()))
-                {
-                    string novyNazev = nazev.ToLower().Replace(s.ToLower(), skoly[s]);
-                    string DalsiNazev = ZkratkySkol(novyNazev);
+            string upravenyNazev = nazev;
 
-                    return DalsiNazev;
-                }
+            foreach (KeyValuePair<string, string> entry in skoly)
+            {
+                // Nahrazujeme všechny výskyty názvu školy v textu, zachováváme původní formát
+                upravenyNazev = Regex.Replace(upravenyNazev, @"\b" + Regex.Escape(entry.Key) + @"\b", entry.Value);
             }
 
-            return nazev;
+            return upravenyNazev;
         }
     }
 }
