@@ -105,6 +105,15 @@ namespace SediM
                 if (skola == -1)
                     throw new Exception("Platná škola musí být vybrána");
 
+                if (ExistujeZak(jmeno, prijmeni, kategorie, skola))
+                {
+                    // Pokud žák již existuje, zeptat se uživatele, zda jej chce vložit do systému
+                    DialogResult result = mainHelp.Alert("Upozornění", "Žák s těmito údaji již existuje. Chcete ho i tak vložit do systému?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (result == DialogResult.No)
+                        return; // Uživatel nechce vložit žáka do systému
+                }
+
                 SqlCommand vytvorZaka = new SqlCommand($"INSERT INTO Studenti (Jmeno, Prijmeni, Kategorie, Skola) VALUES(@jmeno, @prijmeni, @kategorie, @skola)", connection);
 
                 vytvorZaka.Parameters.AddWithValue("@jmeno", $"{jmeno}");
@@ -128,6 +137,31 @@ namespace SediM
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private bool ExistujeZak(string jmeno, string prijmeni, int kategorie, int skola)
+        {
+            bool existuje = false;
+
+            try
+            {
+                SqlCommand overeniZaka = new SqlCommand($"SELECT COUNT(*) FROM Studenti WHERE Jmeno = @jmeno AND Prijmeni = @prijmeni AND Kategorie = @kategorie AND Skola = @skola", connection);
+                overeniZaka.Parameters.AddWithValue("@jmeno", jmeno);
+                overeniZaka.Parameters.AddWithValue("@prijmeni", prijmeni);
+                overeniZaka.Parameters.AddWithValue("@kategorie", kategorie);
+                overeniZaka.Parameters.AddWithValue("@skola", skola + 1);
+
+                int pocet = (int)overeniZaka.ExecuteScalar();
+
+                if (pocet > 0)
+                    existuje = true;
+            }
+            catch (SqlException ex)
+            {
+                mainHelp.Alert("Chyba SQL serveru", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return existuje;
         }
     }
 }
