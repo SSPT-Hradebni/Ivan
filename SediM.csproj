@@ -11,6 +11,7 @@
     <ApplicationIcon>SediM.ico</ApplicationIcon>
     <StartupObject>SediM.Program</StartupObject>
     <UserSecretsId>44ba1f1c-f1bf-4f83-b582-4136e75a6b8a</UserSecretsId>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,9 +43,15 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Npgsql" Version="8.0.1" />
     <PackageReference Include="PDFsharp-GDI" Version="6.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.Speech" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\Trida_Uprava.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

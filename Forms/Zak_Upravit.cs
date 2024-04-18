@@ -1,13 +1,12 @@
-﻿using Npgsql;
-using SediM.Helpers;
+﻿using SediM.Helpers;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SediM
 {
     public partial class Zak_Upravit : Form
     {
-        private static NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder($"Host={Properties.Settings.Default.MySQL_server};Port={Properties.Settings.Default.MySQL_port};Username={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo};Database={Properties.Settings.Default.MySQL_databaze};");
-        private static NpgsqlDataSource dataSource = dataSourceBuilder.Build();
-        private NpgsqlConnection? connection;
+        private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
@@ -18,6 +17,28 @@ namespace SediM
         public Zak_Upravit()
         {
             InitializeComponent();
+
+            connection.Open();
+            ConnectionState stavDB = connection.State;
+
+            try
+            {
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
+                {
+                    DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                    if (pripojen == DialogResult.Cancel)
+                    {
+                        Application.Exit();
+                    }
+
+                    return;
+                }
+            }
+            catch (SqlException e)
+            {
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
         }
 
         public Zak_Upravit(List<Skola> skoly, List<Zak> studenti)
@@ -27,26 +48,26 @@ namespace SediM
 
             InitializeComponent();
 
-            var conn = dataSource.OpenConnectionAsync();
-            connection = conn.Result;
+            connection.Open();
+            ConnectionState stavDB = connection.State;
 
             try
             {
-                if (conn.IsFaulted && jePripojen == false)
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
                 {
                     DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     if (pripojen == DialogResult.Cancel)
                     {
-                        Close();
+                        Application.Exit();
                     }
 
                     return;
                 }
             }
-            catch (NpgsqlException e)
+            catch (SqlException e)
             {
-                mainHelp.Alert("Chyba PostgreSQL", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
             }
         }
 
@@ -95,9 +116,10 @@ namespace SediM
 
             try
             {
-                NpgsqlCommand vytvorStudenta = new NpgsqlCommand($"UPDATE studentiv2 SET jmeno_prijmeni = @jmenoprijmeni, kategorie = @kategorie, skola = @skola WHERE id = @id", connection);
+                SqlCommand vytvorStudenta = new SqlCommand($"UPDATE Studenti SET Jmeno = @jmeno, Prijmeni = @prijmeni, Kategorie = @kategorie, Skola = @skola WHERE StudentId = @id", connection);
 
-                vytvorStudenta.Parameters.AddWithValue("@jmenoprijmeni", $"{jmeno} {prijmeni}");
+                vytvorStudenta.Parameters.AddWithValue("@jmeno", $"{jmeno}");
+                vytvorStudenta.Parameters.AddWithValue("@prijmeni", $"{prijmeni}");
                 vytvorStudenta.Parameters.AddWithValue("@kategorie", kategorie);
                 vytvorStudenta.Parameters.AddWithValue("@skola", skola);
                 vytvorStudenta.Parameters.AddWithValue("@id", studentID);

@@ -1,25 +1,14 @@
-﻿using Ivan.Forms;
-using Ivan.Helpers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
+﻿using SediM.Helpers;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace Ivan
+namespace SediM
 {
     public partial class Nacitani : Form
     {
         private SoundPlayer player;
-        private Hlavni okno = new Hlavni();
+        private Main okno = new Main();
 
-        private HlavniPomoc pomoc;
+        private MainHelp pomoc;
 
         bool haIvanRead = false;
         bool ivanSeNacitaRead = false;
@@ -30,52 +19,57 @@ namespace Ivan
         {
             InitializeComponent();
 
-            pomoc = new HlavniPomoc();
+            pomoc = new MainHelp();
             lblTip.Text = "";
 
             player = new SoundPlayer(Properties.Resources.loading);
             // player.Play();
+            loading.Interval = 10;
         }
 
         private void loading_Tick(object sender, EventArgs e)
         {
             loadingBar.Value = loadingBar.Value + 1;
             Random nahoda = new Random();
-            int cislo = nahoda.Next(20, 70);
+            int cislo = nahoda.Next(1, 100);
 
             double sanceNaNahodu = 20; // například 20% šance
-            double nahodneCislo = nahoda.Next(-20, 90); // předpokládáme funkci pro generování náhodného čísla
+            double nahodneCislo = nahoda.Next(-20, 20); // předpokládáme funkci pro generování náhodného čísla
 
             if (loadingBar.Value >= 0 && loadingBar.Value < 25 && !haIvanRead)
             {
                 lblTip.Text = "Ha, Ivan!";
-                pomoc.RekniTo(lblTip.Text, true);
+                //pomoc.RekniTo(lblTip.Text, true); -- temp
                 haIvanRead = true;
             }
             else if (loadingBar.Value >= 25 && loadingBar.Value < 70 && !ivanSeNacitaRead)
             {
-                lblTip.Text = "Ivan se načítá";
                 if (nahodneCislo < sanceNaNahodu)
                 {
-                    //lblTip.Text = pomoc.NahodnyIvan(cislo); // nahrazení textu náhodnou větou
+                    lblTip.Text = pomoc.NahodnyIvan(cislo); // nahrazení textu náhodnou větou
                 }
-                pomoc.RekniTo(lblTip.Text, true);
+                else
+                {
+                    lblTip.Text = "Ivan se načítá";
+                }
+
+                //pomoc.RekniTo(lblTip.Text, true); -- temp
                 ivanSeNacitaRead = true;
             }
             else if (loadingBar.Value >= 70 && loadingBar.Value < 95 && !ivanSkoroJeRead)
             {
                 lblTip.Text = "Ivan už skoro je ...";
-                pomoc.RekniTo(lblTip.Text, true);
+                //pomoc.RekniTo(lblTip.Text, true); -- temp
                 ivanSkoroJeRead = true;
             }
             else if (loadingBar.Value >= 95 && loadingBar.Value < 100 && !ivanNactenyRead)
             {
                 lblTip.Text = "... načtený!";
-                pomoc.RekniTo(lblTip.Text, true);
+                //pomoc.RekniTo(lblTip.Text, true); -- temp
                 ivanNactenyRead = true;
             }
 
-            if (Properties.Settings.Default.LoadingEnabled)
+            if (SediM.Properties.Settings.Default.LoadingEnabled)
             {
                 loading.Enabled = true;
 
@@ -83,8 +77,6 @@ namespace Ivan
                 if (loadingBar.Value >= 99)
                 {
                     loading.Enabled = false;
-
-                    okno = new Hlavni();
 
                     okno.FormClosed += (s, args) =>
                     {

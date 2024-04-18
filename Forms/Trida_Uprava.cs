@@ -1,46 +1,20 @@
-﻿using SediM.Helpers;
+﻿using Npgsql;
+using SediM.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace SediM.Forms
 {
-    public partial class Trida_Nova : Form
+    public partial class Trida_Uprava : Form
     {
-        private SqlConnection connection = new SqlConnection(@"Data Source=37.60.252.204;Initial Catalog=Ivan;User ID=ivan;Password=mE3xBa0it8dVOGr");
+        private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
 
         private List<Trida> _tridy;
 
-        public Trida_Nova()
-        {
-            InitializeComponent();
-
-            connection.Open();
-            ConnectionState stavDB = connection.State;
-
-            try
-            {
-                if (stavDB == ConnectionState.Broken && jePripojen == false)
-                {
-                    DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-                    if (pripojen == DialogResult.Cancel)
-                    {
-                        Application.Exit();
-                    }
-
-                    return;
-                }
-            }
-            catch (SqlException e)
-            {
-                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-            }
-        }
-
-        public Trida_Nova(List<Trida> tridy)
+        public Trida_Uprava(List<Trida> tridy)
         {
             _tridy = tridy;
 
@@ -67,6 +41,10 @@ namespace SediM.Forms
                 mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
+
+            cboxTridy.DataSource = tridy;
+            cboxTridy.ValueMember = "Id";
+            cboxTridy.DisplayMember = "Nazev";
         }
 
         private void numSirka_ValueChanged(object sender, EventArgs e)
@@ -126,10 +104,20 @@ namespace SediM.Forms
             }
         }
 
-        private void btnVytvorit_Click(object sender, EventArgs e)
+        private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Trida trida = _tridy[cboxTridy.SelectedIndex];
+            tboxNazev.Text = trida.Nazev;
+            numSirka.Value = trida.Sirka;
+            numVyska.Value = trida.Vyska;
+            panelEditClassroom.Invalidate();
+        }
+
+        private void btnNastavit_Click(object sender, EventArgs e)
         {
             try
             {
+                int id = cboxTridy.SelectedIndex + 1;
                 string nazev = tboxNazev.Text;
                 int sirka = (int)numSirka.Value;
                 int vyska = (int)numVyska.Value;
@@ -139,12 +127,12 @@ namespace SediM.Forms
                     throw new Exception("Název třídy nesmí být prázdný");
                 }
 
-                SqlCommand vytvorTridu = new SqlCommand($"INSERT INTO Tridy (Nazev, Sirka, Vyska, JeRozsazena) VALUES(@nazev, @sirka, @vyska, @jeRozsazena)", connection);
+                SqlCommand vytvorTridu = new SqlCommand($"UPDATE Tridy SET Nazev = @nazev, Sirka = @sirka, Vyska = @vyska WHERE TridaId = @id", connection);
 
+                vytvorTridu.Parameters.AddWithValue("@id", id);
                 vytvorTridu.Parameters.AddWithValue("@nazev", nazev);
                 vytvorTridu.Parameters.AddWithValue("@sirka", sirka);
                 vytvorTridu.Parameters.AddWithValue("@vyska", vyska);
-                vytvorTridu.Parameters.AddWithValue("@jeRozsazena", 0);
 
                 int stav = vytvorTridu.ExecuteNonQuery();
 
