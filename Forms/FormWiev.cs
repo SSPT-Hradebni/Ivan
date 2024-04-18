@@ -12,60 +12,77 @@ namespace SediM.Forms
 {
     public partial class FormWiev : Form
     {
-        public FormWiev()
+        public List<Trida> tridy = new List<Trida>();
+        public FormWiev(List<Trida> tridy)
         {
             InitializeComponent();
+            this.tridy = tridy;
         }
-        public List<Trida> tridy = new List<Trida>();
+
         private void FormWiev_Load(object sender, EventArgs e)
         {
-         
-                createwiev();
+
+            createwiev();
+
 
 
         }
+        Random ran = new Random();
+        int pos = 60;
 
-        private void createwiev()
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            //try
-            //{
-                Point posid = new Point(-1, -1);
-                while (true)
-                {
-
-                    if (posid.X == tridy.Find(x => x.Nazev == textBox1.Text).Sirka)
-                        posid.Y++;
-
-                    string[] tmp = tridy.Find(x => x.Nazev == textBox1.Text).Data.Split(",");
-                    foreach (string s in tmp)
-                    {
-                        Label label = new Label();
-                        label.BackColor = Color.OrangeRed;
-                        label.Font = new Font(label.Font, FontStyle.Bold);
-                    
-                        label.Location = new Point(Convert.ToInt32(s.Split("=")[0]) % tridy.Find(x => x.Nazev == textBox1.Text).Sirka, Convert.ToInt32(s.Split("=")[0]) / tridy.Find(x => x.Nazev == textBox1.Text).Sirka); //pos
-                        label.Text = s.Split("=")[1]; //jmeno
-                        this.Controls.Add(label);
-                    }
-                    posid.X++;
-                }
-            //}
-            //catch { }
-        }
-        //odplnit vyhledání uceben, vrací null
-        //https://github.com/SSPT-Hradebni/Ivan/blob/test
-        //optimalizovat vzdalenost/velikost polí,
-        //vykresluje konp. label
-        //katalog barev
-
-        private void FormWiev_Paint(object sender, PaintEventArgs e)
-        {
-
+            createwiev();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             createwiev();
         }
+
+        public void createwiev()
+        {
+            this.Controls.Clear();
+            this.Controls.Add(numericUpDown1); this.Controls.Add(button1);
+            try
+            {
+                Trida ttp = tridy[(int)numericUpDown1.Value];//tridy.Find(tridy => tridy.Id == 86);//Convert.ToInt32(textBox1.Text));
+                if (ttp != null)
+                {
+                    int border = 6;
+                    int n = 0;
+                    string[] tmp = ttp.Data.Split(",");
+                    foreach (string s in tmp)
+                    {
+
+                        Label label = new Label();
+                        label.Size = new Size(50, 50);
+                        label.BackColor = Color.FromArgb(255, ran.Next(100, 255), ran.Next(100, 255), ran.Next(100, 255));
+                        label.Font = new Font(label.Font, FontStyle.Bold);
+                        int a = Convert.ToInt32(s.Split("=")[0].Replace('=', ' '));//misto= zak
+                                                                                   //  int b;// = Convert.ToInt32(s.Split("=")[1]);
+                                                                                   //label.Size.Width = pos;
+                                                                                   //label.Size.Height = pos;
+
+                        
+
+                        label.Location = new Point((n * pos), ((int)(a / border) * pos));
+
+                        label.Text = s.Split("=")[1]; //jmeno
+                        this.Controls.Add(label);
+                        if (n >= border+1)
+                            n = 0;
+                        else
+                            n++;
+
+                    }
+
+                }
+
+            }
+            catch { }
+        }
     }
 }
+
+
