@@ -103,7 +103,7 @@ namespace SediM.Forms
 
         private void cboxTridy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Trida trida = _tridy[_tridy.FindIndex(hledanaTrida => hledanaTrida.Id == (long)cboxTridy.SelectedValue)];
+            Trida trida = _tridy[_tridy.FindIndex(hledanaTrida => hledanaTrida.Id == (int)cboxTridy.SelectedValue)];
             tboxNazev.Text = trida.Nazev;
             numSirka.Value = trida.Sirka;
             numVyska.Value = trida.Vyska;

@@ -60,6 +60,8 @@
             this.dataviewUcebny.RowTemplate.Height = 25;
             this.dataviewUcebny.Size = new System.Drawing.Size(800, 450);
             this.dataviewUcebny.TabIndex = 6;
+            this.dataviewUcebny.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataviewTridy_CellDoubleClick);
+            this.dataviewUcebny.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dataviewTridy_KeyPress);
             // 
             // id
             // 
@@ -103,6 +105,8 @@
             this.Controls.Add(this.dataviewUcebny);
             this.Name = "Trida_Seznam";
             this.Text = "Seznam učeben";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Trida_Seznam_FormClosed);
+            this.Load += new System.EventHandler(this.Trida_Seznam_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataviewUcebny)).EndInit();
             this.ResumeLayout(false);
 

@@ -59,6 +59,7 @@
             this.panelEditClassroom.Name = "panelEditClassroom";
             this.panelEditClassroom.Size = new System.Drawing.Size(976, 574);
             this.panelEditClassroom.TabIndex = 14;
+            this.panelEditClassroom.Paint += new System.Windows.Forms.PaintEventHandler(this.panelEditClassroom_Paint);
             // 
             // numVyska
             // 
