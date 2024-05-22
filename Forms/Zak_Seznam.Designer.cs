@@ -29,31 +29,31 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Zak_Seznam));
-            dataviewStudenti = new DataGridView();
+            dataviewZaci = new DataGridView();
             id = new DataGridViewTextBoxColumn();
             jmeno_prijmeni = new DataGridViewTextBoxColumn();
             kategorie = new DataGridViewTextBoxColumn();
             skola = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataviewStudenti).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataviewZaci).BeginInit();
             SuspendLayout();
             // 
-            // dataviewStudenti
+            // dataviewZaci
             // 
-            dataviewStudenti.AllowUserToAddRows = false;
-            dataviewStudenti.AllowUserToDeleteRows = false;
-            dataviewStudenti.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataviewStudenti.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            dataviewStudenti.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataviewStudenti.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola });
-            dataviewStudenti.Dock = DockStyle.Fill;
-            dataviewStudenti.Location = new Point(0, 0);
-            dataviewStudenti.Margin = new Padding(3, 5, 3, 5);
-            dataviewStudenti.Name = "dataviewStudenti";
-            dataviewStudenti.ReadOnly = true;
-            dataviewStudenti.RowHeadersWidth = 51;
-            dataviewStudenti.RowTemplate.Height = 25;
-            dataviewStudenti.Size = new Size(914, 600);
-            dataviewStudenti.TabIndex = 5;
+            dataviewZaci.AllowUserToAddRows = false;
+            dataviewZaci.AllowUserToDeleteRows = false;
+            dataviewZaci.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataviewZaci.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            dataviewZaci.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataviewZaci.Columns.AddRange(new DataGridViewColumn[] { id, jmeno_prijmeni, kategorie, skola });
+            dataviewZaci.Dock = DockStyle.Fill;
+            dataviewZaci.Location = new Point(0, 0);
+            dataviewZaci.Margin = new Padding(3, 4, 3, 4);
+            dataviewZaci.Name = "dataviewZaci";
+            dataviewZaci.ReadOnly = true;
+            dataviewZaci.RowHeadersWidth = 51;
+            dataviewZaci.RowTemplate.Height = 25;
+            dataviewZaci.Size = new Size(800, 450);
+            dataviewZaci.TabIndex = 5;
             // 
             // id
             // 
@@ -85,26 +85,25 @@
             // 
             // Zak_Seznam
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
-            Controls.Add(dataviewStudenti);
+            ClientSize = new Size(800, 450);
+            Controls.Add(dataviewZaci);
             HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Zak_Seznam";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Seznam studentů";
+            Text = "Seznam žáků";
             Load += Zak_Seznam_Load;
-            ((System.ComponentModel.ISupportInitialize)dataviewStudenti).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataviewZaci).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dataviewStudenti;
+        private DataGridView dataviewZaci;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn jmeno_prijmeni;
         private DataGridViewTextBoxColumn kategorie;

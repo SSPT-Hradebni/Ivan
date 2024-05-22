@@ -37,7 +37,7 @@
             lblKategorie = new Label();
             lblSkola = new Label();
             cboxSkoly = new ComboBox();
-            btnVytvořit = new Button();
+            btnVytvorit = new Button();
             ((System.ComponentModel.ISupportInitialize)numKategorie).BeginInit();
             SuspendLayout();
             // 
@@ -54,14 +54,14 @@
             // 
             tboxJmeno.Location = new Point(12, 27);
             tboxJmeno.Name = "tboxJmeno";
-            tboxJmeno.Size = new Size(261, 23);
+            tboxJmeno.Size = new Size(410, 23);
             tboxJmeno.TabIndex = 1;
             // 
             // tboxPrijmeni
             // 
             tboxPrijmeni.Location = new Point(12, 80);
             tboxPrijmeni.Name = "tboxPrijmeni";
-            tboxPrijmeni.Size = new Size(261, 23);
+            tboxPrijmeni.Size = new Size(410, 23);
             tboxPrijmeni.TabIndex = 2;
             // 
             // lblPrijmeni
@@ -79,7 +79,7 @@
             numKategorie.Maximum = new decimal(new int[] { 7, 0, 0, 0 });
             numKategorie.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numKategorie.Name = "numKategorie";
-            numKategorie.Size = new Size(261, 23);
+            numKategorie.Size = new Size(410, 23);
             numKategorie.TabIndex = 4;
             numKategorie.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -106,25 +106,26 @@
             cboxSkoly.FormattingEnabled = true;
             cboxSkoly.Location = new Point(10, 200);
             cboxSkoly.Name = "cboxSkoly";
-            cboxSkoly.Size = new Size(263, 23);
+            cboxSkoly.Size = new Size(412, 23);
             cboxSkoly.TabIndex = 10;
             // 
-            // btnVytvořit
+            // btnVytvorit
             // 
-            btnVytvořit.Location = new Point(12, 233);
-            btnVytvořit.Margin = new Padding(3, 2, 3, 2);
-            btnVytvořit.Name = "btnVytvořit";
-            btnVytvořit.Size = new Size(261, 23);
-            btnVytvořit.TabIndex = 11;
-            btnVytvořit.Text = "Vytvořit";
-            btnVytvořit.UseVisualStyleBackColor = true;
+            btnVytvorit.Location = new Point(12, 233);
+            btnVytvorit.Margin = new Padding(3, 2, 3, 2);
+            btnVytvorit.Name = "btnVytvorit";
+            btnVytvorit.Size = new Size(261, 23);
+            btnVytvorit.TabIndex = 11;
+            btnVytvorit.Text = "Vytvořit";
+            btnVytvorit.UseVisualStyleBackColor = true;
+            btnVytvorit.Click += btnVytvorit_Click;
             // 
             // Zak_Novy
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(290, 269);
-            Controls.Add(btnVytvořit);
+            ClientSize = new Size(434, 269);
+            Controls.Add(btnVytvorit);
             Controls.Add(cboxSkoly);
             Controls.Add(lblSkola);
             Controls.Add(lblKategorie);
@@ -133,7 +134,7 @@
             Controls.Add(tboxPrijmeni);
             Controls.Add(tboxJmeno);
             Controls.Add(lblJmeno);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
@@ -141,8 +142,9 @@
             Name = "Zak_Novy";
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Nový student";
+            Text = "Nový žák";
             HelpButtonClicked += Zak_Novy_HelpButtonClicked;
+            Load += Zak_Novy_Load;
             ((System.ComponentModel.ISupportInitialize)numKategorie).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -158,6 +160,6 @@
         private Label lblKategorie;
         private Label lblSkola;
         private ComboBox cboxSkoly;
-        private Button btnVytvořit;
+        private Button btnVytvorit;
     }
 }

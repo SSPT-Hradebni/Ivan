@@ -1,5 +1,10 @@
-﻿using System.Data;
+﻿using SediM.Forms;
+using System.Data;
+using System.Globalization;
+using System.Linq;
+using System.Speech.Synthesis;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SediM.Helpers
 {
@@ -15,78 +20,6 @@ namespace SediM.Helpers
         public DialogResult Alert(string titulek, string obsah, MessageBoxButtons messageBoxButtons = MessageBoxButtons.OK, MessageBoxIcon messageBoxIcon = MessageBoxIcon.None)
         {
             return MessageBox.Show(obsah, titulek, messageBoxButtons, messageBoxIcon);
-        }
-
-        /// <summary>
-        /// Načítání studentů do listu z <paramref name="data"/>
-        /// </summary>
-        /// <param name="data">Surová tabulka dat studentů</param>
-        /// <returns>Všichni studenti z databáze v listu</returns>
-        public List<Zak> ListZaku(DataTable data)
-        {
-            // vytvoření dočasného listu studentů
-            List<Zak> zaci = new List<Zak>();
-
-            foreach (DataRow radek in data.Rows)
-            {
-                // rozdělení jména a příjmení
-                string[] jmeno = radek[1].ToString().Split(' ');
-
-                // [0] - ID studenta
-                // [1] - Jméno studenta
-                // [2] - Příjmení studenta
-                // [3] - Studentovo číslo kategorie
-                // [4] - ID školy
-                Zak zak = new Zak(long.Parse(radek[0].ToString()), jmeno[0], jmeno[1], long.Parse(radek[2].ToString()), long.Parse(radek[3].ToString()));
-                zaci.Add(zak);
-            }
-
-            return zaci;
-        }
-
-        /// <summary>
-        /// Načítání tříd do listu z <paramref name="data"/>
-        /// </summary>
-        /// <param name="data">Surová tabulka dat tříd</param>
-        /// <returns>Všechny třídy z databáze v listu</returns>
-        public List<Trida> ListTrid(DataTable data)
-        {
-            // vytvoření dočasného listu tříd
-            List<Trida> tridy = new List<Trida>();
-
-            foreach (DataRow radek in data.Rows)
-            {
-                // [0] - ID třídy
-                // [1] - Název třídy
-                // [2] - Šířka třídy (v místech)
-                // [3] - Výška třídy (v místech)
-                // [4] - Stav vyplnění třídy (true/false)
-                Trida trida = new Trida(long.Parse(radek[0].ToString()), radek[1].ToString(), int.Parse(radek[2].ToString()), int.Parse(radek[3].ToString()), (bool)radek[4]);
-                tridy.Add(trida);
-            }
-
-            return tridy;
-        }
-
-        /// <summary>
-        /// Načítání škol do listu z <paramref name="data"/>
-        /// </summary>
-        /// <param name="data">Surová tabulka dat škol</param>
-        /// <returns>Všechny školy z databáze v listu</returns>
-        public List<Skola> ListSkol(DataTable data)
-        {
-            // vytvoření dočasného listu škol
-            List<Skola> skoly = new List<Skola>();
-
-            foreach (DataRow radek in data.Rows)
-            {
-                // [0] - ID školy
-                // [1] - Název školy
-                Skola skola = new Skola(long.Parse(radek[0].ToString()), radek[1].ToString());
-                skoly.Add(skola);
-            }
-
-            return skoly;
         }
 
         /// <summary>
@@ -200,6 +133,247 @@ namespace SediM.Helpers
         public void ShowHelp(Form form)
         {
             Help.ShowHelp(form, "SediM.chm", HelpNavigator.Index);
+        }
+
+        public DialogResult StudentForm_New(Form form, List<Skola> skoly, List<Zak> zaci)
+        {
+            Zak_Novy okno = new Zak_Novy(skoly, zaci);
+            okno.Owner = form;
+
+            DialogResult stav = okno.ShowDialog();
+
+            return stav;
+        }
+
+        public DialogResult SkolaForm_New(Form form, List<Ucitel> ucitele)
+        {
+            Skola_Nova okno = new Skola_Nova(ucitele);
+            okno.Owner = form;
+
+            DialogResult stav = okno.ShowDialog();
+
+            return stav;
+        }
+
+        /// <summary>
+        /// Funkce pro mluvení zadaného textu.
+        /// </summary>
+        /// <param name="text">Text, který má být promluven.</param>
+        /// <param name="muzeMluvit">Určuje, zda má být text promluven (true) nebo ne (false).</param>
+        public void RekniTo(string text, bool muzeMluvit)
+        {
+            SpeechSynthesizer synthesizer = new SpeechSynthesizer();
+
+            // Nastavení hlasu na český hlas
+            // synthesizer.SelectVoice("Microsoft Jakub");
+            synthesizer.SelectVoiceByHints(VoiceGender.Female, VoiceAge.NotSet, 0, CultureInfo.GetCultureInfo("en-US"));
+
+            if (muzeMluvit)
+            {
+                synthesizer.SpeakAsync(text);
+            }
+        }
+
+        /// <summary>
+        /// Titulek pro okna aplikace
+        /// </summary>
+        /// <param name="text">Text v titulku</param>
+        /// <returns>Titulek s konkrétním textem včetně názvu aplikace</returns>
+        public string VytvorTitulek(string? text)
+        {
+            return text != null ? $"{text} | {Properties.Settings.Default.AppName}" : Properties.Settings.Default.AppName;
+        }
+
+        /// <summary>
+        /// Skloňování slova z 1. pádu do 5. pádu
+        /// </summary>
+        /// <param name="slovo">Slovo ke skloňování</param>
+        /// <returns>Slovo v pátém pádu</returns>
+        public string Sklonuj(string slovo)
+        {
+            if (string.IsNullOrEmpty(slovo) || slovo.Length < 1)
+                return string.Empty;
+            slovo = slovo.Trim();
+            int i = slovo.Length - 1; // Index posledniho pismene
+            slovo = slovo[0].ToString().ToUpper() + slovo.Substring(1, i);
+
+            string vysledneSlovo = slovo;
+
+            if (!((slovo[i - 1] == 'u' && slovo[i] == 'm') ||
+                (slovo[i - 1] == 'o' && slovo[i] == 'n')))
+            {
+                if (slovo[i - 1] == 'i' && slovo[i] == 'a') // Maria
+                    // Nebo -io, -eio
+                    // Záleží na výslovnosti ...
+                    vysledneSlovo = slovo.Substring(0, i - 1) + "ie";
+
+                else if (slovo[i - 1] == 'í' && slovo[i] == 'a') // María
+                    vysledneSlovo = slovo.Substring(0, i - 1) + "íe";
+
+                else if (slovo[i - 1] == 'e' && slovo[i] == 'c') // Otec
+                    vysledneSlovo = slovo.Substring(0, i - 1) + "če";
+
+                else if (slovo[i - 1] == 'e' && slovo[i] == 'k') // Bobek
+                    vysledneSlovo = slovo.Substring(0, i - 1) + "ku";
+
+                else if (slovo[i - 1] == 'e' && slovo[i] == 'l') // Bobek
+                    vysledneSlovo = slovo.Substring(0, i - 1) + "le";
+
+                else if (slovo[i - 1] == 'c' && slovo[i] == 'h')
+                    vysledneSlovo += "u";
+
+                else if (slovo[i] == 'a' ||
+                    slovo[i] == 'á')
+                    vysledneSlovo = slovo.Substring(0, i) + "o";
+
+                else if (slovo[i] == 'ž' ||
+                    slovo[i] == 'l' ||
+                    slovo[i] == 'j' ||
+                    slovo[i] == 's' ||
+                    slovo[i] == 'č' ||
+                    slovo[i] == 'c' ||
+                    slovo[i] == 'x' ||
+                    slovo[i] == 'š' ||
+                    slovo[i] == 'z' ||
+                    slovo[i] == 'ř')
+                    vysledneSlovo += "i";
+
+                else if (slovo[i] == 'n' ||
+                    slovo[i] == 't' ||
+                    slovo[i] == 'b' ||
+                    slovo[i] == 'd' ||
+                    slovo[i] == 'ď' ||
+                    slovo[i] == 'f' ||
+                    slovo[i] == 't' ||
+                    slovo[i] == 'n' ||
+                    slovo[i] == 'ň' ||
+                    slovo[i] == 'p' ||
+                    slovo[i] == 'm' ||
+                    slovo[i] == 'v' ||
+                    slovo[i] == 'w' ||
+                    slovo[i] == 'r')
+                    vysledneSlovo += "e";
+
+                else if (slovo[i] == 'k' ||
+                   slovo[i] == 'g')
+                    vysledneSlovo += "u";
+
+                else if (slovo[i] == 'é')
+                    vysledneSlovo = slovo.Substring(0, i) + "e";
+
+                else if (slovo[i] == 'ó' ||
+                    slovo[i] == 'ň')
+                    vysledneSlovo = slovo.Substring(0, i) + "o";
+
+                //if(slovo[i] == 'r')
+                //    vysledneSlovo = slovo.Substring(0, i) + "ře";
+            }
+            return vysledneSlovo;
+        }
+
+        /// <summary>
+        /// Generátor "náhodných" vět
+        /// </summary>
+        /// <param name="nahoda">Index náhody</param>
+        /// <returns>Náhodná věta ze zadaného indexu <paramref name="nahoda"/></returns>
+        public string NahodnyIvan(int nahoda)
+        {
+            string veta;
+
+            switch (nahoda)
+            {
+                case int n when (n <= 30):
+                    veta = "This is gonna be a long one.";
+                    break;
+                case int n when (n > 30 && n <= 65):
+                    veta = "I hope you're well today.";
+                    break;
+                default:
+                    veta = "There's nothing here";
+                    break;
+            }
+
+            return veta;
+        }
+
+        /// <summary>
+        /// Zobrazí box informující o nehotové/nedokončené části aplikace
+        /// </summary>
+        /// <param name="coNeni">Název části aplikace, které se oznámení týká</param>
+        public void JesteNeni(string? coNeni)
+        {
+            if (coNeni == null)
+            {
+                MessageBox.Show("Tato část aplikace není hotová.", "Nehotová část", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show($"Část \"{coNeni}\" v aplikaci není hotová.", "Nehotová část", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        public string ZkratkySkol(string nazev)
+        {
+            Dictionary<string, string> skoly = new Dictionary<string, string>()
+    {
+        {"České vysoké učení technické","ČVUT"},
+        {"české vysoké učení technické","ČVUT"},
+            {"Základní škola", "ZŠ"},
+            {"základní škola", "ZŠ"},
+            {"Základní umělecká škola", "ZUŠ"},
+            {"základní umělecká škola", "ZUŠ"},
+            {"Střední škola", "SŠ"},
+            {"střední škola", "SŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední odborná škola", "SOŠ"},
+            {"střední odborná škola", "SOŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední průmyslová škola", "SPŠ"},
+            {"střední průmyslová škola", "SPŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední odborné učiliště", "SOU"},
+            {"střední odborné učiliště", "SOU"}, // Varianta s malým počátečním písmenem
+            {"Střední škola informatiky, poštovnictví a finančnictví", "SŠIPF"},
+            {"střední škola informatiky, poštovnictví a finančnictví", "SŠIPF"}, // Varianta s malým počátečním písmenem
+            {"Střední škola technická a ekonomická","SŠTE"},
+            {"střední škola technická a ekonomická","SŠTE"}, // Varianta s malým počátečním písmenem
+            {"Integrovaná střední škola","ISŠ"},
+            {"integrovaná střední škola","ISŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední zdravotnická škola","SZŠ"},
+            {"střední zdravotnická škola","SZŠ"}, // Varianta s malým počátečním písmenem
+            {"Střední škola elektrotechnická","SŠE"},
+            {"střední škola elektrotechnická","SŠE"}, // Varianta s malým počátečním písmenem
+            {"Střední škola polytechnická","SŠP"},
+            {"střední škola polytechnická","SŠP"}, // Varianta s malým počátečním písmenem
+            {"Střední škola technická a dopravní","SŠTD"},
+            {"střední škola technická a dopravní","SŠTD"}, // Varianta s malým počátečním písmenem
+            {"Integrovaná střední škola technická a ekonomická","ISŠTE"},
+            {"integrovaná střední škola technická a ekonomická","ISŠTE"}, // Varianta s malým počátečním písmenem
+            {"Střední odborné učiliště strojírenské","SOUs"},
+            {"střední odborné učiliště strojírenské","SOUs"}, // Varianta s malým počátečním písmenem
+            {"Obchodní akademie","OA"},
+            {"obchodní akademie","OA"}, // Varianta s malým počátečním písmenem
+            {"Jazyková škola","JŠ"},
+            {"jazyková škola","JŠ"}, // Varianta s malým počátečním písmenem
+            {"Hotelová škola","HŠ"},
+            {"hotelová škola","HŠ"}, // Varianta s malým počátečním písmenem
+            {"Gymnázium", "G"},
+            {"gymnázium", "G"}, // Varianta s malým počátečním písmenem
+            {"vyšší odborná škola", "VOŠ"}, // Varianta s malým počátečním písmenem
+            {"Vyšší odborná škola", "VOŠ"},
+            {"Zemědělská akademie", "ZA"},
+            {"zemědělská akademie", "ZA"}, // Varianta s malým počátečním písmenem
+            {"střední zemědělská škola","SZŠ" }, // Varianta s malým počátečním písmenem
+            {"Střední zemědělská škola","SZŠ" },
+            // Přidejte další školy podle potřeby
+    };
+
+            string upravenyNazev = nazev;
+
+            foreach (KeyValuePair<string, string> entry in skoly)
+            {
+                // Nahrazujeme všechny výskyty názvu školy v textu, zachováváme původní formát
+                upravenyNazev = Regex.Replace(upravenyNazev, @"\b" + Regex.Escape(entry.Key) + @"\b", entry.Value);
+            }
+
+            return upravenyNazev;
         }
     }
 }

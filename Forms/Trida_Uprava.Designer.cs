@@ -1,6 +1,6 @@
 ﻿namespace SediM.Forms
 {
-    partial class Trida_Nova
+    partial class Trida_Uprava
     {
         /// <summary>
         /// Required designer variable.
@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Trida_Nova));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Trida_Uprava));
             this.tboxNazev = new System.Windows.Forms.TextBox();
             this.panelEditClassroom = new System.Windows.Forms.Panel();
-            this.btnVytvorit = new System.Windows.Forms.Button();
             this.numVyska = new System.Windows.Forms.NumericUpDown();
             this.numSirka = new System.Windows.Forms.NumericUpDown();
             this.gboxVelikost = new System.Windows.Forms.GroupBox();
             this.lblVyska = new System.Windows.Forms.Label();
             this.lblSirka = new System.Windows.Forms.Label();
+            this.cboxTridy = new System.Windows.Forms.ComboBox();
+            this.btnNastavit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numVyska)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSirka)).BeginInit();
             this.gboxVelikost.SuspendLayout();
@@ -44,7 +45,7 @@
             // 
             // tboxNazev
             // 
-            this.tboxNazev.Location = new System.Drawing.Point(12, 10);
+            this.tboxNazev.Location = new System.Drawing.Point(12, 40);
             this.tboxNazev.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tboxNazev.Name = "tboxNazev";
             this.tboxNazev.PlaceholderText = "Název učebny";
@@ -59,17 +60,6 @@
             this.panelEditClassroom.Size = new System.Drawing.Size(976, 574);
             this.panelEditClassroom.TabIndex = 14;
             this.panelEditClassroom.Paint += new System.Windows.Forms.PaintEventHandler(this.panelEditClassroom_Paint);
-            // 
-            // btnVytvorit
-            // 
-            this.btnVytvorit.Location = new System.Drawing.Point(12, 162);
-            this.btnVytvorit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnVytvorit.Name = "btnVytvorit";
-            this.btnVytvorit.Size = new System.Drawing.Size(142, 31);
-            this.btnVytvorit.TabIndex = 12;
-            this.btnVytvorit.Text = "Vytvořit";
-            this.btnVytvorit.UseVisualStyleBackColor = true;
-            this.btnVytvorit.Click += new System.EventHandler(this.btnVytvorit_Click);
             // 
             // numVyska
             // 
@@ -115,7 +105,7 @@
             this.gboxVelikost.Controls.Add(this.lblSirka);
             this.gboxVelikost.Controls.Add(this.numVyska);
             this.gboxVelikost.Controls.Add(this.numSirka);
-            this.gboxVelikost.Location = new System.Drawing.Point(12, 39);
+            this.gboxVelikost.Location = new System.Drawing.Point(12, 67);
             this.gboxVelikost.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gboxVelikost.Name = "gboxVelikost";
             this.gboxVelikost.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -142,20 +132,41 @@
             this.lblSirka.TabIndex = 12;
             this.lblSirka.Text = "Míst v řadě";
             // 
-            // Trida_Nova
+            // cboxTridy
+            // 
+            this.cboxTridy.FormattingEnabled = true;
+            this.cboxTridy.Location = new System.Drawing.Point(12, 10);
+            this.cboxTridy.Name = "cboxTridy";
+            this.cboxTridy.Size = new System.Drawing.Size(142, 23);
+            this.cboxTridy.TabIndex = 17;
+            this.cboxTridy.SelectedIndexChanged += new System.EventHandler(this.cboxTridy_SelectedIndexChanged);
+            // 
+            // btnNastavit
+            // 
+            this.btnNastavit.Location = new System.Drawing.Point(12, 188);
+            this.btnNastavit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnNastavit.Name = "btnNastavit";
+            this.btnNastavit.Size = new System.Drawing.Size(142, 31);
+            this.btnNastavit.TabIndex = 18;
+            this.btnNastavit.Text = "Nastavit";
+            this.btnNastavit.UseVisualStyleBackColor = true;
+            this.btnNastavit.Click += new System.EventHandler(this.btnNastavit_Click);
+            // 
+            // Trida_Uprava
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1149, 594);
+            this.ClientSize = new System.Drawing.Size(1148, 596);
+            this.Controls.Add(this.btnNastavit);
+            this.Controls.Add(this.cboxTridy);
             this.Controls.Add(this.gboxVelikost);
             this.Controls.Add(this.tboxNazev);
             this.Controls.Add(this.panelEditClassroom);
-            this.Controls.Add(this.btnVytvorit);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "Trida_Nova";
+            this.Name = "Trida_Uprava";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Nová učebna";
+            this.Text = "Úprava třídy";
             ((System.ComponentModel.ISupportInitialize)(this.numVyska)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSirka)).EndInit();
             this.gboxVelikost.ResumeLayout(false);
@@ -170,11 +181,12 @@
         private TextBox tboxNazev;
         private Panel panelEditClassroom;
         private Button btnOdstranitTridu;
-        private Button btnVytvorit;
         private NumericUpDown numVyska;
         private NumericUpDown numSirka;
         private GroupBox gboxVelikost;
         private Label lblVyska;
         private Label lblSirka;
+        private ComboBox cboxTridy;
+        private Button btnNastavit;
     }
 }

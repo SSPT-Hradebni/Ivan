@@ -1,4 +1,4 @@
-﻿namespace Ivan
+﻿namespace SediM
 {
     partial class Nacitani
     {
@@ -100,7 +100,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.BackgroundImage = global::Ivan.Properties.Resources.loadingBG;
+            this.BackgroundImage = global::SediM.Properties.Resources.loadingBG;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1197, 623);
             this.Controls.Add(this.lblTip);

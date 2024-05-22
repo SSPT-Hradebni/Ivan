@@ -1,88 +1,93 @@
-﻿using Npgsql;
-using SediM.Helpers;
+﻿using SediM.Helpers;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SediM
 {
     public partial class Zak_Upravit : Form
     {
-        private static NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder($"Host={Properties.Settings.Default.MySQL_server};Port={Properties.Settings.Default.MySQL_port};Username={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo};Database={Properties.Settings.Default.MySQL_databaze};");
-        private static NpgsqlDataSource dataSource = dataSourceBuilder.Build();
-        private NpgsqlConnection? connection;
+        private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
 
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
 
         private List<Skola> _skoly;
-        private List<Zak> _studenti;
+        private List<Zak> _zaci;
 
         public Zak_Upravit()
         {
             InitializeComponent();
-        }
 
-        public Zak_Upravit(List<Skola> skoly, List<Zak> studenti)
-        {
-            _skoly = skoly;
-            _studenti = studenti;
-
-            InitializeComponent();
-
-            var conn = dataSource.OpenConnectionAsync();
-            connection = conn.Result;
+            connection.Open();
+            ConnectionState stavDB = connection.State;
 
             try
             {
-                if (conn.IsFaulted && jePripojen == false)
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
                 {
                     DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     if (pripojen == DialogResult.Cancel)
                     {
-                        Close();
+                        Application.Exit();
                     }
 
                     return;
                 }
             }
-            catch (NpgsqlException e)
+            catch (SqlException e)
             {
-                mainHelp.Alert("Chyba PostgreSQL", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Close();
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+        }
+
+        public Zak_Upravit(List<Skola> skoly, List<Zak> zaci)
+        {
+            _skoly = skoly;
+            _zaci = zaci;
+
+            InitializeComponent();
+
+            connection.Open();
+            ConnectionState stavDB = connection.State;
+
+            try
+            {
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
+                {
+                    DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                    if (pripojen == DialogResult.Cancel)
+                    {
+                        Application.Exit();
+                    }
+
+                    return;
+                }
+            }
+            catch (SqlException e)
+            {
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
             }
         }
 
         private void Zak_Upravit_Load(object sender, EventArgs e)
         {
-
-            // _skoly.Sort(); // seřazení
-
-            // MessageBox.Show(_skoly.Count.ToString());
-
             // načtení škol
+            cboxSkoly.ValueMember = "Id";
+            cboxSkoly.DisplayMember = "Nazev";
             cboxSkoly.DataSource = _skoly;
-            cboxSkoly.ValueMember = "id";
-            cboxSkoly.DisplayMember = "nazev";
 
-            _studenti.Sort(); // seřazení
+            _zaci.Sort(); // seřazení
 
-            // načtení studentů
-            cboxStudenti.DataSource = _studenti;
-            cboxStudenti.ValueMember = "Id";
-            cboxStudenti.DisplayMember = "CeleJmeno";
+            // načtení žáků
+            cboxZaci.ValueMember = "Id";
+            cboxZaci.DisplayMember = "CeleJmeno";
+            cboxZaci.DataSource = _zaci;
 
             // povolení autocomplete
-            cboxStudenti.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cboxStudenti.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-
-        private void cboxStudenti_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Zak student = _studenti[cboxStudenti.SelectedIndex];
-
-            tboxJmeno.Text = student.Jmeno;
-            tboxPrijmeni.Text = student.Prijmeni;
-            numKategorie.Value = student.Kategorie;
-            cboxSkoly.SelectedIndex = (int)student.Skola - 1;
-            lblStudentID.Text = $"{student.Id}";
+            cboxZaci.AutoCompleteMode = AutoCompleteMode.Suggest;
+            cboxZaci.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
         private void btnUlozit_Click(object sender, EventArgs e)
@@ -90,19 +95,20 @@ namespace SediM
             string jmeno = tboxJmeno.Text;
             string prijmeni = tboxPrijmeni.Text;
             int kategorie = (int)numKategorie.Value;
-            int skola = cboxSkoly.SelectedIndex + 1;
-            int studentID = int.Parse(lblStudentID.Text);
+            int skola = (int)cboxSkoly.SelectedValue;
+            int zakID = (int)cboxZaci.SelectedValue;
 
             try
             {
-                NpgsqlCommand vytvorStudenta = new NpgsqlCommand($"UPDATE studentiv2 SET jmeno_prijmeni = @jmenoprijmeni, kategorie = @kategorie, skola = @skola WHERE id = @id", connection);
+                SqlCommand vytvorZaka = new SqlCommand($"UPDATE Studenti SET Jmeno = @jmeno, Prijmeni = @prijmeni, Kategorie = @kategorie, Skola = @skola WHERE StudentId = @id", connection);
 
-                vytvorStudenta.Parameters.AddWithValue("@jmenoprijmeni", $"{jmeno} {prijmeni}");
-                vytvorStudenta.Parameters.AddWithValue("@kategorie", kategorie);
-                vytvorStudenta.Parameters.AddWithValue("@skola", skola);
-                vytvorStudenta.Parameters.AddWithValue("@id", studentID);
+                vytvorZaka.Parameters.AddWithValue("@jmeno", $"{jmeno}");
+                vytvorZaka.Parameters.AddWithValue("@prijmeni", $"{prijmeni}");
+                vytvorZaka.Parameters.AddWithValue("@kategorie", kategorie);
+                vytvorZaka.Parameters.AddWithValue("@skola", skola);
+                vytvorZaka.Parameters.AddWithValue("@id", zakID);
 
-                int stav = vytvorStudenta.ExecuteNonQuery();
+                int stav = vytvorZaka.ExecuteNonQuery();
 
                 if (stav != 0)
                 {
@@ -111,13 +117,24 @@ namespace SediM
                 }
                 else
                 {
-                    mainHelp.Alert("Chyba!", "Při ukládání úprav studenta do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mainHelp.Alert("Chyba!", "Při ukládání úprav žáka do systému se vyskytla chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 mainHelp.Alert("Chyba!", ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void cboxZaci_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Zak zak = _zaci.Find(zak => zak.Id == (int)cboxZaci.SelectedValue);
+
+            tboxJmeno.Text = zak.Jmeno;
+            tboxPrijmeni.Text = zak.Prijmeni;
+            numKategorie.Value = zak.Kategorie;
+            cboxSkoly.SelectedValue = zak.Skola;
+            lblZakID.Text = $"{zak.Id}";
         }
     }
 }

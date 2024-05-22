@@ -1,17 +1,14 @@
-﻿using Npgsql;
-using SediM.Forms;
+﻿using SediM.Forms;
 using SediM.Helpers;
 using System.Data;
+using System.Data.SqlClient;
 using System.Reflection;
 
 namespace SediM
 {
     public partial class Main : Form
     {
-        public static NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder($"Host={Properties.Settings.Default.MySQL_server};Port={Properties.Settings.Default.MySQL_port};Username={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo};Database={Properties.Settings.Default.MySQL_databaze};");
-        public static NpgsqlDataSource dataSource = dataSourceBuilder.Build();
-
-        private NpgsqlConnection connection;
+        private SqlConnection connection = new SqlConnection($"Data Source={Properties.Settings.Default.MySQL_server};Initial Catalog={Properties.Settings.Default.MySQL_databaze};User ID={Properties.Settings.Default.MySQL_uzivatel};Password={Properties.Settings.Default.MySQL_heslo}");
         private DataTable? data;
 
         public MainHelp mainHelp = new MainHelp();
@@ -20,17 +17,18 @@ namespace SediM
         public List<Zak> zaci = new List<Zak>();
         public List<Trida> tridy = new List<Trida>();
         private List<Skola> skoly = new List<Skola>();
+        private List<Ucitel> ucitele = new List<Ucitel>();
 
         public Main()
         {
             InitializeComponent();
 
-            var conn = dataSource.OpenConnectionAsync();
-            connection = conn.Result;
+            connection.Open();
+            ConnectionState stavDB = connection.State;
 
             try
             {
-                if (conn.IsFaulted && jePripojen == false)
+                if (stavDB == ConnectionState.Broken && jePripojen == false)
                 {
                     DialogResult pripojen = mainHelp.Alert("Nepodařilo se připojit k serveru", "Aplikaci se nepodařilo připojit k serveru.\nZkontrolujte prosím, zda je server v provozu, a také zkontrolujte správnost zadaných údajů pro připojení k serveru.", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     if (pripojen == DialogResult.Cancel)
@@ -41,59 +39,11 @@ namespace SediM
                     return;
                 }
             }
-            catch (NpgsqlException e)
+            catch (SqlException e)
             {
-                mainHelp.Alert("Chyba PostgreSQL", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                mainHelp.Alert("Chyba SQL serveru", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
-        }
-
-        private DataTable NactiSkoly()
-        {
-            DataTable data = new DataTable();
-            NpgsqlDataAdapter dataAdapter;
-            NpgsqlCommand cmd = new("SELECT * FROM skoly", connection);
-
-            dataAdapter = new NpgsqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            return data;
-        }
-
-        private DataTable NactiTridy()
-        {
-            DataTable data = new DataTable();
-            NpgsqlDataAdapter dataAdapter;
-            NpgsqlCommand cmd = new("SELECT * FROM tridy", connection);
-
-            dataAdapter = new NpgsqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            return data;
-        }
-
-        private DataTable NactiStudenty()
-        {
-            DataTable data = new DataTable();
-            NpgsqlDataAdapter dataAdapter;
-            NpgsqlCommand cmd = new("SELECT * FROM studentiv2", connection);
-
-            dataAdapter = new NpgsqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            return data;
-        }
-
-        private void NactiData()
-        {
-            data = NactiStudenty();
-            zaci = mainHelp.ListZaku(data);
-
-            data = NactiSkoly();
-            skoly = mainHelp.ListSkol(data);
-
-            data = NactiTridy();
-            tridy = mainHelp.ListTrid(data);
         }
 
         private void Exportovat()
@@ -128,15 +78,26 @@ namespace SediM
 
         private void Main_Load(object sender, EventArgs e)
         {
-            NactiData();
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+            skoly = DBNaObjekty.ZiskejListSkol(DBKomunikace.NactiSkoly());
+            ucitele = DBNaObjekty.ZiskejListUcitelu(DBKomunikace.NactiUcitele());
         }
 
-        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Exportovat();
+            Version verzeAplikace = Assembly.GetExecutingAssembly().GetName().Version;
+            string verze = $"Verze {verzeAplikace.Major}.{verzeAplikace.Minor}.{verzeAplikace.Build}";
+
+            MessageBox.Show($"Aplikace {Properties.Settings.Default.AppName}\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU, Hradec Králové\n\n{verze}\n\nAplikace umožňuje organizaci přihlašování a rozsazení žáků celostátního kola matematické soutěže.");
         }
 
-        private void ukončitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void napovedaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.ShowHelp(this);
+        }
+
+        private void ukoncitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult opravdu = MessageBox.Show(this, "Opravdu chcete aplikaci ukončit? Všechna neuložená data budou ztracena.", "Ukončit aplikaci", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
@@ -146,86 +107,116 @@ namespace SediM
             }
         }
 
-        private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
+        private void novyUcitelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Version verzeAplikace = Assembly.GetExecutingAssembly().GetName().Version;
-            string verze = $"Verze {verzeAplikace.Major}.{verzeAplikace.Minor}.{verzeAplikace.Build}";
-
-            MessageBox.Show($"Aplikace SediM\n2023 - {DateTime.Now.Year} © ŠSPT pro SPŠ, SOŠ a SOU Hradec Králové\n\n{verze}\n\nAplikace SediM umožňuje správu a organizaci krajského kola matematické soutěže.");
-        }
-        /* POZNÁMKA:
-         * Při rozsazování se odebírají jak studenti, tak třídy. 
-         * Nejsem si však jistý, jestli je to žádoucí chování, či nikoliv.
-         * Odebírání studentů dle mého není žádoucí, odebírání tříd však
-         * pravděpodobně ano kvůli pozdější implementaci úpravy rozsazení.
-        */
-        private void noveRozsazeniToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormularRozsazeni formularRozsazeni = new FormularRozsazeni(tridy, zaci, connection);
-            formularRozsazeni.Owner = this;
-            formularRozsazeni.ShowDialog();
+            mainHelp.JesteNeni("Vytvořit nového učitele");
         }
 
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        private void upravitUciteleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Importovat();
+            mainHelp.JesteNeni("Upravit existujícího učitele");
         }
 
-        /// <summary>
-        /// Toolstrip pro otevření okna pro vytvoření nového studenta
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void novýToolStripMenuItem_Click(object sender, EventArgs e)
+        private void seznamUciteluToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Zobrazit seznam učitelů");
+        }
+
+        private void novaSkolaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
+
+            skoly = DBNaObjekty.ZiskejListSkol(DBKomunikace.NactiSkoly());
+        }
+
+        private void upravitSkoluToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainHelp.JesteNeni("Úprava stávající školy");
+        }
+
+        private void novyZakToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Zak_Novy okno = new Zak_Novy(skoly, zaci);
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
 
-        private void upravitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void upravitZakaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Zak_Upravit okno = new Zak_Upravit(skoly, zaci);
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
 
-        private void seznamToolStripMenuItem_Click(object sender, EventArgs e)
+        private void seznamZakuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Zak_Seznam okno = new Zak_Seznam(zaci);
+            okno.Owner = this;
+
+            okno.Show();
+
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
+        }
+
+        private void seznamSkolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Skola_Seznam okno = new Skola_Seznam(skoly);
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
         }
 
-        private void nováToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void novaUcebnaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Trida_Nova okno = new Trida_Nova(tridy);
             okno.Owner = this;
 
             DialogResult stav = okno.ShowDialog();
 
-            if (stav == DialogResult.OK)
-            {
-                NactiData();
-            }
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
         }
 
-        private void nápovědaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void upravitUcebnuToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            mainHelp.ShowHelp(this);
+            Trida_Uprava okno = new Trida_Uprava(tridy);
+            okno.Owner = this;
+
+            DialogResult stav = okno.ShowDialog();
+
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+        }
+
+        private void seznamUcebenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Trida_Seznam okno = new Trida_Seznam(tridy);
+            okno.Owner = this;
+
+            okno.Show();
+        }
+
+        private void picbox_NovyZak_Click(object sender, EventArgs e)
+        {
+            DialogResult stav = mainHelp.StudentForm_New(this, skoly, zaci);
+
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
+        }
+
+        private void RozsazenitoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormularRozsazeni okno = new FormularRozsazeni(tridy, zaci);
+            okno.Owner = this;
+
+            okno.Show();
+
+            tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
+            zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
         }
     }
 }
