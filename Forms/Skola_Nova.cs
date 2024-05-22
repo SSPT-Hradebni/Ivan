@@ -52,7 +52,7 @@ namespace SediM.Forms
                 int cp = (int)numCP.Value;
                 int psc = (int)numPSC.Value;
                 string mesto = cboxMesto.Text;
-                int ucitel = (int)cboxUcitel.SelectedValue;
+                string ucitel = cboxUcitel.SelectedValue.ToString();
 
                 if (nazev == "")
                     throw new Exception("Název školy nesmí být prázdný");
@@ -62,9 +62,7 @@ namespace SediM.Forms
                     throw new Exception("Číslo popisné v adrese školy nesmí být prázdné");
                 if (psc == 0)
                     throw new Exception("Poštovní směrovací číslo v adrese školy nesmí být prázdné");
-                if (mesto == "")
-                    throw new Exception("Vybrané město v adrese školy musí být platné");
-                if (ucitel == 0)
+                if (ucitel == "")
                     throw new Exception("Odpovědný učitel školy musí být platný");
 
                 // Vytvoření příkazu pro zjištění počtu škol se stejným názvem
