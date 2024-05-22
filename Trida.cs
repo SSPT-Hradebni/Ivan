@@ -19,7 +19,7 @@ namespace SediM
         public bool JeRozsazena { get { return jeRozsazena; } set { jeRozsazena = value; } }
         public Zak[,] RozsazeniZaci { get { return rozsazeniZaci; } set { rozsazeniZaci = value; } }
         public List<int[]>[,] PrijatelneKategorieASkolyMista { get { return prijatelneKategorieMista; } set { prijatelneKategorieMista = value; } }
-
+        
         /// <summary>
         /// Konstruktor třídy
         /// </summary>
