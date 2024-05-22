@@ -74,8 +74,8 @@ namespace SediM
         private void Zak_Novy_Load(object sender, EventArgs e)
         {
             // načtení škol
-            cboxSkoly.ValueMember = "id";
-            cboxSkoly.DisplayMember = "nazev";
+            cboxSkoly.ValueMember = "Id";
+            cboxSkoly.DisplayMember = "Nazev";
             cboxSkoly.DataSource = _skoly;
 
             // Nastavení formátování pro zobrazení zkratky
@@ -94,7 +94,7 @@ namespace SediM
                 string jmeno = tboxJmeno.Text;
                 string prijmeni = tboxPrijmeni.Text;
                 int kategorie = (int)numKategorie.Value;
-                int skola = cboxSkoly.SelectedIndex;
+                int skola = (int)cboxSkoly.SelectedValue;
 
                 if (jmeno == "")
                     throw new Exception("Křestní jméno žáka nesmí být prázdné");
@@ -149,7 +149,7 @@ namespace SediM
                 overeniZaka.Parameters.AddWithValue("@jmeno", jmeno);
                 overeniZaka.Parameters.AddWithValue("@prijmeni", prijmeni);
                 overeniZaka.Parameters.AddWithValue("@kategorie", kategorie);
-                overeniZaka.Parameters.AddWithValue("@skola", skola + 1);
+                overeniZaka.Parameters.AddWithValue("@skola", skola);
 
                 int pocet = (int)overeniZaka.ExecuteScalar();
 

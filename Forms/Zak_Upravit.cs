@@ -133,7 +133,7 @@ namespace SediM
             tboxJmeno.Text = zak.Jmeno;
             tboxPrijmeni.Text = zak.Prijmeni;
             numKategorie.Value = zak.Kategorie;
-            cboxSkoly.SelectedIndex = (int)zak.Skola - 1;
+            cboxSkoly.SelectedValue = zak.Skola;
             lblZakID.Text = $"{zak.Id}";
         }
     }
