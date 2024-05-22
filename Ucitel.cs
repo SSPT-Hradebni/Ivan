@@ -4,13 +4,13 @@ namespace SediM
 {
     public class Ucitel
     {
-        private int id;
+        private string id;
         private string jmeno;
         private string prijmeni;
         private string email;
         private string heslo;
 
-        public int Id { get { return id; } }
+        public string Id { get { return id; } }
         public string Jmeno { get { return jmeno; } }
         public string Prijmeni { get { return prijmeni; } }
         public string Email { get { return email; } set { email = value; } }
@@ -24,7 +24,7 @@ namespace SediM
         /// <param name="prijmeni">Příjmení učitele</param>
         /// <param name="email">Přihlašovací email učitele do webové aplikace</param>
         /// <param name="heslo">Heslo učitele pro přihlašování do webové aplikace</param>
-        public Ucitel(int id, string jmeno, string prijmeni, string email, string heslo)
+        public Ucitel(string id, string jmeno, string prijmeni, string email, string heslo)
         {
             this.id = id;
             this.jmeno = jmeno;
@@ -33,7 +33,7 @@ namespace SediM
             this.heslo = heslo;
         }
 
-        public Ucitel(int id)
+        public Ucitel(string id)
         {
             Ucitel tmpUcitel = DBNaObjekty.ZiskejUcitele(DBKomunikace.NactiUcitele(id));
 

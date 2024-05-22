@@ -73,7 +73,7 @@ namespace SediM.Helpers
                 // [4] - PSČ
                 // [5] - Město
                 // [6] - Učitel (ID)
-                Skola skola = new Skola(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), int.Parse(radek[3].ToString()), int.Parse(radek[4].ToString()), radek[5].ToString(), new Ucitel(int.Parse(radek[6].ToString())));
+                Skola skola = new Skola(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), int.Parse(radek[3].ToString()), int.Parse(radek[4].ToString()), radek[5].ToString(), new Ucitel(radek[6].ToString()));
                 skoly.Add(skola);
             }
 
@@ -97,7 +97,7 @@ namespace SediM.Helpers
                 // [2] - Příjmení
                 // [3] - Email
                 // [4] - Heslo
-                Ucitel ucitel = new Ucitel(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), radek[3].ToString(), radek[4].ToString());
+                Ucitel ucitel = new Ucitel(radek[0].ToString(), radek[15].ToString(), radek[16].ToString(), radek[3].ToString(), radek[6].ToString());
                 ucitele.Add(ucitel);
             }
 
@@ -107,7 +107,7 @@ namespace SediM.Helpers
         public static Ucitel ZiskejUcitele(DataTable data)
         {
             DataRow dataUcitele = data.Rows[0];
-            return new Ucitel(int.Parse(dataUcitele[0].ToString()), dataUcitele[1].ToString(), dataUcitele[2].ToString(), dataUcitele[3].ToString(), dataUcitele[4].ToString());
+            return new Ucitel(dataUcitele[0].ToString(), dataUcitele[15].ToString(), dataUcitele[16].ToString(), dataUcitele[3].ToString(), dataUcitele[6].ToString());
         }
     }
 }
