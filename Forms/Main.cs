@@ -17,7 +17,6 @@ namespace SediM
         public List<Zak> zaci = new List<Zak>();
         public List<Trida> tridy = new List<Trida>();
         private List<Skola> skoly = new List<Skola>();
-        private List<Ucitel> ucitele = new List<Ucitel>();
 
         public Main()
         {
@@ -81,7 +80,6 @@ namespace SediM
             zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
             tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
             skoly = DBNaObjekty.ZiskejListSkol(DBKomunikace.NactiSkoly());
-            ucitele = DBNaObjekty.ZiskejListUcitelu(DBKomunikace.NactiUcitele());
         }
 
         private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
@@ -124,7 +122,7 @@ namespace SediM
 
         private void novaSkolaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult stav = mainHelp.SkolaForm_New(this, ucitele);
+            DialogResult stav = mainHelp.SkolaForm_New(this);
 
             skoly = DBNaObjekty.ZiskejListSkol(DBKomunikace.NactiSkoly());
         }

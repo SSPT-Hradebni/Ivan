@@ -29,105 +29,86 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Skola_Seznam));
-            this.dataviewSkoly = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nazev = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ulice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.psc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ucitel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataviewSkoly)).BeginInit();
-            this.SuspendLayout();
+            dataviewSkoly = new DataGridView();
+            id = new DataGridViewTextBoxColumn();
+            nazev = new DataGridViewTextBoxColumn();
+            adresa = new DataGridViewTextBoxColumn();
+            ico = new DataGridViewTextBoxColumn();
+            kod = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dataviewSkoly).BeginInit();
+            SuspendLayout();
             // 
             // dataviewSkoly
             // 
-            this.dataviewSkoly.AllowUserToAddRows = false;
-            this.dataviewSkoly.AllowUserToDeleteRows = false;
-            this.dataviewSkoly.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataviewSkoly.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            this.dataviewSkoly.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataviewSkoly.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
-            this.nazev,
-            this.ulice,
-            this.cp,
-            this.psc,
-            this.mesto,
-            this.ucitel});
-            this.dataviewSkoly.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataviewSkoly.Location = new System.Drawing.Point(0, 0);
-            this.dataviewSkoly.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dataviewSkoly.Name = "dataviewSkoly";
-            this.dataviewSkoly.ReadOnly = true;
-            this.dataviewSkoly.RowHeadersWidth = 51;
-            this.dataviewSkoly.RowTemplate.Height = 25;
-            this.dataviewSkoly.Size = new System.Drawing.Size(1060, 450);
-            this.dataviewSkoly.TabIndex = 5;
+            dataviewSkoly.AllowUserToAddRows = false;
+            dataviewSkoly.AllowUserToDeleteRows = false;
+            dataviewSkoly.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataviewSkoly.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            dataviewSkoly.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataviewSkoly.Columns.AddRange(new DataGridViewColumn[] { id, nazev, adresa, ico, kod });
+            dataviewSkoly.Dock = DockStyle.Fill;
+            dataviewSkoly.Location = new Point(0, 0);
+            dataviewSkoly.Margin = new Padding(3, 5, 3, 5);
+            dataviewSkoly.Name = "dataviewSkoly";
+            dataviewSkoly.ReadOnly = true;
+            dataviewSkoly.RowHeadersWidth = 51;
+            dataviewSkoly.RowTemplate.Height = 25;
+            dataviewSkoly.Size = new Size(1211, 600);
+            dataviewSkoly.TabIndex = 5;
             // 
             // id
             // 
-            this.id.HeaderText = "ID";
-            this.id.MinimumWidth = 6;
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
+            id.HeaderText = "ID";
+            id.MinimumWidth = 6;
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Visible = false;
             // 
             // nazev
             // 
-            this.nazev.HeaderText = "Název";
-            this.nazev.MinimumWidth = 6;
-            this.nazev.Name = "nazev";
-            this.nazev.ReadOnly = true;
+            nazev.HeaderText = "Název";
+            nazev.MinimumWidth = 6;
+            nazev.Name = "nazev";
+            nazev.ReadOnly = true;
             // 
-            // ulice
+            // adresa
             // 
-            this.ulice.HeaderText = "Ulice";
-            this.ulice.MinimumWidth = 6;
-            this.ulice.Name = "ulice";
-            this.ulice.ReadOnly = true;
+            adresa.HeaderText = "Adresa";
+            adresa.MinimumWidth = 6;
+            adresa.Name = "adresa";
+            adresa.ReadOnly = true;
             // 
-            // cp
+            // ico
             // 
-            this.cp.HeaderText = "Číslo popisné";
-            this.cp.MinimumWidth = 6;
-            this.cp.Name = "cp";
-            this.cp.ReadOnly = true;
+            ico.HeaderText = "IČO";
+            ico.MinimumWidth = 6;
+            ico.Name = "ico";
+            ico.ReadOnly = true;
             // 
-            // psc
+            // kod
             // 
-            this.psc.HeaderText = "PSČ";
-            this.psc.Name = "psc";
-            this.psc.ReadOnly = true;
-            // 
-            // mesto
-            // 
-            this.mesto.HeaderText = "Město";
-            this.mesto.Name = "mesto";
-            this.mesto.ReadOnly = true;
-            // 
-            // ucitel
-            // 
-            this.ucitel.HeaderText = "Odpovědný učitel";
-            this.ucitel.Name = "ucitel";
-            this.ucitel.ReadOnly = true;
+            kod.HeaderText = "Přístupový kód";
+            kod.MinimumWidth = 6;
+            kod.Name = "kod";
+            kod.ReadOnly = true;
             // 
             // Skola_Seznam
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1060, 450);
-            this.Controls.Add(this.dataviewSkoly);
-            this.HelpButton = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "Skola_Seznam";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Seznam škol";
-            this.Load += new System.EventHandler(this.Zak_Seznam_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataviewSkoly)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1211, 600);
+            Controls.Add(dataviewSkoly);
+            HelpButton = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "Skola_Seznam";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Seznam škol";
+            Load += Zak_Seznam_Load;
+            ((System.ComponentModel.ISupportInitialize)dataviewSkoly).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -135,10 +116,8 @@
         private DataGridView dataviewSkoly;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn nazev;
-        private DataGridViewTextBoxColumn ulice;
-        private DataGridViewTextBoxColumn cp;
-        private DataGridViewTextBoxColumn psc;
-        private DataGridViewTextBoxColumn mesto;
-        private DataGridViewTextBoxColumn ucitel;
+        private DataGridViewTextBoxColumn adresa;
+        private DataGridViewTextBoxColumn ico;
+        private DataGridViewTextBoxColumn kod;
     }
 }

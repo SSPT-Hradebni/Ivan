@@ -11,13 +11,8 @@ namespace SediM.Forms
         public MainHelp mainHelp = new MainHelp();
         public bool jePripojen = false;
 
-        private List<Ucitel> ucitele;
-
-
-        public Skola_Nova(List<Ucitel> ucitele)
+        public Skola_Nova()
         {
-            this.ucitele = ucitele;
-
             InitializeComponent();
 
             connection.Open();
@@ -52,7 +47,6 @@ namespace SediM.Forms
                 int cp = (int)numCP.Value;
                 int psc = (int)numPSC.Value;
                 string mesto = cboxMesto.Text;
-                string ucitel = cboxUcitel.SelectedValue.ToString();
 
                 if (nazev == "")
                     throw new Exception("Název školy nesmí být prázdný");
@@ -62,8 +56,6 @@ namespace SediM.Forms
                     throw new Exception("Číslo popisné v adrese školy nesmí být prázdné");
                 if (psc == 0)
                     throw new Exception("Poštovní směrovací číslo v adrese školy nesmí být prázdné");
-                if (ucitel == "")
-                    throw new Exception("Odpovědný učitel školy musí být platný");
 
                 // Vytvoření příkazu pro zjištění počtu škol se stejným názvem
                 SqlCommand vyberSkoly = new SqlCommand("SELECT COUNT(SkolaId) FROM Skoly WHERE Nazev = @nazev", connection);
@@ -76,14 +68,13 @@ namespace SediM.Forms
                 if (pocetShodnychSkol > 0)
                     throw new Exception("Škola s tímto názvem již byla vytvořena");
 
-                SqlCommand vyvorSkolu = new SqlCommand($"INSERT INTO Skoly (Nazev, Ulice, CisloPopisne, PSC, Mesto, Ucitel) VALUES(@nazev, @ulice, @cp, @psc, @mesto, @ucitel)", connection);
+                SqlCommand vyvorSkolu = new SqlCommand($"INSERT INTO Skoly (Nazev, Ulice, CisloPopisne, PSC, Mesto) VALUES(@nazev, @ulice, @cp, @psc, @mesto)", connection);
 
                 vyvorSkolu.Parameters.AddWithValue("@nazev", $"{nazev}");
                 vyvorSkolu.Parameters.AddWithValue("@ulice", $"{ulice}");
                 vyvorSkolu.Parameters.AddWithValue("@cp", cp);
                 vyvorSkolu.Parameters.AddWithValue("@psc", psc);
                 vyvorSkolu.Parameters.AddWithValue("@mesto", mesto);
-                vyvorSkolu.Parameters.AddWithValue("@ucitel", ucitel);
 
                 int stav = vyvorSkolu.ExecuteNonQuery();
 
@@ -105,9 +96,6 @@ namespace SediM.Forms
 
         private void Skola_Nova_Load(object sender, EventArgs e)
         {
-            cboxUcitel.ValueMember = "Id";
-            cboxUcitel.DisplayMember = "CeleJmeno";
-            cboxUcitel.DataSource = ucitele;
         }
     }
 }

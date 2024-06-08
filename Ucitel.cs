@@ -33,17 +33,6 @@ namespace SediM
             this.heslo = heslo;
         }
 
-        public Ucitel(string id)
-        {
-            Ucitel tmpUcitel = DBNaObjekty.ZiskejUcitele(DBKomunikace.NactiUcitele(id));
-
-            this.id = tmpUcitel.Id;
-            this.jmeno = tmpUcitel.Jmeno;
-            this.prijmeni = tmpUcitel.Prijmeni;
-            this.email = tmpUcitel.Email;
-            this.heslo = tmpUcitel.Heslo;
-        }
-
         public override string ToString()
         {
             return $"{prijmeni} {jmeno}";

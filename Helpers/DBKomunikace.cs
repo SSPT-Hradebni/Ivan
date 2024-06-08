@@ -54,37 +54,5 @@ namespace SediM.Helpers
 
             return data;
         }
-
-        public static DataTable NactiUcitele()
-        {
-            connection.Open();
-
-            DataTable data = new DataTable();
-            SqlDataAdapter dataAdapter;
-            SqlCommand cmd = new("SELECT * FROM AspNetUsers", connection);
-
-            dataAdapter = new SqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            connection.Close();
-
-            return data;
-        }
-
-        public static DataTable NactiUcitele(string id)
-        {
-            connection.Open();
-
-            DataTable data = new DataTable();
-            SqlDataAdapter dataAdapter;
-            SqlCommand cmd = new($"SELECT * FROM AspNetUsers WHERE Id = '{id}'", connection);
-
-            dataAdapter = new SqlDataAdapter(cmd);
-            dataAdapter.Fill(data);
-
-            connection.Close();
-
-            return data;
-        }
     }
 }

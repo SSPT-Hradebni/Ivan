@@ -4,34 +4,28 @@
     {
         private int id;
         private string nazev;
-        private string ulice;
-        private int cp;
-        private int psc;
-        private string mesto;
-        private Ucitel ucitel;
+        private string adresa;
+        private int ico;
+        private string kod;
 
         public int Id { get { return id; } }
         public string Nazev { get { return nazev; } set { nazev = value; } }
-        public string Ulice { get { return ulice; } set { ulice = value; } }
-        public int Cp { get { return cp; } set { cp = value; } }
-        public int Psc { get { return psc; } set { psc = value; } }
-        public string Mesto { get { return mesto; } set { mesto = value; } }
-        public Ucitel Ucitel { get { return ucitel; } set { ucitel = value; } }
+        public string Adresa { get { return adresa; } set { adresa = value; } }
+        public int Ico { get { return ico; } set { ico = value; } }
+        public string Kod { get { return kod; } set { kod = value; } }
 
         /// <summary>
         /// Klasický konstruktor školy
         /// </summary>
         /// <param name="id">ID školy</param>
         /// <param name="nazev">Název školy</param>
-        public Skola(int id, string nazev, string ulice, int cp, int psc, string mesto, Ucitel ucitel)
+        public Skola(int id, string nazev, string adresa, int ico, string kod)
         {
             this.id = id;
             this.nazev = nazev;
-            this.ulice = ulice;
-            this.cp = cp;
-            this.psc = psc;
-            this.mesto = mesto;
-            this.ucitel = ucitel;
+            this.adresa = adresa;
+            this.ico = ico;
+            this.kod = kod;
         }
 
         /// <summary>

@@ -68,46 +68,14 @@ namespace SediM.Helpers
             {
                 // [0] - ID školy
                 // [1] - Název školy
-                // [2] - Ulice
-                // [3] - Číslo popisné
-                // [4] - PSČ
-                // [5] - Město
-                // [6] - Učitel (ID)
-                Skola skola = new Skola(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), int.Parse(radek[3].ToString()), int.Parse(radek[4].ToString()), radek[5].ToString(), new Ucitel(radek[6].ToString()));
+                // [2] - Adresa
+                // [3] - IČO
+                // [6] - Přístupový kód
+                Skola skola = new Skola(int.Parse(radek[0].ToString()), radek[1].ToString(), radek[2].ToString(), int.Parse(radek[3].ToString()), radek[6].ToString());
                 skoly.Add(skola);
             }
 
             return skoly;
-        }
-
-        /// <summary>
-        /// Načítání učitelů do listu z <paramref name="data"/>
-        /// </summary>
-        /// <param name="data">Surová tabulka dat učitelů</param>
-        /// <returns>Všichni učitelé z databáze v listu</returns>
-        public static List<Ucitel> ZiskejListUcitelu(DataTable data)
-        {
-            // vytvoření dočasného listu učitelů
-            List<Ucitel> ucitele = new List<Ucitel>();
-
-            foreach (DataRow radek in data.Rows)
-            {
-                // [0] - ID učitele
-                // [1] - Křestní jméno
-                // [2] - Příjmení
-                // [3] - Email
-                // [4] - Heslo
-                Ucitel ucitel = new Ucitel(radek[0].ToString(), radek[15].ToString(), radek[16].ToString(), radek[3].ToString(), radek[6].ToString());
-                ucitele.Add(ucitel);
-            }
-
-            return ucitele;
-        }
-
-        public static Ucitel ZiskejUcitele(DataTable data)
-        {
-            DataRow dataUcitele = data.Rows[0];
-            return new Ucitel(dataUcitele[0].ToString(), dataUcitele[15].ToString(), dataUcitele[16].ToString(), dataUcitele[3].ToString(), dataUcitele[6].ToString());
         }
     }
 }

@@ -145,9 +145,9 @@ namespace SediM.Helpers
             return stav;
         }
 
-        public DialogResult SkolaForm_New(Form form, List<Ucitel> ucitele)
+        public DialogResult SkolaForm_New(Form form)
         {
-            Skola_Nova okno = new Skola_Nova(ucitele);
+            Skola_Nova okno = new Skola_Nova();
             okno.Owner = form;
 
             DialogResult stav = okno.ShowDialog();
