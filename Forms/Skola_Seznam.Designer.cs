@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Skola_Seznam));
             dataviewSkoly = new DataGridView();
-            id = new DataGridViewTextBoxColumn();
             nazev = new DataGridViewTextBoxColumn();
             adresa = new DataGridViewTextBoxColumn();
             ico = new DataGridViewTextBoxColumn();
@@ -45,24 +44,16 @@
             dataviewSkoly.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataviewSkoly.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             dataviewSkoly.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataviewSkoly.Columns.AddRange(new DataGridViewColumn[] { id, nazev, adresa, ico, kod });
+            dataviewSkoly.Columns.AddRange(new DataGridViewColumn[] { nazev, adresa, ico, kod });
             dataviewSkoly.Dock = DockStyle.Fill;
             dataviewSkoly.Location = new Point(0, 0);
-            dataviewSkoly.Margin = new Padding(3, 5, 3, 5);
+            dataviewSkoly.Margin = new Padding(3, 4, 3, 4);
             dataviewSkoly.Name = "dataviewSkoly";
             dataviewSkoly.ReadOnly = true;
             dataviewSkoly.RowHeadersWidth = 51;
             dataviewSkoly.RowTemplate.Height = 25;
-            dataviewSkoly.Size = new Size(1211, 600);
+            dataviewSkoly.Size = new Size(1060, 450);
             dataviewSkoly.TabIndex = 5;
-            // 
-            // id
-            // 
-            id.HeaderText = "ID";
-            id.MinimumWidth = 6;
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Visible = false;
             // 
             // nazev
             // 
@@ -94,13 +85,12 @@
             // 
             // Skola_Seznam
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1211, 600);
+            ClientSize = new Size(1060, 450);
             Controls.Add(dataviewSkoly);
             HelpButton = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Skola_Seznam";
@@ -114,7 +104,6 @@
         #endregion
 
         private DataGridView dataviewSkoly;
-        private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn nazev;
         private DataGridViewTextBoxColumn adresa;
         private DataGridViewTextBoxColumn ico;

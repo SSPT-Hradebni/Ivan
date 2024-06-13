@@ -15,7 +15,7 @@
             dataviewSkoly.Rows.Clear();
 
             foreach (Skola skola in skoly)
-                dataviewSkoly.Rows.Add(skola.Id, skola.Nazev, skola.Adresa, skola.Ico, skola.Kod);
+                dataviewSkoly.Rows.Add(skola.Nazev, skola.Adresa, skola.Ico, skola.Kod);
         }
     }
 }
