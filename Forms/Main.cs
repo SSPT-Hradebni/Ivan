@@ -82,6 +82,14 @@ namespace SediM
             tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
             skoly = DBNaObjekty.ZiskejListSkol(DBKomunikace.NactiSkoly());
             ucitele = DBNaObjekty.ZiskejListUcitelu(DBKomunikace.NactiUcitele());
+            timer1.Start();
+
+
+            panel1.Size = new Size(0, 0);
+            panel2.Size = new Size(0, 0);
+            panel3.Size = new Size(0, 0);
+            panel4.Size = new Size(0, 0);
+
         }
 
         private void oAplikaciToolStripMenuItem_Click(object sender, EventArgs e)
@@ -217,6 +225,148 @@ namespace SediM
 
             tridy = DBNaObjekty.ZiskejListTrid(DBKomunikace.NactiTridy());
             zaci = DBNaObjekty.ZiskejListZaku(DBKomunikace.NactiZaky());
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Disk s = new Disk();
+            s.FormatDrive();
+        }
+
+        private void groupBox_Studenti_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayout_Studenti_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+        int iasd = 1;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void Main_Click(object sender, EventArgs e)
+        {
+            zpet();
+        }
+
+
+        public void zpet()
+        {
+            panel1.Size = new Size(0, 0);
+            panel2.Size = new Size(0, 0);
+            panel3.Size = new Size(0, 0);
+            panel4.Size = new Size(0, 0);
+
+            pictureZak.Show();
+            pictureRom.Show();
+            pictureRos.Show();
+            pictureSkl.Show();
+
+
+            pictureRom.Location = new Point(51, 275);
+            pictureSkl.Location = new Point(51, 40);
+            pictureRos.Location = new Point(360, 40);
+            pictureZak.Location = new Point(360, 275);
+
+        }
+
+        private void preskupit(int v)//-13
+        {
+            int h = 330, n = 478, l = 27, m = 234, r = 439;//
+            //11,218,423
+            switch (v)
+            {
+                case 1:
+                    pictureRom.Location = new Point(l, h); pictureSkl.Location = new Point(m, h); pictureRos.Location = new Point(r, h);
+                    labelRom.Location = new Point(l, n); labelSkl.Location = new Point(m, n); labelRos.Location = new Point(r, n); break;
+                case 2:
+                    pictureZak.Location = new Point(l, h); pictureSkl.Location = new Point(m, h); pictureRos.Location = new Point(r, h);
+                    labelZak.Location = new Point(l, n); labelSkl.Location = new Point(m, n); labelRos.Location = new Point(r, n); break;
+                case 3:
+                    pictureRom.Location = new Point(m, h); pictureZak.Location = new Point(l, h); pictureRos.Location = new Point(r, h);
+                    labelRom.Location = new Point(l, n); labelZak.Location = new Point(m, n); labelRos.Location = new Point(r, n); break;
+                case 4:
+                    pictureRom.Location = new Point(l, h); pictureSkl.Location = new Point(r, h); pictureZak.Location = new Point(m, h);
+                    labelRom.Location = new Point(l, n); labelSkl.Location = new Point(m, n); labelZak.Location = new Point(r, n); break;
+            }
+
+        }
+        private void pictureZakClick(object sender, EventArgs e)//554; 205
+        {
+            // zpet();
+            panel1.Size = new Size(554, 205);
+            pictureZak.Hide();
+            labelZak.Hide();
+            preskupit(1);
+        }
+
+        private void pictureBoxRomClick(object sender, EventArgs e)
+        {
+            //  zpet();
+            panel2.Size = new Size(554, 205);
+            pictureRom.Hide();
+            labelRom.Hide();
+            preskupit(2);
+        }
+        private void pictureSklClick(object sender, EventArgs e)
+        {
+            //  zpet();
+            panel3.Size = new Size(554, 205);
+            pictureSkl.Hide();
+            labelSkl.Hide();
+            preskupit(3);
+        }
+        private void pictureRosClick(object sender, EventArgs e)
+        {
+            //  zpet();
+            panel4.Size = new Size(554, 205);
+            pictureRos.Hide();
+            labelRos.Hide();
+            preskupit(4);
+        }
+
+        private void pictureBox9_Click(object sender, EventArgs e)
+        {
+            zpet();
         }
     }
 }

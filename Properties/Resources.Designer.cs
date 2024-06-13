@@ -61,6 +61,16 @@ namespace SediM.Properties {
         }
         
         /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _0001 {
+            get {
+                object obj = ResourceManager.GetObject("0001", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Icon podobný (Ikona).
         /// </summary>
         internal static System.Drawing.Icon Add {
@@ -130,6 +140,16 @@ namespace SediM.Properties {
         }
         
         /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bagroungMain {
+            get {
+                object obj = ResourceManager.GetObject("bagroungMain", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Icon podobný (Ikona).
         /// </summary>
         internal static System.Drawing.Icon Briefcase {
@@ -176,16 +196,6 @@ namespace SediM.Properties {
             get {
                 object obj = ResourceManager.GetObject("Delete", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Delete1 {
-            get {
-                object obj = ResourceManager.GetObject("Delete1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -330,16 +340,6 @@ namespace SediM.Properties {
         }
         
         /// <summary>
-        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap IkonaMenu_Student {
-            get {
-                object obj = ResourceManager.GetObject("IkonaMenu_Student", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Icon podobný (Ikona).
         /// </summary>
         internal static System.Drawing.Icon Important {
@@ -375,16 +375,6 @@ namespace SediM.Properties {
         internal static System.Drawing.Bitmap Information1 {
             get {
                 object obj = ResourceManager.GetObject("Information1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap IvanLogo {
-            get {
-                object obj = ResourceManager.GetObject("IvanLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -538,6 +528,76 @@ namespace SediM.Properties {
         }
         
         /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rom_delete {
+            get {
+                object obj = ResourceManager.GetObject("rom delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rom_edit {
+            get {
+                object obj = ResourceManager.GetObject("rom edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rom_main_ico {
+            get {
+                object obj = ResourceManager.GetObject("rom main ico", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rom_new {
+            get {
+                object obj = ResourceManager.GetObject("rom new", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ros_main_ico {
+            get {
+                object obj = ResourceManager.GetObject("ros main ico", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ros_new {
+            get {
+                object obj = ResourceManager.GetObject("ros new", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ros_wiev {
+            get {
+                object obj = ResourceManager.GetObject("ros wiev", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Icon podobný (Ikona).
         /// </summary>
         internal static System.Drawing.Icon Save {
@@ -560,9 +620,39 @@ namespace SediM.Properties {
         /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Search {
+        internal static System.Drawing.Bitmap skl_delete {
             get {
-                object obj = ResourceManager.GetObject("Search", resourceCulture);
+                object obj = ResourceManager.GetObject("skl delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap skl_edit {
+            get {
+                object obj = ResourceManager.GetObject("skl edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap skl_main_ico {
+            get {
+                object obj = ResourceManager.GetObject("skl main ico", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap skl_new {
+            get {
+                object obj = ResourceManager.GetObject("skl new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -623,6 +713,46 @@ namespace SediM.Properties {
         internal static System.Drawing.Bitmap User_Accounts1 {
             get {
                 object obj = ResourceManager.GetObject("User_Accounts1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zak_delete {
+            get {
+                object obj = ResourceManager.GetObject("zak delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zak_edit {
+            get {
+                object obj = ResourceManager.GetObject("zak edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zak_main_ico {
+            get {
+                object obj = ResourceManager.GetObject("zak main ico", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zak_new {
+            get {
+                object obj = ResourceManager.GetObject("zak new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
