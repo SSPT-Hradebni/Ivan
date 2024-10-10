@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Media;
 using System.Net.Http;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace SediM
@@ -17,7 +18,10 @@ namespace SediM
         bool ivanSkoroJeRead = false;
         bool ivanNactenyRead = false;
 
-        private readonly string currentVersion = "1.0.0-ALPHA"; // Aktuální verze programu
+        private static Version verzeAplikace = Assembly.GetExecutingAssembly().GetName().Version;
+        private static string verze = $"{verzeAplikace?.Major}.{verzeAplikace?.Minor}.{verzeAplikace?.Build}";
+
+        private readonly string currentVersion = verze;
         private readonly HttpClient httpClient = new HttpClient(); // Inicializace HttpClient
         private bool updateCheckCompleted = false; // Příznak, který určuje, zda byla kontrola aktualizací dokončena
 

@@ -13,6 +13,13 @@
     <UserSecretsId>44ba1f1c-f1bf-4f83-b582-4136e75a6b8a</UserSecretsId>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <UseWPF>True</UseWPF>
+    <Title>Ivan</Title>
+    <Company>Ivan</Company>
+    <Authors>Ivan</Authors>
+    <PackageId>Ivan</PackageId>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
+    <Copyright>All rights reserved</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
